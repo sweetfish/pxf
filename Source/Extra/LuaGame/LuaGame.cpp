@@ -25,17 +25,17 @@ using namespace Pxf::Extra;
 LuaGame::Game::Game(Util::String _gameFilename, Graphics::Device* _device, bool _gracefulFail)
 {
     m_Device = _device;
-    
+
     m_GameFilename = _gameFilename;
     m_GameIdent = "Unknown Game";
-    
+
     // Reset version
     m_GameVersion = "0.0.0";
-    
+
     m_Running = false;
     m_HasInitialized = false;
     m_GracefulFail = _gracefulFail;
-    
+
     // Graphics
     //m_QuadBatch = m_Device->CreateQuadBatch(1024);
     //m_QBT = new QBTConnection[8];
@@ -43,15 +43,15 @@ LuaGame::Game::Game(Util::String _gameFilename, Graphics::Device* _device, bool 
     m_DepthFar = -1.0f;
     m_DepthNear = 0.0f;
     m_CurrentDepth = m_DepthFar;
-    
+
     // QuadBatch-Texture-connections
     m_CurrentQBT = -1;
     m_QBTCount = 0;
-    
+
     // Preload stuff
     m_PreLoadQueue_Textures_Counter = 0;
     m_PreLoadQueue_Total = -1;
-    
+
     // Error/panic handling
     m_CrashRetries = 0;
 }
@@ -66,13 +66,13 @@ void LuaGame::Game::CleanUp()
 {
     delete m_CoreTexture;
     delete m_CoreQB;
-    
+
     for(int i = 0; i < m_QBTCount; ++i)
     {
         delete m_QBT[i]->m_Texture;
         delete m_QBT[i]->m_QuadBatch;
     }
-    
+
     m_CurrentQBT = -1;
     m_QBTCount = 0;
     m_PreLoadQueue_Textures_Counter = 0;
@@ -87,26 +87,26 @@ bool LuaGame::Game::Reload()
 
 bool LuaGame::Game::Load()
 {
-    
+
     m_HasInitialized = false;
-    
+
     // Load core textures
     m_CoreTexture = m_Device->CreateTexture("error_msg.png");
     m_CoreQB      = m_Device->CreateQuadBatch(256);
-    
+
     // Init lua state
     L = lua_open();
-    
+
     // Register lua libs
     _register_lua_libs_callbacks();
-    
+
     // Register own callbacks
     _register_own_callbacks();
-    
+
     ////////////////////////////////
     // Load game core/helper script
     int s = luaL_loadfile(L, "LuaGame.lua");
-    
+
     if (!s)
 	{
 		s = lua_pcall(L, 0, LUA_MULTRET, 0);
@@ -115,20 +115,20 @@ bool LuaGame::Game::Load()
 			lua_pop(L, 1); // remove error message
 			m_Running = false;
 		} else {
-		    
+
 		    // Set Game.Instance to this class instance!
 		    // Instance will later be used to call correct Game instance.
             lua_getglobal(L, LUAGAME_TABLE);
             lua_pushlightuserdata(L, this);
             lua_setfield(L, -2, "Instance");
             lua_pop(L, 1);
-		    
+
 		    // Call core init function (Game:CoreInit())
 		    if (!CallGameMethod("CoreInit"))
                 return false;
-		    
+
 		    //////////////////////////
-			// Load main game script   
+			// Load main game script
             s = luaL_loadfile(L, m_GameFilename.c_str());
         	if (!s)
         	{
@@ -157,7 +157,7 @@ bool LuaGame::Game::Load()
 		Message(LOCAL_MSG, "Error while loading Game.lua: %s",lua_tostring(L,-1));
 		m_Running = false;
 	}
-    
+
     return true;
 }
 
@@ -166,31 +166,31 @@ int LuaGame::Game::PreLoad()
     // Preload game data
     if (!m_Running)
         return false;
-    
+
     // Return value
     int ret = m_PreLoadQueue_Textures_Counter;// + m_PreLoadQueue_Sound_Counter;
     if (ret == 0)
         return 0;
-    
+
     // Load textures
     if (m_PreLoadQueue_Textures_Counter > 0)
     {
-        
+
         m_PreLoadQueue_Textures_Counter -= 1;
         m_PreLoadQueue_Textures[m_PreLoadQueue_Textures_Counter]->Load();
-        
+
         m_CurrentQBT += 1;
         m_QBTCount = m_CurrentQBT + 1;
         m_QBT[m_CurrentQBT] = new QBTConnection(m_PreLoadQueue_Textures[m_PreLoadQueue_Textures_Counter], m_Device);
-        
+
     ////////////////////
     // TODO: Load sounds
     /*
     } else if () {
-        
+
     */
     }
-    
+
     // Returns how many preload data pieces there are left
     return ret;
 }
@@ -201,7 +201,7 @@ Graphics::Texture* LuaGame::Game::AddPreload(Util::String _filepath)
     Graphics::Texture* res = m_Device->CreateTexture(_filepath.c_str(), false); // false = dont autoload
     m_PreLoadQueue_Textures[m_PreLoadQueue_Textures_Counter] = res;
     m_PreLoadQueue_Textures_Counter += 1;
-    
+
     return res;
 }
 
@@ -210,16 +210,16 @@ bool LuaGame::Game::Update(float dt)
     // Update game
     if (!m_Running || !m_HasInitialized)
         return false;
-        
+
     // Update iPhone input handling
 #if defined(TARGET_OS_IPHONEDEV)
     IPhoneInputSubsystem::Update(this, L);
 #else
     MouseInputSubsystem::Update(this, L);
 #endif
-	
-	
-    
+
+
+
     lua_getglobal(L, "debug");
 	lua_getfield(L, -1, "traceback");
 	lua_remove(L, -2);
@@ -229,15 +229,15 @@ bool LuaGame::Game::Update(float dt)
     lua_getglobal(L, LUAGAME_TABLE);
     lua_pushnumber(L, dt);
 	m_Running = HandleLuaErrors(lua_pcall(L, 2, 0, -4));
-	
-	
-        
+
+
+
     return m_Running;
 }
 
 bool LuaGame::Game::Render()
 {
-	
+
     // Render game
     if (!m_Running)
     {
@@ -249,13 +249,13 @@ bool LuaGame::Game::Render()
             Message(LOCAL_MSG, "Script has stopped running. Trying to restart... (Retry # %i)", m_CrashRetries);
             CleanUp();
             Load();
-            
+
         } else {
-            
+
             // Script has encountered an error
             // Display panic msg!
             m_CoreQB->Reset();
-            
+
             int w,h;
             #if defined(TARGET_OS_IPHONEFAKEDEV)
                     w = m_HitArea[2];
@@ -263,10 +263,10 @@ bool LuaGame::Game::Render()
             #else
                     m_Device->GetSize(&w, &h);
             #endif
-            
+
             Math::Vec3f t_color_white(1.0f, 1.0f, 1.0f);
             Math::Vec3f t_color_black(0.0f, 0.0f, 0.0f);
-            
+
             // bg
             m_CurrentDepth = m_DepthFar;
             m_Device->BindTexture(0);
@@ -274,7 +274,7 @@ bool LuaGame::Game::Render()
             m_CoreQB->SetColor(&t_color_black);
             m_CoreQB->AddTopLeft(0, 0, w, h);
             m_CurrentDepth += m_DepthStep;
-            
+
             // Msg
             m_Device->BindTexture(m_CoreTexture);
             m_CoreQB->SetColor(&t_color_white);
@@ -282,25 +282,25 @@ bool LuaGame::Game::Render()
             m_CoreQB->SetDepth(m_CurrentDepth);
             m_CoreQB->AddCentered(w / 2.0f, h / 2.0f, 256, 256);
             m_CoreQB->Draw();
-        
+
         }
         return false;
     }
-    
+
     // Are we in need of preloading anything?
     int t_preload = PreLoad();
     if (m_PreLoadQueue_Total == -1)
     {
         m_PreLoadQueue_Total = t_preload;
-        
+
         // Calculate depth step
         if (m_PreLoadQueue_Total > 0)
             m_DepthStep = (1.0f / m_PreLoadQueue_Total) / 1024;
     }
-    
+
     if (t_preload > 0)
     {
-        
+
         int w,h;
 #if defined(TARGET_OS_IPHONEFAKEDEV)
         w = m_HitArea[2];
@@ -308,48 +308,48 @@ bool LuaGame::Game::Render()
 #else
         m_Device->GetSize(&w, &h);
 #endif
-        
+
         /*
-        
+
         +------------------------+
         |############            |
         +------------------------+
-        
+
         */
-        
+
         Math::Vec3f t_color_white(1.0f, 1.0f, 1.0f);
         Math::Vec3f t_color_black(0.0f, 0.0f, 0.0f);
         Math::Vec3f t_color_red(1.0f, 0.0f, 0.0f);
-        
-        
+
+
         m_Device->BindTexture(0);
         m_CoreQB->Reset();
-        
+
         m_CoreQB->SetTextureSubset(0.0f, 0.0f, 1.0f, 1.0f);
         m_CoreQB->SetDepth(m_CurrentDepth);
-        
+
         // bg
         m_CoreQB->SetColor(&t_color_black);
         m_CoreQB->AddTopLeft(0, 0, w, h);
-        
+
         // bar outline
         float t_bar_width = w * 0.8f;
         float t_bar_height = 8.0f;
         m_CoreQB->SetColor(&t_color_white);
         m_CoreQB->AddCentered(w / 2.0f, h / 2.0f, t_bar_width, t_bar_height);
-        
+
         // bar bg
         m_CoreQB->SetColor(&t_color_black);
         m_CoreQB->AddCentered(w / 2.0f, h / 2.0f, t_bar_width-2.0f, t_bar_height-2.0f);
-        
+
         // bar ticks
         m_CoreQB->SetColor(&t_color_white);
         m_CoreQB->AddTopLeft((w - t_bar_width + 4.0f) / 2.0f, (h - t_bar_height + 4.0f) / 2.0f, (t_bar_width - 4.0f) * ((float)(m_PreLoadQueue_Total - t_preload + 1) / (float)m_PreLoadQueue_Total), t_bar_height - 4.0f);
-        
+
         m_CoreQB->Draw();
-        
+
         Message(LOCAL_MSG, "Loaded resource %i/%i.", (m_PreLoadQueue_Total - t_preload + 1), m_PreLoadQueue_Total);
-        
+
         // Call Game:Init()
         if ((m_PreLoadQueue_Total - t_preload + 1) == m_PreLoadQueue_Total)
         {
@@ -359,21 +359,21 @@ bool LuaGame::Game::Render()
     } else {
         // Reset depth
         m_CurrentDepth = m_DepthFar;
-        
+
         // Loop all quad batches
         for(int i = 0; i < m_QBTCount; ++i)
             m_QBT[i]->m_QuadBatch->Reset();
-        
+
         m_Running = CallGameMethod("Render");
-        
+
         for(int i = 0; i < m_QBTCount; ++i)
         {
             m_Device->BindTexture(m_QBT[i]->m_Texture);
             m_QBT[i]->m_QuadBatch->Draw();
         }
-            
+
     }
-        
+
     return m_Running;
 }
 
@@ -399,7 +399,7 @@ void LuaGame::Game::BindTexture(Graphics::Texture* _texture)
 }
 
 void LuaGame::Game::AddQuad(float x, float y, float w, float h)
-{    
+{
 	GetCurrentQB()->SetTextureSubset(0.0f, 0.0f, 1.0f, 1.0f);
     GetCurrentQB()->SetDepth(m_CurrentDepth);
     GetCurrentQB()->AddCentered(x, y, w, h);
@@ -494,23 +494,23 @@ void LuaGame::Game::_register_own_callbacks()
 	lua_register(L, "print", Print);
 	lua_register(L, "runstring", RunString);
 	//lua_register(L, "print", TestInstance);
-	
+
 	/*
 	lua_getglobal(L, LUAGAME_TABLE);
     lua_getglobal(L, LUAGAME_TABLE);
     lua_pushcfunction(L, TestInstance);
     lua_setfield(L, -2, "Test");
-    
+
     // Pop "LuaGame" table
     lua_pop(L, 1);
     */
-    
+
     // Create empty luagame table
     lua_newtable(L);
     lua_setglobal (L, LUAGAME_TABLE);
-    
+
     Message(LOCAL_MSG, "Hey");
-        
+
     // Register subsystems
 	Vec2::RegisterClass(L);
 	Message(LOCAL_MSG, "Hey");
@@ -581,7 +581,7 @@ bool LuaGame::Game::CallGameMethod(int _param_num)
         return HandleLuaErrors(lua_pcall(L, _param_num, 0, -3));
     }
     */
-    
+
 	return HandleLuaErrors(lua_pcall(L, 1+_param_num, 0, -3-(_param_num)));
 }
 
@@ -597,7 +597,7 @@ void* LuaGame::Game::GetInstance(lua_State *_L)
     lua_getfield(_L, -1, "Instance");
     static void* p = lua_touserdata(_L, -1);
     lua_pop(_L, 2);
-    
+
     return p;
 }
 
@@ -624,7 +624,7 @@ void LuaGame::Game::SetHitArea(float x, float y, float w, float h)
 
 int LuaGame::Game::Print(lua_State *_L)
 {
-    
+
     // More or less copy paste from lbaselib.c of Lua dist.
     // Modified so that prints can be pushed to the "game console"
     int n = lua_gettop(_L);  /* number of arguments */
@@ -661,13 +661,13 @@ int LuaGame::Game::RunString(lua_State *_L)
             return 1;
 		}
         return (lua_gettop(_L) - argc);
-    
+
     } else {
         // Non valid method call
         lua_pushstring(_L, "Invalid argument passed to run function!");
         lua_error(_L);
     }
-    
+
     return 0;
 }
 

@@ -64,7 +64,7 @@ bool WindowD3D::Open()
 {
 	if (!InitWindow())
 		return false;
-	
+
 	if (!InitD3D())
 		return false;
 
@@ -96,7 +96,7 @@ void WindowD3D::Swap()
 	}else if(hr == D3DERR_DEVICENOTRESET){ //The device is ready to be Reset
 		hr=m_D3D_device->Reset(&m_pp);
 	}
-	
+
 	if(FAILED(hr)){
 		Close();
 	}
@@ -193,7 +193,7 @@ bool WindowD3D::InitWindow()
 		return false;
 	}
 
-	
+
 
 	//If we're running full screen, we cover the desktop with our window.
 	//This isn't necessary, but it provides a smoother transition for the
@@ -406,7 +406,7 @@ bool WindowD3D::InitD3D()
 			Message("WindowD3D9", "CreateDevice() failed: Out of video memory!");
 		else
 			Message("WindowD3D9", "CreateDevice() failed: Unknown error!");
-		
+
 		return false;
 	}
 

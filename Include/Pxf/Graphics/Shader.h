@@ -9,7 +9,7 @@ namespace Pxf {
 	}
 
 	namespace Graphics {
-		
+
 		class Shader : Resource::DeviceResource
 		{
 		private:
@@ -25,7 +25,7 @@ namespace Pxf {
 
 			virtual void Bind() = 0;
 			virtual void Unbind() = 0;
-			
+
 			inline bool IsValid()
 			{
 				return m_IsValid;

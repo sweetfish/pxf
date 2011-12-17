@@ -28,7 +28,7 @@ namespace Pxf
 				class LuaPhysicsBody : public Subsystem
 				{
 				public:
-					virtual int GetPosition(lua_State* _L) = 0; 
+					virtual int GetPosition(lua_State* _L) = 0;
 				private:
 				};
 
@@ -45,7 +45,7 @@ namespace Pxf
 				class LuaPhysicsWorld : Subsystem
 				{
 				public:
-					LuaPhysicsWorld(Math::Vec3f _Gravity) { 
+					LuaPhysicsWorld(Math::Vec3f _Gravity) {
 						m_Gravity = _Gravity;
 					}
 
@@ -67,7 +67,7 @@ namespace Pxf
 				class LuaBox2DPhysicsWorld : public LuaPhysicsWorld
 				{
 				public:
-					LuaBox2DPhysicsWorld(Math::Vec3f _Gravity) 
+					LuaBox2DPhysicsWorld(Math::Vec3f _Gravity)
 						: LuaPhysicsWorld(_Gravity)
 						, m_World(0) { }
 					~LuaBox2DPhysicsWorld();

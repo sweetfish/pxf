@@ -15,13 +15,13 @@ namespace Pxf
             public:
                 Vec2 ();
                 ~Vec2 ();
-                
+
                 static void RegisterClass(lua_State* _L);
-                
+
                 // Callbacks
                 static int New(lua_State* _L);
                 static int ToString(lua_State* _L);
-                
+
                 // Data
                 float x,y;
             };

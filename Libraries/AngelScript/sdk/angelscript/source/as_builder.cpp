@@ -247,7 +247,7 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
 	// Add the string to the script code
 	asCScriptCode *script = asNEW(asCScriptCode);
 	script->SetCode(sectionName, code, true);
-	script->lineOffset = lineOffset; 
+	script->lineOffset = lineOffset;
 	scripts.PushLast(script);
 
 	// Parse the string
@@ -258,9 +258,9 @@ int asCBuilder::CompileFunction(const char *sectionName, const char *code, int l
 	asCScriptNode *node = parser.GetScriptNode();
 
 	// Make sure there is nothing else than the function in the script code
-	if( node == 0 || 
-		node->firstChild == 0 || 
-		node->firstChild != node->lastChild || 
+	if( node == 0 ||
+		node->firstChild == 0 ||
+		node->firstChild != node->lastChild ||
 		node->firstChild->nodeType != snFunction )
 	{
 		WriteError(script->name.AddressOf(), TXT_ONLY_ONE_FUNCTION_ALLOWED, 0, 0);
@@ -1119,10 +1119,10 @@ void asCBuilder::CompileGlobalVariables()
 	asCArray<asCGlobalProperty*> initOrder;
 
 	// We first try to compile all the primitive global variables, and only after that
-	// compile the non-primitive global variables. This permits the constructors 
-	// for the complex types to use the already initialized variables of primitive 
-	// type. Note, we currently don't know which global variables are used in the 
-	// constructors, so we cannot guarantee that variables of complex types are 
+	// compile the non-primitive global variables. This permits the constructors
+	// for the complex types to use the already initialized variables of primitive
+	// type. Note, we currently don't know which global variables are used in the
+	// constructors, so we cannot guarantee that variables of complex types are
 	// initialized in the correct order, so we won't reorder those.
 	bool compilingPrimitives = true;
 
@@ -1265,7 +1265,7 @@ void asCBuilder::CompileGlobalVariables()
 					initFunc->globalVarPointers = func.globalVarPointers;
 					initFunc->AddReferences();
 
-					// The function's refCount was already initialized to 1 
+					// The function's refCount was already initialized to 1
 					gvar->property->initFunc = initFunc;
 				}
 			}
@@ -1284,7 +1284,7 @@ void asCBuilder::CompileGlobalVariables()
 		{
 			if( compilingPrimitives )
 			{
-				// No more primitives could be compiled, so 
+				// No more primitives could be compiled, so
 				// switch to compiling the complex variables
 				compilingPrimitives = false;
 				compileSucceeded    = true;
@@ -1312,8 +1312,8 @@ void asCBuilder::CompileGlobalVariables()
 	// Set the correct order of initialization
 	if( numErrors == 0 )
 	{
-		// If the length of the arrays are not the same, then this is the compilation 
-		// of a single variable, in which case the initialization order of the previous 
+		// If the length of the arrays are not the same, then this is the compilation
+		// of a single variable, in which case the initialization order of the previous
 		// variables must be preserved.
 		if( module->scriptGlobals.GetLength() == initOrder.GetLength() )
 			module->scriptGlobals = initOrder;
@@ -1985,7 +1985,7 @@ int asCBuilder::RegisterEnum(asCScriptNode *node, asCScriptCode *file)
 			gvar->isEnumValue     = true;
 			gvar->constantValue   = 0xdeadbeef;
 
-			// Allocate dummy property so we can compile the value. 
+			// Allocate dummy property so we can compile the value.
 			// This will be removed later on so we don't add it to the engine.
 			gvar->property        = asNEW(asCGlobalProperty);
 			gvar->property->name  = name;
@@ -2533,7 +2533,7 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
 
 		asCObjectType *ot = 0;
 
-		// If this is for a template type, then we must first determine if the 
+		// If this is for a template type, then we must first determine if the
 		// identifier matches any of the template subtypes
 		// TODO: template: it should be possible to have more than one subtypes
 		if( templateType && (templateType->flags & asOBJ_TEMPLATE) && str == templateType->templateSubType.GetObjectType()->name )
@@ -2575,7 +2575,7 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
 					if( ot->flags & asOBJ_TEMPLATE )
 					{
 						n = n->next;
-						
+
 						// Check if the subtype is a type or the template's subtype
 						// if it is the template's subtype then this is the actual template type,
 						// orderwise it is a template instance.

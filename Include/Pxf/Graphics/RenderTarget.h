@@ -7,7 +7,7 @@
 namespace Pxf
 {
 	namespace Graphics
-	{		
+	{
 		// REDO THIS
 
 		// Move the enums..
@@ -26,7 +26,7 @@ namespace Pxf
 		class Device;
 		class Texture;
 
-		//! Abstract render target 
+		//! Abstract render target
 		class RenderTarget : public DeviceResource
 		{
 			RTType m_RTType;

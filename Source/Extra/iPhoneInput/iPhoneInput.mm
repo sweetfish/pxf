@@ -19,15 +19,15 @@
     NSString *t_title = [NSString stringWithCString:popupTitle length:strlen(popupTitle)];
     NSString *t_msg = [NSString stringWithCString:msg length:strlen(msg)];
     NSString *t_field = [NSString stringWithCString:field length:strlen(field)];
-    
-	UIAlertView *alert = [[UIAlertView alloc] 
+
+	UIAlertView *alert = [[UIAlertView alloc]
 						  initWithTitle: t_title
 						  message:t_msg
 						  delegate:self
 						  cancelButtonTitle:@"Cancel"
 						  otherButtonTitles:@"OK", nil];
 	[alert addTextFieldWithValue:@"" label:t_field];
-	
+
 	// Name field
 	UITextField *tf = [alert textFieldAtIndex:0];
 	tf.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -35,7 +35,7 @@
 	tf.keyboardAppearance = UIKeyboardAppearanceAlert;
 	tf.autocapitalizationType = UITextAutocapitalizationTypeWords;
 	tf.autocorrectionType = UITextAutocorrectionTypeNo;
-	
+
 	//[alert addSubView:tf];
 
 	[alert show];

@@ -12,16 +12,16 @@ void PhysicsSubsystem::RegisterClass(lua_State* _L)
     lua_newtable(_L);
     lua_setfield(_L, -2, "physics");
     lua_getfield(_L, -1, "physics");
-    
+
 	// luagame.physics.newworld
 	lua_pushcfunction(_L,NewWorld);
 	lua_setfield(_L,-2,"newworld");
-	
-	// push physics engine identifiers 
+
+	// push physics engine identifiers
 	// luagame.physics.BULLET3D
 	lua_pushnumber(_L,WORLD_TYPE_BULLET3D);
 	lua_setfield(_L,-2,"BULLET3D");
-	
+
 	// luagame.physics.BOX2D
 	lua_pushnumber(_L,WORLD_TYPE_BOX2D);
 	lua_setfield(_L,-2,"BOX2D");
@@ -31,11 +31,11 @@ int PhysicsSubsystem::NewWorld(lua_State* _L)
 {
 	int _RetVal = 0;
 
-	int argc = lua_gettop(_L);	
+	int argc = lua_gettop(_L);
 	if(argc == 1 && lua_isnumber(_L,1))
 	{
 		int _Val = lua_tonumber(_L, 1);
-		
+
 		switch(_Val)
 		{
 			case 1: // Bullet3D
@@ -44,7 +44,7 @@ int PhysicsSubsystem::NewWorld(lua_State* _L)
 			case 2: // Box2D
 				_RetVal = _NewBox2DWorld(_L);
 				break;
-			default: 
+			default:
 				lua_pushstring(_L,"Unknown physics identifier passed to newworld function");
 				lua_error(_L);
 				break;
@@ -55,7 +55,7 @@ int PhysicsSubsystem::NewWorld(lua_State* _L)
 		lua_pushstring(_L,"Invalid argument passed to newworld function!");
 		lua_error(_L);
 	}
-	
+
 	return _RetVal;
 }
 
@@ -69,7 +69,7 @@ int PhysicsSubsystem::_NewBox2DWorld(lua_State* _L)
 	LuaPhysicsWorld* _NewWorld = new LuaBox2DPhysicsWorld(Math::Vec3f(0.0f,0.0f,0.0f));
 
 	lua_newtable(_L);
-    
+
     lua_pushlightuserdata(_L, _NewWorld);
     lua_setfield(_L, -2, "instance");
 
@@ -91,15 +91,15 @@ int PhysicsSubsystem::_NewBox2DWorld(lua_State* _L)
 LuaBox2DPhysicsBody::LuaBox2DPhysicsBody()
 	: m_Body(0)
 {
-	
+
 }
-LuaBox2DPhysicsBody::~LuaBox2DPhysicsBody() 
+LuaBox2DPhysicsBody::~LuaBox2DPhysicsBody()
 {
 	if(m_Body)
 		delete m_Body;
 }
 
-int LuaBox2DPhysicsBody::GetPosition(lua_State* _L) 
+int LuaBox2DPhysicsBody::GetPosition(lua_State* _L)
 {
 
 	return 0;
@@ -128,12 +128,12 @@ int LuaBox2DPhysicsWorld::ClearForces(lua_State* _L)
 	return 0;
 }
 
-int LuaBox2DPhysicsWorld::NewBody(lua_State* _L) 
+int LuaBox2DPhysicsWorld::NewBody(lua_State* _L)
 {
 	LuaBox2DPhysicsBody* _NewBody = new LuaBox2DPhysicsBody();
 
 	lua_newtable(_L);
-    
+
     lua_pushlightuserdata(_L, _NewBody);
     lua_setfield(_L, -2, "instance");
 
@@ -144,7 +144,7 @@ int LuaBox2DPhysicsWorld::NewBody(lua_State* _L)
 }
 
 /*
-void LuaPhysicsBody::RegisterClass(lua_State* _L) 
+void LuaPhysicsBody::RegisterClass(lua_State* _L)
 {
 	// luagame.physics.body
 	/*
@@ -154,7 +154,7 @@ void LuaPhysicsBody::RegisterClass(lua_State* _L)
 	lua_setfield(_L, -2, "body");
 	lua_getfield(_L, -1, "body");
 
-	// luagame.physics.body.position 
+	// luagame.physics.body.position
 	lua_pushcfunction(_L,GetPosition);
-	//lua_setfield(_L, -2, "position"); 
+	//lua_setfield(_L, -2, "position");
 }*/

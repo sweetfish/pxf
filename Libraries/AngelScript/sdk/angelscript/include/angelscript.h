@@ -329,7 +329,7 @@ typedef void (*asFREEFUNC_t)(void *);
 #define asFUNCTION(f) asFunctionPtr(f)
 #if defined(_MSC_VER) && _MSC_VER <= 1200
 // MSVC 6 has a bug that prevents it from properly compiling using the correct asFUNCTIONPR with operator >
-// so we need to use ordinary C style cast instead of static_cast. The drawback is that the compiler can't 
+// so we need to use ordinary C style cast instead of static_cast. The drawback is that the compiler can't
 // check that the cast is really valid.
 #define asFUNCTIONPR(f,p,r) asFunctionPtr((void (*)())((r (*)p)(f)))
 #else
@@ -348,7 +348,7 @@ struct asSFuncPtr
 		// The largest known method point is 20 bytes (MSVC 64bit),
 		// but with 8byte alignment this becomes 24 bytes. So we need
 		// to be able to store at least that much.
-		char dummy[25]; 
+		char dummy[25];
 		struct {asMETHOD_t   mthd; char dummy[25-sizeof(asMETHOD_t)];} m;
 		struct {asFUNCTION_t func; char dummy[25-sizeof(asFUNCTION_t)];} f;
 	} ptr;
@@ -971,9 +971,9 @@ struct asSMethodPtr<SINGLE_PTR_SIZE+2*sizeof(int)>
 		// on 64bit platforms with 8byte data alignments.
 
 		// Method pointers for virtual inheritance is not supported,
-		// as it requires the location of the vbase table, which is 
+		// as it requires the location of the vbase table, which is
 		// only available to the C++ compiler, but not in the method
-		// pointer. 
+		// pointer.
 
 		// You can get around this by forward declaring the class and
 		// storing the sizeof its method pointer in a constant. Example:
@@ -985,7 +985,7 @@ struct asSMethodPtr<SINGLE_PTR_SIZE+2*sizeof(int)>
 		// for the class, which falls under the next case
 
 		// TODO: We need to try to identify if this is really a method pointer
-		//       with virtual inheritance, or just a method pointer for multiple 
+		//       with virtual inheritance, or just a method pointer for multiple
 		//       inheritance with pad bytes to produce a 16byte structure.
 
 		asSFuncPtr p;
@@ -1284,25 +1284,25 @@ enum asEBCType
 // Instruction type sizes
 const int asBCTypeSize[19] =
 {
-    0, // asBCTYPE_INFO        
-    1, // asBCTYPE_NO_ARG      
-    1, // asBCTYPE_W_ARG       
-    1, // asBCTYPE_wW_ARG      
-    2, // asBCTYPE_DW_ARG      
-    2, // asBCTYPE_rW_DW_ARG   
-    3, // asBCTYPE_QW_ARG      
-    3, // asBCTYPE_DW_DW_ARG   
+    0, // asBCTYPE_INFO
+    1, // asBCTYPE_NO_ARG
+    1, // asBCTYPE_W_ARG
+    1, // asBCTYPE_wW_ARG
+    2, // asBCTYPE_DW_ARG
+    2, // asBCTYPE_rW_DW_ARG
+    3, // asBCTYPE_QW_ARG
+    3, // asBCTYPE_DW_DW_ARG
     2, // asBCTYPE_wW_rW_rW_ARG
-    3, // asBCTYPE_wW_QW_ARG   
-    2, // asBCTYPE_wW_rW_ARG   
-    1, // asBCTYPE_rW_ARG      
-    2, // asBCTYPE_wW_DW_ARG   
+    3, // asBCTYPE_wW_QW_ARG
+    2, // asBCTYPE_wW_rW_ARG
+    1, // asBCTYPE_rW_ARG
+    2, // asBCTYPE_wW_DW_ARG
     3, // asBCTYPE_wW_rW_DW_ARG
-    2, // asBCTYPE_rW_rW_ARG   
-    2, // asBCTYPE_W_rW_ARG    
-    2, // asBCTYPE_wW_W_ARG    
-    2, // asBCTYPE_W_DW_ARG    
-    4  // asBCTYPE_QW_DW_ARG    
+    2, // asBCTYPE_rW_rW_ARG
+    2, // asBCTYPE_W_rW_ARG
+    2, // asBCTYPE_wW_W_ARG
+    2, // asBCTYPE_W_DW_ARG
+    4  // asBCTYPE_QW_DW_ARG
 };
 
 // Instruction info

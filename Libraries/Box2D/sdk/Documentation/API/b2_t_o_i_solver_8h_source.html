@@ -39,37 +39,37 @@
 <a name="l00015"></a>00015 <span class="comment">* misrepresented as being the original software.</span>
 <a name="l00016"></a>00016 <span class="comment">* 3. This notice may not be removed or altered from any source distribution.</span>
 <a name="l00017"></a>00017 <span class="comment">*/</span>
-<a name="l00018"></a>00018 
+<a name="l00018"></a>00018
 <a name="l00019"></a>00019 <span class="preprocessor">#ifndef B2_TOI_SOLVER_H</span>
 <a name="l00020"></a>00020 <span class="preprocessor"></span><span class="preprocessor">#define B2_TOI_SOLVER_H</span>
 <a name="l00021"></a>00021 <span class="preprocessor"></span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &lt;<a class="code" href="b2_math_8h.html">Box2D/Common/b2Math.h</a>&gt;</span>
-<a name="l00023"></a>00023 
+<a name="l00023"></a>00023
 <a name="l00024"></a>00024 <span class="keyword">class </span><a class="code" href="classb2_contact.html">b2Contact</a>;
 <a name="l00025"></a>00025 <span class="keyword">class </span><a class="code" href="classb2_body.html" title="A rigid body. These are created via b2World::CreateBody.">b2Body</a>;
 <a name="l00026"></a>00026 <span class="keyword">struct </span><a class="code" href="structb2_t_o_i_constraint.html">b2TOIConstraint</a>;
 <a name="l00027"></a>00027 <span class="keyword">class </span><a class="code" href="classb2_stack_allocator.html">b2StackAllocator</a>;
-<a name="l00028"></a>00028 
+<a name="l00028"></a>00028
 <a name="l00031"></a><a class="code" href="classb2_t_o_i_solver.html">00031</a> <span class="keyword">class </span><a class="code" href="classb2_t_o_i_solver.html">b2TOISolver</a>
 <a name="l00032"></a>00032 {
 <a name="l00033"></a>00033 <span class="keyword">public</span>:
 <a name="l00034"></a>00034         <a class="code" href="classb2_t_o_i_solver.html#a32129179c6cbfee94faa8069f6583f04">b2TOISolver</a>(<a class="code" href="classb2_stack_allocator.html">b2StackAllocator</a>* allocator);
 <a name="l00035"></a>00035         <a class="code" href="classb2_t_o_i_solver.html#a83c1391f4402be99e51046705c777136">~b2TOISolver</a>();
-<a name="l00036"></a>00036 
+<a name="l00036"></a>00036
 <a name="l00037"></a>00037         <span class="keywordtype">void</span> <a class="code" href="classb2_t_o_i_solver.html#af197809b5b2c4f9d260894bf992d01d4">Initialize</a>(<a class="code" href="classb2_contact.html">b2Contact</a>** contacts, <a class="code" href="b2_settings_8h.html#a43d43196463bde49cb067f5c20ab8481">int32</a> contactCount, <a class="code" href="classb2_body.html" title="A rigid body. These are created via b2World::CreateBody.">b2Body</a>* toiBody);
 <a name="l00038"></a>00038         <span class="keywordtype">void</span> <a class="code" href="classb2_t_o_i_solver.html#ae4e3f5805a3be7553667199b743d70c1">Clear</a>();
-<a name="l00039"></a>00039 
+<a name="l00039"></a>00039
 <a name="l00040"></a>00040         <span class="comment">// Perform one solver iteration. Returns true if converged.</span>
 <a name="l00041"></a>00041         <span class="keywordtype">bool</span> <a class="code" href="classb2_t_o_i_solver.html#acc69a90e93d40ab86b2cad50dbcdde6e">Solve</a>(<a class="code" href="b2_settings_8h.html#aacdc525d6f7bddb3ae95d5c311bd06a1">float32</a> baumgarte);
-<a name="l00042"></a>00042 
+<a name="l00042"></a>00042
 <a name="l00043"></a>00043 <span class="keyword">private</span>:
-<a name="l00044"></a>00044 
+<a name="l00044"></a>00044
 <a name="l00045"></a>00045         <a class="code" href="structb2_t_o_i_constraint.html">b2TOIConstraint</a>* m_constraints;
 <a name="l00046"></a>00046         <a class="code" href="b2_settings_8h.html#a43d43196463bde49cb067f5c20ab8481">int32</a> m_count;
 <a name="l00047"></a>00047         <a class="code" href="classb2_body.html" title="A rigid body. These are created via b2World::CreateBody.">b2Body</a>* m_toiBody;
 <a name="l00048"></a>00048         <a class="code" href="classb2_stack_allocator.html">b2StackAllocator</a>* m_allocator;
 <a name="l00049"></a>00049 };
-<a name="l00050"></a>00050 
+<a name="l00050"></a>00050
 <a name="l00051"></a>00051 <span class="preprocessor">#endif</span>
 </pre></div></div>
 <hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Apr 3 18:18:08 2010 for Box2D by&nbsp;

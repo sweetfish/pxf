@@ -2,11 +2,11 @@
 #define _PXF_SCENE_ENTITYDEFS_H
 
 namespace Pxf
-{		
+{
 	namespace Scene
 	{
-		enum EntityType 
-		{ 
+		enum EntityType
+		{
 			ELight,
 			EObject,
 			ECamera

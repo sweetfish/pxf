@@ -12,8 +12,8 @@ TestGameState::TestGameState()
 bool TestGameState::Init()
 {
 	bool _RetVal = true;
-	
-	
+
+
 	return _RetVal;
 }
 

@@ -27,7 +27,7 @@ class AsioDrivers : public AsioDriverList
 public:
 	AsioDrivers();
 	~AsioDrivers();
-	
+
 	bool getCurrentDriverName(char *name);
 	long getDriverNames(char **names, long maxDrivers);
 	bool loadDriver(char *name);

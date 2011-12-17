@@ -17,7 +17,7 @@
 #include "asio.h"
 
 class AsioDriver;
-extern AsioDriver *getDriver();		// for generic constructor 
+extern AsioDriver *getDriver();		// for generic constructor
 
 #if WINDOWS
 #include <windows.h>

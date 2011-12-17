@@ -5,7 +5,7 @@
 
 namespace Pxf {
 namespace Scene
-{		
+{
 	class Camera;
 	class MaterialManager;
 
@@ -21,7 +21,7 @@ namespace Scene
 		//! Scene statistics:
 		unsigned long int		m_NumVerts;
 		unsigned long int		m_NumFaces;
-		
+
 		//! BGColor
 		float 					m_BGColor[3];
 

@@ -12,7 +12,7 @@ namespace Pxf
     public:
       SimpleServer(char* _host, unsigned int _port, unsigned int _max_clients = 32);
       ~SimpleServer();
-      
+
       void Open();
       void Close();
       int MessagePump(NetMessage* _message);
@@ -23,7 +23,7 @@ namespace Pxf
       // ENet specifics
       ENetAddress m_address;
       ENetHost *m_server;
-      
+
     };
   } /* Extra */
 } /* Pxf */

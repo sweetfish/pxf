@@ -24,7 +24,7 @@ Image::~Image()
 {
 	if(m_ImageData)
 		SOIL_free_image_data(m_ImageData);
-	
+
 	SafeDelete(m_Chunk);
 }
 

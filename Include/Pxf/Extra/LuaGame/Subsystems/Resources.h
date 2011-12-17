@@ -15,8 +15,8 @@ namespace Pxf
                 int LoadTexture(lua_State* _L);
                 int BindTexture(lua_State* _L);
                 int GetTextureSize(lua_State* _L);
-                
-                
+
+
             } /* ResourcesSubsystem */
         } /* LuaGame */
     } /* Extra */

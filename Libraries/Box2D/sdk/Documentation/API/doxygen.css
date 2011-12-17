@@ -199,7 +199,7 @@ p.formulaDsp {
 }
 
 img.formulaDsp {
-	
+
 }
 
 img.formulaInl {
@@ -252,20 +252,20 @@ span.charliteral {
 	color: #008080
 }
 
-span.vhdldigit { 
-	color: #ff00ff 
+span.vhdldigit {
+	color: #ff00ff
 }
 
-span.vhdlchar { 
-	color: #000000 
+span.vhdlchar {
+	color: #000000
 }
 
-span.vhdlkeyword { 
-	color: #700070 
+span.vhdlkeyword {
+	color: #700070
 }
 
-span.vhdllogic { 
-	color: #ff0000 
+span.vhdllogic {
+	color: #ff0000
 }
 
 /* @end */
@@ -375,9 +375,9 @@ hr.footer {
 }
 
 .memproto {
-        border-top: 1px solid #84b0c7;          
-        border-left: 1px solid #84b0c7;         
-        border-right: 1px solid #84b0c7; 
+        border-top: 1px solid #84b0c7;
+        border-left: 1px solid #84b0c7;
+        border-right: 1px solid #84b0c7;
         padding: 0;
         background-color: #d5e1e8;
         font-weight: bold;
@@ -395,9 +395,9 @@ hr.footer {
 }
 
 .memdoc {
-        border-bottom: 1px solid #84b0c7;      
-        border-left: 1px solid #84b0c7;      
-        border-right: 1px solid #84b0c7; 
+        border-bottom: 1px solid #84b0c7;
+        border-left: 1px solid #84b0c7;
+        border-right: 1px solid #84b0c7;
         padding: 2px 5px;
         background-color: #eef3f5;
         border-top-width: 0;

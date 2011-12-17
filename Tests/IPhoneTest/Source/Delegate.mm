@@ -24,17 +24,17 @@ static Application* _Application = NULL;
 	if(_Application->IsRunning())
 	{
 		// move to Application->GameStep() or something?
-		
+
 		[m_GLView PrepareDrawing];
-		
+
 		// UPDATE
 		if(!_Application->Update())
-			ERROR("unable to update applcation") 
-	
+			ERROR("unable to update applcation")
+
 		// RENDER
 		if(!_Application->Render())
 			ERROR("unable to render application")
-		
+
 		// SWAP BUFFER
 		m_GLView->m_Device->SwapBuffers();
 	}
@@ -43,28 +43,28 @@ static Application* _Application = NULL;
 -(void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	_Application = new Application("pxf iPhone test");
-	
+
 	if(_Application->Init())
 		SUCCESS("init")
 	else
 		ERROR("init failed")
-	
+
 	CGRect _Rect	= [[UIScreen mainScreen] bounds];
 	m_Window		= [[UIWindow alloc] initWithFrame:_Rect];
 	m_GLView		= [[[[EAGLView11 alloc] init] initWithRect: _Rect] disableStatusbar:YES];
-	
-	
+
+
 	if(!m_GLView)
 	{
 		ERROR("unable to initialize GLView")
 		_Application->Shutdown();
 		return;
 	}
-	
+
 	[m_Window addSubview:m_GLView];
-	[m_Window makeKeyAndVisible]; 
+	[m_Window makeKeyAndVisible];
 	[NSTimer scheduledTimerWithTimeInterval:(1.0 / 30.0) target:self selector:@selector(update) userInfo:nil repeats:YES];
-	
+
 	_Application->SetDevice( m_GLView->m_Device );//(Pxf::Graphics::Device*)[m_GLView m_Device] );
 }
 

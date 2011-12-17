@@ -230,7 +230,7 @@ static int _glfwSetPixelFormatAttrib( int redbits, int greenbits, int bluebits,
     int PixelFormat, dummy, count = 0;
     int attribs[128];
     PIXELFORMATDESCRIPTOR pfd;
-    
+
     int accumredbits = hints->AccumRedBits;
     int accumgreenbits = hints->AccumGreenBits;
     int accumbluebits = hints->AccumBlueBits;
@@ -248,7 +248,7 @@ static int _glfwSetPixelFormatAttrib( int redbits, int greenbits, int bluebits,
     _glfwSetWGLAttribute( WGL_DEPTH_BITS_ARB,     depthbits );
     _glfwSetWGLAttribute( WGL_STENCIL_BITS_ARB,   stencilbits );
     _glfwSetWGLAttribute( WGL_AUX_BUFFERS_ARB,    hints->AuxBuffers );
-    
+
     if( accumredbits || accumgreenbits || accumbluebits || accumalphabits )
     {
         _glfwSetWGLAttribute( WGL_ACCUM_BITS_ARB, accumredbits +
@@ -291,7 +291,7 @@ static int _glfwSetPixelFormatAttrib( int redbits, int greenbits, int bluebits,
         return GL_FALSE;
     }
 
-    return GL_TRUE; 
+    return GL_TRUE;
 }
 
 #undef _glfwSetWGLAttribute
@@ -645,7 +645,7 @@ static LRESULT CALLBACK _glfwWindowCallback( HWND hWnd, UINT uMsg,
                 _glfwTranslateChar( (DWORD) wParam, (DWORD) lParam, GLFW_PRESS );
             }
             return 0;
-          }  
+          }
 
         // Is a key being released?
         case WM_KEYUP:
@@ -757,7 +757,7 @@ static LRESULT CALLBACK _glfwWindowCallback( HWND hWnd, UINT uMsg,
                     _glfwInput.OldMouseX = NewMouseX;
                     _glfwInput.OldMouseY = NewMouseY;
                     _glfwInput.MouseMoved = GL_TRUE;
-    
+
                     // Call user callback function
                     if( _glfwWin.MousePosCallback )
                     {
@@ -937,7 +937,7 @@ static void _glfwInitWGLExtensions( void )
     {
         _glfwWin.SwapInterval = NULL;
     }
-    
+
     if( has_pixel_format )
     {
         _glfwWin.ChoosePixelFormat = (WGLCHOOSEPIXELFORMATARB_T)
@@ -949,7 +949,7 @@ static void _glfwInitWGLExtensions( void )
     {
         _glfwWin.ChoosePixelFormat = NULL;
         _glfwWin.GetPixelFormatAttribiv = NULL;
-    }  
+    }
 }
 
 
@@ -975,7 +975,7 @@ static int _glfwCreateWindow( int redbits, int greenbits, int bluebits,
 
     // Adjust window position to working area (e.g. if the task bar is at
     // the top of the display). Fullscreen windows are always opened in
-    // the upper left corner regardless of the desktop working area. 
+    // the upper left corner regardless of the desktop working area.
     if( _glfwWin.Fullscreen )
     {
         wa.left = wa.top = 0;
@@ -1140,7 +1140,7 @@ int _glfwPlatformOpenWindow( int width, int height,
     if( !wc.hIcon )
     {
         // Load default icon
-        wc.hIcon = LoadIcon( NULL, IDI_WINLOGO ); 
+        wc.hIcon = LoadIcon( NULL, IDI_WINLOGO );
     }
 
     // Register the window class
@@ -1173,7 +1173,7 @@ int _glfwPlatformOpenWindow( int width, int height,
         // Win98/ME/2K/.NET/+)
 	/*
         if( _glfwLibrary.Sys.WinVer != _GLFW_WIN_95 &&
-            _glfwLibrary.Sys.WinVer != _GLFW_WIN_NT4 && 
+            _glfwLibrary.Sys.WinVer != _GLFW_WIN_NT4 &&
             _glfwLibrary.Sys.WinVer != _GLFW_WIN_XP )
         {
             dwStyle |= WS_MINIMIZE;
@@ -1516,8 +1516,8 @@ void _glfwPlatformRefreshWindowParams( void )
 
         int values[sizeof(attribs) / sizeof(attribs[0])];
 
-        _glfwWin.GetPixelFormatAttribiv( _glfwWin.DC, PixelFormat, 0, 
-                                         sizeof(attribs) / sizeof(attribs[0]), 
+        _glfwWin.GetPixelFormatAttribiv( _glfwWin.DC, PixelFormat, 0,
+                                         sizeof(attribs) / sizeof(attribs[0]),
                                          attribs, values);
 
         // Is current OpenGL context accelerated?
@@ -1531,7 +1531,7 @@ void _glfwPlatformRefreshWindowParams( void )
         _glfwWin.DepthBits      = values[5];
         _glfwWin.StencilBits    = values[6];
         _glfwWin.AccumRedBits   = values[7];
-        _glfwWin.AccumGreenBits = values[8]; 
+        _glfwWin.AccumGreenBits = values[8];
         _glfwWin.AccumBlueBits  = values[9];
         _glfwWin.AccumAlphaBits = values[10];
         _glfwWin.AuxBuffers     = values[11];

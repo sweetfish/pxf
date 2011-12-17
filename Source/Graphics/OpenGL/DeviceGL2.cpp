@@ -29,7 +29,7 @@ DeviceGL2::DeviceGL2()
 	}
 
 	Message(LOCAL_MSG, "Device initiated.");
-	
+
 }
 
 DeviceGL2::~DeviceGL2()
@@ -37,7 +37,7 @@ DeviceGL2::~DeviceGL2()
 
 	// Close any open window.
 	CloseWindow();
-	
+
 
 	// Terminate GLFW
 	glfwTerminate();
@@ -116,7 +116,7 @@ Texture* DeviceGL2::CreateTexture(const char* _filepath, bool _autoload)
     } else {
         _Tex = new TextureGL2(_filepath, this);
     }
-	
+
 	return _Tex;
 }
 

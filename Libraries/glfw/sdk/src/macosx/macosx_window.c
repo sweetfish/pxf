@@ -722,7 +722,7 @@ int  _glfwPlatformOpenWindow( int width,
                 _glfwPlatformCloseWindow();
                 return GL_FALSE;
             }
-            
+
             /* Keith Bauer 2007-07-12 - I don't believe this is desirable
     	    if( SetFrontProcess( &psn ) != noErr )
             {
@@ -732,7 +732,7 @@ int  _glfwPlatformOpenWindow( int width,
             }
             */
         }
-	    
+
         // create window
         Rect windowContentBounds;
         windowContentBounds.left = 0;

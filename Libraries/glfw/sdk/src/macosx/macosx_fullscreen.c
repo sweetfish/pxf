@@ -39,17 +39,17 @@ static int _glfwVideoModesEqual( GLFWvidmode* first,
 {
     if( first->Width != second->Width )
 	return 0;
-		
+
     if( first->Height != second->Height )
 	return 0;
-		
+
     if( first->RedBits + first->GreenBits + first->BlueBits !=
       second->RedBits + second->GreenBits + second->BlueBits )
 	return 0;
-	
+
     return 1;
 }
-                            
+
 //========================================================================
 // _glfwCGToGLFWVideoMode() - Converts a CG mode to a GLFW mode
 //========================================================================
@@ -99,14 +99,14 @@ int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
         // Is it a valid mode? (only list depths >= 15 bpp)
 	if( mode.RedBits + mode.GreenBits + mode.BlueBits < 15 )
 	    continue;
-			
+
         // Check for duplicate of current mode in target list
       	for( j = 0; j < numModes; ++j )
       	{
       	    if( _glfwVideoModesEqual( &mode, &(list[j]) ) )
       		break;
       	}
-      	
+
       	// If empty list or no match found
       	if( numModes == 0 || j == numModes )
       	    list[numModes++] = mode;

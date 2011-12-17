@@ -4,7 +4,7 @@
 #include <Pxf/Scene/EntityDefs.h>
 
 namespace Pxf
-{		
+{
 	namespace Scene
 	{
 		//! Abstract class for items in the engine
@@ -17,7 +17,7 @@ namespace Pxf
 			//! Type
 			EntityType m_Type;
 		public:
-			Entity(const char* _Name,EntityType _Type) 
+			Entity(const char* _Name,EntityType _Type)
 				: m_Name(_Name)
 				, m_Type(_Type)
 			{

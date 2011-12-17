@@ -29,8 +29,8 @@ int64 Platform::GetTime()
 {
 	int64 newTimeStamp;
 	QueryPerformanceCounter((LARGE_INTEGER*) &newTimeStamp);
-	
-	return ((newTimeStamp - m_Timestamp) * 1000) / m_Frequency;	
+
+	return ((newTimeStamp - m_Timestamp) * 1000) / m_Frequency;
 }
 
 #endif // CONF_FAMILY_WINDOWS

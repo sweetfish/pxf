@@ -1,4 +1,4 @@
-/** 
+/**
  @file callbacks.c
  @brief ENet callback functions
 */
@@ -21,13 +21,13 @@ enet_initialize_with_callbacks (ENetVersion version, const ENetCallbacks * inits
       callbacks.malloc = inits -> malloc;
       callbacks.free = inits -> free;
    }
-      
+
    if (inits -> rand != NULL)
      callbacks.rand = inits -> rand;
 
    return enet_initialize ();
 }
-           
+
 void *
 enet_malloc (size_t size)
 {

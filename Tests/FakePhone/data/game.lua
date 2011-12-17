@@ -4,15 +4,15 @@ require("faker")
 function luagame:Init()
 	self.GameIdent = "Our awesome testgame!"
 	self.GameVersion = "1.0"
-	
+
 	luagame:add_console("GameIdent: ^4" .. self.GameIdent)
 	luagame:add_console("GameVersion: ^4" .. self.GameVersion)
-	
+
 	--print("luagame.vec2.ToString(): " .. luagame.vec2.ToString())
-	
+
 	screenw, screenh = luagame.graphics.getscreensize()
 	luagame:add_console("Screen size: ^4" .. tostring(screenw) .. "x" .. tostring(screenh))
-	
+
 	sprite_test = luagame.graphics:newsprite(sprite_texture,64,64,10)
 
 	testani = 0.0
@@ -28,7 +28,7 @@ function luagame:PreLoad()
 	test_texture4 = luagame.resources.loadtexture("test_atlas.png")
 	test_texture5 = luagame.resources.loadtexture("test_atlas.png")
 	test_texture6 = luagame.resources.loadtexture("test_atlas.png")
-	
+
 	--luagame.iphone.gettext("LuaGame", "Console input", "Command")
 end
 
@@ -40,26 +40,26 @@ function luagame:Update(dt)
 end
 
 function luagame:Render()
-	
+
 	-- test draw texture 2
 	test_texture2:bind()
-	
+
 	luagame.graphics.loadidentity()
 	luagame.graphics.translate(screenw / 2.0, screenh / 2.0)
 	luagame.graphics.drawquad(-64, -64, 256, 128)
-	
+
 	-- back to texture 1
 	test_texture:bind()
 	luagame.graphics.loadidentity()
 	luagame.graphics.translate(screenw / 2.0, screenh / 2.0)
 	luagame.graphics.drawquad(0, 0, 32, 32, 0, 0, 16, 16)
-	
+
 	-- render debug text
 	luagame.graphics.loadidentity()
 	luagame:draw_console()
-	
+
 	--luagame:add_console("Rendering frame: ^4" .. tostring(simple_framecount))
-	
+
 	-- make it crash:
   --luagame.graphics.drawquad(nil)
 end

@@ -15,9 +15,9 @@ using Pxf::Util::String;
 void MessageCallback(const asSMessageInfo *msg, void *param)
 {
 	const char *type = "ERR ";
-	if( msg->type == asMSGTYPE_WARNING ) 
+	if( msg->type == asMSGTYPE_WARNING )
 		type = "WARN";
-	else if( msg->type == asMSGTYPE_INFORMATION ) 
+	else if( msg->type == asMSGTYPE_INFORMATION )
 		type = "INFO";
 	printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
 }
@@ -45,7 +45,7 @@ bool PxfMain(String _CmdLine)
 	// stream.
 	r = engine->SetMessageCallback(asFUNCTION(MessageCallback), 0, asCALL_CDECL); assert( r >= 0 );
 
-	// Register the function that we want the scripts to call 
+	// Register the function that we want the scripts to call
 	r = engine->RegisterGlobalFunction("void print()", asFUNCTION(print), asCALL_CDECL); assert( r >= 0 );
 
 
@@ -58,13 +58,13 @@ bool PxfMain(String _CmdLine)
 	r = builder.BuildModule();
 	if( r < 0 )
 	{
-		// An error occurred. Instruct the script writer to fix the 
+		// An error occurred. Instruct the script writer to fix the
 		// compilation errors that were listed in the output stream.
 		printf("Please correct the errors in the script and try again.\n");
 		return false;
 	}
 
-	// Find the function that is to be called. 
+	// Find the function that is to be called.
 	asIScriptModule *mod = engine->GetModule("MyModule");
 	int funcId = mod->GetFunctionIdByDecl("void main()");
 	if( funcId < 0 )

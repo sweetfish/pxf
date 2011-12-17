@@ -66,7 +66,7 @@ a tough bug, then please visit this issue of Ask Midnight and leave a
 testimonial in the comments. I will periodically check them and may eventually
 release an updated version of this software based on your comments.
 
-So go ahead. Take the challenge. I dare you. :) 
+So go ahead. Take the challenge. I dare you. :)
 
 - Paul Nettle
 midnight@FluidStudios.com

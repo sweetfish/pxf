@@ -136,14 +136,14 @@ namespace LuaGUI
 			GUIWidget* widget = (GUIWidget*)lua_touserdata(L, 1);
 
 			(*g_CurrentScript.top()).AddQuad(widget, &quad, &texcoord);
-			
+
 			return 0;
 		} else {
 			Message(PXF_LUAGUI_MESSAGE_ID, "Wrong number (%i instead of 6) of parameters to AddWidget(...).", n);
 		}
 		return 0;
 	}
-	
+
 	static int _guicb_AddText(lua_State *L)
 	{
 		int n = lua_gettop(L); // arguments
@@ -153,14 +153,14 @@ namespace LuaGUI
 			GUIWidget* widget = (GUIWidget*)lua_touserdata(L, 1);
 
 			(*g_CurrentScript.top()).AddText(widget, lua_tostring(L, 2), _pos);
-			
+
 			return 0;
 		} else {
 			Message(PXF_LUAGUI_MESSAGE_ID, "Wrong number (%i instead of 4) of parameters to AddText(...).", n);
 		}
 		return 0;
 	}
-	
+
 	static int _guicb_AddTextCentered(lua_State *L)
 	{
 		int n = lua_gettop(L); // arguments
@@ -170,7 +170,7 @@ namespace LuaGUI
 			GUIWidget* widget = (GUIWidget*)lua_touserdata(L, 1);
 
 			(*g_CurrentScript.top()).AddTextCentered(widget, lua_tostring(L, 2), _pos);
-			
+
 			return 0;
 		} else {
 			Message(PXF_LUAGUI_MESSAGE_ID, "Wrong number (%i instead of 4) of parameters to AddTextCentered(...).", n);
@@ -249,7 +249,7 @@ namespace LuaGUI
 		}
 		return 0;
 	}
-	
+
 	static int _guicb_Message(lua_State *L)
 	{
 		int n = lua_gettop(L); // arguments

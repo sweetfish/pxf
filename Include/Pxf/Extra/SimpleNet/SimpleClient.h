@@ -12,10 +12,10 @@ namespace Pxf
     public:
       SimpleClient();
       ~SimpleClient();
-      
+
       void Connect(char* _host, unsigned int _port, unsigned int _channels = 1);
       void Disconnect();
-      
+
       int MessagePump(NetMessage* _message);
 
     private:

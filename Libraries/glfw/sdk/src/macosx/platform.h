@@ -279,9 +279,9 @@ GLFWGLOBAL struct {
 	    // Bundle for dynamically-loading extension function pointers
     	CFBundleRef OpenGLFramework;
     } Libs;
-    
+
     int Unbundled;
-    
+
 } _glfwLibrary;
 
 

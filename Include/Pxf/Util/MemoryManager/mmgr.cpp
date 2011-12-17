@@ -1,77 +1,77 @@
 /* ---------------------------------------------------------------------------------------------------------------------------------
-                                                       
-                                                       
-   _ __ ___  _ __ ___   __ _ _ __      ___ _ __  _ __  
-  | '_ ` _ \| '_ ` _ \ / _` | '__|    / __| '_ \| '_ \ 
+
+
+   _ __ ___  _ __ ___   __ _ _ __      ___ _ __  _ __
+  | '_ ` _ \| '_ ` _ \ / _` | '__|    / __| '_ \| '_ \
   | | | | | | | | | | | (_| | |    _ | (__| |_) | |_) |
-  |_| |_| |_|_| |_| |_|\__, |_|   (_) \___| .__/| .__/ 
-                        __/ |             | |   | |    
-                       |___/              |_|   |_|    
- 
+  |_| |_| |_|_| |_| |_|\__, |_|   (_) \___| .__/| .__/
+                        __/ |             | |   | |
+                       |___/              |_|   |_|
+
   Memory manager & tracking software
- 
+
   Best viewed with 8-character tabs and (at least) 132 columns
- 
+
   ---------------------------------------------------------------------------------------------------------------------------------
- 
+
   Restrictions & freedoms pertaining to usage and redistribution of this software:
- 
+
    * This software is 100% free
    * If you use this software (in part or in whole) you must credit the author.
    * This software may not be re-distributed (in part or in whole) in a modified
      form without clear documentation on how to obtain a copy of the original work.
    * You may not use this software to directly or indirectly cause harm to others.
    * This software is provided as-is and without warrantee. Use at your own risk.
- 
+
   For more information, visit HTTP: www.FluidStudios.com
- 
+
   ---------------------------------------------------------------------------------------------------------------------------------
   Originally created on 12/22/2000 by Paul Nettle
- 
+
   Copyright 2000, Fluid Studios, Inc., all rights reserved.
   ---------------------------------------------------------------------------------------------------------------------------------
- 
+
   !!IMPORTANT!!
- 
+
   This software is self-documented with periodic comments. Before you start using this software, perform a search for the string
   "-DOC-" to locate pertinent information about how to use this software.
- 
+
   You are also encouraged to read the comment blocks throughout this source file. They will help you understand how this memory
   tracking software works, so you can better utilize it within your applications.
- 
+
   NOTES:
- 
+
   1. If you get compiler errors having to do with set_new_handler, then go through this source and search/replace
      "std::set_new_handler" with "set_new_handler".
- 
+
   2. This code purposely uses no external routines that allocate RAM (other than the raw allocation routines, such as malloc). We
      do this because we want this to be as self-contained as possible. As an example, we don't use assert, because when running
      under WIN32, the assert brings up a dialog box, which allocates RAM. Doing this in the middle of an allocation would be bad.
- 
+
   3. When trying to override new/delete under MFC (which has its own version of global new/delete) the linker will complain. In
      order to fix this error, use the compiler option: /FORCE, which will force it to build an executable even with linker errors.
      Be sure to check those errors each time you compile, otherwise, you may miss a valid linker error.
- 
+
   4. If you see something that looks odd to you or seems like a strange way of going about doing something, then consider that this
      code was carefully thought out. If something looks odd, then just assume I've got a good reason for doing it that way (an
      example is the use of the class MemStaticTimeTracker.)
- 
+
   5. With MFC applications, you will need to comment out any occurance of "#define new DEBUG_NEW" from all source files.
- 
+
   6. Include file dependencies are _very_important_ for getting the MMGR to integrate nicely into your application. Be careful if
-     you're including standard includes from within your own project inclues; that will break this very specific dependency order. 
+     you're including standard includes from within your own project inclues; that will break this very specific dependency order.
      It should look like this:
- 
+
  		#include <stdio.h>     // Standard includes MUST come first
- 		#include <stdlib.h>   
- 		#include <streamio>   
- 
+ 		#include <stdlib.h>
+ 		#include <streamio>
+
  		#include "mmgr.h"    // mmgr.h MUST come next
- 
+
  		#include "myfile1.h" // Project includes MUST come last
  		#include "myfile2.h" //
  		#include "myfile3.h" //
- 
+
   ---------------------------------------------------------------------------------------------------------------------------------
 */
 
@@ -107,7 +107,7 @@
 //
 // Whether this software causes your application to crash, or if it reports errors, you need to be able to TRUST this software. To
 // this end, you are given some very simple debugging tools.
-// 
+//
 // The quickest way to locate problems is to enable the STRESS_TEST macro (below.) This should catch 95% of the crashes before they
 // occur by validating every allocation each time this memory manager performs an allocation function. If that doesn't work, keep
 // reading...
@@ -1188,7 +1188,7 @@ void	*m_allocator(const char *sourceFile, const unsigned int sourceLine, const c
 		wipeWithPattern(au, unusedPattern);
 
 		// calloc() expects the reported memory address range to be filled with 0's
-		
+
 		// memset for all allocations
 #ifndef MEMSETALLMEMORYALLOCATIONS
 		if (allocationType == m_alloc_calloc)
@@ -1701,7 +1701,7 @@ void	m_dumpMemoryReport(const char *filename, const bool overwrite)
 	// Open the report file
 
 //	FILE	*fp = NULL;
-	
+
 //	if (overwrite)	fp = fopen(filename, "w+b");
 //	else		fp = fopen(filename, "ab");
 

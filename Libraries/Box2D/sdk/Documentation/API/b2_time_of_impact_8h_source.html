@@ -39,14 +39,14 @@
 <a name="l00015"></a>00015 <span class="comment">* misrepresented as being the original software.</span>
 <a name="l00016"></a>00016 <span class="comment">* 3. This notice may not be removed or altered from any source distribution.</span>
 <a name="l00017"></a>00017 <span class="comment">*/</span>
-<a name="l00018"></a>00018 
+<a name="l00018"></a>00018
 <a name="l00019"></a>00019 <span class="preprocessor">#ifndef B2_TIME_OF_IMPACT_H</span>
 <a name="l00020"></a>00020 <span class="preprocessor"></span><span class="preprocessor">#define B2_TIME_OF_IMPACT_H</span>
 <a name="l00021"></a>00021 <span class="preprocessor"></span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &lt;<a class="code" href="b2_math_8h.html">Box2D/Common/b2Math.h</a>&gt;</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include &lt;<a class="code" href="b2_distance_8h.html">Box2D/Collision/b2Distance.h</a>&gt;</span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;climits&gt;</span>
-<a name="l00025"></a>00025 
+<a name="l00025"></a>00025
 <a name="l00027"></a><a class="code" href="structb2_t_o_i_input.html">00027</a> <span class="keyword">struct </span><a class="code" href="structb2_t_o_i_input.html" title="Input parameters for b2TimeOfImpact.">b2TOIInput</a>
 <a name="l00028"></a>00028 {
 <a name="l00029"></a><a class="code" href="structb2_t_o_i_input.html#a5c5fb931435d92ac2d2080552400cd57">00029</a>         <a class="code" href="structb2_distance_proxy.html">b2DistanceProxy</a> <a class="code" href="structb2_t_o_i_input.html#a5c5fb931435d92ac2d2080552400cd57">proxyA</a>;
@@ -55,7 +55,7 @@
 <a name="l00032"></a><a class="code" href="structb2_t_o_i_input.html#af506b6adc7eca852f08460ec76c7b9a7">00032</a>         <a class="code" href="structb2_sweep.html">b2Sweep</a> <a class="code" href="structb2_t_o_i_input.html#af506b6adc7eca852f08460ec76c7b9a7">sweepB</a>;
 <a name="l00033"></a><a class="code" href="structb2_t_o_i_input.html#a365a434996de60957777a673918d3a5f">00033</a>         <a class="code" href="b2_settings_8h.html#aacdc525d6f7bddb3ae95d5c311bd06a1">float32</a> <a class="code" href="structb2_t_o_i_input.html#a365a434996de60957777a673918d3a5f">tMax</a>;           <span class="comment">// defines sweep interval [0, tMax]</span>
 <a name="l00034"></a>00034 };
-<a name="l00035"></a>00035 
+<a name="l00035"></a>00035
 <a name="l00036"></a>00036 <span class="comment">// Output parameters for b2TimeOfImpact.</span>
 <a name="l00037"></a><a class="code" href="structb2_t_o_i_output.html">00037</a> <span class="keyword">struct </span><a class="code" href="structb2_t_o_i_output.html">b2TOIOutput</a>
 <a name="l00038"></a>00038 {
@@ -67,13 +67,13 @@
 <a name="l00044"></a><a class="code" href="structb2_t_o_i_output.html#a12c3cf4dc0551f5c8249dc1dd867959aa4d4178a0a0f89410d1b6b3a49f0c08d9">00044</a>                 <a class="code" href="structb2_t_o_i_output.html#a12c3cf4dc0551f5c8249dc1dd867959aa4d4178a0a0f89410d1b6b3a49f0c08d9">e_touching</a>,
 <a name="l00045"></a><a class="code" href="structb2_t_o_i_output.html#a12c3cf4dc0551f5c8249dc1dd867959aad8752c7cabc15b4522bd97e99acf66d1">00045</a>                 <a class="code" href="structb2_t_o_i_output.html#a12c3cf4dc0551f5c8249dc1dd867959aad8752c7cabc15b4522bd97e99acf66d1">e_separated</a>
 <a name="l00046"></a>00046         };
-<a name="l00047"></a>00047 
+<a name="l00047"></a>00047
 <a name="l00048"></a><a class="code" href="structb2_t_o_i_output.html#aaacbf28f437b965ffecabf1407a77915">00048</a>         <a class="code" href="structb2_t_o_i_output.html#a12c3cf4dc0551f5c8249dc1dd867959a">State</a> <a class="code" href="structb2_t_o_i_output.html#aaacbf28f437b965ffecabf1407a77915">state</a>;
 <a name="l00049"></a><a class="code" href="structb2_t_o_i_output.html#a94f8b756e060892226ec006db4be7ee3">00049</a>         <a class="code" href="b2_settings_8h.html#aacdc525d6f7bddb3ae95d5c311bd06a1">float32</a> <a class="code" href="structb2_t_o_i_output.html#a94f8b756e060892226ec006db4be7ee3">t</a>;
 <a name="l00050"></a>00050 };
-<a name="l00051"></a>00051 
+<a name="l00051"></a>00051
 <a name="l00057"></a>00057 <span class="keywordtype">void</span> <a class="code" href="b2_time_of_impact_8cpp.html#a8b6d601bca44a2f3ed67a71304ba8b51">b2TimeOfImpact</a>(<a class="code" href="structb2_t_o_i_output.html">b2TOIOutput</a>* output, <span class="keyword">const</span> <a class="code" href="structb2_t_o_i_input.html" title="Input parameters for b2TimeOfImpact.">b2TOIInput</a>* input);
-<a name="l00058"></a>00058 
+<a name="l00058"></a>00058
 <a name="l00059"></a>00059 <span class="preprocessor">#endif</span>
 </pre></div></div>
 <hr class="footer"/><address style="text-align: right;"><small>Generated on Sat Apr 3 18:18:08 2010 for Box2D by&nbsp;

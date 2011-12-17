@@ -17,7 +17,7 @@ namespace Pxf{
 		public:
 			DeviceD3D9();
 			~DeviceD3D9();
-			
+
 			Window* OpenWindow(WindowSpecifications* _pWindowSpecs);
 			void CloseWindow();
 

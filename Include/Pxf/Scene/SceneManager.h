@@ -6,7 +6,7 @@
 
 namespace Pxf {
 namespace Scene
-{	
+{
 	//! Simple scene manager that stores/loads scenes
 	//! No fancy scene graph stuff here.. TODO: ?
 	class SceneManager
@@ -29,13 +29,13 @@ namespace Scene
 
 		//! Create new scene
 		//! return = 0 if failed
-		Pxf::Scene::Scene* NewScene(const char* _Name); 
+		Pxf::Scene::Scene* NewScene(const char* _Name);
 
 		//! Statistics getters
 		unsigned long GetNumVerts() { return m_NumVerts; }
 		unsigned long GetNumFaces() { return m_NumFaces; }
 
-		//! Do a scene lookup 
+		//! Do a scene lookup
 		//! return = 0 if failed
 		//! else return the scene
 		Pxf::Scene::Scene* GetScene(const char* _Name);

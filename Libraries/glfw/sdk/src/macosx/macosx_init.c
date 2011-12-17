@@ -74,7 +74,7 @@ void _glfwChangeToResourcesDirectory( void )
     CFBundleRef mainBundle = CFBundleGetMainBundle();
     CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL( mainBundle );
     char resourcesPath[ _GLFW_MAX_PATH_LENGTH ];
-    
+
     CFStringRef lastComponent = CFURLCopyLastPathComponent( resourcesURL );
     if ( kCFCompareEqualTo != CFStringCompare(
             CFSTR( "Resources" ),
@@ -83,7 +83,7 @@ void _glfwChangeToResourcesDirectory( void )
     {
         UNBUNDLED;
     }
-    
+
     CFRelease( lastComponent );
 
     if( !CFURLGetFileSystemRepresentation( resourcesURL,
@@ -116,11 +116,11 @@ int _glfwPlatformInit( void )
     _glfwWin.CommandUPP = NULL;
     _glfwWin.KeyboardUPP = NULL;
     _glfwWin.WindowUPP = NULL;
-    
+
     _glfwInput.Modifiers = 0;
-    
+
     _glfwLibrary.Unbundled = 0;
-    
+
     _glfwLibrary.Libs.OpenGLFramework
         = CFBundleGetBundleWithIdentifier( CFSTR( "com.apple.opengl" ) );
     if( _glfwLibrary.Libs.OpenGLFramework == NULL )
@@ -188,7 +188,7 @@ int _glfwPlatformTerminate( void )
         DisposeEventHandlerUPP( _glfwWin.KeyboardUPP );
         _glfwWin.KeyboardUPP = NULL;
     }
-    
+
     return GL_TRUE;
 }
 

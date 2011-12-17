@@ -4,7 +4,7 @@
 namespace Pxf
 {
 	namespace Graphics
-	{	
+	{
 		/**
 		 * VertexBuffer location types
 		 * VB_LOCATION_SYS is stored in system memory
@@ -68,9 +68,9 @@ namespace Pxf
 			VB_ACCESS_READ_WRITE = 4
 		};
 
-		enum VertexBufferPrimitiveType { 
+		enum VertexBufferPrimitiveType {
 			VB_PRIMITIVE_NONE   = 0,
-			VB_PRIMITIVE_POINTS = 1, 
+			VB_PRIMITIVE_POINTS = 1,
 			VB_PRIMITIVE_LINES,
 			VB_PRIMITIVE_LINE_LOOP,
 			VB_PRIMITIVE_LINE_STRIP,

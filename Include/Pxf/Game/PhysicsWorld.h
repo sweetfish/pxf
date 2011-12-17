@@ -3,8 +3,8 @@
 
 #include <Pxf/Math/Vector.h>
 
-namespace Pxf 
-{	
+namespace Pxf
+{
 	namespace Game
 	{
 		class PhysicsObject;

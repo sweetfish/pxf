@@ -4,10 +4,10 @@
 
 using Pxf::Util::String;
 
-static s7_pointer our_exit(s7_scheme *sc, s7_pointer args) 
+static s7_pointer our_exit(s7_scheme *sc, s7_pointer args)
 {
-	/* all added functions have this form, args is a list, 
-	*    s7_car(args) is the 1st arg, etc 
+	/* all added functions have this form, args is a list,
+	*    s7_car(args) is the 1st arg, etc
 	*/
 	exit(1);
 	return(s7_nil(sc)); /* never executed, but makes the compiler happier */
@@ -31,9 +31,9 @@ bool PxfMain(String _CmdLine)
 	{
 		fprintf(stdout, "\n> ");        /* prompt for input */
 		fgets(buffer, 512, stdin);
-		if ((buffer[0] != '\n') || 
+		if ((buffer[0] != '\n') ||
 			(strlen(buffer) > 1))
-		{                            
+		{
 			sprintf(response, "(write %s)", buffer);
 			s7_eval_c_string(s7, response); /* evaluate input and write the result */
 		}

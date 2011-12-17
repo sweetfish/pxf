@@ -1270,7 +1270,7 @@ unsigned int
 						img, width, height, channels,
 						resampled,
 						(1 << MIPlevel), (1 << MIPlevel) );
-				/*  upload the MIPmaps	
+				/*  upload the MIPmaps
 				if( DXT_mode == SOIL_CAPABILITY_PRESENT )
 				{
 					int DDS_size;

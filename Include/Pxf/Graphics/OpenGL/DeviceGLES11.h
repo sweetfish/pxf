@@ -25,11 +25,11 @@ namespace Pxf{
 		public:
 			DeviceGLES11();
 			~DeviceGLES11();
-			
+
 			Window* OpenWindow(WindowSpecifications* _pWindowSpecs);
 			void CloseWindow();
 			DeviceType GetDeviceType() { return EOpenGLES11; }
-			
+
 			// Graphics
             void GetSize(int *_w, int *_h);
 			void SetViewport(int _x, int _y, int _w, int _h);
@@ -47,7 +47,7 @@ namespace Pxf{
 
 			// PrimitiveBatch
 			QuadBatch* CreateQuadBatch(int _maxSize);
-			
+
 			VertexBuffer* CreateVertexBuffer(VertexBufferLocation _VertexBufferLocation, VertexBufferUsageFlag _VertexBufferUsageFlag);
 			void DestroyVertexBuffer(VertexBuffer* _pVertexBuffer);
 			void DrawBuffer(VertexBuffer* _pVertexBuffer);
@@ -60,17 +60,17 @@ namespace Pxf{
 			void DeleteVideoBuffer(VideoBuffer* _VideoBuffer);
 			bool BindVideoBuffer(VideoBuffer* _VideoBuffer);
 			bool UnBindVideoBufferType(int _FormatType);
-			
+
 			void SetEAGLContext(EAGLContext* _Context) { m_Context = _Context; }
 			void SetUseDepthBuffer(bool _Toggle) { m_UseDepthBuffer = _Toggle; }
 			void SetBackingWidth(GLint _Width) { m_BackingWidth = _Width; }
 			void SetBackingHeight(GLint _Height) { m_BackingHeight = _Height; }
 			GLint GetBackingWidth() { return m_BackingWidth; }
 			GLint GetBackingHeight() { return m_BackingHeight; }
-			
+
 			//bool InitBuffers();
             bool InitBuffers(EAGLContext* _context, CAEAGLLayer* _EAGLLayer); // Temporary..
-            
+
             // Input handling
             // This is fuuugly, but hey, it sucks to mix c++ and obj-c.
             void SetUIView(UIView* _view);
@@ -80,34 +80,34 @@ namespace Pxf{
             bool InputHasRespondedText();
             void InputGetResponseText(char *outText);
             int  InputGetResponseButton();
-            
-            
+
+
             bool InputTap(InputTapData* _data);
             bool InputRelease(InputTapData* _data);
             bool InputDoubleTap(InputTapData* _data);
             bool InputDrag(InputDragData* _data);
-            
+
             void InputSetTap(float x, float y);
             void InputSetRelease(float x, float y);
             void InputSetDoubleTap(float x, float y);
             void InputSetDrag(float x1, float y1, float x2, float y2);
-            
+
             /*
             - (void) clearResponse;
             - (bool) hasRespondedToInput;
             - (void) getInputResponseText:(const char *)outText;
             - (int) getInputResponseButton;
             */
-			
+
 			EAGLContext* GetEAGLContext() { return m_Context; }
 			bool GetUseDepthBuffer() { return m_UseDepthBuffer; }
 			VideoBufferGL* GetRenderBuffer() { return m_RenderBuffer; }
 			VideoBufferGL* GetFrameBuffer() { return m_FrameBuffer; }
 			VideoBufferGL* GetDepthBuffer() { return m_DepthBuffer; }
-			
+
 		private:
 			void _ConfigureTextureUnits();
-			
+
 			// TODO: replace videobuffer with simple gluints..
 			/*GLuint					m_RenderBuffer;
 			 GLuint					m_FrameBuffer;
@@ -117,11 +117,11 @@ namespace Pxf{
 			VideoBufferGL*	m_RenderBuffer;
 			VideoBufferGL*	m_FrameBuffer;
 			VideoBufferGL*	m_DepthBuffer;
-			
+
 			bool	m_UseDepthBuffer;
 			GLint	m_BackingWidth;
 			GLint	m_BackingHeight;
-			
+
 			// Input device for iPhone
             InputHandler* m_InputHandler;
             bool m_InputTapOccurred;
@@ -132,7 +132,7 @@ namespace Pxf{
             float m_InputReleaseData[2];
             float m_InputDoubleTapData[2];
             float m_InputDragData[4];
-            
+
 		};
 	} // Graphics
 } // Pxf

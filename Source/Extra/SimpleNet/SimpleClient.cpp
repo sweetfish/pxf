@@ -23,7 +23,7 @@ SimpleClient::SimpleClient()
 SimpleClient::~SimpleClient()
 {
   Disconnect();
-  
+
   if (m_client)
     enet_host_destroy(m_client);
 }
@@ -31,19 +31,19 @@ SimpleClient::~SimpleClient()
 void SimpleClient::Connect(char* _host, unsigned int _port, unsigned int _channels)
 {
   ENetEvent event;
-  
+
   m_channels = _channels;
-  
+
   if (_host != NULL)
     m_address_host = _host;
   else
     m_address_host = "*";
-  
+
   // Resolve host to ip
   enet_address_set_host(&m_address, _host);
   m_address.port = _port;
 
-  m_peer = enet_host_connect(m_client, &m_address, m_channels);    
+  m_peer = enet_host_connect(m_client, &m_address, m_channels);
 
   if (m_peer == NULL)
   {
@@ -72,7 +72,7 @@ void SimpleClient::Disconnect()
 {
 	if (!m_client)
 		return;
-		
+
   ENetEvent event;
 
   enet_peer_disconnect (m_peer, (enet_uint32)"I WANT OUT!");
@@ -100,7 +100,7 @@ int SimpleClient::MessagePump(NetMessage* _message)
 {
 	if (!m_client)
 		return 0;
-  
+
   if (enet_host_service (m_client, (ENetEvent*)_message, 0) > 0)
   {
     switch (_message->type)
@@ -112,15 +112,15 @@ int SimpleClient::MessagePump(NetMessage* _message)
         return PUMP_RESULT_DISCONNECT;
         break;
       case ENET_EVENT_TYPE_RECEIVE:
-        
+
         // Take care of internal data
         // return NetPumpResult.INTERNAL;
-        
+
         return PUMP_RESULT_DATA;
         break;
     }
   }
-  
+
   return PUMP_RESULT_EMPTY;
   /*
   ENetEvent event;
@@ -130,11 +130,11 @@ int SimpleClient::MessagePump(NetMessage* _message)
     switch (event.type)
     {
       case ENET_EVENT_TYPE_CONNECT:
-        Message(LOCAL_MSG, "A new client connected from %x:%u.", 
+        Message(LOCAL_MSG, "A new client connected from %x:%u.",
         event.peer->address.host,
         event.peer->address.port);
 
-        /* Store any relevant client information here. 
+        /* Store any relevant client information here.
         event.peer->data = (void*)"Client information";
 
         break;
@@ -146,7 +146,7 @@ int SimpleClient::MessagePump(NetMessage* _message)
         event.peer->data,
         event.channelID);
 
-        /* Clean up the packet now that we're done using it. 
+        /* Clean up the packet now that we're done using it.
         enet_packet_destroy(event.packet);
 
         break;
@@ -154,7 +154,7 @@ int SimpleClient::MessagePump(NetMessage* _message)
       case ENET_EVENT_TYPE_DISCONNECT:
         Message(LOCAL_MSG, "%s disconected.", (const char*)event.peer->data);
 
-        /* Reset the peer's client information. 
+        /* Reset the peer's client information.
         event.peer->data = NULL;
     }
   }

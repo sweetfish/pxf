@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2009 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -59,7 +59,7 @@ asCModule::~asCModule()
 {
 	InternalReset();
 
-	if( builder ) 
+	if( builder )
 	{
 		asDELETE(builder,asCBuilder);
 		builder = 0;
@@ -141,7 +141,7 @@ int asCModule::Build()
 	r = builder->Build();
 	asDELETE(builder,asCBuilder);
 	builder = 0;
-	
+
 	if( r < 0 )
 	{
 		// Reset module again
@@ -166,7 +166,7 @@ int asCModule::Build()
 // interface
 int asCModule::ResetGlobalVars()
 {
-	if( isGlobalVarInitialized ) 
+	if( isGlobalVarInitialized )
 		CallExit();
 
 	// TODO: The application really should do this manually through a context
@@ -187,7 +187,7 @@ int asCModule::GetFunctionIdByIndex(int index)
 // internal
 int asCModule::CallInit()
 {
-	if( isGlobalVarInitialized ) 
+	if( isGlobalVarInitialized )
 		return asERROR;
 
 	// Each global variable needs to be cleared individually
@@ -226,9 +226,9 @@ int asCModule::CallInit()
 		ctx = 0;
 	}
 
-	// Even if the initialization failed we need to set the 
+	// Even if the initialization failed we need to set the
 	// flag that the variables have been initialized, otherwise
-	// the module won't free those variables that really were 
+	// the module won't free those variables that really were
 	// initialized.
 	isGlobalVarInitialized = true;
 
@@ -365,7 +365,7 @@ int asCModule::GetImportedFunctionIndexByDecl(const char *decl)
 	int id = -1;
 	for( asUINT n = 0; n < bindInformations.GetLength(); ++n )
 	{
-		if( func.name == bindInformations[n]->importedFunctionSignature->name && 
+		if( func.name == bindInformations[n]->importedFunctionSignature->name &&
 			func.returnType == bindInformations[n]->importedFunctionSignature->returnType &&
 			func.parameterTypes.GetLength() == bindInformations[n]->importedFunctionSignature->parameterTypes.GetLength() )
 		{
@@ -415,8 +415,8 @@ int asCModule::GetFunctionIdByDecl(const char *decl)
 	int id = -1;
 	for( size_t n = 0; n < globalFunctions.GetLength(); ++n )
 	{
-		if( globalFunctions[n]->objectType == 0 && 
-			func.name == globalFunctions[n]->name && 
+		if( globalFunctions[n]->objectType == 0 &&
+			func.name == globalFunctions[n]->name &&
 			func.returnType == globalFunctions[n]->returnType &&
 			func.parameterTypes.GetLength() == globalFunctions[n]->parameterTypes.GetLength() )
 		{
@@ -510,7 +510,7 @@ int asCModule::GetGlobalVarIndexByDecl(const char *decl)
 	int id = -1;
 	for( size_t n = 0; n < scriptGlobals.GetLength(); ++n )
 	{
-		if( gvar.name == scriptGlobals[n]->name && 
+		if( gvar.name == scriptGlobals[n]->name &&
 			gvar.type == scriptGlobals[n]->type )
 		{
 			id = (int)n;
@@ -581,10 +581,10 @@ int asCModule::GetObjectTypeCount()
 	return (int)classTypes.GetLength();
 }
 
-// interface 
+// interface
 asIObjectType *asCModule::GetObjectTypeByIndex(asUINT index)
 {
-	if( index >= classTypes.GetLength() ) 
+	if( index >= classTypes.GetLength() )
 		return 0;
 
 	return classTypes[index];
@@ -625,7 +625,7 @@ int asCModule::GetEnumValueCount(int enumTypeId)
 {
 	const asCDataType *dt = engine->GetDataTypeFromTypeId(enumTypeId);
 	asCObjectType *t = dt->GetObjectType();
-	if( t == 0 || !(t->GetFlags() & asOBJ_ENUM) ) 
+	if( t == 0 || !(t->GetFlags() & asOBJ_ENUM) )
 		return asINVALID_TYPE;
 
 	return (int)t->enumValues.GetLength();
@@ -636,7 +636,7 @@ const char *asCModule::GetEnumValueByIndex(int enumTypeId, asUINT index, int *ou
 {
 	const asCDataType *dt = engine->GetDataTypeFromTypeId(enumTypeId);
 	asCObjectType *t = dt->GetObjectType();
-	if( t == 0 || !(t->GetFlags() & asOBJ_ENUM) ) 
+	if( t == 0 || !(t->GetFlags() & asOBJ_ENUM) )
 		return 0;
 
 	if( index >= t->enumValues.GetLength() )
@@ -710,7 +710,7 @@ int asCModule::AddScriptFunction(int sectionIdx, int id, const char *name, const
 	return 0;
 }
 
-// internal 
+// internal
 int asCModule::AddScriptFunction(asCScriptFunction *func)
 {
 	scriptFunctions.PushLast(func);
@@ -770,7 +770,7 @@ int asCModule::BindImportedFunction(int index, int sourceId)
 	if( dst == 0 ) return asNO_FUNCTION;
 
 	asCScriptFunction *src = engine->GetScriptFunction(sourceId);
-	if( src == 0 ) 
+	if( src == 0 )
 		return asNO_FUNCTION;
 
 	// Verify return type
@@ -920,8 +920,8 @@ asCGlobalProperty *asCModule::AllocateGlobalProperty(const char *name, const asC
 void asCModule::ResolveInterfaceIds()
 {
 	// For each of the interfaces declared in the script find identical interface in the engine.
-	// If an identical interface was found then substitute the current id for the identical interface's id, 
-	// then remove this interface declaration. If an interface was modified by the declaration, then 
+	// If an identical interface was found then substitute the current id for the identical interface's id,
+	// then remove this interface declaration. If an interface was modified by the declaration, then
 	// retry the detection of identical interface for it since it may now match another.
 
 	// For an interface to be equal to another the name and methods must match. If the interface
@@ -940,7 +940,7 @@ void asCModule::ResolveInterfaceIds()
 
 	unsigned int i;
 
-	// The interface can only be equal to interfaces declared in other modules. 
+	// The interface can only be equal to interfaces declared in other modules.
 	// Interfaces registered by the application will conflict with this one if it has the same name.
 	// This means that we only need to look for the interfaces in the engine->classTypes, but not in engine->objectTypes.
 	asCArray<sObjectTypePair> equals;
@@ -960,7 +960,7 @@ void asCModule::ResolveInterfaceIds()
 				break;
 			}
 		}
-		
+
 		if( found )
 			break;
 
@@ -969,7 +969,7 @@ void asCModule::ResolveInterfaceIds()
 			// Don't compare against self
 			if( engine->classTypes[n] == intf1 )
 				continue;
-	
+
 			asCObjectType *intf2 = engine->classTypes[n];
 
 			// Assume the interface are equal, then validate this
@@ -978,13 +978,13 @@ void asCModule::ResolveInterfaceIds()
 
 			if( AreInterfacesEqual(intf1, intf2, equals) )
 				break;
-			
+
 			// Since they are not equal, remove them from the list again
 			equals.PopLast();
 		}
 	}
 
-	// For each of the interfaces that have been found to be equal we need to 
+	// For each of the interfaces that have been found to be equal we need to
 	// remove the new declaration and instead have the module use the existing one.
 	for( i = 0; i < equals.GetLength(); i++ )
 	{
@@ -1072,7 +1072,7 @@ bool asCModule::AreInterfacesEqual(asCObjectType *a, asCObjectType *b, asCArray<
 	// TODO: Study the possiblity of allowing interfaces where methods are declared in different orders to
 	// be considered equal. The compiler and VM can handle this, but it complicates the comparison of interfaces
 	// where multiple methods take different interfaces as parameters (or return values). Example:
-	// 
+	//
 	// interface A
 	// {
 	//    void f(B, C);
@@ -1110,7 +1110,7 @@ bool asCModule::AreInterfacesEqual(asCObjectType *a, asCObjectType *b, asCArray<
 		asCScriptFunction *funcA = (asCScriptFunction*)engine->GetFunctionDescriptorById(a->methods[n]);
 		asCScriptFunction *funcB = (asCScriptFunction*)engine->GetFunctionDescriptorById(b->methods[n]);
 
-		// funcB can be null if the module that created the interface has been  
+		// funcB can be null if the module that created the interface has been
 		// discarded but the type has not yet been released by the engine.
 		if( funcB == 0 )
 			break;
@@ -1119,7 +1119,7 @@ bool asCModule::AreInterfacesEqual(asCObjectType *a, asCObjectType *b, asCArray<
 		if( funcA->name != funcB->name ||
 			funcA->parameterTypes.GetLength() != funcB->parameterTypes.GetLength() )
 			break;
-		
+
 		// The return types must be equal. If the return type is an interface the interfaces must match.
 		if( !AreTypesEqual(funcA->returnType, funcB->returnType, equals) )
 			break;
@@ -1154,8 +1154,8 @@ bool asCModule::AreInterfacesEqual(asCObjectType *a, asCObjectType *b, asCArray<
 
 	if( !match )
 	{
-		// The interfaces doesn't match. 
-		// Restore the list of previous equals before we go on, so  
+		// The interfaces doesn't match.
+		// Restore the list of previous equals before we go on, so
 		// the caller can continue comparing with another interface
 		equals.SetLength(prevEquals);
 	}
@@ -1263,7 +1263,7 @@ int asCModule::CompileGlobalVar(const char *sectionName, const char *code, int l
 	// Initialize the variable
 	if( r >= 0 && engine->ep.initGlobalVarsAfterBuild )
 	{
-		// Clear the memory 
+		// Clear the memory
 		asCGlobalProperty *prop = scriptGlobals[scriptGlobals.GetLength()-1];
 		memset(prop->GetAddressOfValue(), 0, sizeof(asDWORD)*prop->type.GetSizeOnStackDWords());
 
@@ -1292,7 +1292,7 @@ int asCModule::CompileFunction(const char *sectionName, const char *code, int li
 	asASSERT(outFunc == 0 || *outFunc == 0);
 
 	// Validate arguments
-	if( code == 0 || 
+	if( code == 0 ||
 		(compileFlags != 0 && compileFlags != asCOMP_ADD_TO_MODULE) )
 		return asINVALID_ARG;
 

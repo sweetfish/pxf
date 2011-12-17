@@ -11,7 +11,7 @@ bool FileStream::Open(const char* _FileName, const char* _Mode)
 	if (IsValid())
 	{
 		m_Offset = 0;
-		
+
 		uint InitialPosition = ftell((FILE*)m_Handle);
 		fseek((FILE*)m_Handle, 0, SEEK_END);
 		m_Size = m_Remaining = ftell((FILE*)m_Handle);
@@ -66,7 +66,7 @@ bool FileStream::Skip(uint _Count)
 	m_Offset += _Count;
 	m_Remaining -= _Count;
 	return fseek((FILE*)m_Handle, _Count, SEEK_CUR) >= 0;
-	
+
 }
 
 bool FileStream::SeekTo(uint _Offset)

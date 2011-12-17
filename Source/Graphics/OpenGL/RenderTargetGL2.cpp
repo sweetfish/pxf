@@ -26,7 +26,7 @@ void FBO::AddColorAttachment(Texture* _Color)
 
 	if(!t_Sucess)
 		Message(LOCAL_MSG,"Could not attach color texture to FBO");
-	
+
 	glDisable(GL_TEXTURE_2D);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -41,7 +41,7 @@ void FBO::AddDepthAttachment(Texture* _Depth)
 
 	m_DepthAttachment = ((TextureGL2*)_Depth)->GetTextureID();
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,GL_TEXTURE_2D, m_DepthAttachment, 0);
-	
+
 	glDisable(GL_TEXTURE_2D);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -70,11 +70,11 @@ PBO::~PBO()
 
 void PBO::AddColorAttachment(Texture* _Color)
 {
-	// 
+	//
 }
 
 void PBO::AddDepthAttachment(Texture* _Depth)
 {
 	Message("RenderTarget","Depth texture attachment not supported on PBOs");
 }
-					
+

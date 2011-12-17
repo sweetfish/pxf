@@ -34,7 +34,7 @@ public:
 	template<typename T> void WriteNE(T v) { Write(&v, sizeof(T)); }
 	template<typename T> void WriteBE(T v) { T t = ByteswapNtoB(v); Write(&t, sizeof(T)); }
 	template<typename T> void WriteLE(T v) { T t = ByteswapNtoL(v); Write(&t, sizeof(T)); }
-	
+
 };
 
 class FileStream : public Stream
@@ -85,7 +85,7 @@ public:
 	}
 
 	bool Close();
-	
+
 	uint Read(void* _Buffer, uint _Count);
 	uint Write(const void* _Buffer, uint _Count);
 

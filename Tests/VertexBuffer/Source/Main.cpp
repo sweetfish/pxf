@@ -106,7 +106,7 @@ bool PxfMain(Util::String _CmdLine)
 	pDevice->SetProjection(&t_ortho);
 
 	// InterleavedVertexBuffer
-	
+
 
 	MyVertex data[24];
 	// Front
@@ -139,24 +139,24 @@ bool PxfMain(Util::String _CmdLine)
 	data[21] = MyVertex(Vec3f(-0.5f, -0.5f, -0.5f), Vec4f(0, 1, 1, 1.0f));
 	data[22] = MyVertex(Vec3f(0.5f, -0.5f, -0.5f), Vec4f(0, 1, 1, 1.0f));
 	data[23] = MyVertex(Vec3f(0.5f, -0.5f, 0.5f), Vec4f(0, 1, 1, 1.0f));
-	
+
 	VertexBuffer* pIBuffs[4];
 	pIBuffs[0] = CreateBuffer(pDevice, VB_LOCATION_SYS);
 	pIBuffs[1] = CreateBuffer(pDevice, VB_LOCATION_GPU);
 	pIBuffs[2] = CreateBuffer(pDevice, VB_LOCATION_SYS);
 	pIBuffs[3] = CreateBuffer(pDevice, VB_LOCATION_GPU);
 
-	
+
 	MyVertex* mapped_data = (MyVertex*)pIBuffs[0]->MapData(Graphics::VB_ACCESS_WRITE_ONLY);
 	for(unsigned i = 24; i--;)
 		mapped_data[i] = data[i];
 	pIBuffs[0]->UnmapData();
-	
+
 	mapped_data = (MyVertex*)pIBuffs[1]->MapData(Graphics::VB_ACCESS_WRITE_ONLY);
 	for(unsigned i = 24; i--;)
 		mapped_data[i] = data[i];
 	pIBuffs[1]->UnmapData();
-	
+
 	pIBuffs[2]->UpdateData(data, sizeof(data), 0);
 	pIBuffs[3]->UpdateData(data, sizeof(data), 0);
 
@@ -178,7 +178,7 @@ bool PxfMain(Util::String _CmdLine)
 
 		glEnable(GL_DEPTH_TEST);
 		glBindTexture(GL_TEXTURE_2D, 0);
-	
+
 		for(int i = 0; i < 4; i++)
 		{
 			glLoadIdentity();

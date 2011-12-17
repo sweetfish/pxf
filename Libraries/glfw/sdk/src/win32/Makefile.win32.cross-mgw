@@ -15,15 +15,15 @@ default: libglfw.a glfw.dll
 # Install GLFW header and static library
 ##########################################################################
 install: glfw.dll libglfw.a libglfw.pc
-	$(INSTALL) -d $(PREFIX)/bin 
-	$(INSTALL) -c glfw.dll $(PREFIX)/bin/glfw.dll 
+	$(INSTALL) -d $(PREFIX)/bin
+	$(INSTALL) -c glfw.dll $(PREFIX)/bin/glfw.dll
 	$(INSTALL) -d $(PREFIX)/lib
 	$(INSTALL) -c -m 644 libglfw.a $(PREFIX)/lib/libglfw.a
 	$(INSTALL) -d $(PREFIX)/include/GL
 	$(INSTALL) -c -m 644 ../../include/GL/glfw.h $(PREFIX)/include/GL/glfw.h
 	$(INSTALL) -d $(PREFIX)/lib/pkgconfig
 	$(INSTALL) -c -m 644 libglfw.pc $(PREFIX)/lib/pkgconfig/libglfw.pc
-	
+
 ##########################################################################
 # Clean up generated files
 ##########################################################################
@@ -68,8 +68,8 @@ LINKLIBS  = -lopengl32
 
 DLLTOOL   = dlltool
 
-SED       = sed 
-INSTALL   = install 
+SED       = sed
+INSTALL   = install
 
 ##########################################################################
 # Object files for static library

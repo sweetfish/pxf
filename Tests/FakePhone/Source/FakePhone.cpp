@@ -43,11 +43,11 @@ bool PxfMain(Util::String _CmdLine)
 	Graphics::Window* pWindow = pDevice->OpenWindow(pWindowSpecs);
 	Input::Input* pInput = engine.CreateInput(pDevice, pWindow);
 	pInput->ShowCursor(true);
-	
+
 	// Load iPhone background
 	QuadBatch* bg_qb = pDevice->CreateQuadBatch(128);
     Texture* bg = pDevice->CreateTexture("iphonebg.png");
-	
+
 	// Fix so we are in the data dir
  #ifdef CONF_FAMILY_WINDOWS
     //system("cd data");
@@ -55,22 +55,22 @@ bool PxfMain(Util::String _CmdLine)
  #else
     chdir("data/");
  #endif
-	
+
 	// Setup LuaGame
 	Game* luagame = new Game("knugen.lua", pDevice);
 	luagame->Load();
     luagame->SetInputDevice(pInput);
-    
+
     // iPhone orientation
     bool landscapemode = true;
-	
-	while (pWindow->IsOpen()) //!pInput->IsKeyDown(Input::ESC) && 
+
+	while (pWindow->IsOpen()) //!pInput->IsKeyDown(Input::ESC) &&
 	{
-		
+
     	pDevice->SetViewport(0.0f, 0.0f, pWindowSpecs->Width, pWindowSpecs->Height);
     	Math::Mat4 t_ortho = Math::Mat4::Ortho(0, pWindowSpecs->Width, pWindowSpecs->Height, 0, 0, 1);
     	pDevice->SetProjection(&t_ortho);
-    	
+
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_DEPTH_TEST);
@@ -79,10 +79,10 @@ bool PxfMain(Util::String _CmdLine)
     	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
-        
+
         // Render iPhone bg
         bg_qb->Reset();
-        
+
         // bg
         pDevice->BindTexture(bg);
         bg_qb->Translate(pWindowSpecs->Width / 2.0f, pWindowSpecs->Height / 2.0f);
@@ -101,7 +101,7 @@ bool PxfMain(Util::String _CmdLine)
 
 		// LuaGame
 
-    	
+
     	if (!landscapemode)
     	{
     	    luagame->SetHitArea(pWindowSpecs->Width / 2.0f - 160, pWindowSpecs->Height / 2.0f - 240, 320, 480);
@@ -115,7 +115,7 @@ bool PxfMain(Util::String _CmdLine)
     	    glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
             glTranslated(-160, -240, 0.0f);
         }
-    	
+
     	luagame->Update(0.1);
     	luagame->Render();
 
@@ -129,7 +129,7 @@ bool PxfMain(Util::String _CmdLine)
 			sprintf(t_title, "%s - %s - FPS: %i", t_pxftitle, Graphics::DeviceTypeName(pDevice->GetDeviceType()), t_fps);
 			pWindow->SetTitle(t_title);
 		}
-		
+
 		// Reload luagame?
 		if (pInput->IsKeyDown('R'))
 		{

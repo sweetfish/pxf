@@ -92,7 +92,7 @@ void QuadBatchGL2::Translate(float x, float y)
     //m_TransformMatrix = m_TransformMatrix.Translate(x, y, 0.0f);
     Math::Mat4 t_translatematrix = Math::Mat4::Identity;
     t_translatematrix.Translate(x, y, 0.0f);
-        
+
     //m_TransformMatrix.Translate(x, y, 0.0f);
     m_TransformMatrix = m_TransformMatrix * t_translatematrix;
 }
@@ -115,7 +115,7 @@ void QuadBatchGL2::Reset()
 	SetColor(1.f,1.f,1.f);
     SetDepth(0.0f);
     SetAlpha(1.0f);
-	
+
     LoadIdentity();
 }
 
@@ -126,38 +126,38 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 		Message(LOCAL_MSG, "Not enough space in vertex array! Try increasing _maxSize in QuadBatch constructor.");
 		return;
 	}
-	
+
 	/*
-	
+
 	 0       1, 4
 	   +----+
 	   |   /|
 	   |  / |
 	   | /  |
 	   |/   |
-	   +----+  
+	   +----+
 	2, 3      5
-	 
+
 	*/
-	
+
 	// Transform into world coords
 	Math::Vec4f t_pos(0.0f, 0.0f, 0.0f, 1.0f);
-	
+
     t_pos = Math::Vec4f(x0, y0, 0.0f, 1.0f);
     t_pos = m_TransformMatrix * t_pos;
     x0 = t_pos.x;
     y0 = t_pos.y;
-    
+
     t_pos = Math::Vec4f(x1, y1, 0.0f, 1.0f);
     t_pos = m_TransformMatrix * t_pos;
     x1 = t_pos.x;
     y1 = t_pos.y;
-    
+
     t_pos = Math::Vec4f(x2, y2, 0.0f, 1.0f);
     t_pos = m_TransformMatrix * t_pos;
     x2 = t_pos.x;
     y2 = t_pos.y;
-    
+
     t_pos = Math::Vec4f(x3, y3, 0.0f, 1.0f);
     t_pos = m_TransformMatrix * t_pos;
     x3 = t_pos.x;
@@ -170,7 +170,7 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 	m_Vertices[m_VertexBufferPos].tex = m_CurrentTexCoords[0];
 	m_Vertices[m_VertexBufferPos].color = m_CurrentColors[0];
 	//RotatePoint(center, m_Vertices[m_VertexBufferPos].pos);
-	
+
 	// 1
 	m_Vertices[m_VertexBufferPos+1].pos.x = x1;
 	m_Vertices[m_VertexBufferPos+1].pos.y = y1;
@@ -178,7 +178,7 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 	m_Vertices[m_VertexBufferPos+1].tex = m_CurrentTexCoords[1];
 	m_Vertices[m_VertexBufferPos+1].color = m_CurrentColors[1];
 	//RotatePoint(center, m_Vertices[m_VertexBufferPos+1].pos);
-	
+
 	// 2
 	m_Vertices[m_VertexBufferPos+2].pos.x = x3;
 	m_Vertices[m_VertexBufferPos+2].pos.y = y3;
@@ -186,7 +186,7 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 	m_Vertices[m_VertexBufferPos+2].tex = m_CurrentTexCoords[3];
 	m_Vertices[m_VertexBufferPos+2].color = m_CurrentColors[3];
 	//RotatePoint(center, m_Vertices[m_VertexBufferPos+2].pos);
-	
+
 	// 3
 	m_Vertices[m_VertexBufferPos+3].pos.x = x3;
 	m_Vertices[m_VertexBufferPos+3].pos.y = y3;
@@ -194,7 +194,7 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 	m_Vertices[m_VertexBufferPos+3].tex = m_CurrentTexCoords[3];
 	m_Vertices[m_VertexBufferPos+3].color = m_CurrentColors[3];
 	//RotatePoint(center, m_Vertices[m_VertexBufferPos+3].pos);
-	
+
 	// 4
 	m_Vertices[m_VertexBufferPos+4].pos.x = x1;
 	m_Vertices[m_VertexBufferPos+4].pos.y = y1;
@@ -202,7 +202,7 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 	m_Vertices[m_VertexBufferPos+4].tex = m_CurrentTexCoords[1];
 	m_Vertices[m_VertexBufferPos+4].color = m_CurrentColors[1];
 	//RotatePoint(center, m_Vertices[m_VertexBufferPos+4].pos);
-	
+
 	// 5
 	m_Vertices[m_VertexBufferPos+5].pos.x = x2;
 	m_Vertices[m_VertexBufferPos+5].pos.y = y2;
@@ -210,7 +210,7 @@ void QuadBatchGL2::AddFreeform(float x0, float y0, float x1, float y1, float x2,
 	m_Vertices[m_VertexBufferPos+5].tex = m_CurrentTexCoords[2];
 	m_Vertices[m_VertexBufferPos+5].color = m_CurrentColors[2];
 	//RotatePoint(center, m_Vertices[m_VertexBufferPos+5].pos);
-	
+
 	m_VertexBufferPos += 6;
 }
 
@@ -221,52 +221,52 @@ void QuadBatchGL2::AddTopLeft(float x, float y, float w, float h)
 		Message(LOCAL_MSG, "Not enough space in vertex array! Try increasing _maxSize in QuadBatch constructor.");
 		return;
 	}
-	
+
     AddFreeform(x, y, x+w, y, x+w, y+h, x, y+h);
-	
+
 
 	/*Math::Vec3f center(x + w/2, y + h/2, 0.f);
-    
+
     Math::Vec4f t_pos(x, y, 0.0f, 1.0f);
     t_pos = m_TransformMatrix * t_pos;
     x = t_pos.x;
     y = t_pos.y;
-	
+
 	// 0
 	m_Vertices[m_VertexBufferPos].pos.x = x;
 	m_Vertices[m_VertexBufferPos].pos.y = y;
 	m_Vertices[m_VertexBufferPos].tex = m_CurrentTexCoords[0];
 	m_Vertices[m_VertexBufferPos].color = m_CurrentColors[0];
 	RotatePoint(center, m_Vertices[m_VertexBufferPos].pos);
-	
+
 	// 1
 	m_Vertices[m_VertexBufferPos+1].pos.x = x+w;
 	m_Vertices[m_VertexBufferPos+1].pos.y = y;
 	m_Vertices[m_VertexBufferPos+1].tex = m_CurrentTexCoords[1];
 	m_Vertices[m_VertexBufferPos+1].color = m_CurrentColors[1];
 	RotatePoint(center, m_Vertices[m_VertexBufferPos+1].pos);
-	
+
 	// 2
 	m_Vertices[m_VertexBufferPos+2].pos.x = x;
 	m_Vertices[m_VertexBufferPos+2].pos.y = y+h;
 	m_Vertices[m_VertexBufferPos+2].tex = m_CurrentTexCoords[3];
 	m_Vertices[m_VertexBufferPos+2].color = m_CurrentColors[3];
 	RotatePoint(center, m_Vertices[m_VertexBufferPos+2].pos);
-	
+
 	// 3
 	m_Vertices[m_VertexBufferPos+3].pos.x = x;
 	m_Vertices[m_VertexBufferPos+3].pos.y = y+h;
 	m_Vertices[m_VertexBufferPos+3].tex = m_CurrentTexCoords[3];
 	m_Vertices[m_VertexBufferPos+3].color = m_CurrentColors[3];
 	RotatePoint(center, m_Vertices[m_VertexBufferPos+3].pos);
-	
+
 	// 4
 	m_Vertices[m_VertexBufferPos+4].pos.x = x+w;
 	m_Vertices[m_VertexBufferPos+4].pos.y = y;
 	m_Vertices[m_VertexBufferPos+4].tex = m_CurrentTexCoords[1];
 	m_Vertices[m_VertexBufferPos+4].color = m_CurrentColors[1];
 	RotatePoint(center, m_Vertices[m_VertexBufferPos+4].pos);
-	
+
 	// 5
 	m_Vertices[m_VertexBufferPos+5].pos.x = x+w;
 	m_Vertices[m_VertexBufferPos+5].pos.y = y+h;
@@ -286,22 +286,22 @@ void QuadBatchGL2::AddCentered(float x, float y, float w, float h, float rotatio
 {
     Math::Vec3f center(x, y, 0.0f);
     Math::Vec3f p0, p1, p2, p3;
-    
+
     p0.x = x-w/2.0f;
     p1.x = p0.x + w;
     p2.x = p1.x;
     p3.x = p0.x;
-    
+
     p0.y = y-h/2.0f;
     p1.y = p0.y;
     p2.y = p0.y + h;
     p3.y = p2.y;
-    
+
     RotatePoint(center, p0, rotation);
     RotatePoint(center, p1, rotation);
     RotatePoint(center, p2, rotation);
     RotatePoint(center, p3, rotation);
-    
+
     AddFreeform(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 }
 

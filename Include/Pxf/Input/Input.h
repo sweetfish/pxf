@@ -38,7 +38,7 @@ namespace Pxf
 			virtual void ShowCursor(bool _show) = 0;
 		private:
 			Graphics::Window* m_Window;
-			
+
 		};
 
 	} // Input

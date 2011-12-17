@@ -47,7 +47,7 @@ bool PxfMain(Util::String _CmdLine)
 	pWindowSpecs->FSAASamples = 0;
 	pWindowSpecs->Fullscreen = false;
 	pWindowSpecs->Resizeable = false;
-  
+
   // Setup engine/device/window
 	Pxf::Engine engine;
 	Graphics::Device* pDevice = engine.CreateDevice(Graphics::EOpenGL2);
@@ -67,12 +67,12 @@ bool PxfMain(Util::String _CmdLine)
 	pDevice->SetViewport(0, 0, pWindowSpecs->Width / 2.0f, pWindowSpecs->Height);
 	Math::Mat4 t_ortho = Math::Mat4::Ortho(0, pWindowSpecs->Width / 2.0f, pWindowSpecs->Height, 0, 0, 1);
 	pDevice->SetProjection(&t_ortho);
-	
+
 	// Test font
 	/*SimpleFont *_fonttest = new SimpleFont(pDevice);
 	_fonttest->Load("data/alterebro_pixel.ttf", 13.0f, 128);
 	_fonttest->AddTextCentered("Hey, some text! :)", Math::Vec3f(0,10,0));*/
-	
+
 	// Setup networking
 #ifdef IS_SERVER
   SimpleServer *pNet = new SimpleServer(NULL, 4632);
@@ -84,7 +84,7 @@ bool PxfMain(Util::String _CmdLine)
 
 	while (!pInput->IsKeyDown(Input::ESC) && pWindow->IsOpen())
 	{
-		
+
 		// Some OGL stuff that hasn't been moved to the device yet
 		pDevice->SetViewport(0, 0, pWindowSpecs->Width, pWindowSpecs->Height);
 		pDevice->SetProjection(&t_ortho);
@@ -96,14 +96,14 @@ bool PxfMain(Util::String _CmdLine)
     // Update network
     NetMessage _message;
     int _pumpres;
-    
+
     // Pump network messages
     while ((_pumpres = pNet->MessagePump(&_message)) > 0)
     {
       switch (_pumpres)
       {
         case PUMP_RESULT_CONNECT:
-          Message("Application", "A new client connected from %x:%u.", 
+          Message("Application", "A new client connected from %x:%u.",
           _message.peer->address.host,
           _message.peer->address.port);
 
@@ -111,7 +111,7 @@ bool PxfMain(Util::String _CmdLine)
           _message.peer->data = (void*)"Client information";
 
           break;
-          
+
         case PUMP_RESULT_DISCONNECT:
           Message("Application", "%s disconected, got: %s", (const char*)_message.peer->data, (const char*)_message.data);
 
@@ -133,7 +133,7 @@ bool PxfMain(Util::String _CmdLine)
 
       }
     }
-    
+
     // Pump script messages
     ScriptMessage _scriptmessage;
     while (pGUI->MessagePump(&_scriptmessage))
@@ -195,7 +195,7 @@ bool PxfMain(Util::String _CmdLine)
 			pWindow->SetTitle(t_title);
 		}
 	}
-	
+
   delete pNet;
 
 	pDevice->CloseWindow();

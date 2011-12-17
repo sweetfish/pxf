@@ -156,7 +156,7 @@ void VertexBufferGLES11::CreateNewBuffer(uint32 _NumVertices, uint32 _VertexSize
 		glGenBuffers(1, (GLuint*)&m_BufferObjectId);
 		glBindBuffer(GL_ARRAY_BUFFER, m_BufferObjectId);
 		glBufferData(GL_ARRAY_BUFFER, _NumVertices * _VertexSize,0,usage);
-			
+
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
@@ -174,7 +174,7 @@ void VertexBufferGLES11::CreateFromBuffer(void* _Buffer,uint32 _NumVertices, uin
 {
 	if (m_InterleavedData != 0 && m_BufferObjectId != 0)
 		return;
-	
+
 	if (m_VertexBufferUsageFlag == VB_LOCATION_GPU)
 	{
 		// Copy to gpu memory
@@ -240,7 +240,7 @@ void VertexBufferGLES11::UnmapData()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		m_IsMapped = false;
 	}
-	
+
 	if (m_VertexBufferLocation == VB_LOCATION_SYS && m_InterleavedData != 0)
 	{
 		m_IsMapped = false;

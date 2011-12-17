@@ -26,7 +26,7 @@ namespace Pxf
 				int NewSprite(lua_State* _L);
 
 				class LuaSprite : public Pxf::Game::Sprite
-				{	
+				{
 				public:
 					LuaSprite(Graphics::Device* _pDevice, Graphics::Texture* _Texture, int _CellWidth, int _CellHeight,int _Frequency)
 						: Pxf::Game::Sprite(_pDevice,NULL,_Texture,_CellWidth,_CellHeight,_Frequency) { }
@@ -34,7 +34,7 @@ namespace Pxf
 					static int _Update(lua_State* _L);
 					static int _AddSequence(lua_State* _L);
 				}; */
-                
+
             } /* GraphicsSubsystem */
         } /* LuaGame */
     } /* Extra */

@@ -36,10 +36,10 @@ end
 function CreateSettings(settings)
     -- Intermediate directory for object files
     settings.cc.Output = Intermediate_Output
-    
+
        -- Libraries
     if family == "windows" then
-    
+
         -- Set compiler specific values
         --  if config.compiler.value == "cl" then
         --      settings.cc.flags:Add("/EHsc")
@@ -47,7 +47,7 @@ function CreateSettings(settings)
         --      settings.cc.flags:Add("-Wall", "-fno-exceptions")
         --  end
         settings.cc.flags:Add("/EHsc")
-        
+
         settings.link.libs:Add("opengl32")
         settings.link.libs:Add("glu32")
         settings.link.libs:Add("ws2_32")
@@ -56,9 +56,9 @@ function CreateSettings(settings)
         --settings.link.libs:Add("dsound")
         settings.link.libs:Add("ole32")
         settings.link.libs:Add("d3d9")
-        
+
         settings.cc.includes:Add(Path("%DXSDK_DIR%\\Include"))
-        
+
     elseif family == "unix" then
         if platform == "macosx" then
             settings.link.frameworks:Add("AGL")
@@ -74,10 +74,10 @@ function CreateSettings(settings)
             settings.link.libs:Add("pthread")
         end
     end
-    
+
     -- Add include directory
     settings.cc.includes:Add(include_base)
- 
+
     return settings
 end
 
@@ -99,8 +99,8 @@ end
 function BuildFramework(settings)
     -- Compile framework
     --framework = Compile(settings, CollectRecursive(source_base))
-             
-    
+
+
     framework = Compile(settings, Collect(path_prefix .. "/Source/*.cpp"),
                                   CollectRecursive(path_prefix .. "/Source/Base/*.cpp",
                                                    path_prefix .. "/Source/Extra/*.cpp",
@@ -123,16 +123,16 @@ ReleaseSettings = CreateSettings(release_settings)
 
 function BuildProject(name, required_libs, include_dir, source_files)
     function DoBuild(settings)
-        
+
         CompiledLibs = {}
         for i,n in ipairs(required_libs) do
             CompiledLibs[i] = Libraries[n].Build(settings)
         end
-        
+
         framework = BuildFramework(settings)
-        
+
         settings.cc.includes:Add(Path(path_prefix .. include_dir))
-        
+
         -- Compile Project
         project = Compile(settings, source_files)
         project_exe = Link(settings, name, project, CompiledLibs, framework)
@@ -140,7 +140,7 @@ function BuildProject(name, required_libs, include_dir, source_files)
 
         PseudoTarget(settings.config_name, project_target)
     end
-    
+
     DoBuild(DebugSettings)
     DoBuild(ReleaseSettings)
 end

@@ -28,11 +28,11 @@ namespace Math {
 		Vector2D(T nv) { x = y = nv; }
 		Vector2D(T nx, T ny) { x = nx; y = ny; }
 		Vector2D(const Vector2D<T>& o) { *this = o; }
-		
+
 		inline void Set(T nx, T ny) { x = nx; y = ny; }
 
 		Vector2D operator - () const { return Vector2D(-x, -y); }
-		
+
 		Vector2D operator - (const Vector2D &v) const { return Vector2D(x - v.x, y - v.y); }
 		Vector2D operator + (const Vector2D &v) const { return Vector2D(x + v.x, y + v.y); }
 		Vector2D operator * (const Vector2D &v) const { return Vector2D(x * v.x, y * v.y); }
@@ -61,44 +61,44 @@ namespace Math {
 
 	template <typename T>
 	inline T Dot(const Vector2D<T> &a, const Vector2D<T> &b)
-	{ 
+	{
 		return a.x*b.x + a.y*b.y;
 	}
 
 	template <typename T>
 	inline T LengthSqr(const Vector2D<T> &a)
 	{
-		return a.x*a.x + a.y*a.y; 
+		return a.x*a.x + a.y*a.y;
 	}
 
 	template <typename T>
 	inline T Length(const Vector2D<T> &a)
-	{ 
+	{
 		return sqrtf(LengthSqr(a));
 	}
-	
+
 	template <typename T>
 	inline T Distance(const Vector2D<T> &a, const Vector2D<T> &b)
-	{ 
-		return Length(a-b); 
+	{
+		return Length(a-b);
 	}
-	
+
 	template <typename T>
 	inline Vector2D<T> Perpendicular(const Vector2D<T> &a)
-	{ 
+	{
 		return Vector2D<T>(a.y, -a.x);
 	}
 
 	template <typename T>
 	inline void Clamp(const Vector2D<T> &a, T min, T max)
-	{ 
+	{
 		a.x = Clamp(a.x, min, max);
 		a.y = Clamp(a.y, min, max);
 	}
 
 	template <typename T>
 	inline Vector2D<T> Clamped(const Vector2D<T> &a, T min, T max)
-	{ 
+	{
 		Vector2D<T> ret = a;
 		Clamp<T>(ret);
 		return ret;
@@ -143,7 +143,7 @@ namespace Math {
 		union { T x, r; };
 		union { T y, g; };
 		union { T z, b; };
-	
+
 		Vector3D()     { x = y = z = 0; }
 		Vector3D(T nv) { x = y = z = nv; }
 		Vector3D(T nx, T ny, T nz) { x = nx; y = ny; z = nz; }
@@ -152,7 +152,7 @@ namespace Math {
 		inline void Set(T nx, T ny, T nz) { x = nx; y = ny; z = nz; }
 
 		Vector3D operator - () const { return Vector3D(-x, -y, -z); }
-		
+
 		Vector3D operator - (const Vector3D &v) const { return Vector3D(x - v.x, y - v.y, z - v.z); }
 		Vector3D operator + (const Vector3D &v) const { return Vector3D(x + v.x, y + v.y, z + v.z); }
 		Vector3D operator * (const Vector3D &v) const { return Vector3D(x * v.x, y * v.y, z * v.z); }
@@ -181,39 +181,39 @@ namespace Math {
 
 	template <typename T>
 	inline T Dot(const Vector3D<T> &a, const Vector3D<T> &b)
-	{ 
-		return a.x*b.x + a.y*b.y + a.z*b.z; 
+	{
+		return a.x*b.x + a.y*b.y + a.z*b.z;
 	}
 
 	template <typename T>
-	inline T LengthSqr(const Vector3D<T> &a) 
-	{ 
-		return a.x*a.x + a.y*a.y + a.z*a.z; 
+	inline T LengthSqr(const Vector3D<T> &a)
+	{
+		return a.x*a.x + a.y*a.y + a.z*a.z;
 	}
 
 	template <typename T>
-	inline T Length(const Vector3D<T> &a) 
-	{ 
-		return sqrtf(LengthSqr(a)); 
+	inline T Length(const Vector3D<T> &a)
+	{
+		return sqrtf(LengthSqr(a));
 	}
-	
+
 	template <typename T>
-	inline T Distance(const Vector3D<T> &a, const Vector3D<T> &b) 
-	{ 
+	inline T Distance(const Vector3D<T> &a, const Vector3D<T> &b)
+	{
 		return Length(a-b);
 	}
-	
+
 	template <typename T>
 	inline void Clamp(const Vector3D<T> &a, T min, T max)
-	{ 
-		a.x = Clamp(a.x, min, max); 
-		a.y = Clamp(a.y, min, max); 
+	{
+		a.x = Clamp(a.x, min, max);
+		a.y = Clamp(a.y, min, max);
 		a.z = Clamp(a.z, min, max);
 	}
-	
+
 	template <typename T>
 	inline Vector3D<T> Clamped(const Vector3D<T> &a, T min, T max)
-	{ 
+	{
 		Vector3D<T> ret = a;
 		Clamp<T>(ret);
 		return ret;
@@ -244,7 +244,7 @@ namespace Math {
 	template <typename T>
 	inline Vector3D<T> Cross(const Vector3D<T> &a, const Vector3D<T> &b)
 	{
-		return Vector3D<T>( a.y * b.z - a.z * b.y, 
+		return Vector3D<T>( a.y * b.z - a.z * b.y,
 						    a.z * b.x - a.x * b.z,
 						    a.x * b.y - a.y * b.x);
 	}
@@ -261,7 +261,7 @@ namespace Math {
 		union { T y; T g; };
 		union { T z; T b; };
 		union { T w; T a; };
-	
+
 		Vector4D() { x = y = z = w = 0; }
 		Vector4D(T nv) { x = y = z = w = nv; }
 		Vector4D(T nx, T ny, T nz, T nw) { x = nx; y = ny; z = nz; w = nw; }
@@ -270,7 +270,7 @@ namespace Math {
 		inline void Set(T nx, T ny, T nz, T nw) { x = nx; y = ny; z = nz; w = nw; }
 
 		Vector4D operator - () const { return Vector4D(-x, -y, -z, -w); }
-		
+
 		Vector4D operator - (const Vector4D &v) const { return Vector4D(x - v.x, y - v.y, z - v.z, w - v.w); }
 		Vector4D operator + (const Vector4D &v) const { return Vector4D(x + v.x, y + v.y, z + v.z, w + v.w); }
 		Vector4D operator * (const Vector4D &v) const { return Vector4D(x * v.x, y * v.y, z * v.z, w * v.w); }
@@ -299,22 +299,22 @@ namespace Math {
 
 	template <typename T>
 	inline T Dot(const Vector4D<T> &a, const Vector4D<T> &b)
-	{ 
+	{
 		return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
 	}
-	
+
 	template <typename T>
 	inline void Clamp(const Vector4D<T> &a, T min, T max)
-	{ 
+	{
 		a.x = Clamp(a.x, min, max);
-		a.y = Clamp(a.y, min, max); 
-		a.z = Clamp(a.z, min, max); 
+		a.y = Clamp(a.y, min, max);
+		a.z = Clamp(a.z, min, max);
 		a.w = Clamp(a.w, min, max);
 	}
 
 	template <typename T>
 	inline Vector4D<T> Clamped(const Vector4D<T> &a, T min, T max)
-	{ 
+	{
 		Vector4D<T> ret = a;
 		Clamp(ret);
 		return ret;
@@ -322,16 +322,16 @@ namespace Math {
 
 	template <typename T>
 	inline T LengthSqr(const Vector4D<T> &a)
-	{ 
+	{
 		return a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w;
 	}
 
 	template <typename T>
 	inline T Length(const Vector4D<T> &a)
-	{ 
-		return sqrtf(LengthSqr(a)); 
+	{
+		return sqrtf(LengthSqr(a));
 	}
-	
+
 	template <typename T>
 	inline void Normalize(Vector4D<T> &a)
 	{

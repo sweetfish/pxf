@@ -2,8 +2,8 @@
 #define _PXF_GAME_GAMESTATE_H_
 
 namespace Pxf
-{	
-	namespace Game  
+{
+	namespace Game
 	{
 		// abstract state class
 		class GameState
@@ -11,7 +11,7 @@ namespace Pxf
 		public:
 			// Initialize state resources etc.
 			virtual bool Init() = 0;
-			// update state 
+			// update state
 			virtual void Update() = 0;
 			// render this game state
 			virtual void Render() = 0;

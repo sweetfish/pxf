@@ -22,7 +22,7 @@ namespace Pxf
 			virtual ~VertexBufferGL2();
 
 			void CreateNewBuffer(uint32 _NumVertices, uint32 _VertexSize);
-			void CreateFromBuffer(void* _Buffer,uint32 _NumVertices, uint32 _VertexSize); 
+			void CreateFromBuffer(void* _Buffer,uint32 _NumVertices, uint32 _VertexSize);
 
 			void UpdateData(void* _Buffer, uint32 _Count, uint32 _Offset);
 

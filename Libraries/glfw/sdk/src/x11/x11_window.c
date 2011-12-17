@@ -34,10 +34,10 @@
 /* Defines some GLX FSAA tokens if not yet defined */
 #ifndef GLX_SAMPLE_BUFFERS
 # define GLX_SAMPLE_BUFFERS  100000
-#endif 
-#ifndef GLX_SAMPLES 
+#endif
+#ifndef GLX_SAMPLES
 # define GLX_SAMPLES         100001
-#endif 
+#endif
 
 
 /* KDE decoration values */
@@ -291,11 +291,11 @@ XVisualInfo * _glfwChooseVisual( Display *Dpy, int Screen, int r, int g,
 
     // Convenience pre-calculation
     accum = (ar > 0 || ag > 0 || ab > 0 || aa > 0);
-    
+
     samples = fsaa;
     samplebuffers = (fsaa > 0) ? 1 : 0;
-    
-    
+
+
 
     // Loop through list of visuals to find best match
     best_vis        = -1;
@@ -328,7 +328,7 @@ XVisualInfo * _glfwChooseVisual( Display *Dpy, int Screen, int r, int g,
             glXGetConfig( Dpy, &VI_list[i], GLX_AUX_BUFFERS, &vi_aux );
 	    glXGetConfig( Dpy, &VI_list[i], GLX_SAMPLE_BUFFERS, &vi_samplebuffers );
 	    glXGetConfig( Dpy, &VI_list[i], GLX_SAMPLES, &vi_samples );
-	    
+
             vi_accum = (vi_ar > 0 || vi_ag > 0 || vi_ab > 0 || vi_aa > 0);
 
             // Check how many buffers are missing
@@ -339,7 +339,7 @@ XVisualInfo * _glfwChooseVisual( Display *Dpy, int Screen, int r, int g,
             if( accum && !vi_accum ) missing ++;
             if( aux > 0 && vi_aux == 0 ) missing ++;
 	    if( samplebuffers > 0 && vi_samplebuffers == 0 ) missing ++;
-	    
+
 
             // Calculate color diff
             color_diff = (r - vi_r) * (r - vi_r) +
@@ -374,7 +374,7 @@ XVisualInfo * _glfwChooseVisual( Display *Dpy, int Screen, int r, int g,
 	    if( samples > 0 )
 	    {
 	      extra_diff += (samples - vi_samples) * (samples - vi_samples);
-	      
+
 	    }
             // Check if this is a better match. We implement some
             // complicated rules, by prioritizing in this order:
@@ -1469,14 +1469,14 @@ void _glfwPlatformRefreshWindowParams( void )
     // Get multisample buffer samples
     glXGetConfig( _glfwLibrary.Dpy, _glfwWin.VI, GLX_SAMPLES,
 		  &_glfwWin.Samples );
-    glXGetConfig( _glfwLibrary.Dpy, _glfwWin.VI, GLX_SAMPLE_BUFFERS, 
+    glXGetConfig( _glfwLibrary.Dpy, _glfwWin.VI, GLX_SAMPLE_BUFFERS,
 		  &sample_buffers );
     if( sample_buffers == 0 )
       _glfwWin.Samples = 0;
-    
+
     // Default to refresh rate unknown (=0 according to GLFW spec)
     _glfwWin.RefreshRate = 0;
-		  
+
     // Retrieve refresh rate, if possible
 #if defined( _GLFW_HAS_XRANDR )
     if( _glfwLibrary.XRandR.Available )

@@ -245,7 +245,7 @@ CScriptAny::CScriptAny(asIScriptEngine *engine)
 	value.valueInt = 0;
 
 	// Notify the garbage collector of this object
-	engine->NotifyGarbageCollectorOfNewObject(this, engine->GetTypeIdByDecl("any"));		
+	engine->NotifyGarbageCollectorOfNewObject(this, engine->GetTypeIdByDecl("any"));
 }
 
 CScriptAny::CScriptAny(void *ref, int refTypeId, asIScriptEngine *engine)
@@ -257,7 +257,7 @@ CScriptAny::CScriptAny(void *ref, int refTypeId, asIScriptEngine *engine)
 	value.valueInt = 0;
 
 	// Notify the garbage collector of this object
-	engine->NotifyGarbageCollectorOfNewObject(this, engine->GetTypeIdByDecl("any"));		
+	engine->NotifyGarbageCollectorOfNewObject(this, engine->GetTypeIdByDecl("any"));
 
 	Store(ref, refTypeId);
 }
@@ -322,7 +322,7 @@ bool CScriptAny::Retrieve(void *ref, int refTypeId) const
 
 		// A handle can be retrieved if the stored type is a handle of same or compatible type
 		// or if the stored type is an object that implements the interface that the handle refer to.
-		if( (value.typeId & asTYPEID_MASK_OBJECT) && 
+		if( (value.typeId & asTYPEID_MASK_OBJECT) &&
 			engine->IsHandleCompatibleWithObject(value.valueObj, value.typeId, refTypeId) )
 		{
 			engine->AddRefScriptObject(value.valueObj, value.typeId);

@@ -16,7 +16,7 @@ int main()
     printf("#ifndef ASWRAPPEDCALL_H\n"
            "#define ASWRAPPEDCALL_H\n\n");
 
-	// Add some instructions on how to use this 
+	// Add some instructions on how to use this
 	printf("// Generate the wrappers by calling the macros in global scope. \n");
 	printf("// Then register the wrapper function with the script engine using the asCALL_GENERIC \n");
 	printf("// calling convention. The wrapper can handle both global functions and class methods.\n");
@@ -65,7 +65,7 @@ int main()
            "    as_wrapNative_helper(X d_) : d(d_) {}\n"
            "};\n\n");
 
-	// Iterate over the number of parameters 
+	// Iterate over the number of parameters
     for(int t = 0; t <= MAXPARAM; t++)
     {
 		printf("// %d parameter(s)\n\n", t);
@@ -113,7 +113,7 @@ int main()
 			};
 
 			//----------
-			// Generate the function that extracts the parameters from 
+			// Generate the function that extracts the parameters from
 			// the asIScriptGeneric interface and calls the native function
 
 			// Build the template declaration
@@ -125,7 +125,7 @@ int main()
                     printf("%stypename T%d",(k||(d>0))?",":"",k+1);
 
                 printf(">\n");
-            }           
+            }
 
             printf("static void asWrapNative_p%d%s(",t,signature[d]);
 			printf("%s (%s*func)(" ,(d&1)?"R":"void", (d>1)?"C::":"");
@@ -181,7 +181,7 @@ int main()
                    "}\n\n");
         }
 
-    }    
+    }
 
     printf("#endif // ASWRAPPEDCALL_H\n\n");
 

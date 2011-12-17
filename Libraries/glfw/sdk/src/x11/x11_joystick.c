@@ -126,7 +126,7 @@ void _glfwInitJoysticks( void )
             {
                 // Remember fd
                 _glfwJoy[ joy_count ].fd = fd;
-    
+
                 // Check that the joystick driver version is 1.0+
                 ioctl( fd, JSIOCGVERSION, &driver_version );
                 if( driver_version < 0x010000 )
@@ -135,15 +135,15 @@ void _glfwInitJoysticks( void )
                     close( fd );
                     continue;
                 }
-    
+
                 // Get number of joystick axes
                 ioctl( fd, JSIOCGAXES, &ret_data );
                 _glfwJoy[ joy_count ].NumAxes = (int) ret_data;
-    
+
                 // Get number of joystick buttons
                 ioctl( fd, JSIOCGBUTTONS, &ret_data );
                 _glfwJoy[ joy_count ].NumButtons = (int) ret_data;
-    
+
                 // Allocate memory for joystick state
                 _glfwJoy[ joy_count ].Axis =
                     (float *) malloc( sizeof(float) *
@@ -172,7 +172,7 @@ void _glfwInitJoysticks( void )
                 {
                     _glfwJoy[ joy_count ].Button[ n ] = GLFW_RELEASE;
                 }
-    
+
                 // The joystick is supported and connected
                 _glfwJoy[ joy_count ].Present = GL_TRUE;
                 joy_count ++;

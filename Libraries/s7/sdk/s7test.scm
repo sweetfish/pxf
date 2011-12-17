@@ -1,6 +1,6 @@
 ;;; R5RS test suite
 ;;;
-;;; sources include 
+;;; sources include
 ;;;   clisp test suite
 ;;;   Paul Dietz's CL test suite
 ;;;   R Kelsey, W Clinger, and J Rees r5rs.html (and r6rs.html)
@@ -33,7 +33,7 @@
 (define with-list-set! #t)                                     ; test list-set!
 (define with-reverse! #t)                                      ; test reverse!
 (define with-open-input-string-and-friends #t)                 ; string IO, as well as file
-(define with-delay #f)                                         ; delay and force 
+(define with-delay #f)                                         ; delay and force
 (define with-bitwise-functions #t)                             ; logand|or|xor|ior, ash
 (define with-hash-tables #t)                                   ; make-hash-table and friends
 (define with-keywords #t)                                      ; make-keyword, keyword->symbol etc
@@ -89,13 +89,13 @@
 
 ;;; the error limits below are pretty expansive in some cases, so with-error-data
 ;;;   tries to keep a record of the worst case error for each operator.  error-data
-;;;   is a list: '(#(op worst-error worst-error-case) ...). 
+;;;   is a list: '(#(op worst-error worst-error-case) ...).
 
 (define error-data '())
 
 (define (op-error op result expected)
 
-  (define (conjugate n) 
+  (define (conjugate n)
     (make-rectangular (real-part n) (- (imag-part n))))
 
   (if (and (real? result)
@@ -153,7 +153,7 @@
 
 
 (define (types-consistent? n)
-  (not (or (and (integer? n) 
+  (not (or (and (integer? n)
 	       (or (not (= (denominator n) 1))
 		   (not (= n (numerator n)))
 		   (not (= (imag-part n) 0))
@@ -170,7 +170,7 @@
 	       (not (rational? n))
 	       (or (not (= (imag-part n) 0))
 		   (not (= n (real-part n)))))
-	  (and (complex? n) 
+	  (and (complex? n)
 	       (not (real? n))
 	       (or (= (imag-part n) 0)
 		   (not (= n (+ (real-part n) (* 0+i (imag-part n))))))))))
@@ -216,7 +216,7 @@
 		   (rational? result)
 		   (exact? result)
 		   (not (= result expected)))
-	      (and (or (and (rational? expected) 
+	      (and (or (and (rational? expected)
 			    (exact? expected))
 		       (and (rational? result)
 			    (exact? result)))
@@ -238,7 +238,7 @@
 	    (display " but expected ")
 	    (display expected)
 
-	    (if (defined? 'format) 
+	    (if (defined? 'format)
 		(begin
 		  (if (and (not (number? expected))
 			   (not (eq? result expected)))
@@ -256,7 +256,7 @@
 				   (exact? result)
 				   (not (= result expected)))
 			      (format #t ", exact results but not (= ~A ~A): ~A" expected result (= result expected))
-			      (if (and (or (and (rational? expected) 
+			      (if (and (or (and (rational? expected)
 						(exact? expected))
 					   (and (rational? result)
 						(exact? result)))
@@ -267,7 +267,7 @@
 				  (if (< (op-error (car tst) result expected) 1.0e-6)
 				      (let ((n result))
 					(format #t ", result not internally consistent")
-					(if (and (integer? n) 
+					(if (and (integer? n)
 						 (or (not (= (denominator n) 1))
 						     (not (= n (numerator n)))
 						     (not (= (imag-part n) 0))
@@ -284,7 +284,7 @@
 							 (not (= n (real-part n)))
 							 (not (= n (/ (numerator n) (denominator n))))))
 						(format #t ", ~A ratio but imag: ~A, den: ~A, real: ~A, ~A/~A=~A"
-							n (imag-part n) (denominator n) (real-part n) 
+							n (imag-part n) (denominator n) (real-part n)
 							(numerator n) (denominator n) (exact->inexact (/ (numerator n) (denominator n))))
 						(if (and (real? n)
 							 (not (rational? n))
@@ -719,7 +719,7 @@
       ((= i 128))
     (if (and (not (char=? (integer->char i) (char-upcase (integer->char i))))
 	     (not (char-alphabetic? (integer->char i))))
-	(begin 
+	(begin
 	  (display "(char-upcase ") (display (integer->char i)) (display ") -> ")
 	  (display (integer->char i)) (display ", but not alphabetic?")
 	  (newline))))
@@ -827,10 +827,10 @@
 	   (display "(char-alphabetic? ") (display arg) (display ") returned #f?") (newline))))
    mixed-a-to-z)
 
-  (test 
+  (test
    (let ((unhappy '()))
-     (do ((i 0 (+ i 1))) 
-	 ((= i 256)) 
+     (do ((i 0 (+ i 1)))
+	 ((= i 256))
        (let* ((ch (integer->char i))
 	      (chu (char-upcase ch))
 	      (chd (char-downcase ch)))
@@ -940,8 +940,8 @@
     (test (char<=? #\b #\c #\a) #f)
     (test (char<=? #\B #\B #\A) #f)
     (test (char<=? #\b #\c #\e) #t)))
-  
-  
+
+
   (test (char>? #\e #\d) #t)
   (test (char>? #\z #\a) #t)
   (test (char>? #\A #\B) #f)
@@ -1012,7 +1012,7 @@
     (test (apply char-ci=? digits) #f)
     (test (char-ci=? #\d #\c #\d) #f)))
 
-  
+
   (test (char-ci<? #\A #\B) #t)
   (test (char-ci<? #\a #\B) #t)
   (test (char-ci<? #\A #\b) #t)
@@ -1057,7 +1057,7 @@
     (test (char-ci<? #\3 #\? #\Z #\[) #t)
     ))
 
-  
+
   (test (char-ci>? #\A #\B) #f)
   (test (char-ci>? #\a #\B) #f)
   (test (char-ci>? #\A #\b) #f)
@@ -1086,7 +1086,7 @@
     (test (char-ci>? #\b #\c #\a) #f)
     (test (char-ci>? #\d #\C #\a) #t)))
 
-  
+
   (test (char-ci<=? #\A #\B) #t)
   (test (char-ci<=? #\a #\B) #t)
   (test (char-ci<=? #\A #\b) #t)
@@ -1114,7 +1114,7 @@
     (test (char-ci<=? #\b #\c #\C) #t)
     (test (char-ci<=? #\b #\C #\e) #t)))
 
-  
+
   (test (char-ci>=? #\A #\B) #f)
   (test (char-ci>=? #\a #\B) #f)
   (test (char-ci>=? #\A #\b) #f)
@@ -1412,7 +1412,7 @@
   (test (string-ci>? "^" "aN@di;iEO" "7*9q6uPmX9)PaY,6J" "15vH") #t)
   ))
 
- 
+
 (test (string-ci<=? "A" "B") #t)
 (test (string-ci<=? "a" "B") #t)
 (test (string-ci<=? "A" "b") #t)
@@ -1687,7 +1687,7 @@
 (test (symbol->string (string->symbol "Hi There")) "Hi There")
 (test (symbol->string (string->symbol "HI THERE")) "HI THERE")
 (test (symbol->string (string->symbol "")) "")
-(test (symbol? (string->symbol "(weird name for a symbol!)")) #t)      
+(test (symbol? (string->symbol "(weird name for a symbol!)")) #t)
 
 
 
@@ -1850,16 +1850,16 @@
 	    (begin
 	      (display "(") (display name) (display " ") (display lst) (display ")) returned ") (display val1) (display " ") (display val2) (newline)))))
     lists))
- (list 'caar 'cadr 'cdar 'cddr 'caaar 'caadr 'cadar 'cdaar 'caddr 'cdddr 'cdadr 'cddar 
-       'caaaar 'caaadr 'caadar 'cadaar 'caaddr 'cadddr 'cadadr 'caddar 'cdaaar 
+ (list 'caar 'cadr 'cdar 'cddr 'caaar 'caadr 'cadar 'cdaar 'caddr 'cdddr 'cdadr 'cddar
+       'caaaar 'caaadr 'caadar 'cadaar 'caaddr 'cadddr 'cadadr 'caddar 'cdaaar
        'cdaadr 'cdadar 'cddaar 'cdaddr 'cddddr 'cddadr 'cdddar)
 
- (list caar cadr cdar cddr caaar caadr cadar cdaar caddr cdddr cdadr cddar 
-       caaaar caaadr caadar cadaar caaddr cadddr cadadr caddar cdaaar 
+ (list caar cadr cdar cddr caaar caadr cadar cdaar caddr cdddr cdadr cddar
+       caaaar caaadr caadar cadaar caaddr cadddr cadadr caddar cdaaar
        cdaadr cdadar cddaar cdaddr cddddr cddadr cdddar)
 
- (list caar-1 cadr-1 cdar-1 cddr-1 caaar-1 caadr-1 cadar-1 cdaar-1 caddr-1 cdddr-1 cdadr-1 cddar-1 
-       caaaar-1 caaadr-1 caadar-1 cadaar-1 caaddr-1 cadddr-1 cadadr-1 caddar-1 cdaaar-1 
+ (list caar-1 cadr-1 cdar-1 cddr-1 caaar-1 caadr-1 cadar-1 cdaar-1 caddr-1 cdddr-1 cdadr-1 cddar-1
+       caaaar-1 caaadr-1 caadar-1 cadaar-1 caaddr-1 cadddr-1 cadadr-1 caddar-1 cdaaar-1
        cdaadr-1 cdadar-1 cddaar-1 cdaddr-1 cddddr-1 cddadr-1 cdddar-1))
 
 
@@ -2519,7 +2519,7 @@
 (test (append '() '() 0) 0)
 (test (let* ((x '(1 2 3)) (y (append x '()))) (eq? x y)) #f) ; check that append returns a new list
 (test (let* ((x '(1 2 3)) (y (append x '()))) (equal? x y)) #t)
-(test (let* ((x (list 1 2 3)) (y (append x (list)))) (eq? x y)) #f) 
+(test (let* ((x (list 1 2 3)) (y (append x (list)))) (eq? x y)) #f)
 (test (append '(1) 2) '(1 . 2))
 (let ((x (list 1 2 3)))
   (let ((y (append x '())))
@@ -2759,7 +2759,7 @@
 	(num-test (v1 0 1) 3)
 	(num-test (v1 1 1) 32))
       (set! v1 (make-vector '(2 4 3) 1))
-      (test (vector-dimensions v1) '(2 4 3))      
+      (test (vector-dimensions v1) '(2 4 3))
       (num-test (vector-ref v1 1 1 1) 1)
       (vector-set! v1 0 0 0 32)
       (num-test (v1 0 0 0) 32)
@@ -2916,7 +2916,7 @@
     (begin (display "with-output-to-file did not restore current-output-port? ") (display start-output-port) (display " ") (display (current-output-port)) (newline)))
 
 
-(let ((newly-found-sonnet-probably-by-shakespeare 
+(let ((newly-found-sonnet-probably-by-shakespeare
         "This is the story, a sad tale but true \
         Of a programmer who had far too little to do.\
         One day as he sat in his hut swilling stew, \
@@ -3051,11 +3051,11 @@
 			(lambda (hlt)
 			  (define (nextchar)
 			    (let ((c (read-char)))
-			      (if (and (char? c) 
+			      (if (and (char? c)
 				       (char=? c #\space))
-				  (nextchar) 
+				  (nextchar)
 				  c)))
-			  
+
 			  (define inx
 			    (lambda()
 			      (let in1 ()
@@ -3068,12 +3068,12 @@
 					      (out*n (- n 1)))))
 				      (out c))
 				  (in1)))))
-			  
+
 			  (define (move-char c)
 			    (write-char c)
 			    (if (char=? c #\.)
 				(begin (hlt))))
-			  
+
 			  (define outx
 			    (lambda()
 			      (let out1 ()
@@ -3084,20 +3084,20 @@
 				  (if (= n 1)
 				      (begin (out1))
 				      (begin (write-char #\space) (h1 (- n 1))) )))))
-			  
+
 			  (define (in)
 			    (call/cc (lambda(return)
 				       (set! outx return)
 				       (inx))))
-			  
+
 			  (define (out c)
-			    (call/cc (lambda(return) 
+			    (call/cc (lambda(return)
 				       (set! inx return)
 				       (outx c))))
 			  (outx)))))))))
       (if (not (string=? str "ABB BEE EEE E44 446 66F GZY W22 220 0PQ 999 999 999 R."))
 	  (format #t "call/cc with-input-from-string str: ~A~%" str))))
-    
+
 (let ((badfile "tmp1.r5rs"))
   (let ((p (open-output-file badfile)))
     (close-output-port p))
@@ -3126,12 +3126,12 @@
 (if with-open-input-string-and-friends
     (test (+ 100 (with-input-from-string "123" (lambda () (values (read) 1)))) 224))
 
-    
-    
+
+
 ;;; --------------------------------------------------------------------------------
 ;;; CONTROL OPS
 ;;; --------------------------------------------------------------------------------
-    
+
 (define control-ops (list lambda define quote if begin set! let let* letrec cond case and or do
 			  call/cc eval apply for-each map values call-with-values dynamic-wind
 			  quasiquote))
@@ -3153,7 +3153,7 @@
        (begin (display op) (display " not equal? to itself?") (newline))))
  control-ops)
 
-(define question-ops (list boolean? eof-object? string? 
+(define question-ops (list boolean? eof-object? string?
 		           number? integer? real? rational? complex? char?
 			   list? vector? pair? null?))
 
@@ -3167,7 +3167,7 @@
  question-ops)
 
 
-(for-each 
+(for-each
  (lambda (s)
    (if (not (symbol? s))
        (begin (display "(symbol? ") (display s) (display " returned #f?") (newline))))
@@ -3375,20 +3375,20 @@
 	d)
       21)
 
-(test (let ((ctr 0)) 
-	(let ((val (call/cc 
-		    (lambda (exit) 
-		      (for-each (lambda (a) 
-				  (if (> a 3) (exit a)) 
-				  (set! ctr (+ ctr 1))) 
-				(list 0 1 2 3 4 5)))))) 
+(test (let ((ctr 0))
+	(let ((val (call/cc
+		    (lambda (exit)
+		      (for-each (lambda (a)
+				  (if (> a 3) (exit a))
+				  (set! ctr (+ ctr 1)))
+				(list 0 1 2 3 4 5))))))
 	  (list ctr val)))
       (list 4 4))
 
 (test (call-with-current-continuation
        (lambda (exit)
-	 (for-each 
-	  (lambda (x) 
+	 (for-each
+	  (lambda (x)
 	    (if (negative? x) (exit x)))
 	  '(54 0 37 -3 245 19))
 	 #t))
@@ -3397,29 +3397,29 @@
 (test (let ((ctr 0)
 	    (cont #f)
 	    (lst '()))
-	(let ((val (call/cc 
-		    (lambda (exit) 
-		      (for-each (lambda (a) 
+	(let ((val (call/cc
+		    (lambda (exit)
+		      (for-each (lambda (a)
 				  (if (and (not cont) (= a 2))
-				      (exit a)) 
-				  (if (and cont (= a 5)) 
+				      (exit a))
+				  (if (and cont (= a 5))
 				      (exit a))
 				  (call/cc (lambda (c) (set! cont c)))
 				  (set! lst (cons ctr lst))
 				  (set! ctr (+ ctr 1)))
-				(list 0 1 2 3 4 5)))))) 
+				(list 0 1 2 3 4 5))))))
 	  (if (< val 5)
 	      (cont))
 	  (list ctr val lst)))
       (list 5 5 (list 4 3 2 1 0)))
 
-(test (let ((lst '())) 
-	(for-each (lambda (a) (set! lst (cons a lst))) 
-		  (let ((lst '())) 
-		    (for-each (lambda (b) (set! lst (cons b lst))) 
-			      (list 1 2 3)) 
-		    lst)) 
-	lst) 
+(test (let ((lst '()))
+	(for-each (lambda (a) (set! lst (cons a lst)))
+		  (let ((lst '()))
+		    (for-each (lambda (b) (set! lst (cons b lst)))
+			      (list 1 2 3))
+		    lst))
+	lst)
       (list 1 2 3))
 
 ;;; this is an infinite loop?
@@ -3427,11 +3427,11 @@
 (test (call/cc (lambda (x) (for-each x (list 1 2 3)))) 1) ; map also gives 1 ... perhaps not actually legal?
 
 (test (let ((ctr 0))
-	(for-each 
+	(for-each
 	 (lambda (x)
 	   (for-each
 	    (lambda (x y)
-	      (for-each 
+	      (for-each
 	       (lambda (x y z)
 		 (set! ctr (+ x y z)))
 	       (list x (+ x 1))
@@ -3442,8 +3442,8 @@
 	 (list 1 2 3 4 5))
 	ctr)
       23)
-					      
-	  
+
+
 
 
 
@@ -3484,10 +3484,10 @@
       (list 6 13 21))
 
 (test (let ((ctr 0))
-	(let ((val (call/cc 
-		    (lambda (exit) 
-		      (map (lambda (a) 
-			     (if (> a 3) (exit a)) 
+	(let ((val (call/cc
+		    (lambda (exit)
+		      (map (lambda (a)
+			     (if (> a 3) (exit a))
 			     (set! ctr (+ ctr 1))
 			     ctr)
 			   (list 0 1 2 3 4 5))))))
@@ -3496,8 +3496,8 @@
 
 (test (call-with-current-continuation
        (lambda (exit)
-	 (map 
-	  (lambda (x) 
+	 (map
+	  (lambda (x)
 	    (if (negative? x) (exit x))
 	    x)
 	  '(54 0 37 -3 245 19))))
@@ -3506,12 +3506,12 @@
 (test (let ((ctr 0)
 	    (cont #f)
 	    (lst '()))
-	(let ((val (call/cc 
-		    (lambda (exit) 
-		      (map (lambda (a) 
+	(let ((val (call/cc
+		    (lambda (exit)
+		      (map (lambda (a)
 			     (if (and (not cont) (= a 2))
-				 (exit a)) 
-			     (if (and cont (= a 5)) 
+				 (exit a))
+			     (if (and cont (= a 5))
 				 (exit a))
 			     (call/cc (lambda (c) (set! cont c)))
 			     (set! lst (cons ctr lst))
@@ -3546,7 +3546,7 @@
 (test (do ((vec (make-vector 5)) (i 0 (+ i 1))) ((= i 5) vec) (vector-set! vec i i)) '#(0 1 2 3 4))
 (test (let ((x '(1 3 5 7 9))) (do ((x x (cdr x)) (sum 0 (+ sum (car x))))  ((null? x) sum))) 25)
 (test (do ((i 4 (- i 1)) (a 1 (* a i))) ((zero? i) a)) 24)
-	   
+
 ;(test (do () (() ()) ()) '()) ; ?? -- is '() the same as ()? -- scheme bboard sez not necessarily
 (test (do () ('() '())) '())
 
@@ -3607,18 +3607,18 @@
 
 (num-test (do ((x (list 1 2 3) (cdr x)) (j -1)) ((null? x) j) (set! j (car x))) 3)
 
-(test (let ((x 0)) 
+(test (let ((x 0))
 	(do ((i 0 (+ i 1)))
 	    ((= i (do ((j 0 (+ j 1))) ((= j 2) (+ j 1)))))
 	  (set! x (+ x i)))
 	x)
       3)
-(test (let ((x 0)) 
+(test (let ((x 0))
 	(do ((i 0 (+ i (do ((j 0 (+ j 1))) ((= j 2) 1)))))
 	    ((= i 3) x)
 	  (set! x (+ x i))))
       3)
-(test (let ((x 0)) 
+(test (let ((x 0))
 	(do ((i 0 (+ i (do ((j 0 (+ j 1))) ((= j 2) 1)))))
 	    ((= i 3) (do ((j 0 (+ j 1))) ((= j 5) x) (set! x j)))
 	  (set! x (+ x i))))
@@ -3637,9 +3637,9 @@
 (test (let ((cont #f)
 	    (j 0)
 	    (k 0))
-	(call/cc (lambda (exit) 
-		   (do ((i 0 (+ i 1))) 
-		       ((= i 100) i) 
+	(call/cc (lambda (exit)
+		   (do ((i 0 (+ i 1)))
+		       ((= i 100) i)
 		     (set! j i)
 		     (call/cc (lambda (r) (set! cont r)))
 		     (if (= j 2) (exit))
@@ -3681,7 +3681,7 @@
 	4)
 
 (test (do ((temp-one 1 (+ temp-one 1))
-	     (temp-two 0 (+ temp-one 1)))     
+	     (temp-two 0 (+ temp-one 1)))
 	 ((= 3 temp-two) temp-one))
 	3)
 
@@ -3980,7 +3980,7 @@
   (test (list-length '(a b . c)) #f))
 
 (test (let ((samples (vector 0 1 2 3 4 5 6 7 8 9 10)))
-	(let ((make-scaler 
+	(let ((make-scaler
 	       (lambda (start end)
 		 (letrec ((ctr start)
 			  (us (lambda (them)
@@ -3990,7 +3990,7 @@
 				    (them us)))))
 		   us))))
 	  ((make-scaler 0 11)
-	   (make-scaler 1 11))) 
+	   (make-scaler 1 11)))
 	samples)
       (vector 0 2 4 6 8 10 12 14 16 18 20))
 
@@ -4111,7 +4111,7 @@
 
 (if (equal? (begin 1) 1)
     (begin
-      (test (let () (begin (define x 0)) (set! x (begin (begin 5))) (begin ((begin +) (begin x) (begin (begin 1))))) 6)      
+      (test (let () (begin (define x 0)) (set! x (begin (begin 5))) (begin ((begin +) (begin x) (begin (begin 1))))) 6)
 
       (test (let ((x 5))
 	      (begin (begin (begin)
@@ -4328,7 +4328,7 @@
 (test (call-with-values (lambda () (values -1)) abs) 1)
 (test (call-with-values (lambda () (values -1)) (lambda (a) (abs a))) 1)
 
-(test (call-with-values 
+(test (call-with-values
 	  (lambda ()
 	    (values
 	     (call-with-values (lambda () (values 1 2 3)) +)
@@ -4337,7 +4337,7 @@
 	  (- a b)))
       -18)
 
-(test (call-with-values 
+(test (call-with-values
 	  (lambda ()
 	    (values
 	     (call-with-values (lambda () (values 1 2 3)) +)
@@ -4358,15 +4358,15 @@
 (test (let ((x 2) (y 3)) (let ((x 7) (z (+ x y))) (* z x))) 35)
 (test (let ((x 2) (y 3)) (let* ((x 7)  (z (+ x y))) (* z x))) 70)
 (test (letrec ((even? (lambda (n)  (if (zero? n) #t (odd? (- n 1))))) (odd? (lambda (n)  (if (zero? n) #f (even? (- n 1)))))) (even? 88))  #t)
-(test (let loop ((numbers '(3 -2 1 6 -5)) 
-		 (nonneg '()) 
-		 (neg '())) 
-	(cond ((null? numbers) 
-	       (list nonneg neg)) 
-	      ((>= (car numbers) 0)  
-	       (loop (cdr numbers) (cons (car numbers) nonneg)  neg)) 
-	      ((< (car numbers) 0)  
-	       (loop (cdr numbers) nonneg (cons (car numbers) neg))))) 
+(test (let loop ((numbers '(3 -2 1 6 -5))
+		 (nonneg '())
+		 (neg '()))
+	(cond ((null? numbers)
+	       (list nonneg neg))
+	      ((>= (car numbers) 0)
+	       (loop (cdr numbers) (cons (car numbers) nonneg)  neg))
+	      ((< (car numbers) 0)
+	       (loop (cdr numbers) nonneg (cons (car numbers) neg)))))
       '((6 1 3) (-5 -2)))
 
 (test (let ((x 3)) (define x 5) x) 5)
@@ -4493,25 +4493,25 @@
 (test (let ((caller #f)) (let ((inner (lambda (arg) (+ arg 1)))) (set! caller inner)) (caller 1)) 2)
 (test (let ((caller #f)) (let ((x 11)) (define (inner arg) (+ arg x)) (set! caller inner)) (caller 1)) 12)
 
-(test (let ((caller #f)) 
-	(let ((x 11)) 
-	  (define (inner arg) 
-	    (+ arg x)) 
+(test (let ((caller #f))
+	(let ((x 11))
+	  (define (inner arg)
+	    (+ arg x))
 	  (let ((y 12))
-	    (let ((inner (lambda (arg) 
+	    (let ((inner (lambda (arg)
 			   (+ (inner x) y arg)))) ; 11 + 11 + 12 + arg
 	      (set! caller inner))))
 	(caller 1))
       35)
 
-(test (let ((caller #f)) 
-	(let ((x 11)) 
-	  (define (inner arg) 
-	    (+ arg x)) 
-	  (let* ((y 12) 
-		 (inner (lambda (arg) 
+(test (let ((caller #f))
+	(let ((x 11))
+	  (define (inner arg)
+	    (+ arg x))
+	  (let* ((y 12)
+		 (inner (lambda (arg)
 			  (+ (inner x) y arg)))) ; 11 + 11 + 12 + arg
-	    (set! caller inner))) 
+	    (set! caller inner)))
 	(caller 1))
       35)
 
@@ -4653,7 +4653,7 @@
         ((< (car numbers) 0)
          (loop (cdr numbers)
                nonneg
-               (cons (car numbers) neg)))))   
+               (cons (car numbers) neg)))))
       '((6 1 3) (-5 -2)))
 (test (let ((b '(1 2 3)))
   (let* ((a b)
@@ -4681,7 +4681,7 @@
 
 ;;; -------- call/cc --------
 ;;;
-;;; some of these were originally from Al Petrovsky, Scott G Miller, Matthias Radestock, J H Brown, Dorai Sitaram, 
+;;; some of these were originally from Al Petrovsky, Scott G Miller, Matthias Radestock, J H Brown, Dorai Sitaram,
 ;;;   and probably others.
 
 (let* ((next-leaf-generator (lambda (obj eot)
@@ -4717,10 +4717,10 @@
 	    (b #f)
 	    (c #f)
 	    (i 0))
-	(let () 
+	(let ()
 	  (set! r (+ 1 (+ 2 (+ 3 (call/cc (lambda (k) (set! a k) 4))))
 		     (+ 5 (+ 6 (call/cc (lambda (k) (set! b k) 7))))))
-	  (if (not c) 
+	  (if (not c)
 	      (set! c a))
 	  (set! i (+ i 1))
 	  (case i
@@ -4736,10 +4736,10 @@
 	    (b #f)
 	    (c #f)
 	    (i 0))
-	(let () 
+	(let ()
 	  (set! r (+ 1 (+ 2 (+ 3 (call/cc (lambda (k) (set! a k) 4))))
 		     (+ 5 (+ 6 (call/cc (lambda (k) (set! b k) 7))))))
-	  (if (not c) 
+	  (if (not c)
 	      (set! c a))
 	  (set! i (+ i 1))
 	  (case i
@@ -4783,9 +4783,9 @@
 
 (test (let ((x '())
 	    (y 0))
-	(call/cc 
+	(call/cc
 	 (lambda (escape)
-	   (let* ((yin ((lambda (foo) 
+	   (let* ((yin ((lambda (foo)
 			  (set! x (cons y x))
 			  (if (= y 10)
 			      (escape x)
@@ -4793,7 +4793,7 @@
 				(set! y 0)
 				foo)))
 			(call/cc (lambda (bar) bar))))
-		  (yang ((lambda (foo) 
+		  (yang ((lambda (foo)
 			   (set! y (+ y 1))
 			   foo)
 			 (call/cc (lambda (baz) baz)))))
@@ -4846,7 +4846,7 @@
 
 (test (let ((listindex (lambda (e l)
 			 (call/cc (lambda (not_found)
-				    (letrec ((loop 
+				    (letrec ((loop
 					      (lambda (l)
 						(cond
 						 ((null? l) (not_found #f))
@@ -4918,9 +4918,9 @@
 
 (test (let ((return #f)
 	    (lst '()))
-	(let ((val (+ 1 (call/cc 
-			 (lambda (cont) 
-			   (set! return cont) 
+	(let ((val (+ 1 (call/cc
+			 (lambda (cont)
+			   (set! return cont)
 			   1)))))
 	  (set! lst (cons val lst)))
 	(if (= (length lst) 1)
@@ -4975,7 +4975,7 @@
 		(lambda (k)
 		  (set! caller k)
 		  (generate-leaves)))))))))
-  (let ((same-fringe? 
+  (let ((same-fringe?
 	 (lambda (tree1 tree2)
 	   (let ((gen1 (tree->generator tree1))
 		 (gen2 (tree->generator tree2)))
@@ -5025,8 +5025,8 @@
 		(index (cadr v)))
 	    (string-set! r index chr)
 	    (set! index (+ index 1))
-	    (if (<= index 8) 
-		(c (list (integer->char (+ 1 (char->integer chr))) index)) 
+	    (if (<= index 8)
+		(c (list (integer->char (+ 1 (char->integer chr))) index))
 		r))))
       "abcdefghiiho")
 
@@ -5149,14 +5149,14 @@
 
 
 (let ((r5rs-ratify (lambda (ux err)
-		     (if (= ux 0.0) 
+		     (if (= ux 0.0)
 			 0
-			 (let ((tt 1) 
-			       (a1 0) 
-			       (b2 0) 
-			       (a2 1) 
-			       (b1 1) 
-			       (a 0)  
+			 (let ((tt 1)
+			       (a1 0)
+			       (b2 0)
+			       (a2 1)
+			       (b1 1)
+			       (a 0)
 			       (b 0)
 			       (ctr 0)
 			       (x (/ 1 ux)))
@@ -5164,7 +5164,7 @@
 			    (lambda (return)
 			      (do ()
 				  (#f)
-				(set! a (+ (* a1 tt) a2)) 
+				(set! a (+ (* a1 tt) a2))
 				(set! b (+ (* tt b1) b2))
 					;(display (format #f "~A ~A~%" a (- b a)))
 				(if (or (<= (abs (- ux (/ a b))) err)
@@ -5172,26 +5172,26 @@
 				    (return (/ a b)))
 				(set! ctr (+ 1 ctr))
 				(if (= x tt) (return))
-				(set! x (/ 1 (- x tt))) 
+				(set! x (/ 1 (- x tt)))
 				(set! tt (inexact->exact (floor x)))
-				(set! a2 a1) 
-				(set! b2 b1) 
-				(set! a1 a) 
+				(set! a2 a1)
+				(set! b2 b1)
+				(set! a1 a)
 				(set! b1 b)))))))))
-  
+
   (test (r5rs-ratify (/ (log 2.0) (log 3.0)) 1/10000000) 665/1054)
   (if (positive? 2147483648)
       (test (r5rs-ratify (/ (log 2.0) (log 3.0)) 1/100000000000) 190537/301994)))
 
 (for-each
  (lambda (arg)
-   (test (let ((ctr 0)) 
-	   (let ((val (call/cc 
-		       (lambda (exit) 
-			 (for-each (lambda (a) 
+   (test (let ((ctr 0))
+	   (let ((val (call/cc
+		       (lambda (exit)
+			 (for-each (lambda (a)
 				     (if (equal? a arg) (exit arg))
-				     (set! ctr (+ ctr 1))) 
-				   (list 0 1 2 3 arg 5)))))) 
+				     (set! ctr (+ ctr 1)))
+				   (list 0 1 2 3 arg 5))))))
 	     (list ctr val)))
 	 (list 4 arg)))
  (list "hi" -1 #\a 11 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #f #t '(1 . 2)))
@@ -5204,9 +5204,9 @@
 (test (procedure? (call/cc (lambda (k) k))) #t)
 (test (call/cc (lambda (k) (+ 56 (k 3)))) 3)
 (test (apply
-       (lambda (k i) 
-	 (if (> i 5) 
-	     i 
+       (lambda (k i)
+	 (if (> i 5)
+	     i
 	     (k (list k (* 2 i)))))
        (call/cc (lambda (k) (list k 1))))
       8)
@@ -5224,9 +5224,9 @@
 (let ()
   (define (generate-one-element-at-a-time a-list)
     (define (generator)
-      (call/cc control-state)) 
+      (call/cc control-state))
     (define (control-state return)
-      (for-each 
+      (for-each
        (lambda (an-element-from-a-list)
 	 (set! return
 	       (call/cc
@@ -5246,7 +5246,7 @@
 (test (let ()
 	(define count-to-n
 	  (lambda (n)
-	    (let ((receiver 
+	    (let ((receiver
 		   (lambda (exit-procedure)
 		     (let ((count 0))
 		       (letrec ((infinite-loop
@@ -5283,7 +5283,7 @@
 	    (let ((receiver
 		   (lambda (exit-on-zero)
 		     (letrec ((product
-			       (lambda (nums) 
+			       (lambda (nums)
 				 (cond ((null? nums) 1)
 				       ((number? (car nums))
 					(if (zero? (car nums))
@@ -5347,18 +5347,18 @@
 	       (= ctr3 ctr4 0))))
       #t)
 
-(test (let ((path '())  
-	    (c #f)) 
-	(let ((add (lambda (s)  
-		     (set! path (cons s path))))) 
-	  (dynamic-wind  
-	      (lambda () (add 'connect))  
-	      (lambda () (add (call-with-current-continuation  
-			       (lambda (c0) (set! c c0) 'talk1))))  
-	      (lambda () (add 'disconnect))) 
-	  (if (< (length path) 4) 
-	      (c 'talk2) 
-	      (reverse path)))) 
+(test (let ((path '())
+	    (c #f))
+	(let ((add (lambda (s)
+		     (set! path (cons s path)))))
+	  (dynamic-wind
+	      (lambda () (add 'connect))
+	      (lambda () (add (call-with-current-continuation
+			       (lambda (c0) (set! c c0) 'talk1))))
+	      (lambda () (add 'disconnect)))
+	  (if (< (length path) 4)
+	      (c 'talk2)
+	      (reverse path))))
       '(connect talk1 disconnect  connect talk2 disconnect))
 
 
@@ -5392,7 +5392,7 @@
           (reverse x)))
       '(a b c d e f g b c d e f g h))
 
-(test (list (dynamic-wind 
+(test (list (dynamic-wind
 		(lambda () #f)
 		(lambda () (values 'a 'b 'c))
 		(lambda () #f)))
@@ -5530,7 +5530,7 @@
 	      (let* ((val1 (stream-car counters))
 		     (val2 (stream-car (stream-cdr counters))))
 		(letrec ((stream-add (lambda (s1 s2)
-				       (delay (cons 
+				       (delay (cons
 					       (+ (stream-car s1) (stream-car s2))
 					       (stream-add (stream-cdr s1) (stream-cdr s2)))))))
 		  (let ((even-counters (stream-add counters counters)))
@@ -5565,11 +5565,11 @@
 		  (generator->lazy-list (lambda (generator)
 					  (delay
 					    (call/cc (lambda (k-main)
-						       (generator 
+						       (generator
 							(lambda (e)
 							  (call/cc (lambda (k-reenter)
-								     (k-main (cons e 
-										   (delay 
+								     (k-main (cons e
+										   (delay
 										     (call/cc (lambda (k-new-main)
 												(set! k-main k-new-main)
 												(k-reenter #f))))))))))
@@ -5590,7 +5590,7 @@
 	      (force p))
 	    2)
 
-      (test (let* ((x 1) 
+      (test (let* ((x 1)
 		   (p #f))
 	      (let* ((x 2))
 		(set! p (delay (+ x 1))))
@@ -5607,7 +5607,7 @@
 	      (set! x 10)
 	      (force p))
 	    6)
-      
+
       (test (let ((count 0))
 	      (define s (delay (begin (set! count (+ count 1)) 1)))
 	      (+ (force s) (force s))
@@ -5653,9 +5653,9 @@
       (test
        (let ()
 	 ;; j bartlett
-	 
+
 	 (define (square x) (* x x))
-	 
+
 	 (define (calculate-statistics-1 the-series)
 	   (let* ((size (length the-series))
 		  (sum (apply + the-series))
@@ -5664,7 +5664,7 @@
 			      (/ (apply + variance-list) size)))
 		  (standard-deviation (sqrt variance)))
 	     (vector mean variance standard-deviation)))
-	 
+
 	 (define (calculate-statistics the-series)
 	   (let* ((size (delay (length the-series)))
 		  (mean (delay (/ (apply + the-series) (force size))))
@@ -5672,7 +5672,7 @@
 				     (/ (apply + variance-list) (force size)))))
 		  (standard-deviation (delay (sqrt (force variance)))))
 	     (vector mean variance standard-deviation)))
-	 
+
 	 (let* ((stats1 (calculate-statistics-1 '(2 6 4 3 7 4 3 6 7 8 43 4 3 2 36 75 3)))
 		(stats (calculate-statistics '(2 6 4 3 7 4 3 6 7 8 43 4 3 2 36 75 3)))
 		(mean (force (vector-ref stats 0)))
@@ -5683,7 +5683,7 @@
 		(< (abs (- (vector-ref stats1 2) stddev)) 1.0e-6))))
        #t)
 
-      (test 
+      (test
        (let ()
 	 ;; j bartlett
 	 (define (flatten x)
@@ -5697,7 +5697,7 @@
 		   (does-flatten
 		    (cons (caar x) (cons (cdar x) (cdr x))))))))
 	   (delay (does-flatten x)))
-	 
+
 	 (let ((lst '((1 2) 3 ((4) 5)))
 	       (newlst '()))
 	   (do ((i 0 (+ i 1))
@@ -5706,12 +5706,12 @@
 	     (set! newlst (cons (car p) newlst)))))
        (list 1 2 3 4 5))
 
-      
+
       ))
 
 
-    
-    
+
+
 ;;; -------- quasiquote --------
 
 (test `(1 2 3) '(1 2 3))
@@ -5726,7 +5726,7 @@
 (test (let ((name1 'x) (name2 'y)) `(a `(b ,,name1 ,',name2 d) e)) '(a `(b ,x ,'y d) e))
 (test `(,@'() . foo) 'foo)
 (test `(1 2 ,(* 9 9) 3 4) '(1 2 81 3 4))
-(test `(1 ,(+ 1 1) 3) '(1 2 3))                     
+(test `(1 ,(+ 1 1) 3) '(1 2 3))
 ;#; `(,(+ 1 2)) -> infinite loop?
 (test `(,'a . ,'b) (cons 'a 'b))
 
@@ -5865,7 +5865,7 @@
 	 (lambda (arg)
 	   (test (let () (hash-table-set! ht 'key arg) (hash-table-ref ht 'key)) arg))
 	 (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2))))
-      
+
       (let ((ht (make-hash-table 277)))
 	(test (hash-table? ht) #t)
 	(test (hash-table-size ht) 277)
@@ -5875,25 +5875,25 @@
 	 (lambda (arg)
 	   (test (let () (hash-table-set! ht 'key arg) (hash-table-ref ht 'key)) arg))
 	 (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (hash-table? arg) #f))
        (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t #f '() '#(()) (list 1 2 3) '(1 . 2)))
-      
+
       (test (hash-table? (make-vector 3 '())) #f)
 
-      (let ((ht (make-hash-table)))	
+      (let ((ht (make-hash-table)))
 	(test (hash-table-ref ht 'not-a-key) #f)
 	(test (hash-table-ref ht "not-a-key") #f)
 	(hash-table-set! ht 'key 3/4)
 	(hash-table-set! ht "key" "hi")
 	(test (hash-table-ref ht "key") "hi")
 	(test (hash-table-ref ht 'key) "hi")
-	
+
 	(hash-table-set! ht 'asd 'hiho)
 	(test (hash-table-ref ht 'asd) 'hiho))
-      
+
       (let ((ht1 (make-hash-table 653))
 	    (ht2 (make-hash-table 277)))
 	(hash-table-set! ht1 'key 'hiho)
@@ -5901,7 +5901,7 @@
 	(test (hash-table-size ht1) 653)
 	(test (hash-table-ref ht2 'hiho) 3.14)
 	(test (hash-table-ref ht2 (hash-table-ref ht1 'key)) 3.14))
-      
+
       ))
 
 
@@ -5912,7 +5912,7 @@
        (lambda (arg)
 	 (test (keyword? arg) #f))
        (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t #f '() '#(()) (list 1 2 3) '(1 . 2)))
-      
+
       (let ((kw (make-keyword "hiho")))
 	(test (keyword? kw) #t)
 	(test (keyword->symbol kw) 'hiho)
@@ -5938,7 +5938,7 @@
 	(test (symbol->string (keyword->symbol hi:)) "hi")
 	(test (symbol->string (keyword->symbol :hi)) "hi")
 	(test (make-keyword ":") ::))
-      
+
       ))
 
 
@@ -5969,7 +5969,7 @@
       (test (equal? (sort! '#() <) '#()) #t)
 
       (test (call/cc (lambda (return) (sort! '(1 2 3) (lambda (a b) (return "oops"))))) "oops")
-      
+
       (let ((v (make-vector 10000)))
 	(do ((i 0 (+ i 1)))
 	    ((= i 10000))
@@ -6010,7 +6010,7 @@
       (test (eqv? (gensym) (gensym)) #f)
       (test (equal? (gensym) (gensym)) #f)
       (test (keyword? (gensym)) #f)
-      
+
       (let ((sym (gensym)))
 	(test (eval `(let ((,sym 32)) (+ ,sym 1))) 33))
 
@@ -6032,21 +6032,21 @@
 	    ;; the execution of FORMS and return the argument as the value of the
 	    ;; block.  If the function in LABEL is not invoked, the value of the
 	    ;; block is the value of the last form in FORMS.
-	    
+
 	    (define-macro (block label . forms)
 	      `(let ((body (lambda (,label) ,@forms))
 		     (tag (gensym "return-")))
 		 (catch tag
 			(lambda () (body (lambda (val) (error tag val))))
 			(lambda (tag val) val))))
-	    
+
 	    ;; (with-return FORMS...)
 	    ;;
 	    ;; Equivalent to (block return FORMS...)
-	    
+
 	    (define-macro (with-return . forms)
 	      `(block return ,@forms))
-	    
+
 	    ;; (tagbody TAGS-AND-FORMS...)
 	    ;;
 	    ;; TAGS-AND-FORMS is a list of either tags or forms.  A TAG is a
@@ -6058,7 +6058,7 @@
 	    ;; that will execute the FORMS following the respective TAG.
 	    ;;
 	    ;; The value of a tagbody is always `#f'.
-	    
+
 	    (define (transform-tagbody forms)
 	      (let ((start-tag (gensym "start-"))
 		    (block-tag (gensym "block-")))
@@ -6070,7 +6070,7 @@
 		   ((null? forms)
 		    `(block ,block-tag
 			    (letrec ,(reverse! (cons (list cur-tag `(lambda ()
-								      ,@(reverse! 
+								      ,@(reverse!
 									 (cons `(,block-tag #f)
 									       cur-code))))
 						     tags-and-code))
@@ -6088,10 +6088,10 @@
 			  (cons (car forms) cur-code)
 			  tags-and-code
 			  (cdr forms)))))))
-	    
+
 	    (define-macro (tagbody . forms)
 	      (transform-tagbody forms))
-	    
+
 	    (define (first_even l)
 	      (with-return
 	       (tagbody
@@ -6107,62 +6107,62 @@
 		(continue)
 		break)
 	       (return #f)))
-	    
+
 	    (let ((val (first_even '(1 3 5 6 7 8 9))))
 	      (if (not (equal? val (list 6)))
 		  (begin (display "first_even (tagbody, gensym, reverse!): '") (display val) (newline))))
-	    
+
 	    ))
       ))
 
 
 (if with-format
-    (begin 
-      
+    (begin
+
       (test (format #f "hiho") "hiho")
       (test (format #f "") "")
       (test (format #f "a") "a")
-      
+
       (test (format #f "~~") "~")
       (test (format #f "~~~~") "~~")
       (test (format #f "a~~") "a~")
       (test (format #f "~~a") "~a")
-      
+
       (test (format #f "hiho~%ha") (string-append "hiho" (string #\newline) "ha"))
       (test (format #f "~%") (string #\newline))
       (test (format #f "~%ha") (string-append (string #\newline) "ha"))
       (test (format #f "hiho~%") (string-append "hiho" (string #\newline)))
-      
+
       (for-each
        (lambda (arg res)
 	 (let ((val (catch #t (lambda () (format #f "~A" arg)) (lambda args 'error))))
 	   (if (or (not (string? val))
 		   (not (string=? val res)))
-	       (begin (display "(format #f \"~A\" ") (display arg) 
-		      (display " returned \"") (display val) 
-		      (display "\" but expected \"") (display res) (display "\"") 
+	       (begin (display "(format #f \"~A\" ") (display arg)
+		      (display " returned \"") (display val)
+		      (display "\" but expected \"") (display res) (display "\"")
 		      (newline)))))
        (list "hiho"  -1  #\a  1   #f   #t  '#(1 2 3)   3.14   3/4  1.5+1.5i '()  '#(())  (list 1 2 3) '(1 . 2) 'hi)
        (list "hiho" "-1" "a" "1" "#f" "#t" "#(1 2 3)" "3.14" "3/4" "1.5+1.5i"   "()" "#(())" "(1 2 3)"    "(1 . 2)" "hi"))
-      
+
       (test (format #f "hi ~A ho" 1) "hi 1 ho")
       (test (format #f "hi ~a ho" 1) "hi 1 ho")
       (test (format #f "~a~A~a" 1 2 3) "123")
       (test (format #f "~a~~~a" 1 3) "1~3")
       (test (format #f "~a~%~a" 1 3) (string-append "1" (string #\newline) "3"))
-      
+
       (for-each
        (lambda (arg res)
 	 (let ((val (catch #t (lambda () (format #f "~S" arg)) (lambda args 'error))))
 	   (if (or (not (string? val))
 		   (not (string=? val res)))
-	       (begin (display "(format #f \"~S\" ") (display arg) 
-		      (display " returned \"") (display val) 
-		      (display "\" but expected \"") (display res) (display "\"") 
+	       (begin (display "(format #f \"~S\" ") (display arg)
+		      (display " returned \"") (display val)
+		      (display "\" but expected \"") (display res) (display "\"")
 		      (newline)))))
        (list "hiho"  -1  #\a  1   #f   #t  '#(1 2 3)   3.14   3/4  1.5+1.5i '()  '#(())  (list 1 2 3) '(1 . 2) 'hi)
        (list "\"hiho\"" "-1" "#\\a" "1" "#f" "#t" "#(1 2 3)" "3.14" "3/4" "1.5+1.5i"   "()" "#(())" "(1 2 3)"    "(1 . 2)" "hi"))
-      
+
       (test (format #f "hi ~S ho" 1) "hi 1 ho")
       (test (format #f "hi ~S ho" "abc") "hi \"abc\" ho")
       (test (format #f "~s~a" #\a #\b) "#\\ab")
@@ -6172,7 +6172,7 @@
       (test (format #f "asb~{~A ~}asb" '(1 2 3 4)) "asb1 2 3 4 asb")
       (test (format #f "asb~{~A ~A.~}asb" '(1 2 3 4)) "asb1 2.3 4.asb")
       (test (format #f ".~{~A~}." '()) "..")
-      
+
       (test (format #f "~{~A ~A ~}" '(1 "hi" 2 "ho")) "1 hi 2 ho ")
       (test (format #f "~{.~{+~A+~}.~}" (list (list 1 2 3) (list 4 5 6))) ".+1++2++3+..+4++5++6+.")
       (test (format #f "~{~s ~}" '(fred jerry jill)) "fred jerry jill ")
@@ -6181,16 +6181,16 @@
       (test (format #f "~{.~{~A~}+~{~A~}~}" '((1 2) (3 4 5) (6 7 8) (9))) ".12+345.678+9")
       (test (format #f "~{.~{+~{-~A~}~}~}" '(((1 2) (3 4 5)))) ".+-1-2+-3-4-5")
       (test (format #f "~{.~{+~{-~A~}~}~}" '(((1 2) (3 4 5)) ((6) (7 8 9)))) ".+-1-2+-3-4-5.+-6+-7-8-9")
-      
+
       (test (format #f "~A ~* ~A" 1 2 3) "1  3")
       (test (format #f "~*" 1) "")
       (test (format #f "~{~* ~}" '(1 2 3)) "   ")
-      
+
       (test (format #f "this is a ~
              sentence") "this is a sentence")
-      
+
       ;; ~nT handling is a mess -- what are the defaults?  which is column 1? do we space up to or up to and including?
-      
+
       (test (format #f "asdh~20Thiho") "asdh                hiho")
       (test (format #f "asdh~2Thiho") "asdhhiho")
       (test (format #f "a~Tb") "ab")
@@ -6202,10 +6202,10 @@
       (test (format #f "0123456~1,Tb") "0123456b")
       (test (format #f "0123456~1,Tb") "0123456b")
       (test (format #f "0123456~,Tb") "0123456b")
-;      (test (format #f "0123456~7,10Tb") "0123456          b") 
+;      (test (format #f "0123456~7,10Tb") "0123456          b")
 ;      (test (format #f "0123456~8,10tb") "0123456           b")
       (test (format #f "0123456~3,12tb") "0123456        b")
-      
+
 ;      (test (format #f "~40TX") "                                       X")
 ;      (test (format #f "X~,8TX~,8TX") "X       X       X")
       (test (format #f "X~8,TX~8,TX") "X       XX")
@@ -6218,87 +6218,87 @@
       (test (format #f "X~0,0TX~0,0TX") "XXX")
       (test (format #f "X~0,TX~0,TX") "XXX")
       (test (format #f "X~,0TX~,0TX") "XXX")
-      
+
       (test (format #f "~D" 123) "123")
       (test (format #f "~X" 123) "7b")
       (test (format #f "~B" 123) "1111011")
       (test (format #f "~O" 123) "173")
-      
+
       (test (format #f "~10D" 123) "       123")
       (test (format #f "~10X" 123) "        7b")
       (test (format #f "~10B" 123) "   1111011")
       (test (format #f "~10O" 123) "       173")
-      
+
       (test (format #f "~D" -123) "-123")
       (test (format #f "~X" -123) "-7b")
       (test (format #f "~B" -123) "-1111011")
       (test (format #f "~O" -123) "-173")
-      
+
       (test (format #f "~10D" -123) "      -123")
       (test (format #f "~10X" -123) "       -7b")
       (test (format #f "~10B" -123) "  -1111011")
       (test (format #f "~10O" -123) "      -173")
-      
+
       (test (format #f "~d" 123) "123")
       (test (format #f "~x" 123) "7b")
       (test (format #f "~b" 123) "1111011")
       (test (format #f "~o" 123) "173")
-      
+
       (test (format #f "~10d" 123) "       123")
       (test (format #f "~10x" 123) "        7b")
       (test (format #f "~10b" 123) "   1111011")
       (test (format #f "~10o" 123) "       173")
-      
+
       (test (format #f "~d" -123) "-123")
       (test (format #f "~x" -123) "-7b")
       (test (format #f "~b" -123) "-1111011")
       (test (format #f "~o" -123) "-173")
-      
+
       (test (format #f "~10d" -123) "      -123")
       (test (format #f "~10x" -123) "       -7b")
       (test (format #f "~10b" -123) "  -1111011")
       (test (format #f "~10o" -123) "      -173")
-      
+
       (if (and (defined? 'most-positive-fixnum)
 	       (= most-positive-fixnum 9223372036854775807))
 	  (begin
-	    
+
 	    (test (format #f "~D" most-positive-fixnum) "9223372036854775807")
 	    (test (format #f "~D" (+ 1 most-negative-fixnum)) "-9223372036854775807")
-	    
+
 	    (test (format #f "~X" most-positive-fixnum) "7fffffffffffffff")
 	    (test (format #f "~X" (+ 1 most-negative-fixnum)) "-7fffffffffffffff")
-	    
+
 	    (test (format #f "~O" most-positive-fixnum) "777777777777777777777")
 	    (test (format #f "~O" (+ 1 most-negative-fixnum)) "-777777777777777777777")
-	    
+
 	    (test (format #f "~B" most-positive-fixnum) "111111111111111111111111111111111111111111111111111111111111111")
 	    (test (format #f "~B" (+ 1 most-negative-fixnum)) "-111111111111111111111111111111111111111111111111111111111111111")
 
 	    (num-test (inexact->exact most-positive-fixnum) most-positive-fixnum)
-	    
+
 	    ))
 
       (if (and (defined? 'most-positive-fixnum)
 	       (= most-positive-fixnum 2147483647))
 	  (begin
-	    
+
 	    (test (format #f "~D" most-positive-fixnum) "2147483647")
 	    (test (format #f "~D" (+ 1 most-negative-fixnum)) "-2147483647")
-	    
+
 	    (test (format #f "~X" most-positive-fixnum) "7fffffff")
 	    (test (format #f "~X" (+ 1 most-negative-fixnum)) "-7fffffff")
-	    
+
 	    (test (format #f "~O" most-positive-fixnum) "17777777777")
 	    (test (format #f "~O" (+ 1 most-negative-fixnum)) "-17777777777")
-	    
+
 	    (test (format #f "~B" most-positive-fixnum) "1111111111111111111111111111111")
 	    (test (format #f "~B" (+ 1 most-negative-fixnum)) "-1111111111111111111111111111111")
 
 	    (num-test (inexact->exact most-positive-fixnum) most-positive-fixnum)
-	    
+
 	    ))
-      
+
       (test (format #f "~0D" 123) "123")
       (test (format #f "~0X" 123) "7b")
       (test (format #f "~0B" 123) "1111011")
@@ -6307,7 +6307,7 @@
       (call-with-output-file "tmp1.r5rs" (lambda (p) (format p "this ~A ~C test ~D" "is" #\a 3)))
       (let ((res (call-with-input-file "tmp1.r5rs" (lambda (p) (read-line p)))))
 	(if (not (string=? res "this is a test 3"))
-	    (begin 
+	    (begin
 	      (display "call-with-input-file + format to \"tmp1.r5rs\" ... expected \"this is a test 3\", but got \"")
 	      (display res) (display "\"?") (newline))))
 
@@ -6336,15 +6336,15 @@
 		  (test (string=? line3 "line 3") #t))
 		(let ((eof (read-line p #t)))
 		  (test (eof-object? eof) #t))))))
-      
+
       (if with-open-input-string-and-friends
-	  (let ((res #f)) 
-	    (let ((this-file (open-output-string))) 
+	  (let ((res #f))
+	    (let ((this-file (open-output-string)))
 	      (format this-file "this ~A ~C test ~D" "is" #\a 3)
 	      (set! res (get-output-string this-file))
 	      (close-output-port this-file))
 	    (if (not (string=? res "this is a test 3"))
-		(begin 
+		(begin
 		  (display "open-output-string + format ... expected \"this is a test 3\", but got \"")
 		  (display res) (display "\"?") (newline)))))
 
@@ -6414,7 +6414,7 @@
 	(test (hi) #f)          ; all args are optional
 	(test (hi :a 32) 32)    ; all args are keywords
 	(test (hi 1 2) 'error)  ; extra args
-	
+
 	(for-each
 	 (lambda (arg)
 	   (test (hi arg) arg)
@@ -6494,7 +6494,7 @@
 	(test (hi) (list #f #f))
 	(test (hi :a 2) (list 2 #f))
 	(test (hi :b 3) (list #f 3)))
-	
+
       (let ((hi (lambda* ((a 0.0) :optional (b 0.0)) (+ a b))))
 	(num-test (hi 1.0) 1.0)
 	(num-test (hi 1.0 2.0) 3.0)
@@ -6572,7 +6572,7 @@
 	 (test (continuation? arg) #f))
        (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi abs '#(()) (list 1 2 3) '(1 . 2) "hi" (lambda () 1)))
 
-      (test (let ((cont #f)) 
+      (test (let ((cont #f))
 	      (and (call/cc (lambda (x) (set! cont x) (continuation? x)))
 		   (continuation? cont)))
 	    #t)
@@ -6592,10 +6592,10 @@
 
       (test (string=? (procedure-documentation abs) "(abs x) returns the absolute value of the real number x") #t)
       (test (string=? (procedure-documentation 'abs) "(abs x) returns the absolute value of the real number x") #t)
-      (test (let ((hi (lambda (x) "this is a test" (+ x 1)))) 
+      (test (let ((hi (lambda (x) "this is a test" (+ x 1))))
 	      (list (hi 1) (procedure-documentation hi)))
 	    (list 2 "this is a test"))
-      
+
       (for-each
        (lambda (arg)
 	 (test (procedure-documentation arg) 'error))
@@ -6651,8 +6651,8 @@
       (test (_mac4_ 2 :b 3) 5)
       (test (_mac4_ :b 10 :a 12) 22)
       (test (_mac4_ :a 4) 6)
-      
-      
+
+
       (defmacro* _mac11_ () `(+ 1 2))
       (test (_mac11_) 3)
       (defmacro* _mac12_ (a) `(+ ,a 2))
@@ -6668,7 +6668,7 @@
       (test (_mac14_ 2 :b 3) 5)
       (test (_mac14_ :b 10 :a 12) 22)
       (test (_mac14_ :a 4) 6)
-      
+
       (begin
 	(define-macro (hi a) `(+ ,a 1))
 	(test (hi 2) 3)
@@ -6739,43 +6739,43 @@
       (test (string=? (object->string '#(1 2 3)) "#(1 2 3)") #t)
       (test (string=? (object->string +) "+") #t)
 
-      (test (let ((l (list 1 2))) 
-	      (list-set! l 0 l) 
-	      (string=? (object->string l) "([circular list] 2)")) 
+      (test (let ((l (list 1 2)))
+	      (list-set! l 0 l)
+	      (string=? (object->string l) "([circular list] 2)"))
 	    #t)
-      (test (let ((lst (cons 1 2))) 
+      (test (let ((lst (cons 1 2)))
 	      (set-cdr! lst lst)
 	      (string=? (object->string lst) "[circular list]"))
 	    #t)
-      (test (let ((lst (cons 1 2))) 
+      (test (let ((lst (cons 1 2)))
 	      (set-car! lst lst)
 	      (string=? (object->string lst) "([circular list] . 2)"))
 	    #t)
-      (test (let ((lst (cons (cons 1 2) 3))) 
+      (test (let ((lst (cons (cons 1 2) 3)))
 	      (set-car! (car lst) lst)
 	      (string=? (object->string lst) "(([circular list] . 2) . 3)"))
 	    #t)
-      (test (let ((v (vector 1 2))) 
-	      (vector-set! v 0 v) 
-	      (string=? (object->string v) "#([circular vector] 2)")) 
+      (test (let ((v (vector 1 2)))
+	      (vector-set! v 0 v)
+	      (string=? (object->string v) "#([circular vector] 2)"))
 	    #t)
-      (test (let* ((l1 (list 1 2)) (l2 (list l1))) 
-	      (list-set! l1 0 l1) 
-	      (string=? (object->string l2) "(([circular list] 2))")) 
+      (test (let* ((l1 (list 1 2)) (l2 (list l1)))
+	      (list-set! l1 0 l1)
+	      (string=? (object->string l2) "(([circular list] 2))"))
 	    #t)
-      (test (let* ((v1 (vector 1 2)) (v2 (vector v1))) 
-	      (vector-set! v1 1 v1) 
-	      (string=? (object->string v2) "#(#(1 [circular vector]))")) 
+      (test (let* ((v1 (vector 1 2)) (v2 (vector v1)))
+	      (vector-set! v1 1 v1)
+	      (string=? (object->string v2) "#(#(1 [circular vector]))"))
 	    #t)
-      (test (let ((v1 (make-vector 3 1))) 
-	      (vector-set! v1 0 (cons 3 v1)) 
-	      (string=? (object->string v1) "#((3 . [circular vector]) 1 1)")) 
+      (test (let ((v1 (make-vector 3 1)))
+	      (vector-set! v1 0 (cons 3 v1))
+	      (string=? (object->string v1) "#((3 . [circular vector]) 1 1)"))
 	    #t)
-      (test (let ((h1 (make-hash-table 11))) 
+      (test (let ((h1 (make-hash-table 11)))
 	      (hash-table-set! h1 'hi h1)
 	      (string=? (object->string h1) "#(() () () () ((\"hi\" . [circular hash-table])) () () () () () ())"))
 	    #t)
-		 
+
 
       (test (let* ((l1 (list 1 2))
 		   (v1 (vector 1 2))
@@ -6808,41 +6808,41 @@
 		      (join-thread t1))
 		    ctr)
 		  1)
-	    
+
 	    (test (let ((ctr 0))
 		    (let ((t1 (make-thread (lambda () (set! ctr (+ ctr 1))))))
 		      (join-thread t1)
 		      (thread? t1)))
 		  #t)
-	    
+
 	    (test (let ((ctr 0)
 			(loc (make-thread-variable)))
 		    (let ((t1 (make-thread (lambda () (set! (loc) (+ ctr 1)) (set! ctr (loc))))))
 		      (join-thread t1)
 		      ctr))
 		  1)
-	    
+
 	    (test (let ((ctr 0)
 			(loc (make-thread-variable)))
 		    (let ((t1 (make-thread (lambda () (set! (loc) (+ ctr 1)) (set! ctr (thread-variable? loc))))))
 		      (join-thread t1)
 		      ctr))
 		  #t)
-	    
+
 	    (test (let ((ctr 0)
 			(lock (make-lock)))
 		    (let ((t1 (make-thread (lambda () (grab-lock lock) (set! ctr (+ ctr 1)) (release-lock lock)))))
 		      (join-thread t1))
 		    ctr)
 		  1)
-	    
+
 	    (test (let ((ctr 0)
 			(lock (make-lock)))
 		    (let ((t1 (make-thread (lambda () (grab-lock lock) (set! ctr (lock? lock)) (release-lock lock)))))
 		      (join-thread t1))
 		    ctr)
 		  #t)
-	    
+
 	    (test (let ((ctr 0)
 			(lock (make-lock)))
 		    (let ((t1 (make-thread (lambda () (grab-lock lock) (set! ctr (+ ctr 1)) (release-lock lock))))
@@ -6851,7 +6851,7 @@
 		      (join-thread t2))
 		    ctr)
 		  2)
-	    
+
 	    (test (let ((ctr 0)
 			(lock (make-lock)))
 		    (let ((threads '()))
@@ -6865,7 +6865,7 @@
 		       threads))
 		    ctr)
 		  8)
-	    
+
 	    (test (let ((ctr 0)
 			(ctr1 0)
 			(ctr2 0)
@@ -6883,32 +6883,32 @@
 	     (lambda (arg)
 	       (test (thread? arg) #f))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi "hi" abs '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (lock? arg) #f))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi "hi" abs '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (thread-variable? arg) #f))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi "hi" abs '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (make-thread arg) 'error))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi "hi" '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (grab-lock arg) 'error))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi "hi" '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (release-lock arg) 'error))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi "hi" '#(()) (list 1 2 3) '(1 . 2)))))
-	    
+
       (let ((v (make-vector '(2 3) 0)))
 	(num-test (vector-length v) 6)
 	(test (vector-dimensions v) '(2 3))
@@ -6936,7 +6936,7 @@
 	(test (vector-set! v 1 2 3 4) 'error)
 	(test (v 1 1 1) 'error)
 	(test (set! (v 1 1 1) 1) 'error))
-      
+
       (let ((v1 (make-vector '(3 2) 0))
 	    (v2 (make-vector '(2 3) 0))
 	    (v3 (make-vector '(2 3 4) 0))
@@ -6966,18 +6966,18 @@
 
       (test (#(1 2) 1) 2)
       (test (#(1 2) 1 2) 'error)
-      
+
       (test (constant? pi) #t)
       (test (constant? 'pi) #t) ; take that, Clisp!
       (test (constant? 12345) #t)
       (test (constant? 3.14) #t)
-      (test (constant? :asdf) #t) 
-      (test (constant? "hi") #t) 
-      (test (constant? #\a) #t) 
-      (test (constant? #f) #t) 
-      (test (constant? #t) #t) 
-      (test (constant? '()) #t) 
-      (test (constant? '(a)) #t) 
+      (test (constant? :asdf) #t)
+      (test (constant? "hi") #t)
+      (test (constant? #\a) #t)
+      (test (constant? #f) #t)
+      (test (constant? #t) #t)
+      (test (constant? '()) #t)
+      (test (constant? '(a)) #t)
       (test (constant? '*features*) #f)
       (test (let ((a 3)) (constant? 'a)) #f)
       (test (constant? 'abs) #f)
@@ -6992,11 +6992,11 @@
       (test ("hi" 1) #\i)
       (test (apply '(1 2) '(1)) 2)
       (test ((list 1 2 3) 1) 2)
-      
+
       (test (let ((pi 3)) pi) 'error)
       ;;   or ... (let ((:asdf 3)) :asdf) and worse (let ((:key 1)) :key) or even worse (let ((:3 1)) 1)
       (test (let ((x_x_x 32)) (let () (define-constant x_x_x 3) x_x_x) (set! x_x_x 31) x_x_x) 'error)
-      
+
 
       (test (with-environment (current-environment) (let ((x 1)) x)) 1)
 
@@ -7019,9 +7019,9 @@
 	    #t)
 
       (test (let ()
-        (define-macro (mac a b) 
-          `(with-environment 
-             (cons (list (cons 'a ,a) 
+        (define-macro (mac a b)
+          `(with-environment
+             (cons (list (cons 'a ,a)
                          (cons 'b ,b))
                    (global-environment))
              (+ a b)))
@@ -7057,7 +7057,7 @@
 	      (pws-test))
 	    321)
 
-      (if (defined? 'open-encapsulator) 
+      (if (defined? 'open-encapsulator)
 	  (begin
 	    ;; encapsulator tests
 	    (let ((gi 32)
@@ -7089,7 +7089,7 @@
 	      (test gc (cons 1 2))
 	      (test gr 3/4)
 	      (test (gf) 123))
-	    
+
 	    (let ((gsym 123))
 	      (let ((e (open-encapsulator)))
 		(set! gsym 321)
@@ -7100,7 +7100,7 @@
 		(e)
 		(test gsym 123)
 		(close-encapsulator e)))
-	    
+
 	    (let ((g1 1))
 	      (let ((e1 (open-encapsulator)))
 		(let ((g2 2))
@@ -7132,7 +7132,7 @@
 		(close-encapsulator e)))
 
 	    ))
-		
+
       (for-each
        (lambda (arg)
 	 (test (port-filename arg) 'error))
@@ -7149,7 +7149,7 @@
       (test (length (vector 1 2)) 2)
       (test (length (make-hash-table 7)) 7)
       (test (length '()) 0)
-      
+
       (test (copy 3) 3)
       (test (copy 3/4) 3/4)
       (test (copy "hi") "hi")
@@ -7159,7 +7159,7 @@
       (test (copy (list 1 (list 2 3))) (list 1 (list 2 3)))
       (test (copy (cons 1 2)) (cons 1 2))
       (test (copy '(1 2 . 3)) '(1 2 . 3))
-      
+
       (if (not (provided? 'gmp))
 	  (let ((r1 (make-random-state 1234)))
 	    (random 1.0 r1)
@@ -7197,7 +7197,7 @@
 	(test cn (cons 100 100)))
 
       ;; generic for-each/map
-      (test (let ((sum 0)) (for-each (lambda (n) (set! sum (+ sum n))) (vector 1 2 3)) sum) 6)      
+      (test (let ((sum 0)) (for-each (lambda (n) (set! sum (+ sum n))) (vector 1 2 3)) sum) 6)
       (test (map (lambda (n) (+ n 1)) (vector 1 2 3)) '#(2 3 4))
 
       ;; try some applicable stuff
@@ -7403,35 +7403,35 @@
 (num-test (sin -1.0+2.71828182845905i) -6.40369949494148+4.07611467243740i)
 (num-test (sin 1.0-2.71828182845905i) 6.40369949494148-4.07611467243740i)
 (num-test (sin -1.0-2.71828182845905i) -6.40369949494148-4.07611467243740i)
-(num-test (sin 10/3) -0.1905679628754527) 
-(num-test (sin 1234/3) 0.213644699569724) 
-(num-test (sin 1234/10) -0.7693905459455223) 
+(num-test (sin 10/3) -0.1905679628754527)
+(num-test (sin 1234/3) 0.213644699569724)
+(num-test (sin 1234/10) -0.7693905459455223)
 (num-test (sin 1234000000/3) 9.98585468017658e-1)
-(num-test (sin 1234000000/500029) -0.9907886154453116) 
-(num-test (sin 1234000000/362880) .9798963032808383) 
-(num-test (sin 500029/2) 0.270047165973401) 
+(num-test (sin 1234000000/500029) -0.9907886154453116)
+(num-test (sin 1234000000/362880) .9798963032808383)
+(num-test (sin 500029/2) 0.270047165973401)
 (num-test (sin 500029/3) 7.610322596690986e-1)
-(num-test (sin 500029/10) .9665258739436294) 
-(num-test (sin 500029/1234) .05553717596791147) 
-(num-test (sin 362880/1234) -0.9463147870254296) 
-(num-test (sin our-pi) -6.982889851335445E-15) 
-(num-test (sin 2.71828182845905) .4107812905029501) 
-(num-test (sin 3.14159265358979+0.0i) -6.982889851335445E-15) 
-(num-test (sin 3.14159265358979+0.00000001i) -6.982889851335445E-15-1.0E-8i) 
-(num-test (sin 3.14159265358979+1.0i) -1.077516210464362E-14-1.175201193643801i) 
-(num-test (sin 3.14159265358979+3.14159265358979i) -8.094533288479446E-14-11.54873935725783i) 
-(num-test (sin 3.14159265358979+2.71828182845905i) -5.314066559815525E-14-7.54413710281663i) 
-(num-test (sin 2.71828182845905+0.0i) .4107812905029501) 
-(num-test (sin 2.71828182845905+0.00000001i) .4107812905029501-9.117339147869465E-9i) 
-(num-test (sin 2.71828182845905+1.0i) .6338686545195173-1.071470784943156i) 
-(num-test (sin 2.71828182845905+3.14159265358979i) 4.761757525968664-10.52937734504676i) 
-(num-test (sin 2.71828182845905+2.71828182845905i) 3.126097025348496-6.878245654440458i) 
-(num-test (sin 1234.0+0.00000001i) .6019276547624973-7.985506235875843E-9i) 
-(num-test (sin 1234.0+3.14159265358979i) 6.977517249251167-9.222253015388718i) 
-(num-test (sin 1234.0+2.71828182845905i) 4.58074477716391-6.024375387884452i) 
-(num-test (sin 1234000000.0+0.00000001i) -0.9872932128398908+1.5890913089022285E-9i) 
-(num-test (sin 1234000000.0+3.14159265358979i) -11.44465679247962+1.835200134139553i) 
-(num-test (sin 1234000000.0+2.71828182845905i) -7.513424898263172+1.198832270325275i) 
+(num-test (sin 500029/10) .9665258739436294)
+(num-test (sin 500029/1234) .05553717596791147)
+(num-test (sin 362880/1234) -0.9463147870254296)
+(num-test (sin our-pi) -6.982889851335445E-15)
+(num-test (sin 2.71828182845905) .4107812905029501)
+(num-test (sin 3.14159265358979+0.0i) -6.982889851335445E-15)
+(num-test (sin 3.14159265358979+0.00000001i) -6.982889851335445E-15-1.0E-8i)
+(num-test (sin 3.14159265358979+1.0i) -1.077516210464362E-14-1.175201193643801i)
+(num-test (sin 3.14159265358979+3.14159265358979i) -8.094533288479446E-14-11.54873935725783i)
+(num-test (sin 3.14159265358979+2.71828182845905i) -5.314066559815525E-14-7.54413710281663i)
+(num-test (sin 2.71828182845905+0.0i) .4107812905029501)
+(num-test (sin 2.71828182845905+0.00000001i) .4107812905029501-9.117339147869465E-9i)
+(num-test (sin 2.71828182845905+1.0i) .6338686545195173-1.071470784943156i)
+(num-test (sin 2.71828182845905+3.14159265358979i) 4.761757525968664-10.52937734504676i)
+(num-test (sin 2.71828182845905+2.71828182845905i) 3.126097025348496-6.878245654440458i)
+(num-test (sin 1234.0+0.00000001i) .6019276547624973-7.985506235875843E-9i)
+(num-test (sin 1234.0+3.14159265358979i) 6.977517249251167-9.222253015388718i)
+(num-test (sin 1234.0+2.71828182845905i) 4.58074477716391-6.024375387884452i)
+(num-test (sin 1234000000.0+0.00000001i) -0.9872932128398908+1.5890913089022285E-9i)
+(num-test (sin 1234000000.0+3.14159265358979i) -11.44465679247962+1.835200134139553i)
+(num-test (sin 1234000000.0+2.71828182845905i) -7.513424898263172+1.198832270325275i)
 (num-test (sin 1234.0+12.0i) 48983.30495194942-64983.97008730317i)
 (num-test (sin -3.45266983001243932001e-04+0.0e+00i) -3.4526697614140534807e-4+0.0i)
 (num-test (sin 3.45266983001243932001e-04+0.0e+00i) 3.4526697614140534807e-4+0.0i)
@@ -7788,47 +7788,47 @@
 (num-test (cos 2.71828182845905-3.14159265358979i) -10.56877693991882+4.74400605685607i)
 (num-test (cos 2.71828182845905+2.71828182845905i) -6.93840918469126-3.09899037482603i)
 (num-test (cos 2.71828182845905-2.71828182845905i) -6.93840918469126+3.09899037482603i)
-(num-test (cos -2/3) .7858872607769459) 
-(num-test (cos -3/2) 0.0707372016677029) 
-(num-test (cos -10/3) -0.9816740047110853) 
-(num-test (cos 1234/3) -0.9769114301438807) 
-(num-test (cos 1234/10) -0.6387786688749486) 
+(num-test (cos -2/3) .7858872607769459)
+(num-test (cos -3/2) 0.0707372016677029)
+(num-test (cos -10/3) -0.9816740047110853)
+(num-test (cos 1234/3) -0.9769114301438807)
+(num-test (cos 1234/10) -0.6387786688749486)
 (num-test (cos 1234000000/3) -5.317013319482049e-2)
-(num-test (cos 1234000000/500029) .1354175745756898) 
-(num-test (cos 1234000000/362880) .1995074806029773) 
-(num-test (cos 500029/2) 0.962847094896035) 
-(num-test (cos 500029/3) -0.6487140328750399) 
-(num-test (cos 500029/10) .2565691622107056) 
-(num-test (cos 500029/1234) -0.9984566200318916) 
-(num-test (cos -500029/362880) .1916572772946199) 
-(num-test (cos 362880/1234) .3232465372699541) 
-(num-test (cos -362880/500029) .7480231586426291) 
-(num-test (cos -3.14159265358979) -1.0) 
-(num-test (cos -2.71828182845905) -0.9117339147869464) 
-(num-test (cos 0.0+3.14159265358979i) 11.5919532755216) 
-(num-test (cos 0.0+2.71828182845905i) 7.610125138661946) 
-(num-test (cos 0.00000001+1.0i) 1.543080634815244-1.1752011936438014E-8i) 
-(num-test (cos 0.00000001+3.14159265358979i) 11.5919532755216-1.154873935725783E-7i) 
-(num-test (cos 0.00000001+2.71828182845905i) 7.610125138661945-7.54413710281663E-8i) 
-(num-test (cos 1.0+0.00000001i) .5403023058681398-8.414709848078964E-9i) 
-(num-test (cos 1.0+3.14159265358979i) 6.263159084280057-9.71792908024146i) 
-(num-test (cos 1.0+2.71828182845905i) 4.111768160364146-6.348172477432901i) 
-(num-test (cos 3.14159265358979+0.0i) -1.0) 
-(num-test (cos 3.14159265358979+0.00000001i) -1.0+6.982889851335445E-23i) 
-(num-test (cos 3.14159265358979+1.0i) -1.543080634815244+8.206300488372603E-15i) 
-(num-test (cos 3.14159265358979+3.14159265358979i) -11.5919532755216+8.064357485351393E-14i) 
-(num-test (cos 3.14159265358979+2.71828182845905i) -7.610125138661946+5.267987841234144E-14i) 
-(num-test (cos 2.71828182845905+0.0i) -0.9117339147869464) 
-(num-test (cos 2.71828182845905+0.00000001i) -0.9117339147869464-4.1078129050295015E-9i) 
-(num-test (cos 2.71828182845905+1.0i) -1.406878948012029-0.4827506629256081i) 
-(num-test (cos 2.71828182845905+3.14159265358979i) -10.56877693991868-4.744006056856582i) 
-(num-test (cos 2.71828182845905+2.71828182845905i) -6.93840918469081-3.098990374826203i) 
-(num-test (cos 1234.0+0.00000001i) -0.7985506235875843-6.019276547624973E-9i) 
-(num-test (cos 1234.0+3.14159265358979i) -9.256761516765916-6.951505596777556i) 
-(num-test (cos 1234.0+2.71828182845905i) -6.077070175058048-4.541024753505155i) 
-(num-test (cos 1234000000.0+0.00000001i) +0.1589091308902228+9.872932128398908E-9i) 
-(num-test (cos 1234000000.0+3.14159265358979i) +1.84206722033321+11.40199198427758i) 
-(num-test (cos 1234000000.0+2.71828182845905i) +1.209318371750606+7.448275358344457i) 
+(num-test (cos 1234000000/500029) .1354175745756898)
+(num-test (cos 1234000000/362880) .1995074806029773)
+(num-test (cos 500029/2) 0.962847094896035)
+(num-test (cos 500029/3) -0.6487140328750399)
+(num-test (cos 500029/10) .2565691622107056)
+(num-test (cos 500029/1234) -0.9984566200318916)
+(num-test (cos -500029/362880) .1916572772946199)
+(num-test (cos 362880/1234) .3232465372699541)
+(num-test (cos -362880/500029) .7480231586426291)
+(num-test (cos -3.14159265358979) -1.0)
+(num-test (cos -2.71828182845905) -0.9117339147869464)
+(num-test (cos 0.0+3.14159265358979i) 11.5919532755216)
+(num-test (cos 0.0+2.71828182845905i) 7.610125138661946)
+(num-test (cos 0.00000001+1.0i) 1.543080634815244-1.1752011936438014E-8i)
+(num-test (cos 0.00000001+3.14159265358979i) 11.5919532755216-1.154873935725783E-7i)
+(num-test (cos 0.00000001+2.71828182845905i) 7.610125138661945-7.54413710281663E-8i)
+(num-test (cos 1.0+0.00000001i) .5403023058681398-8.414709848078964E-9i)
+(num-test (cos 1.0+3.14159265358979i) 6.263159084280057-9.71792908024146i)
+(num-test (cos 1.0+2.71828182845905i) 4.111768160364146-6.348172477432901i)
+(num-test (cos 3.14159265358979+0.0i) -1.0)
+(num-test (cos 3.14159265358979+0.00000001i) -1.0+6.982889851335445E-23i)
+(num-test (cos 3.14159265358979+1.0i) -1.543080634815244+8.206300488372603E-15i)
+(num-test (cos 3.14159265358979+3.14159265358979i) -11.5919532755216+8.064357485351393E-14i)
+(num-test (cos 3.14159265358979+2.71828182845905i) -7.610125138661946+5.267987841234144E-14i)
+(num-test (cos 2.71828182845905+0.0i) -0.9117339147869464)
+(num-test (cos 2.71828182845905+0.00000001i) -0.9117339147869464-4.1078129050295015E-9i)
+(num-test (cos 2.71828182845905+1.0i) -1.406878948012029-0.4827506629256081i)
+(num-test (cos 2.71828182845905+3.14159265358979i) -10.56877693991868-4.744006056856582i)
+(num-test (cos 2.71828182845905+2.71828182845905i) -6.93840918469081-3.098990374826203i)
+(num-test (cos 1234.0+0.00000001i) -0.7985506235875843-6.019276547624973E-9i)
+(num-test (cos 1234.0+3.14159265358979i) -9.256761516765916-6.951505596777556i)
+(num-test (cos 1234.0+2.71828182845905i) -6.077070175058048-4.541024753505155i)
+(num-test (cos 1234000000.0+0.00000001i) +0.1589091308902228+9.872932128398908E-9i)
+(num-test (cos 1234000000.0+3.14159265358979i) +1.84206722033321+11.40199198427758i)
+(num-test (cos 1234000000.0+2.71828182845905i) +1.209318371750606+7.448275358344457i)
 (num-test (cos 1234.0+12.0i) -64983.97009220963-48983.30494825104i)
 (num-test (cos -3.45266983001243932001e-04+0.0e+00i) 9.9999994039535581673e-1+0.0i)
 (num-test (cos 3.45266983001243932001e-04+0.0e+00i) 9.9999994039535581673e-1+0.0i)
@@ -8186,41 +8186,41 @@
 (num-test (tan -1.0-2.71828182845905i) -0.00794757997665-1.00359921084211i)
 (num-test (tan 1234.0+1234.0i) 2.7e-20+1.0i)
 (num-test (tan 1234.0-1234.0i) 2.7e-20-1.0i)
-(num-test (tan 10/3) .1941255059835657) 
-(num-test (tan 1234/3) -0.2186940320047828) 
-(num-test (tan 1234/10) 1.204471256531804) 
+(num-test (tan 10/3) .1941255059835657)
+(num-test (tan 1234/3) -0.2186940320047828)
+(num-test (tan 1234/10) 1.204471256531804)
 (num-test (tan 1234000000/3) -18.78094727276203)              ; -18.78094815124064721190472 according to arprec's mathtool
-(num-test (tan 1234000000/500029) -7.31654379832009) 
-(num-test (tan 1234000000/362880) 4.911576750502133) 
-(num-test (tan 500029/2) .2804673425353792) 
-(num-test (tan 500029/3) -1.173139817032177) 
-(num-test (tan 500029/10) 3.767116303516932) 
-(num-test (tan 500029/1234) -0.05562302342803592) 
-(num-test (tan 362880/1234) -2.927532635052267) 
-(num-test (tan our-pi) 6.982889851335445E-15) 
-(num-test (tan 2.71828182845905) -0.4505495340698621) 
-(num-test (tan 0.00000001+1234.0i) +8.077935669463161E-28+1.0i) 
-(num-test (tan 0.00000001+1234000000.0i) 0.0+1.0i) 
-(num-test (tan 3.14159265358979+0.0i) 6.982889851335445E-15) 
-(num-test (tan 3.14159265358979+0.00000001i) +6.982889851335444E-15+1.0E-8i) 
-(num-test (tan 3.14159265358979+1.0i) +2.932634567877868E-15+0.7615941559557649i) 
-(num-test (tan 3.14159265358979+3.14159265358979i) +5.196631812627532E-17+0.99627207622075i) 
-(num-test (tan 3.14159265358979+2.71828182845905i) +1.205734242765375E-16+0.991328915800599i) 
-(num-test (tan 3.14159265358979+1234.0i) 0.0+1.0i) 
-(num-test (tan 3.14159265358979+1234000000.0i) -7.703719777548943E-34+1.0i) 
-(num-test (tan 2.71828182845905+0.0i) -0.4505495340698621) 
-(num-test (tan 2.71828182845905+0.00000001i) -0.4505495340698621+1.2029948826505699E-8i) 
-(num-test (tan 2.71828182845905+1.0i) -0.1692870118766369+0.8196826057997404i) 
-(num-test (tan 2.71828182845905+3.14159265358979i) -0.002790687681003331+0.9975247319761639i) 
-(num-test (tan 2.71828182845905+2.71828182845905i) -0.00648578276962794+0.9942257438545914i) 
-(num-test (tan 2.71828182845905+1234.0i) +2.710505431213761E-20+1.0i) 
-(num-test (tan 2.71828182845905+1234000000.0i) +2.710505431213761E-20+1.0i) 
-(num-test (tan 1234.0+0.00000001i) -0.7537751984442328+1.5681770497896427E-8i) 
-(num-test (tan 1234.0+3.14159265358979i) -0.003586791196867043+0.9989656315245496i) 
-(num-test (tan 1234.0+2.71828182845905i) -0.008351965390936033+0.9975698313220817i) 
-(num-test (tan 1234000000.0+0.00000001i) -6.212941995900324+3.9600648244422054E-7i) 
-(num-test (tan 1234000000.0+3.14159265358979i) -0.001176098307980411+1.003551866736695i) 
-(num-test (tan 1234000000.0+2.71828182845905i) -0.002755390838840499+1.008299558244272i) 
+(num-test (tan 1234000000/500029) -7.31654379832009)
+(num-test (tan 1234000000/362880) 4.911576750502133)
+(num-test (tan 500029/2) .2804673425353792)
+(num-test (tan 500029/3) -1.173139817032177)
+(num-test (tan 500029/10) 3.767116303516932)
+(num-test (tan 500029/1234) -0.05562302342803592)
+(num-test (tan 362880/1234) -2.927532635052267)
+(num-test (tan our-pi) 6.982889851335445E-15)
+(num-test (tan 2.71828182845905) -0.4505495340698621)
+(num-test (tan 0.00000001+1234.0i) +8.077935669463161E-28+1.0i)
+(num-test (tan 0.00000001+1234000000.0i) 0.0+1.0i)
+(num-test (tan 3.14159265358979+0.0i) 6.982889851335445E-15)
+(num-test (tan 3.14159265358979+0.00000001i) +6.982889851335444E-15+1.0E-8i)
+(num-test (tan 3.14159265358979+1.0i) +2.932634567877868E-15+0.7615941559557649i)
+(num-test (tan 3.14159265358979+3.14159265358979i) +5.196631812627532E-17+0.99627207622075i)
+(num-test (tan 3.14159265358979+2.71828182845905i) +1.205734242765375E-16+0.991328915800599i)
+(num-test (tan 3.14159265358979+1234.0i) 0.0+1.0i)
+(num-test (tan 3.14159265358979+1234000000.0i) -7.703719777548943E-34+1.0i)
+(num-test (tan 2.71828182845905+0.0i) -0.4505495340698621)
+(num-test (tan 2.71828182845905+0.00000001i) -0.4505495340698621+1.2029948826505699E-8i)
+(num-test (tan 2.71828182845905+1.0i) -0.1692870118766369+0.8196826057997404i)
+(num-test (tan 2.71828182845905+3.14159265358979i) -0.002790687681003331+0.9975247319761639i)
+(num-test (tan 2.71828182845905+2.71828182845905i) -0.00648578276962794+0.9942257438545914i)
+(num-test (tan 2.71828182845905+1234.0i) +2.710505431213761E-20+1.0i)
+(num-test (tan 2.71828182845905+1234000000.0i) +2.710505431213761E-20+1.0i)
+(num-test (tan 1234.0+0.00000001i) -0.7537751984442328+1.5681770497896427E-8i)
+(num-test (tan 1234.0+3.14159265358979i) -0.003586791196867043+0.9989656315245496i)
+(num-test (tan 1234.0+2.71828182845905i) -0.008351965390936033+0.9975698313220817i)
+(num-test (tan 1234000000.0+0.00000001i) -6.212941995900324+3.9600648244422054E-7i)
+(num-test (tan 1234000000.0+3.14159265358979i) -0.001176098307980411+1.003551866736695i)
+(num-test (tan 1234000000.0+2.71828182845905i) -0.002755390838840499+1.008299558244272i)
 ;(num-test (tan 1.5707963259845+2.0630965522972e-18i) 1.234000079689074E+9+3.141593059344448i)
 (num-test (tan -3.45266983001243932001e-04+0.0e+00i) -3.4526699672092183585e-4+0.0i)
 (num-test (tan 3.45266983001243932001e-04+0.0e+00i) 3.4526699672092183585e-4+0.0i)
@@ -8736,13 +8736,13 @@
 (num-test (asin 8.2729394e-17) 8.2729394e-17)
 (num-test (asin 1.821832e-231) 1.821832e-231)
 (num-test (asin 48983.30495194942-64983.97008730317i) 0.6459128607940432-12i)
-(num-test (asin 1234000000/3) 1.570796326794897-20.52806165432143i) 
-(num-test (asin 500029/2) 1.570796326794897-13.12242137571839i) 
-(num-test (asin 0.00000001+1234000000.0i) +8.103725052149596E-18+21.62667380877375i) 
-(num-test (asin 3.14159265358979+1234000000.0i) +2.545860611523387E-9+21.62667380877375i) 
-(num-test (asin 2.71828182845905+1234000000.0i) +2.2028207814967068E-9+21.62667380877375i) 
-(num-test (asin 1234000000.0+0.00000001i) +1.570796327200083+21.62667394298955i) 
-(num-test (asin 1234000000.0+3.14159265358979i) +1.570796327200083+21.62667394298955i) 
+(num-test (asin 1234000000/3) 1.570796326794897-20.52806165432143i)
+(num-test (asin 500029/2) 1.570796326794897-13.12242137571839i)
+(num-test (asin 0.00000001+1234000000.0i) +8.103725052149596E-18+21.62667380877375i)
+(num-test (asin 3.14159265358979+1234000000.0i) +2.545860611523387E-9+21.62667380877375i)
+(num-test (asin 2.71828182845905+1234000000.0i) +2.2028207814967068E-9+21.62667380877375i)
+(num-test (asin 1234000000.0+0.00000001i) +1.570796327200083+21.62667394298955i)
+(num-test (asin 1234000000.0+3.14159265358979i) +1.570796327200083+21.62667394298955i)
 (num-test (asin 0.0e+00+0.0e+00i) 0e0+0.0i)
 (num-test (asin 0.0e+00+1.19209289550781250e-07i) 0+1.1920928955078096766e-7i)
 (num-test (asin 0.0e+00-1.19209289550781250e-07i) 0-1.1920928955078096766e-7i)
@@ -9364,13 +9364,13 @@
 (num-test (acos 8.3886080e+06-8.3886080e+06i) 7.8539816339745008597e-1+1.6982105923718660081e1i)
 (num-test (acos -8.3886080e+06+8.3886080e+06i) 2.3561944901923431525e0-1.6982105923718660081e1i)
 (num-test (acos -8.3886080e+06-8.3886080e+06i) 2.3561944901923431525e0+1.6982105923718660081e1i)
-(num-test (acos 1234000000/3) 0+20.52806165432143i) 
-(num-test (acos 0.00000001+1234000000.0i) 1.570796326794897-21.62667380877375i) 
-(num-test (acos 3.14159265358979+1234000000.0i) 1.570796324249036-21.62667380877375i) 
-(num-test (acos 2.71828182845905+1234000000.0i) 1.570796324592076-21.62667380877375i) 
-(num-test (acos 1234000000.0+0.00000001i) -4.051865509779873E-10-21.62667394298955i) 
-(num-test (acos 1234000000.0+3.14159265358979i) -4.051865509779873E-10-21.62667394298955i) 
-(num-test (acos 1234000000.0+2.71828182845905i) -4.051865509779873E-10-21.62667394298955i) 
+(num-test (acos 1234000000/3) 0+20.52806165432143i)
+(num-test (acos 0.00000001+1234000000.0i) 1.570796326794897-21.62667380877375i)
+(num-test (acos 3.14159265358979+1234000000.0i) 1.570796324249036-21.62667380877375i)
+(num-test (acos 2.71828182845905+1234000000.0i) 1.570796324592076-21.62667380877375i)
+(num-test (acos 1234000000.0+0.00000001i) -4.051865509779873E-10-21.62667394298955i)
+(num-test (acos 1234000000.0+3.14159265358979i) -4.051865509779873E-10-21.62667394298955i)
+(num-test (acos 1234000000.0+2.71828182845905i) -4.051865509779873E-10-21.62667394298955i)
 (num-test (acos -64983.97009220963-48983.30494825104i) 2.495679792792491+12.0i)
 
 (let ((err 0.0))
@@ -9733,12 +9733,12 @@
 (num-test (atan 1234000000.0 2.71828182845905) 1.57079632459208)
 (num-test (atan 1234000000.0 1234.0) 1.57079532679490)
 (num-test (atan 1234000000.0 1234000000.0) 0.78539816339745)
-(num-test (atan 1234000000/3) 1.570796324363778) 
-(num-test (atan 0.00000001+1234000000.0i) +1.570796326794897+8.103727714748784E-10i) 
-(num-test (atan 3.14159265358979+1234000000.0i) +1.570796326794897+8.103727714748784E-10i) 
-(num-test (atan 2.71828182845905+1234000000.0i) +1.570796326794897+8.103727714748784E-10i) 
-(num-test (atan 1234000000.0+0.00000001i) +1.570796325984524+6.567040287478756E-27i) 
-(num-test (atan 1234000000.0+3.14159265358979i) +1.570796325984524+2.063096552297151E-18i) 
+(num-test (atan 1234000000/3) 1.570796324363778)
+(num-test (atan 0.00000001+1234000000.0i) +1.570796326794897+8.103727714748784E-10i)
+(num-test (atan 3.14159265358979+1234000000.0i) +1.570796326794897+8.103727714748784E-10i)
+(num-test (atan 2.71828182845905+1234000000.0i) +1.570796326794897+8.103727714748784E-10i)
+(num-test (atan 1234000000.0+0.00000001i) +1.570796325984524+6.567040287478756E-27i)
+(num-test (atan 1234000000.0+3.14159265358979i) +1.570796325984524+2.063096552297151E-18i)
 (num-test (atan 1234000000.0+2.71828182845905i) +1.570796325984524+1.785106628021167E-18i)
 (num-test (atan 1) 0.7853981633974483)
 (num-test (atan 0.0e+00+0.0e+00i) 0e0+0.0i)
@@ -9862,7 +9862,7 @@
 (num-test (atan -8.3886080e+06-8.3886080e+06i) -1.5707962671902518438e0-5.9604644775390483828e-8i)
 
 
-(if with-hyperbolic-functions 
+(if with-hyperbolic-functions
     (begin
 
       ;; -------- sinh
@@ -10038,24 +10038,24 @@
       (num-test (sinh -2.71828182845905+1.0i) -4.07611467243740+6.40369949494148i)
       (num-test (sinh 2.71828182845905-1.0i) 4.07611467243740-6.40369949494148i)
       (num-test (sinh -2.71828182845905-1.0i) -4.07611467243740-6.40369949494148i)
-      (num-test (sinh 1234/3) 2.18155865313939E+178) 
-      (num-test (sinh 1234/10) 1.953930316004457E+53) 
-      (num-test (sinh 0.0+3.14159265358979i) 0.0-6.982889851335445E-15i) 
-      (num-test (sinh 0.0+2.71828182845905i) 0.0+0.4107812905029501i) 
+      (num-test (sinh 1234/3) 2.18155865313939E+178)
+      (num-test (sinh 1234/10) 1.953930316004457E+53)
+      (num-test (sinh 0.0+3.14159265358979i) 0.0-6.982889851335445E-15i)
+      (num-test (sinh 0.0+2.71828182845905i) 0.0+0.4107812905029501i)
       (num-test (sinh 0.00000001+3.14159265358979i) -1.00000000000000003758922749678992050291E-8+3.231089148865173792463232707134864571569E-15i)
-      (num-test (sinh 0.00000001+2.71828182845905i) -9.117339147869465E-9+0.4107812905029501i) 
-      (num-test (sinh 0.00000001+1234.0i) -7.985506235875843E-9+0.6019276547624973i) 
-      (num-test (sinh 0.00000001+1234000000.0i) 1.5890913089022285E-9-0.9872932128398908i) 
-      (num-test (sinh 1.0+3.14159265358979i) -1.175201193643801-1.077516210464362E-14i) 
-      (num-test (sinh 1.0+2.71828182845905i) -1.071470784943156+0.6338686545195173i) 
-      (num-test (sinh 3.14159265358979+3.14159265358979i) -11.54873935725783-8.094533288479446E-14i) 
-      (num-test (sinh 3.14159265358979+2.71828182845905i) -10.52937734504676+4.761757525968664i) 
-      (num-test (sinh 3.14159265358979+1234.0i) -9.222253015388718+6.977517249251167i) 
-      (num-test (sinh 3.14159265358979+1234000000.0i) 1.835200134139553-11.44465679247962i) 
-      (num-test (sinh 2.71828182845905+3.14159265358979i) -7.54413710281663-5.314066559815525E-14i) 
-      (num-test (sinh 2.71828182845905+2.71828182845905i) -6.878245654440458+3.126097025348496i) 
-      (num-test (sinh 2.71828182845905+1234.0i) -6.024375387884452+4.58074477716391i) 
-      (num-test (sinh 2.71828182845905+1234000000.0i) 1.198832270325275-7.513424898263172i) 
+      (num-test (sinh 0.00000001+2.71828182845905i) -9.117339147869465E-9+0.4107812905029501i)
+      (num-test (sinh 0.00000001+1234.0i) -7.985506235875843E-9+0.6019276547624973i)
+      (num-test (sinh 0.00000001+1234000000.0i) 1.5890913089022285E-9-0.9872932128398908i)
+      (num-test (sinh 1.0+3.14159265358979i) -1.175201193643801-1.077516210464362E-14i)
+      (num-test (sinh 1.0+2.71828182845905i) -1.071470784943156+0.6338686545195173i)
+      (num-test (sinh 3.14159265358979+3.14159265358979i) -11.54873935725783-8.094533288479446E-14i)
+      (num-test (sinh 3.14159265358979+2.71828182845905i) -10.52937734504676+4.761757525968664i)
+      (num-test (sinh 3.14159265358979+1234.0i) -9.222253015388718+6.977517249251167i)
+      (num-test (sinh 3.14159265358979+1234000000.0i) 1.835200134139553-11.44465679247962i)
+      (num-test (sinh 2.71828182845905+3.14159265358979i) -7.54413710281663-5.314066559815525E-14i)
+      (num-test (sinh 2.71828182845905+2.71828182845905i) -6.878245654440458+3.126097025348496i)
+      (num-test (sinh 2.71828182845905+1234.0i) -6.024375387884452+4.58074477716391i)
+      (num-test (sinh 2.71828182845905+1234000000.0i) 1.198832270325275-7.513424898263172i)
       (num-test (sinh 0.0e+00-3.45266983001243932001e-04i) 0-3.4526697614140534807e-4i)
       (num-test (sinh 0.0e+00+3.45266983001243932001e-04i) 0+3.4526697614140534807e-4i)
       (num-test (sinh 0.0e+00+1.57045105981189525579e+00i) 0+9.9999994039535581669e-1i)
@@ -10407,41 +10407,41 @@
       (num-test (cosh 2.71828182845905-3.14159265358979i) -7.61012513866229-0.0i)
       (num-test (cosh 2.71828182845905+2.71828182845905i) -6.93840918469126+3.09899037482603i)
       (num-test (cosh 2.71828182845905-2.71828182845905i) -6.93840918469126-3.09899037482603i)
-      (num-test (cosh -2/3) 1.230575580043636) 
-      (num-test (cosh -3/2) 2.352409615243247) 
-      (num-test (cosh -10/3) 14.03364944393623) 
-      (num-test (cosh 1234/3) 2.18155865313939E+178) 
-      (num-test (cosh 1234/10) 1.953930316004457E+53) 
-      (num-test (cosh 500029/1234) 4.77955809407816E+175) 
-      (num-test (cosh -500029/362880) 2.109420464922257) 
-      (num-test (cosh 362880/1234) 2.57697781296564E+127) 
-      (num-test (cosh -362880/500029) 1.275095456482107) 
-      (num-test (cosh -3.14159265358979) 11.5919532755216) 
-      (num-test (cosh -2.71828182845905) 7.610125138661946) 
-      (num-test (cosh 0.0+3.14159265358979i) -1.0) 
-      (num-test (cosh 0.0+2.71828182845905i) -0.9117339147869464) 
-      (num-test (cosh 0.00000001+1.0i) +0.5403023058681398+8.414709848078964E-9i) 
-      (num-test (cosh 0.00000001+3.14159265358979i) -1.0-6.982889851335445E-23i) 
-      (num-test (cosh 0.00000001+2.71828182845905i) -0.9117339147869464+4.1078129050295015E-9i) 
-      (num-test (cosh 0.00000001+1234.0i) -0.7985506235875843+6.019276547624973E-9i) 
-      (num-test (cosh 0.00000001+1234000000.0i) .1589091308902228-9.872932128398908E-9i) 
-      (num-test (cosh 1.0+0.00000001i) +1.543080634815244+1.1752011936438014E-8i) 
-      (num-test (cosh 1.0+3.14159265358979i) -1.543080634815244-8.206300488372603E-15i) 
-      (num-test (cosh 1.0+2.71828182845905i) -1.406878948012029+0.4827506629256081i) 
-      (num-test (cosh 3.14159265358979+0.0i) 11.5919532755216) 
-      (num-test (cosh 3.14159265358979+0.00000001i) +11.5919532755216+1.154873935725783E-7i) 
-      (num-test (cosh 3.14159265358979+1.0i) +6.263159084280057+9.71792908024146i) 
-      (num-test (cosh 3.14159265358979+3.14159265358979i) -11.5919532755216-8.064357485351393E-14i) 
-      (num-test (cosh 3.14159265358979+2.71828182845905i) -10.56877693991868+4.744006056856582i) 
-      (num-test (cosh 3.14159265358979+1234.0i) -9.256761516765916+6.951505596777556i) 
-      (num-test (cosh 3.14159265358979+1234000000.0i) 1.84206722033321-11.40199198427758i) 
-      (num-test (cosh 2.71828182845905+0.0i) 7.610125138661946) 
-      (num-test (cosh 2.71828182845905+0.00000001i) +7.610125138661945+7.54413710281663E-8i) 
-      (num-test (cosh 2.71828182845905+1.0i) +4.111768160364146+6.348172477432901i) 
-      (num-test (cosh 2.71828182845905+3.14159265358979i) -7.610125138661946-5.267987841234144E-14i) 
-      (num-test (cosh 2.71828182845905+2.71828182845905i) -6.93840918469081+3.098990374826203i) 
-      (num-test (cosh 2.71828182845905+1234.0i) -6.077070175058048+4.541024753505155i) 
-      (num-test (cosh 2.71828182845905+1234000000.0i) 1.209318371750606-7.448275358344457i) 
+      (num-test (cosh -2/3) 1.230575580043636)
+      (num-test (cosh -3/2) 2.352409615243247)
+      (num-test (cosh -10/3) 14.03364944393623)
+      (num-test (cosh 1234/3) 2.18155865313939E+178)
+      (num-test (cosh 1234/10) 1.953930316004457E+53)
+      (num-test (cosh 500029/1234) 4.77955809407816E+175)
+      (num-test (cosh -500029/362880) 2.109420464922257)
+      (num-test (cosh 362880/1234) 2.57697781296564E+127)
+      (num-test (cosh -362880/500029) 1.275095456482107)
+      (num-test (cosh -3.14159265358979) 11.5919532755216)
+      (num-test (cosh -2.71828182845905) 7.610125138661946)
+      (num-test (cosh 0.0+3.14159265358979i) -1.0)
+      (num-test (cosh 0.0+2.71828182845905i) -0.9117339147869464)
+      (num-test (cosh 0.00000001+1.0i) +0.5403023058681398+8.414709848078964E-9i)
+      (num-test (cosh 0.00000001+3.14159265358979i) -1.0-6.982889851335445E-23i)
+      (num-test (cosh 0.00000001+2.71828182845905i) -0.9117339147869464+4.1078129050295015E-9i)
+      (num-test (cosh 0.00000001+1234.0i) -0.7985506235875843+6.019276547624973E-9i)
+      (num-test (cosh 0.00000001+1234000000.0i) .1589091308902228-9.872932128398908E-9i)
+      (num-test (cosh 1.0+0.00000001i) +1.543080634815244+1.1752011936438014E-8i)
+      (num-test (cosh 1.0+3.14159265358979i) -1.543080634815244-8.206300488372603E-15i)
+      (num-test (cosh 1.0+2.71828182845905i) -1.406878948012029+0.4827506629256081i)
+      (num-test (cosh 3.14159265358979+0.0i) 11.5919532755216)
+      (num-test (cosh 3.14159265358979+0.00000001i) +11.5919532755216+1.154873935725783E-7i)
+      (num-test (cosh 3.14159265358979+1.0i) +6.263159084280057+9.71792908024146i)
+      (num-test (cosh 3.14159265358979+3.14159265358979i) -11.5919532755216-8.064357485351393E-14i)
+      (num-test (cosh 3.14159265358979+2.71828182845905i) -10.56877693991868+4.744006056856582i)
+      (num-test (cosh 3.14159265358979+1234.0i) -9.256761516765916+6.951505596777556i)
+      (num-test (cosh 3.14159265358979+1234000000.0i) 1.84206722033321-11.40199198427758i)
+      (num-test (cosh 2.71828182845905+0.0i) 7.610125138661946)
+      (num-test (cosh 2.71828182845905+0.00000001i) +7.610125138661945+7.54413710281663E-8i)
+      (num-test (cosh 2.71828182845905+1.0i) +4.111768160364146+6.348172477432901i)
+      (num-test (cosh 2.71828182845905+3.14159265358979i) -7.610125138661946-5.267987841234144E-14i)
+      (num-test (cosh 2.71828182845905+2.71828182845905i) -6.93840918469081+3.098990374826203i)
+      (num-test (cosh 2.71828182845905+1234.0i) -6.077070175058048+4.541024753505155i)
+      (num-test (cosh 2.71828182845905+1234000000.0i) 1.209318371750606-7.448275358344457i)
       (num-test (cosh 0.0e+00-3.45266983001243932001e-04i) 9.9999994039535581673e-1+0.0i)
       (num-test (cosh 0.0e+00+3.45266983001243932001e-04i) 9.9999994039535581673e-1+0.0i)
       (num-test (cosh 0.0e+00+1.57045105981189525579e+00i) 3.4526697614152485627e-4+0.0i)
@@ -10821,36 +10821,36 @@
       (num-test (tanh -2.71828182845905+1.0i) -1.00359921084211+0.00794757997665i)
       (num-test (tanh 2.71828182845905-1.0i) 1.00359921084211-0.00794757997665i)
       (num-test (tanh -2.71828182845905-1.0i) -1.00359921084211-0.00794757997665i)
-      (num-test (tanh 1234/3) 1.0) 
-      (num-test (tanh 1234000000/3) 1.0) 
-      (num-test (tanh 1234000000/500029) 1.0) 
-      (num-test (tanh 1234000000/362880) 1.0) 
-      (num-test (tanh 500029/2) 1.0) 
-      (num-test (tanh 500029/3) 1.0) 
-      (num-test (tanh 500029/10) 1.0) 
-      (num-test (tanh 500029/1234) 1.0) 
-      (num-test (tanh 0.0+3.14159265358979i) 0.0+6.982889851335445E-15i) 
-      (num-test (tanh 0.0+2.71828182845905i) 0.0-0.4505495340698621i) 
-      (num-test (tanh 0.00000001+3.14159265358979i) 1.0e-8+6.982889851335444E-15i) 
-      (num-test (tanh 0.00000001+2.71828182845905i) 1.2029948826505699E-8-0.4505495340698621i) 
-      (num-test (tanh 0.00000001+1234.0i) 1.5681770497896427E-8-0.7537751984442328i) 
-      (num-test (tanh 0.00000001+1234000000.0i) 3.9600648244422054E-7-6.212941995900324i) 
-      (num-test (tanh 1.0+3.14159265358979i) +0.7615941559557649+2.932634567877868E-15i) 
-      (num-test (tanh 1.0+2.71828182845905i) .8196826057997404-0.1692870118766369i) 
-      (num-test (tanh 3.14159265358979+3.14159265358979i) +0.99627207622075+5.196631812627532E-17i) 
-      (num-test (tanh 3.14159265358979+2.71828182845905i) .9975247319761639-0.002790687681003331i) 
-      (num-test (tanh 3.14159265358979+1234.0i) .9989656315245496-0.003586791196867043i) 
-      (num-test (tanh 3.14159265358979+1234000000.0i) 1.003551866736695-0.001176098307980411i) 
-      (num-test (tanh 2.71828182845905+3.14159265358979i) +0.991328915800599+1.205734242765375E-16i) 
-      (num-test (tanh 2.71828182845905+2.71828182845905i) .9942257438545914-0.00648578276962794i) 
-      (num-test (tanh 2.71828182845905+1234.0i) .9975698313220817-0.008351965390936033i) 
-      (num-test (tanh 2.71828182845905+1234000000.0i) 1.008299558244272-0.002755390838840499i) 
-      (num-test (tanh 1234.0+0.00000001i) +1.0+8.077935669463161E-28i) 
-      (num-test (tanh 1234.0+3.14159265358979i) 1.0) 
-      (num-test (tanh 1234.0+2.71828182845905i) +1.0+2.710505431213761E-20i) 
-      (num-test (tanh 1234000000.0+0.00000001i) 1.0) 
-      (num-test (tanh 1234000000.0+3.14159265358979i) 1.0-7.703719777548943E-34i) 
-      (num-test (tanh 1234000000.0+2.71828182845905i) +1.0+2.710505431213761E-20i) 
+      (num-test (tanh 1234/3) 1.0)
+      (num-test (tanh 1234000000/3) 1.0)
+      (num-test (tanh 1234000000/500029) 1.0)
+      (num-test (tanh 1234000000/362880) 1.0)
+      (num-test (tanh 500029/2) 1.0)
+      (num-test (tanh 500029/3) 1.0)
+      (num-test (tanh 500029/10) 1.0)
+      (num-test (tanh 500029/1234) 1.0)
+      (num-test (tanh 0.0+3.14159265358979i) 0.0+6.982889851335445E-15i)
+      (num-test (tanh 0.0+2.71828182845905i) 0.0-0.4505495340698621i)
+      (num-test (tanh 0.00000001+3.14159265358979i) 1.0e-8+6.982889851335444E-15i)
+      (num-test (tanh 0.00000001+2.71828182845905i) 1.2029948826505699E-8-0.4505495340698621i)
+      (num-test (tanh 0.00000001+1234.0i) 1.5681770497896427E-8-0.7537751984442328i)
+      (num-test (tanh 0.00000001+1234000000.0i) 3.9600648244422054E-7-6.212941995900324i)
+      (num-test (tanh 1.0+3.14159265358979i) +0.7615941559557649+2.932634567877868E-15i)
+      (num-test (tanh 1.0+2.71828182845905i) .8196826057997404-0.1692870118766369i)
+      (num-test (tanh 3.14159265358979+3.14159265358979i) +0.99627207622075+5.196631812627532E-17i)
+      (num-test (tanh 3.14159265358979+2.71828182845905i) .9975247319761639-0.002790687681003331i)
+      (num-test (tanh 3.14159265358979+1234.0i) .9989656315245496-0.003586791196867043i)
+      (num-test (tanh 3.14159265358979+1234000000.0i) 1.003551866736695-0.001176098307980411i)
+      (num-test (tanh 2.71828182845905+3.14159265358979i) +0.991328915800599+1.205734242765375E-16i)
+      (num-test (tanh 2.71828182845905+2.71828182845905i) .9942257438545914-0.00648578276962794i)
+      (num-test (tanh 2.71828182845905+1234.0i) .9975698313220817-0.008351965390936033i)
+      (num-test (tanh 2.71828182845905+1234000000.0i) 1.008299558244272-0.002755390838840499i)
+      (num-test (tanh 1234.0+0.00000001i) +1.0+8.077935669463161E-28i)
+      (num-test (tanh 1234.0+3.14159265358979i) 1.0)
+      (num-test (tanh 1234.0+2.71828182845905i) +1.0+2.710505431213761E-20i)
+      (num-test (tanh 1234000000.0+0.00000001i) 1.0)
+      (num-test (tanh 1234000000.0+3.14159265358979i) 1.0-7.703719777548943E-34i)
+      (num-test (tanh 1234000000.0+2.71828182845905i) +1.0+2.710505431213761E-20i)
       (num-test (tanh 0.0e+00-3.45266983001243932001e-04i) 0-3.4526699672092183585e-4i)
       (num-test (tanh 0.0e+00+3.45266983001243932001e-04i) 0+3.4526699672092183585e-4i)
       (num-test (tanh 0.0e+00+1.57045105981189525579e+00i) 0+2.8963092606501007060e3i)
@@ -11378,12 +11378,12 @@
       (num-test (asinh 1234000000.0-1234.0i) 21.62667394299005-0.00000100000000i)
       (num-test (asinh 1234000000.0+1234000000.0i) 21.97324753326953+0.78539816339745i)
       (num-test (asinh 1234000000.0-1234000000.0i) 21.97324753326953-0.78539816339745i)
-      (num-test (asinh -1234000000/3) -20.52806165432143) 
-      (num-test (asinh -500029/2) -13.12242137572639) 
-      (num-test (asinh 0.00000001+1234000000.0i) +21.62667394298955+1.570796327200083i) 
-      (num-test (asinh 3.14159265358979+1234000000.0i) +21.62667394298955+1.570796327200083i) 
-      (num-test (asinh 2.71828182845905+1234000000.0i) +21.62667394298955+1.570796327200083i) 
-      (num-test (asinh 1234000000.0+0.00000001i) +21.62667380877375+8.103725052149596E-18i) 
+      (num-test (asinh -1234000000/3) -20.52806165432143)
+      (num-test (asinh -500029/2) -13.12242137572639)
+      (num-test (asinh 0.00000001+1234000000.0i) +21.62667394298955+1.570796327200083i)
+      (num-test (asinh 3.14159265358979+1234000000.0i) +21.62667394298955+1.570796327200083i)
+      (num-test (asinh 2.71828182845905+1234000000.0i) +21.62667394298955+1.570796327200083i)
+      (num-test (asinh 1234000000.0+0.00000001i) +21.62667380877375+8.103725052149596E-18i)
       (num-test (asinh 1234000000.0+2.71828182845905i) +21.62667380877375+2.2028207814967068E-9i)
       (num-test (asinh 0.0e+00+0.0e+00i) 0e0+0.0i)
       (num-test (asinh 0.0e+00+1.19209289550781250e-07i) 0+1.1920928955078153234e-7i)
@@ -12432,7 +12432,7 @@
 	    (if (> y err) (set! err y))))
 	(if (> err 1e-14)
 	    (begin (display "(cosh (acosh ...)) error: ") (display err) (newline))))
-      
+
       (let ((err 0.0))
 	(do ((i 0 (+ i 1))
 	     (x 1.0+i (+ x 0.1-0.1i)))
@@ -12441,7 +12441,7 @@
 	    (if (> y err) (set! err y))))
 	(if (> err 1e-14)
 	    (begin (display "(cosh (acosh [complex] ...)) error: ") (display err) (newline))))
-      
+
       (let ((err 0.0))
 	(do ((i 0 (+ i 1))
 	     (x 1.0 (+ x .1)))
@@ -12450,7 +12450,7 @@
 	    (if (> y err) (set! err y))))
 	(if (> err 1e-14)
 	    (begin (display "(sinh (asinh ...)) error: ") (display err) (newline))))
-      
+
       (let ((err 0.0))
 	(do ((i 0 (+ i 1))
 	     (x 1.0-i (+ x -0.1+i)))
@@ -12459,7 +12459,7 @@
 	    (if (> y err) (set! err y))))
 	(if (> err 1e-9)
 	    (begin (display "(sinh (asinh [complex] ...)) error: ") (display err) (newline))))
-      
+
       (let ((err 0.0))
 	(do ((i 0 (+ i 1))
 	     (x 0.0 (+ x .1)))
@@ -12990,7 +12990,7 @@
 	       (if (or (not (integer? val))
 		       (not (eqv? sqn val)))
 		   (begin
-		     (display "(sqrt ") (display n) (display ") expected ") 
+		     (display "(sqrt ") (display n) (display ") expected ")
 		     (display sqn) (display " but got ") (display val) (newline))))))
        (list 9 491401 19439281 1248844921 235565593201)
        (list 3 701 4409 35339 485351))
@@ -13002,7 +13002,7 @@
 	       (if (or (integer? val)
 		       (> (abs (- (* val val) n)) .001))
 		   (begin
-		     (display "(sqrt ") (display n) (display ") expected ") 
+		     (display "(sqrt ") (display n) (display ") expected ")
 		     (display (sqrt (exact->inexact n))) (display " but got ") (display val) (newline))))))
        (list 10 491400 19439282 1248844920 235565593200))
 
@@ -13269,11 +13269,11 @@
 (num-test (exp -100.0) 3.720075976020836E-44)
 (num-test (exp -7.080000e+02) 3.307553e-308)
 (num-test (exp 7.090000e+02) 8.218407461554972189241372386597816393254E307)
-(num-test (exp 0.00000001+1234.0i) -0.7985506315730906+0.601927660781774i) 
-(num-test (exp 0.00000001+1234000000.0i) .1589091324793142-0.987293222712823i) 
-(num-test (exp 3.14159265358979+1234.0i) -18.47901453215463+13.92902284602872i) 
-(num-test (exp 3.14159265358979+1234000000.0i) 3.677267354472762-22.8466487767572i) 
-(num-test (exp 2.71828182845905+1234.0i) -12.1014455629425+9.121769530669065i) 
+(num-test (exp 0.00000001+1234.0i) -0.7985506315730906+0.601927660781774i)
+(num-test (exp 0.00000001+1234000000.0i) .1589091324793142-0.987293222712823i)
+(num-test (exp 3.14159265358979+1234.0i) -18.47901453215463+13.92902284602872i)
+(num-test (exp 3.14159265358979+1234000000.0i) 3.677267354472762-22.8466487767572i)
+(num-test (exp 2.71828182845905+1234.0i) -12.1014455629425+9.121769530669065i)
 (num-test (exp 2.71828182845905+1234000000.0i) 2.408150642075881-14.96170025660763i)
 (num-test (exp 0.0e+00-3.45266983001243932001e-04i) 9.9999994039535581673e-1-3.4526697614140534807e-4i)
 (num-test (exp 0.0e+00+3.45266983001243932001e-04i) 9.9999994039535581673e-1+3.4526697614140534807e-4i)
@@ -14123,7 +14123,7 @@
 (num-test (expt -0.0 0) 0.0)
 (num-test (expt 1 -0) 1)
 
-(if with-large-powers 
+(if with-large-powers
     (begin
       (num-test (expt 0 1234000000) 0)
       (num-test (expt 0 500029) 0)
@@ -14310,7 +14310,7 @@
 (num-test (expt (expt -1 1/123) 123) -1)
 (num-test (expt -1/8 -3) -512)
 
-(test (= (make-rectangular 1.0 0.0) (make-polar 1.0 0.0) 1.0+0i (* -1.0 -1.0) (/ 1.0) 
+(test (= (make-rectangular 1.0 0.0) (make-polar 1.0 0.0) 1.0+0i (* -1.0 -1.0) (/ 1.0)
 	 (exp 0.0) (abs -1.0) (cos 0.0) (log (exp 1)) (magnitude 1.0+0i) (max 0.0 1.0) (min 1.0 2.0) )
       #t)
 
@@ -14318,7 +14318,7 @@
       (ys  (list 2 3 4 -2 -3 1/2 1/3 1/4 -1/2 -1/3 -1/4 2.5 -3.5 1+i -1+2i 2.5+1.5i 2.5-.5i)))
   (for-each
    (lambda (x)
-     (for-each 
+     (for-each
       (lambda (y)
 	(num-test (expt (expt x y) (/ y)) x)
 	;;	(if (> (magnitude (- (expt (expt x y) (/ y)) x)) 1e-6)
@@ -14974,7 +14974,7 @@
 	      (set! happy #f)
 	      (display "(expt ") (display i) (display "/2 -10) = ") (display (expt (/ i 2) -10))
 	      (display " but (* 1/(") (display i) (display "/2) ... 10x) = ")
-	      (display (/ 1024 (* i i i i i i i i i i))) 
+	      (display (/ 1024 (* i i i i i i i i i i)))
 	      (display " [diff=") (display val) (display "]")
 	      (newline)))))))
 
@@ -14996,7 +14996,7 @@
 
 ;;; -------- rationalize
 
-(if with-rationalize 
+(if with-rationalize
     (begin
       (num-test (rationalize 0.0 1.0001) 0)
       (num-test (rationalize -0.0 1.0001) 0)
@@ -15267,10 +15267,10 @@
       (num-test (rationalize 1/4 -1/6) 1/3)
       (num-test (rationalize -3/10 -1/10) -1/3)
       (num-test (rationalize (exact->inexact 1/3) (exact->inexact -1/4)) 1/2)
-      
+
       (if with-bigfloats
 	  (begin
-	    ;; can this sort of thing be handled with locally set precisions? 
+	    ;; can this sort of thing be handled with locally set precisions?
 	    (num-test (rationalize 385817946978768113605842402465609185854927496022065152.5) 771635893957536227211684804931218371709854992044130305/2)
 	    ))
 
@@ -16080,7 +16080,7 @@
 (num-test (gcd (- (expt 2 11) 1) (- (expt 2 19) 1)) (- (expt 2 (gcd 11 19)) 1))
 (num-test (gcd (- (expt 2 11) 1) (- (expt 2 22) 1)) (- (expt 2 (gcd 11 22)) 1))
 (num-test (gcd (- (expt 2 12) 1) (- (expt 2 18) 1)) (- (expt 2 (gcd 12 18)) 1))
-(if (or with-bignums with-64-bit-ints) 
+(if (or with-bignums with-64-bit-ints)
     (num-test (gcd (- (expt 2 52) 1) (- (expt 2 39) 1)) (- (expt 2 (gcd 52 39)) 1)))
 (num-test (gcd (numerator 7/9) (denominator 7/9)) 1)
 (num-test (gcd 0 4) 4 )
@@ -17379,7 +17379,7 @@
 	    (begin (set! happy #f) (display "(quotient ") (display val2) (display " 2) = ") (display qv) (display "?") (newline)))
 	(if (not (= rv 1))
 	    (begin (set! happy #f) (display "(remainder ") (display val2) (display " 2) = ") (display rv) (display "?") (newline))))))
-  
+
   (if with-generic-modulo
       (let ((happy #t))
 	(do ((i 2 (+ i 1)))
@@ -17396,7 +17396,7 @@
 	    (if (not (= rv 1/2))
 		(begin (set! happy #f) (display "(remainder ") (display val2) (display " 2) = ") (display rv) (display "?") (newline))))))
       ))
-  
+
 
 ;; -------- abs and magnitude
 
@@ -19566,25 +19566,25 @@
 (num-test (round 1/2) 0)
 (num-test (round 3/2) 2)
 
-(test (equal? (let ((vals '())) 
-		(do ((k 1/3 (+ k 1/3))) ((> k 2) (reverse vals)) 
-		  (set! vals (cons (round k) vals)))) 
-	      (list 0 1 1 1 2 2)) 
+(test (equal? (let ((vals '()))
+		(do ((k 1/3 (+ k 1/3))) ((> k 2) (reverse vals))
+		  (set! vals (cons (round k) vals))))
+	      (list 0 1 1 1 2 2))
       #t)
-(test (equal? (let ((vals '())) 
-		(do ((k 1/3 (+ k 1/3))) ((> k 2) (reverse vals)) 
-		  (set! vals (cons (round (- k)) vals)))) 
-	      (list 0 -1 -1 -1 -2 -2)) 
+(test (equal? (let ((vals '()))
+		(do ((k 1/3 (+ k 1/3))) ((> k 2) (reverse vals))
+		  (set! vals (cons (round (- k)) vals))))
+	      (list 0 -1 -1 -1 -2 -2))
       #t)
-(test (equal? (let ((vals '())) 
-		(do ((k 1/2 (+ k 1/2))) ((> k 3) (reverse vals)) 
-		  (set! vals (cons (round k) vals)))) 
-	      (list 0 1 2 2 2 3)) 
+(test (equal? (let ((vals '()))
+		(do ((k 1/2 (+ k 1/2))) ((> k 3) (reverse vals))
+		  (set! vals (cons (round k) vals))))
+	      (list 0 1 2 2 2 3))
       #t)
-(test (equal? (let ((vals '())) 
+(test (equal? (let ((vals '()))
 		(do ((k 1/2 (+ k 1/2))) ((> k 3) (reverse vals))
 		  (set! vals (cons (round (- k)) vals))))
-	      (list 0 -1 -2 -2 -2 -3)) 
+	      (list 0 -1 -2 -2 -2 -3))
       #t)
 
 (num-test (floor 0) 0)
@@ -19643,11 +19643,11 @@
 (num-test (round 2.4) 2)
 
 (let ((top-exp 60))
-  (if with-bignums 
+  (if with-bignums
       (set! top-exp 150)
       (if (not with-64-bit-ints)
 	  (set! top-exp 30)))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19665,7 +19665,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = ") (display tv) (display "?") (newline)))
 	(if (not (= rv val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = ") (display rv) (display "?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19683,7 +19683,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = ") (display tv) (display "?") (newline)))
 	(if (not (= rv val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = ") (display rv) (display "?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19697,7 +19697,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = (truncate ") (display val2) (display ")?") (newline)))
 	(if (= (round val1) (round val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = (round ") (display val2) (display ")?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19711,7 +19711,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = (truncate ") (display val2) (display ")?") (newline)))
 	(if (= (round val1) (round val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = (round ") (display val2) (display ")?") (newline))))))
-  
+
   (let ((happy #t)
 	(off-by 1/3))
     (do ((i 2 (+ i 1)))
@@ -19735,7 +19735,7 @@
 	(if (= off-by 1/3)
 	    (set! off-by 2/3)
 	    (set! off-by 1/3)))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19753,7 +19753,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = ") (display tv) (display "?") (newline)))
 	(if (not (= rv val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = ") (display rv) (display "?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19771,7 +19771,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = ") (display tv) (display "?") (newline)))
 	(if (not (= rv val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = ") (display rv) (display "?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19785,7 +19785,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = (truncate ") (display val2) (display ")?") (newline)))
 	(if (= (round val1) (round val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = (round ") (display val2) (display ")?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -19799,7 +19799,7 @@
 	    (begin (set! happy #f) (display "(truncate ") (display val1) (display ") = (truncate ") (display val2) (display ")?") (newline)))
 	(if (= (round val1) (round val2))
 	    (begin (set! happy #f) (display "(round ") (display val1) (display ") = (round ") (display val2) (display ")?") (newline))))))
-  
+
   (let ((happy #t)
 	(off-by 2/3))
     (do ((i 2 (+ i 1)))
@@ -19824,7 +19824,7 @@
 	    (set! off-by 2/3)
 	    (set! off-by 1/3)))))
   )
-  
+
 
 ;; -------- negative?, positive?, zero?
 
@@ -19981,21 +19981,21 @@
  (list 'number? 'complex? 'real? 'rational? 'integer?))
 
 (for-each
- (lambda (arg) 
+ (lambda (arg)
    (if (not (complex? arg))
        (begin (display "(complex? ") (display arg) (display ") returned #f?") (newline))))
  (list 1 1.0 1.0+0.5i 1/2))
- 
+
 (if (not (integer? 1234)) (display ";1234 is not an integer?~%"))
 (for-each
- (lambda (arg) 
+ (lambda (arg)
    (if (integer? arg)
        (begin (display "(integer? ") (display arg) (display ") returned #t?") (newline))))
  (list 1.5 1.0+0.5i 1/2))
 
 (if (real? 1.0+1.0i) (display ";1.0+1.0i is real?~%"))
 (for-each
- (lambda (arg) 
+ (lambda (arg)
    (if (not (real? arg))
        (begin (display "(real? ") (display arg) (display ") returned #f?") (newline))))
  (list 1 1.0 1/2))
@@ -20003,7 +20003,7 @@
 (if (not (rational? 1/2))
     (begin (display "(rational? 1/2) is #f?") (newline)))
 
-(if (not (rational? 2)) 
+(if (not (rational? 2))
     (begin (display "(rational? 2) is #f?") (newline)))
 
 
@@ -20064,7 +20064,7 @@
 (num-test (min 3/2 -6/5) -6/5)
 (num-test (min -3/2 -6/5) -3/2)
 
-(let ((top-exp 60))  
+(let ((top-exp 60))
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -20074,7 +20074,7 @@
 	    (begin (set! happy #f) (display "(max ") (display val1) (display " ") (display val2) (display ") -> ") (display (max val1 val2)) (display "?") (newline)))
 	(if (not (= val2 (min val1 val2)))
 	    (begin (set! happy #f) (display "(min ") (display val1) (display " ") (display val2) (display ") -> ") (display (min val1 val2)) (display "?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -21009,7 +21009,7 @@
 (num-test (- -1234000000.0+2.71828182845905i) 1234000000.0-2.71828182845905i)
 (num-test (* -1234000000.0+2.71828182845905i) -1234000000.0+2.71828182845905i)
 (num-test (/ -1234000000.0+2.71828182845905i) -0.00000000081037-0.0i)
-  
+
 (num-test (+ 1 1) 2)
 (num-test (- 1 1) 0)
 (num-test (* 1 1) 1)
@@ -31228,7 +31228,7 @@
 (num-test (/ -4.276770609150315E-21 6.853299965034864E-21) -6.240454424832049912604789277138688124888E-1)
 (num-test (/ -8.847946637724495E-21 6.33827952828724E-21) -1.395953996386055439061738621964402924048E0)
 
-(let ((top-exp 60))  
+(let ((top-exp 60))
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -31238,7 +31238,7 @@
 	    (begin (set! happy #f) (display "(> ") (display val1) (display " ") (display val2) (display ") -> ") (display (> val1 val2)) (display "?") (newline)))
 	(if (< val1 val2)
 	    (begin (set! happy #f) (display "(< ") (display val1) (display " ") (display val2) (display ") -> ") (display (< val1 val2)) (display "?") (newline))))))
-  
+
   (let ((happy #t))
     (do ((i 2 (+ i 1)))
 	((or (not happy) (> i top-exp)))
@@ -31255,12 +31255,12 @@
 	))))
 
 
-(if with-bignums 
+(if with-bignums
     (begin
       ;; these are trivial translations of some numeric tests in the
       ;; Clisp test suite.  Presumably they fall under Clisp's license,
       ;; which I belive is GPL
-      
+
       (num-test (+ 17009115185923538769 -12047631083067675031) 4961484102855863738)
       (num-test (+ 12677011568664239747 3269056182420253574) 15946067751084493321)
       (num-test (+ 9315504781982082433 13857624532376678678) 23173129314358761111)
@@ -31846,26 +31846,26 @@
       (num-test (= -98781233389595723930250385525631360344437602649022271391716773162526352115087074898920261954897888235939429993829738630297052776667061779065100945771127020439712527398509771853491319737304616607041615012797134365574007368603232768089410097730646360760856052946465578073788924743642391638455649511108051053789425902013657106523269224045822294981391380222050223141347787674321888089837786284947870569165079491411110074602544203383038299901291952931113248943344436935596614205784436844912243069019367149526328612664067719765890897558075277707055756274228634652905751880612235340874976952880431555921814590049070979276358637989837532124647692152520447680373275200239544449293834424643702763974403094033892112967196087310232853165951285609426599617479356206218697586025251765476179158153123631158173662488102357611674821528467825910806391548770908013608889792001203039243914696463472490444573930050190716726220002151679336252008777326482398042427845860796285369622627679324605214987983884122808994422164327311297556122943400093231935477754959547620500784989043704825777186301417894825200797719289692636286337716705491307686644214213732116277102140558505945554566856673724837541141206267647285222293953181717113434757149921850120377706206012113994795124049471433490016083401216757825264766474891405185591236321448744678896448941259668731597494947127423662646933419809756274038044752395708014998820826196523041220918922611359697502638594907608648168849193813197790291360087857093790119162389573209640804111261616771827989939551840471235079945175327536638365874717775169210186608268924244639016270610098894971732892267642318266405837012482726627199088381027028630711279130575230815976484191675172279903609489448225149181063260231957171204855841611039996959582465138269247794842445177715476581512709861409446684911276158067098438009067149531119008707418601627426255891/2063950098473886055933596136103014753954685977787179797499441692283103642150668140884348149132839387663291870239435604463778573480782766958396423322880804442523056530013282118705429274303746421980903580754656364533869319744640130831962767797772323836293079599182477171562218297208495122660799328579852852969560730744211066545295945803939271680397511478811389399527913043145952054883289558914237172406636283114284363301999238526952309439259354223729114988806937903509692118585280437646676248013406270664905997291670857985754768850507766359973207600149782819306010561088246502918148146264806947375101624011387317921439210509902170092173796154464078297852707797984007992277904626058467143192149921546030028316990855470478894515952884526783686210401408859364838148201339959570732480920969000913791571631154267939054105878236201498477027265774680071188764947522112650857013491135901945605796776829525789886482760578142306057177990048751864852763036720112071475134369179525117161001517868525821398753039187062869247457336940152614866298628205010037695017885878296140891234142925514925051385440766473260338168038302226808098439763889250948602137806546736025439919604390464712793474019469457135856879584745805794574609707742445431851999335443724488636749987837445626810087003490329257105472274738811579817454656532496370562155449815456374456838912258383282154811001588175608617475540639254689723629881619252699580383612847920348111900440075645703960104081690968807839189109040568288972353424306876947127635585164905071821419089229871978994388197349499565628906992171901547121903117815637249359328193980583892566359962066242217169190169986105579733710057404319381685578470983838597020624234209884597110721892707818651210378187525863009879314177842634871978427592746452643603586344401223449546482306838947819060455178762434166799996220143825677025686435609179225302671777326568324855229172912876656233006785717920665743720753617646617017219230313226844735567400507490772935145894670445831971526014183234960075574401616682479457962912905141754252265169682318523572680657053374002911007741991220001444440319448034755483178790032581428679303588017268970 0) #f)
 
       ;; these come from Brad Lucier:
-      
+
       (num-test (quotient 295147905149568077200 34359738366) 8589934591)
       (num-test (remainder 295147905149568077200 34359738366) 21754858894)
       (num-test (quotient 696898287454081973170944403677937368733396 1180591620717411303422) 590295810358705651711)
       (num-test (remainder 696898287454081973170944403677937368733396 1180591620717411303422) 314390899110894278354)
-      
-      ;; (map (lambda (x) (number->string x 2)) '(696898287454081973170944403677937368733396 1180591620717411303422 295147905149568077200 34359738366)) 
-      ;; ("1111111111111111111111111111111111111111111111111111111111111111111100100 010000101100001100110110010000011011101000100001101001011011010100" 
-      ;; "1111111111111111111111111111111111111111111111111111111111111111111110" 
-      ;; "11111111111111111111111111111111100100010000101100001100110110010000" 
-      ;;  "11111111111111111111111111111111110") 
-      
+
+      ;; (map (lambda (x) (number->string x 2)) '(696898287454081973170944403677937368733396 1180591620717411303422 295147905149568077200 34359738366))
+      ;; ("1111111111111111111111111111111111111111111111111111111111111111111100100 010000101100001100110110010000011011101000100001101001011011010100"
+      ;; "1111111111111111111111111111111111111111111111111111111111111111111110"
+      ;; "11111111111111111111111111111111100100010000101100001100110110010000"
+      ;;  "11111111111111111111111111111111110")
+
       (letrec ((factorial (lambda (n i) (if (positive? n) (factorial (- n 1) (* i n)) i))))
 	(num-test (/ (factorial 100 1) (factorial 99 1)) 100)
 	(num-test (/ (factorial 1000 1) (factorial 999 1)) 1000)
 	(num-test (factorial 100 1) 93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000)
 	(num-test (factorial 200 1) 788657867364790503552363213932185062295135977687173263294742533244359449963403342920304284011984623904177212138919638830257642790242637105061926624952829931113462857270763317237396988943922445621451664240254033291864131227428294853277524242407573903240321257405579568660226031904170324062351700858796178922222789623703897374720000000000000000000000000000000000000000000000000)
-	
+
 	(num-test (* (factorial 3 1) (factorial 5 1) (factorial 7 1)) (factorial 10 1)))
-      
+
       (num-test (modulo (+ 2 (* 3 499127 495037 490459 468803)) (* 499127 495037 490459 468803)) 2)
       (num-test (let ((n 1)) (do ((i 2 (+ i 1))) ((= i 100)) (set! n (lcm n i))) n) 69720375229712477164533808935312303556800)
       (num-test (log 69720375229712477164533808935312303556800) 9.40453112293573922460049312446069272415E1)
@@ -31875,9 +31875,9 @@
 
 (let ((f= (lambda (a b) (< (abs (- a b)) 1.0e-15))))
   (let ((log2 0.69314718055994530941723212145817656807550013436025525412068000949339362196969471560586332699641868754200148102057068573368552023575813055703267075163507596193072757082837143519030703862389167347112335011536449795523912047517268157493206515552473413952588295045300709532636664265410423915781495204374043038550080194417064167151864471283996817178454695702627163106454615025720740248163777338963855069526066834113727387372292895649354702576265209885969320196505855476470330679365443254763274495125040606943814710468994650622016772042452452961268794654619316517468139267250410380254625965686914419287160829380317271436778265487756648508567407764845146443994046142260319309673540257444607030809608504748663852313818167675143866747664789088143714198549423151997354880375165861275352916610007105355824987941472950929311389715599820565439287170007218085761025236889213244971389320378439353088774825970171559107088236836275898425891853530243634214367061189236789192372314672321720534016492568727477823445353476481149418642386776774406069562657379600867076257199184734022651462837904883062033061144630073719489002743643965002580936519443041191150608094879306786515887090060520346842973619384128965255653968602219412292420757432175748909770675268711581705113700915894266547859596489065305846025866838294002283300538207400567705304678700184162404418833232798386349001563121889560650553151272199398332030751408426091479001265168243443893572472788205486271552741877243002489794540196187233980860831664811490930667519339312890431641370681397776498176974868903887789991296503619270710889264105230924783917373501229842420499568935992206602204654941510613918788574424557751020683703086661948089641218680779020818158858000168811597305618667619918739520076671921459223672060253959543654165531129517598994005600036651356756905124592682574394648316833262490180382424082423145230614096380570070255138770268178516306902551370323405380214501901537402950994226299577964742713815736380172987394070424217997226696297993931270694)
-	
+
 	(log3 1.09861228866810969139524523692252570464749055782274945173469433363749429321860896687361575481373208878797002906595786574236800422593051982105280187076727741060316276918338136717937369884436095990374257031679591152114559191775067134705494016677558022220317025294689756069010652150564286813803631737329857778236699165479213181814902003010382363012224865274819822599109745249089645805346700884596508574844411901885708764749486707961308582941160216612118400140982551439194876889367984943022557315353296853452952514592138764946859325627944165569415782723103551688661021184698904399430631382552857364668828249881368228006341439107868932514564375102044516275619349739821169415857405353617589009751222337977369696877543547951357129821770175812421223514058101632724655889372495649191852429607966842346470693772372526550820320783339280558928531468730951326064583091843974968222303257654675333118230196492752575991322178513533902374829643395025460742458249346668661218814365265654295427676105054777954229339733234011737431939745798470185595484940594783539438410106029307622922281312074893063445340252777326856271480016818715472439782071878034446780216178158419042820076721243255738014364178876826161041016818724240687908909929874208152183237528942752732534071002835750695062403965462752244308462588450859786253083224774538885068003488324340490083990058080943565282122370388702036804548600776214244088697259413584365999226211739670804950952792714363154640444623089158185367119608370304853520909672629582415040355995121355450332241748474100331981487832452569334704949937301656336660991903957122822844881674312150628569993874038819012744839564791034772885972119850649422796985791669956418551265041502191554719665856929726606523573293736830027830921776605387030462007661584946700226011756797518003934791763277844935142634968360037557857160700498181519184373438290934746660457750659273670121115370582496479847930404205823964753857850960626093389914706120130243108260518262958640076003059494321166880446106134684533980))
-    
+
     (if (not (f= log3 (log 3.0)))
 	(begin (display "(- (log 3.0) true-log-3) = ") (display (- log3 (log 3.0))) (newline)))
     (if (not (f= log2 (log 2.0)))
@@ -31886,55 +31886,55 @@
 	(begin (display "(- 3.0 (exp log3)) = ") (display (- 3.0 (exp log3))) (newline)))
     (if (not (f= 2.0 (exp log2)))
 	(begin (display "(- 2.0 (exp log2)) = ") (display (- 2.0 (exp log2))) (newline))))
-  
+
   (let ((sin1 8.414709848078965066525023216302989996225630607983710656727517099919104043912396689486397435430526959e-1)
 	(cos1 5.403023058681397174009366074429766037323104206179222276700972553811003947744717645179518560871830894e-1)
 	(tan1 1.557407724654902230506974807458360173087250772381520038383946605698861397151727289555099965202242984e0))
-    
+
     (if (not (f= sin1 (sin 1)))
 	(begin (display "(- (sin 1) true-sin-1) = ") (display (- sin1 (sin 1))) (newline)))
     (if (not (f= (asin sin1) 1.0))
 	(begin (display "(- (asin (sin 1)) 1) = ") (display (- (asin sin1) 1)) (newline)))
-    
+
     (if (not (f= cos1 (cos 1)))
 	(begin (display "(- (cos 1) true-cos-1) = ") (display (- cos1 (cos 1))) (newline)))
     (if (not (f= (acos cos1) 1.0))
 	(begin (display "(- (acos (cos 1)) 1) = ") (display (- (acos cos1) 1)) (newline)))
-    
+
     (if (not (f= tan1 (tan 1)))
 	(begin (display "(- (tan 1) true-tan-1) = ") (display (- tan1 (tan 1))) (newline)))
     (if (not (f= (atan tan1) 1.0))
 	(begin (display "(- (atan (tan 1)) 1) = ") (display (- (atan tan1) 1)) (newline)))
-    
+
     (set! sin1 -.3056143888882523)
     (set! cos1 -.9521553682590148)
     (set! tan1 .3209711346238149)
-    
+
     (if (not (f= sin1 (sin 10000)))
 	(begin (display "(- (sin 10000) true-sin-10000) = ") (display (- sin1 (sin 10000))) (newline)))
-    
+
     (if (not (f= cos1 (cos 10000)))
 	(begin (display "(- (cos 10000) true-cos-10000) = ") (display (- cos1 (cos 10000))) (newline)))
-    
+
     (if (not (f= tan1 (tan 10000)))
 	(begin (display "(- (tan 10000) true-tan-10000) = ") (display (- tan1 (tan 10000))) (newline)))
     )
-  
+
   (if with-hyperbolic-functions
       (let ((sinh1 1.175201193643801456882381850595600815155717981334095870229565413013307567304323895607117452089623392e0)
 	    (cosh1 1.543080634815243778477905620757061682601529112365863704737402214710769063049223698964264726435543036e0)
 	    (tanh1 7.615941559557648881194582826047935904127685972579365515968105001219532445766384834589475216736767144e-1))
-	
+
 	(if (not (f= sinh1 (sinh 1)))
 	    (begin (display "(- (sinh 1) true-sinh-1) = ") (display (- sinh1 (sinh 1))) (newline)))
 	(if (not (f= (asinh sinh1) 1.0))
 	    (begin (display "(- (asinh (sinh 1)) 1) = ") (display (- (asinh sinh1) 1)) (newline)))
-	
+
 	(if (not (f= cosh1 (cosh 1)))
 	    (begin (display "(- (cosh 1) true-cosh-1) = ") (display (- cosh1 (cosh 1))) (newline)))
 	(if (not (f= (acosh cosh1) 1.0))
 	    (begin (display "(- (acosh (cosh 1)) 1) = ") (display (- (acosh cosh1) 1)) (newline)))
-	
+
 	(if (not (f= tanh1 (tanh 1)))
 	    (begin (display "(- (tanh 1) true-tanh-1) = ") (display (- tanh1 (tanh 1))) (newline)))
 	(if (not (f= (atanh tanh1) 1.0))
@@ -31953,7 +31953,7 @@
 								 (* y 0.45813e-2)))))))))))))
 		    (let* ((ax (abs x))
 			   (y (/ 3.75 ax)))
-		      (* (/ (exp ax) (sqrt ax)) 
+		      (* (/ (exp ax) (sqrt ax))
 			 (+ 0.39894228
 			    (* y (+ 0.1328592e-1
 				    (* y (+ 0.225319e-2
@@ -32124,20 +32124,20 @@
 (num-test (sqrt 0+i) (/ 1+i (sqrt 2)))
 (num-test (expt 0+i 0+i) (exp (/ our-pi -2)))
 (num-test (* (cos (/ our-pi 9)) (cos (/ (* 2 our-pi) 9)) (cos (/ (* 4 our-pi) 9))) 1/8)
-(num-test (* (/ 4 (sqrt 522)) 
-	     (log (* (expt (/ (+ 5 (sqrt 29)) (sqrt 2)) 3) 
-		     (+ (* 5 (sqrt 29)) (* 11 (sqrt 6))) 
+(num-test (* (/ 4 (sqrt 522))
+	     (log (* (expt (/ (+ 5 (sqrt 29)) (sqrt 2)) 3)
+		     (+ (* 5 (sqrt 29)) (* 11 (sqrt 6)))
 		     (expt (+ (sqrt (/ (+ 9 (* 3 (sqrt 6))) 4))
 			      (sqrt (/ (+ 5 (* 3 (sqrt 6))) 4))) 6)))) ;31 digits
 	  our-pi)
 (if (or with-bignums with-64-bit-ints) (num-test (+ 2 (expt 276694819753963/226588 1/158)) our-pi)) ; 23 digits
-;(num-test (expt 4297607660/144171 1/9) our-pi) ; 15 digits 
+;(num-test (expt 4297607660/144171 1/9) our-pi) ; 15 digits
 
 (do ((k 1 (+ k 1)))
     ((= k 12))
-  (num-test (+ (expt 11 k) (expt 24 k) (expt 65 k) (expt 90 k) (expt 129 k) 
+  (num-test (+ (expt 11 k) (expt 24 k) (expt 65 k) (expt 90 k) (expt 129 k)
 	       (expt 173 k) (expt 212 k) (expt 237 k) (expt 278 k) (expt 291 k) (expt 302 k))
-	    (+ (expt 3 k) (expt 5 k) (expt 30 k) (expt 57 k) (expt 104 k) (expt 116 k) 
+	    (+ (expt 3 k) (expt 5 k) (expt 30 k) (expt 57 k) (expt 104 k) (expt 116 k)
 	       (expt 186 k) (expt 198 k) (expt 245 k) (expt 272 k) (expt 297 k) (expt 299 k))))
 
 (num-test (expt (- (expt 2 1/3) 1) 1/3) (+ (expt 1/9 1/3) (- (expt 2/9 1/3)) (expt 4/9 1/3)))
@@ -32177,7 +32177,7 @@
 (num-test (expt (/ (log (+ (expt 640320 3) 744)) our-pi) 2) 163.0) ; rest is 2.32167e-29
 (num-test (exp (* our-pi (sqrt 719))) 3.8426143735395488914902942778058291929999e+36)
 (if (or with-bignums with-64-bit-ints) (num-test (+ (expt 415280564497/348671682660 3) (expt 676702467503/348671682660 3)) 9))
-(num-test (expt 25 6) (+ (expt 1 6) (expt 2 6) (expt 3 6) (expt 5 6) (expt 6 6) (expt 7 6) (expt 8 6) (expt 9 6) 
+(num-test (expt 25 6) (+ (expt 1 6) (expt 2 6) (expt 3 6) (expt 5 6) (expt 6 6) (expt 7 6) (expt 8 6) (expt 9 6)
 			 (expt 10 6) (expt 12 6) (expt 13 6) (expt 15 6) (expt 16 6) (expt 17 6) (expt 18 6) (expt 23 6)))
 (num-test (/ (- (sqrt 5) 1) 2) (/ (sin (* our-pi 1/5)) (sin (* our-pi 2/5))))
 (num-test (let* ((N 3502)
@@ -32278,9 +32278,9 @@
 		(display " but (* ") (display i) (display "... 10x) = ")
 		(display (* i i i i i i i i i i)) (newline)))))))
   (if (> top 63)
-      (num-test (+ (expt 1 10) (expt 2 10) (expt 4 10) (expt 5 10) (expt 6 10) (expt 8 10) (expt 12 10) 
-		   (expt 15 10) (expt 16 10) (expt 17 10) (expt 20 10) (expt 21 10) (expt 25 10) (expt 26 10) 
-		   (expt 27 10) (expt 28 10) (expt 30 10) (expt 36 10) (expt 37 10) (expt 38 10) (expt 40 10) 
+      (num-test (+ (expt 1 10) (expt 2 10) (expt 4 10) (expt 5 10) (expt 6 10) (expt 8 10) (expt 12 10)
+		   (expt 15 10) (expt 16 10) (expt 17 10) (expt 20 10) (expt 21 10) (expt 25 10) (expt 26 10)
+		   (expt 27 10) (expt 28 10) (expt 30 10) (expt 36 10) (expt 37 10) (expt 38 10) (expt 40 10)
 		   (expt 51 10) (expt 62 10))
 		(expt 63 10))))
 
@@ -32294,7 +32294,7 @@
 (num-test (expt (- (expt 3 3/5) (expt 2 1/5)) 1/3)
 	  (/ (+ (- (* (expt 2 1/5) (expt 3 3/5))) (* (expt 2 3/5) (expt 3 2/5)) (expt 3 1/5) (expt 2 2/5)) (expt 5 2/3)))
 
-(num-test (sqrt (- 2 (expt 2 1/7))) 
+(num-test (sqrt (- 2 (expt 2 1/7)))
 	  (/ (* (expt 2 1/14) (+ (- (expt 2 6/7)) (expt 2 5/7) (expt 2 3/7) (* 2 (expt 2 1/7)) -1)) (sqrt 7)))
 
 (num-test (sqrt (- 127 (* 4 (sqrt 6) (expt 7 1/4))))
@@ -32312,7 +32312,7 @@
 	  (+ -1 (* 2 (expt 2 1/7)) (expt 2 3/7) (expt 2 5/7) (- (expt 2 6/7))))
 
 (num-test (sqrt (- (expt 4 2/3) (* (sqrt 3) (expt 5 1/6))))
-	  (+ (/ (expt 5 1/3) (sqrt 6)) (- (/ (expt 5 5/6) (* 3 (sqrt 2)))) (/ (* (expt 2 1/6) (sqrt 5)) 3) 
+	  (+ (/ (expt 5 1/3) (sqrt 6)) (- (/ (expt 5 5/6) (* 3 (sqrt 2)))) (/ (* (expt 2 1/6) (sqrt 5)) 3)
 	     (- (/ (* (expt 2 5/6) (expt 5 1/6)) 3)) (/ (expt 2 1/6) (sqrt 3))))
 
 (num-test (* 2  0+i (log (/ 1-i 1+i))) our-pi)
@@ -32322,201 +32322,201 @@
 ;;; a selection from Eric Weisstein MathWorld MachinFormulas
 (let ((formulas '(
 		  (1/4  (1 1))
-		  
-		  (1/4  (1 2) (1 3))  
-		  (1/4  (2 2) (-1 7))  
-		  (1/4  (2 3) (1 7))  
-		  (1/4  (4 5) (-1 239)) 
-		  
-		  (1/4  (1 2) (1 4) (1 13))    
-		  (1/4  (1 2) (1 5) (1 8))    
-		  (1/4  (1 2) (2 6) (-1 117))    
-		  (1/4  (1 3) (2 4) (-1 38))  
-		  (1/4  (2 2) (-2 12) (1 41))  
-		  (1/4  (2 2) (-2 14) (1 1393))  
-		  (1/4  (2 2) (-2 17) (-1 41))  
-		  (1/4  (2 2) (-1 5) (1 18))  
-		  (1/4  (2 2) (-1 6) (1 43))  
-		  (1/4  (2 2) (-1 8) (-1 57))  
-		  (1/4  (2 2) (-1 9) (-1 32))  
-		  (1/4  (2 2) (-1 12) (-1 17))  
-		  (1/4  (2 3) (1 5) (-1 18))  
-		  (1/4  (2 3) (1 6) (-1 43))  
-		  (1/4  (2 3) (1 8) (1 57))  
-		  (1/4  (2 3) (1 9) (1 32))  
-		  (1/4  (2 3) (1 12) (1 17))  
-		  (1/4  (2 3) (2 12) (-1 41))  
-		  (1/4  (2 3) (2 14) (-1 1393))  
-		  (1/4  (2 3) (2 17) (1 41))  
-		  (1/4  (2 4) (1 7) (2 13))  
-		  (1/4  (2 5) (1 7) (2 8))  
-		  (1/4  (2 5) (3 7) (-2 57))  
-		  (1/4  (2 5) (3 8) (1 57))  
-		  (1/4  (2 6) (3 7) (2 68))  
-		  (1/4  (2 7) (4 8) (1 239))  
-		  (1/4  (3 3) (-2 11) (1 682))  
-		  (1/4  (3 3) (-2 13) (-1 38))  
-		  (1/4  (3 3) (-1 5) (1 57))  
-		  (1/4  (3 3) (-1 6) (-1 68))  
-		  (1/4  (3 3) (-1 8) (-1 18))  
-		  (1/4  (3 4) (1 13) (-1 38))  
-		  (1/4  (3 4) (1 20) (1 1985))  
-		  (1/4  (3 5) (2 8) (-1 18))  
-		  (1/4  (3 7) (2 8) (2 18))  
-		  (1/4  (3 7) (4 11) (-2 682))  
-		  (1/4  (3 7) (4 13) (2 38))  
-		  (1/4  (4 3) (-4 8) (-1 239))     
-		  (1/4  (4 4) (-1 7) (-2 38))  
-		  (1/4  (4 4) (-4 21) (-1 239))  
-		  (1/4  (4 5) (-2 408) (1 1393))  
-		  (1/4  (4 5) (-2 478) (1 54608393))  
-		  (1/4  (4 5) (-2 577) (-1 1393))  
-		  (1/4  (4 5) (-1 41) (2 99))      
-		  (1/4  (4 5) (-1 70) (1 99))      
-		  (1/4  (4 5) (-1 213) (1 1958))   
-		  (1/4  (4 5) (-1 226) (1 4155))   
-		  (1/4  (4 5) (-1 237) (1 28322))  
-		  (1/4  (4 5) (-1 238) (1 56883))  
-		  (1/4  (4 5) (-1 240) (-1 57361))  
-		  (1/4  (4 5) (-1 241) (-1 28800))  
-		  (1/4  (4 5) (-1 252) (-1 4633))  
-		  (1/4  (4 5) (-1 265) (-1 2436))  
-		  (1/4  (4 5) (-1 408) (-1 577))   
-		  (1/4  (4 5) (1 41) (-2 70))      
-		  (1/4  (4 6) (1 7) (-2 117))      
-		  (1/4  (4 6) (4 31) (-1 239))     
-		  (1/4  (4 7) (4 18) (-1 239))     
-		  (1/4  (5 5) (-3 18) (-2 57))  
-		  (1/4  (5 6) (-1 43) (-2 117))  
-		  (1/4  (5 6) (-1 68) (-3 117))  
-		  
-		  (1/4  (-29 239) (256 378) (200 829) (244 882) (-388 993) (324 2943) (-144 18543))  
-		  (1/4  (-4 307) (394 577) (163 1393) (-12 12238) (-24 58911) (-68 1999509) (-68 11653127))  
-		  (1/4  (7 10) (2 50) (4 100) (1 682) (4 1000) (3 1303) (-4 90109))    
-		  (1/4  (7 10) (8 100) (1 682) (4 1000) (3 1303) (-4 90109) (-2 500150))    
-		  (1/4  (12 18) (8 307) (46 577) (19 1393) (-8 2827807) (-16 11653127) (-8 16480443))  
-		  (1/4  (17 23) (11 882) (24 931) (10 1143) (-2 34208) (-8 44179) (-13 485298))  
-		  (1/4  (29 268) (198 378) (142 829) (186 882) (-301 993) (237 2943) (-115 18543))  
-		  (1/4  (43 57) (22 746) (-2 1568) (1 4662) (28 12943) (14 32807) (11 157318))  
-		  (1/4  (44 515) (95 538) (127 682) (176 782) (95 1068) (88 4030) (17 12943))                   
-		  (1/4  (76 682) (190 746) (271 882) (315 2917) (-132 9466) (295 12943) (-95 19703))  
-		  (1/4  (83 107) (17 4443) (68 11343) (-5 113568) (-34 595667) (-5 23481902) (5 168925949733307))  
-		  (1/4  (83 107) (17 4443) (68 11343) (-5 111693) (-34 595667) (5 9503057) (5 232633636378307))  
-		  (1/4  (95 418) (171 682) (176 882) (315 2917) (-132 9466) (105 12943) (95 16693))  
-		  (1/4  (100 437) (254 577) (127 1393) (44 2072) (24 2943) (-12 16432) (-100 28800))  
-		  (1/4  (122 162) (22 568) (-29 1432) (83 5087) (-7 6107) (-10 27493) (-29 30027))  
-		  (1/4  (122 183) (108 1177) (29 1393) (22 4443) (54 5087) (-64 7078) (-10 27493))  
-		  (1/4  (122 418) (237 557) (29 1068) (144 3458) (-61 5087) (122 16452) (105 27493))  
-		  (1/4  (127 239) (100 343) (-56 2072) (-76 2943) (100 7983) (-12 16432) (100 28322))  
-		  (1/4  (127 239) (212 1068) (-144 2072) (188 2309) (-200 6105) (376 6807) (288 13637))  
-		  (1/4  (127 239) (400 1068) (44 2072) (-376 2943) (-200 6105) (100 13637) (188 16432))  
-		  (1/4  (127 682) (227 788) (227 843) (44 2072) (51 2943) (-27 12943) (88 16432))  
-		  (1/4  (127 682) (454 818) (271 1303) (-403 2943) (-44 6118) (-254 12943) (-183 3014557))  
-		  (1/4  (171 239) (68 788) (-56 1744) (36 2943) (44 6613) (-112 13603) (144 28322))  
-		  (1/4  (171 239) (68 993) (-20 2943) (56 4443) (-44 13252) (-112 17088) (156 28322))  
-		  (1/4  (171 239) (124 993) (-56 1252) (56 2855) (-76 2943) (-100 13252) (100 28322))  
-		  (1/4  (171 682) (183 788) (227 843) (95 2943) (44 6613) (-115 12943) (88 28322))  
-		  (1/4  (171 682) (271 882) (95 993) (315 2917) (95 2943) (-227 9466) (200 12943))  
-		  (1/4  (171 682) (366 1068) (139 2436) (271 5357) (315 5507) (227 6962) (-71 12943))  
-		  (1/4  (176 463) (32 682) (241 798) (241 3141) (-58 5357) (-122 12943) (-51 390112))  
-		  (1/4  (176 557) (244 757) (90 1068) (61 1393) (22 3458) (122 11018) (44 27493))  
-		  (1/4  (179 239) (44 5357) (80 5507) (156 12943) (8 17923) (48 32807) (-40 157318))  
-		  (1/4  (179 239) (120 4662) (4 5357) (116 12943) (-32 17923) (88 32807) (40 390112))  
-		  (1/4  (179 233) (120 4662) (4 5357) (-63 12943) (-32 17923) (-91 32807) (40 390112))  
-		  (1/4  (183 239) (32 682) (-88 1143) (132 2673) (68 12943) (-132 34208) (-44 44179))  
-		  (1/4  (183 239) (32 1023) (-68 5832) (12 111693) (-100 6826318) (-12 9503057) (-12 232633636378307))  
-		  (1/4  (183 239) (32 1023) (-68 5832) (12 112068) (-100 6826318) (-12 13288972) (-12 49541920807))  
-		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23476958) (-12 111432033307))  
-		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23481005) (-12 612463280182))  
-		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23463218) (-12 29483238307))  
-		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23481902) (-12 168925949733307))  
-		  (1/4  (183 294) (44 905) (115 1292) (88 3957) (-32 12238) (68 12943) (51 114483))  
-		  (1/4  (183 307) (32 682) (95 1143) (132 2673) (68 12943) (51 34208) (139 44179))  
-		  (1/4  (183 378) (115 557) (29 1068) (122 2943) (144 3458) (-244 14318) (44 27493))  
-		  (1/4  (183 378) (144 606) (86 1772) (122 2943) (-115 6118) (-71 14318) (-71 27493))  
-		  (1/4  (183 378) (144 905) (115 1057) (151 2943) (-29 3957) (-100 14318) (-100 27493))  
-		  (1/4  (183 378) (215 682) (44 1432) (51 2943) (-315 5257) (-71 12943) (44 13043))  
-		  (1/4  (183 538) (215 682) (51 1068) (44 2309) (88 2673) (88 3039) (17 12943))  
-		  (1/4  (183 568) (215 682) (278 1636) (-139 6107) (112 12943) (-234 19703) (132 32807))  
-		  (1/4  (186 307) (41 378) (27 829) (-13 1713) (122 2943) (42 12238) (71 58911))  
-		  (1/4  (190 577) (76 682) (176 882) (95 1393) (220 2917) (-132 9466) (200 12943))  
-		  (1/4  (198 577) (200 606) (127 1393) (-20 2943) (112 3740) (-44 6118) (56 11018))  
-		  (1/4  (199 233) (-60 1393) (-76 5357) (-43 12943) (-152 17923) (9 32807) (120 1049433))  
-		  (1/4  (215 233) (-216 1568) (12 4662) (-64 6898) (113 12943) (-51 32807) (-32 534568))  
-		  (1/4  (215 239) (-248 1568) (76 4662) (296 12943) (132 32807) (64 83270) (32 1493208))  
-		  
-		  (1/4  (160 200) (-1 239) (-4 515) (-8 4030) (-16 50105) (-16 62575) (-32 500150) (-80 4000300))    
-		  (1/4  (215 682) (644 1568) (227 5767) (366 6898) (-532 12943)  (227 24331) (-51 32807) (183 534568))  
-		  (1/4  (295 4193) (3767 5507) (593 18543) (-1228 39307) (2068 55603) (-962 211050) (-708 390112) (-1587 2867938)) 
-		  (1/4  (537 1393) (1118 5357) (952 12943) (3032 17923) (-1384 32807) (-1194 157318) (-1870 1049433) (796 21638297)) 
-		  (1/4  (581 1023) (183 4443) (664 5832) (732 11343) (-171 110443) (-366 595667) (171 4841182) (83 6826318)) 
-		  (1/4  (581 1252) (764 4853) (1030 5832) (-398 58898) (-764 97232) (195 110443) (537 4841182) (266 6826318)) 
-		  (1/4  (581 1252) (764 5593) (1030 5827) (366 58898) (195 110443) (537 4841182) (-764 6826318) (-1030 1561886607)) 
-		  (1/4  (581 1252) (764 5618) (1030 5832) (366 58898) (195 110443) (764 1256859) (537 4841182) (266 6826318)) 
-		  (1/4  (581 1252) (764 5593) (1030 5832) (366 69051) (195 110443) (366 369957) (171 4841182) (266 6826318)) 
-		  (1/4  (581 1252) (764 5593) (1030 11557) (1030 11773) (366 58898) (195 110443) (537 4841182) (266 6826318)) 
-		  (1/4  (581 1252) (1030 5507) (764 5593) (366 58898) (-1030 98821) (195 110443) (537 4841182) (266 6826318)) 
-		  (1/4  (764 1068) (298 5832) (581 26307) (-183 78813) (-171 110443) (215 314982) (171 4841182) (83 6826318)) 
-		  (1/4  (808 1477) (1308 2436) (-1635 5283) (-417 5507) (593 6962) (632 390112) (-561 2733307) (266 23747457))  
-		  (1/4  (1074 1568) (840 5357) (-779 12943) (625 17923) (-1106 32807) (657 198505) (-259 390112) (657 24185182)) 
-		  (1/4  (1074 4246) (1257 5357) (1731 6107) (295 12943) (625 19703) (-481 32807) (-1042 39307) (398 390112))  
-		  (1/4  (1484 4693) (2097 4831) (366 18543) (1189 49457) (-227 123093) (-879 128643) (481 27872057) (-266 31895807)) 
-		  (1/4  (1738 4193) (1699 4246) (144 6687) (-1443 32318) (-266 39307) (337 235318) (-227 390112) (-481 2282363)) 
+
+		  (1/4  (1 2) (1 3))
+		  (1/4  (2 2) (-1 7))
+		  (1/4  (2 3) (1 7))
+		  (1/4  (4 5) (-1 239))
+
+		  (1/4  (1 2) (1 4) (1 13))
+		  (1/4  (1 2) (1 5) (1 8))
+		  (1/4  (1 2) (2 6) (-1 117))
+		  (1/4  (1 3) (2 4) (-1 38))
+		  (1/4  (2 2) (-2 12) (1 41))
+		  (1/4  (2 2) (-2 14) (1 1393))
+		  (1/4  (2 2) (-2 17) (-1 41))
+		  (1/4  (2 2) (-1 5) (1 18))
+		  (1/4  (2 2) (-1 6) (1 43))
+		  (1/4  (2 2) (-1 8) (-1 57))
+		  (1/4  (2 2) (-1 9) (-1 32))
+		  (1/4  (2 2) (-1 12) (-1 17))
+		  (1/4  (2 3) (1 5) (-1 18))
+		  (1/4  (2 3) (1 6) (-1 43))
+		  (1/4  (2 3) (1 8) (1 57))
+		  (1/4  (2 3) (1 9) (1 32))
+		  (1/4  (2 3) (1 12) (1 17))
+		  (1/4  (2 3) (2 12) (-1 41))
+		  (1/4  (2 3) (2 14) (-1 1393))
+		  (1/4  (2 3) (2 17) (1 41))
+		  (1/4  (2 4) (1 7) (2 13))
+		  (1/4  (2 5) (1 7) (2 8))
+		  (1/4  (2 5) (3 7) (-2 57))
+		  (1/4  (2 5) (3 8) (1 57))
+		  (1/4  (2 6) (3 7) (2 68))
+		  (1/4  (2 7) (4 8) (1 239))
+		  (1/4  (3 3) (-2 11) (1 682))
+		  (1/4  (3 3) (-2 13) (-1 38))
+		  (1/4  (3 3) (-1 5) (1 57))
+		  (1/4  (3 3) (-1 6) (-1 68))
+		  (1/4  (3 3) (-1 8) (-1 18))
+		  (1/4  (3 4) (1 13) (-1 38))
+		  (1/4  (3 4) (1 20) (1 1985))
+		  (1/4  (3 5) (2 8) (-1 18))
+		  (1/4  (3 7) (2 8) (2 18))
+		  (1/4  (3 7) (4 11) (-2 682))
+		  (1/4  (3 7) (4 13) (2 38))
+		  (1/4  (4 3) (-4 8) (-1 239))
+		  (1/4  (4 4) (-1 7) (-2 38))
+		  (1/4  (4 4) (-4 21) (-1 239))
+		  (1/4  (4 5) (-2 408) (1 1393))
+		  (1/4  (4 5) (-2 478) (1 54608393))
+		  (1/4  (4 5) (-2 577) (-1 1393))
+		  (1/4  (4 5) (-1 41) (2 99))
+		  (1/4  (4 5) (-1 70) (1 99))
+		  (1/4  (4 5) (-1 213) (1 1958))
+		  (1/4  (4 5) (-1 226) (1 4155))
+		  (1/4  (4 5) (-1 237) (1 28322))
+		  (1/4  (4 5) (-1 238) (1 56883))
+		  (1/4  (4 5) (-1 240) (-1 57361))
+		  (1/4  (4 5) (-1 241) (-1 28800))
+		  (1/4  (4 5) (-1 252) (-1 4633))
+		  (1/4  (4 5) (-1 265) (-1 2436))
+		  (1/4  (4 5) (-1 408) (-1 577))
+		  (1/4  (4 5) (1 41) (-2 70))
+		  (1/4  (4 6) (1 7) (-2 117))
+		  (1/4  (4 6) (4 31) (-1 239))
+		  (1/4  (4 7) (4 18) (-1 239))
+		  (1/4  (5 5) (-3 18) (-2 57))
+		  (1/4  (5 6) (-1 43) (-2 117))
+		  (1/4  (5 6) (-1 68) (-3 117))
+
+		  (1/4  (-29 239) (256 378) (200 829) (244 882) (-388 993) (324 2943) (-144 18543))
+		  (1/4  (-4 307) (394 577) (163 1393) (-12 12238) (-24 58911) (-68 1999509) (-68 11653127))
+		  (1/4  (7 10) (2 50) (4 100) (1 682) (4 1000) (3 1303) (-4 90109))
+		  (1/4  (7 10) (8 100) (1 682) (4 1000) (3 1303) (-4 90109) (-2 500150))
+		  (1/4  (12 18) (8 307) (46 577) (19 1393) (-8 2827807) (-16 11653127) (-8 16480443))
+		  (1/4  (17 23) (11 882) (24 931) (10 1143) (-2 34208) (-8 44179) (-13 485298))
+		  (1/4  (29 268) (198 378) (142 829) (186 882) (-301 993) (237 2943) (-115 18543))
+		  (1/4  (43 57) (22 746) (-2 1568) (1 4662) (28 12943) (14 32807) (11 157318))
+		  (1/4  (44 515) (95 538) (127 682) (176 782) (95 1068) (88 4030) (17 12943))
+		  (1/4  (76 682) (190 746) (271 882) (315 2917) (-132 9466) (295 12943) (-95 19703))
+		  (1/4  (83 107) (17 4443) (68 11343) (-5 113568) (-34 595667) (-5 23481902) (5 168925949733307))
+		  (1/4  (83 107) (17 4443) (68 11343) (-5 111693) (-34 595667) (5 9503057) (5 232633636378307))
+		  (1/4  (95 418) (171 682) (176 882) (315 2917) (-132 9466) (105 12943) (95 16693))
+		  (1/4  (100 437) (254 577) (127 1393) (44 2072) (24 2943) (-12 16432) (-100 28800))
+		  (1/4  (122 162) (22 568) (-29 1432) (83 5087) (-7 6107) (-10 27493) (-29 30027))
+		  (1/4  (122 183) (108 1177) (29 1393) (22 4443) (54 5087) (-64 7078) (-10 27493))
+		  (1/4  (122 418) (237 557) (29 1068) (144 3458) (-61 5087) (122 16452) (105 27493))
+		  (1/4  (127 239) (100 343) (-56 2072) (-76 2943) (100 7983) (-12 16432) (100 28322))
+		  (1/4  (127 239) (212 1068) (-144 2072) (188 2309) (-200 6105) (376 6807) (288 13637))
+		  (1/4  (127 239) (400 1068) (44 2072) (-376 2943) (-200 6105) (100 13637) (188 16432))
+		  (1/4  (127 682) (227 788) (227 843) (44 2072) (51 2943) (-27 12943) (88 16432))
+		  (1/4  (127 682) (454 818) (271 1303) (-403 2943) (-44 6118) (-254 12943) (-183 3014557))
+		  (1/4  (171 239) (68 788) (-56 1744) (36 2943) (44 6613) (-112 13603) (144 28322))
+		  (1/4  (171 239) (68 993) (-20 2943) (56 4443) (-44 13252) (-112 17088) (156 28322))
+		  (1/4  (171 239) (124 993) (-56 1252) (56 2855) (-76 2943) (-100 13252) (100 28322))
+		  (1/4  (171 682) (183 788) (227 843) (95 2943) (44 6613) (-115 12943) (88 28322))
+		  (1/4  (171 682) (271 882) (95 993) (315 2917) (95 2943) (-227 9466) (200 12943))
+		  (1/4  (171 682) (366 1068) (139 2436) (271 5357) (315 5507) (227 6962) (-71 12943))
+		  (1/4  (176 463) (32 682) (241 798) (241 3141) (-58 5357) (-122 12943) (-51 390112))
+		  (1/4  (176 557) (244 757) (90 1068) (61 1393) (22 3458) (122 11018) (44 27493))
+		  (1/4  (179 239) (44 5357) (80 5507) (156 12943) (8 17923) (48 32807) (-40 157318))
+		  (1/4  (179 239) (120 4662) (4 5357) (116 12943) (-32 17923) (88 32807) (40 390112))
+		  (1/4  (179 233) (120 4662) (4 5357) (-63 12943) (-32 17923) (-91 32807) (40 390112))
+		  (1/4  (183 239) (32 682) (-88 1143) (132 2673) (68 12943) (-132 34208) (-44 44179))
+		  (1/4  (183 239) (32 1023) (-68 5832) (12 111693) (-100 6826318) (-12 9503057) (-12 232633636378307))
+		  (1/4  (183 239) (32 1023) (-68 5832) (12 112068) (-100 6826318) (-12 13288972) (-12 49541920807))
+		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23476958) (-12 111432033307))
+		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23481005) (-12 612463280182))
+		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23463218) (-12 29483238307))
+		  (1/4  (183 239) (32 1023) (-68 5832) (12 113568) (-100 6826318) (12 23481902) (-12 168925949733307))
+		  (1/4  (183 294) (44 905) (115 1292) (88 3957) (-32 12238) (68 12943) (51 114483))
+		  (1/4  (183 307) (32 682) (95 1143) (132 2673) (68 12943) (51 34208) (139 44179))
+		  (1/4  (183 378) (115 557) (29 1068) (122 2943) (144 3458) (-244 14318) (44 27493))
+		  (1/4  (183 378) (144 606) (86 1772) (122 2943) (-115 6118) (-71 14318) (-71 27493))
+		  (1/4  (183 378) (144 905) (115 1057) (151 2943) (-29 3957) (-100 14318) (-100 27493))
+		  (1/4  (183 378) (215 682) (44 1432) (51 2943) (-315 5257) (-71 12943) (44 13043))
+		  (1/4  (183 538) (215 682) (51 1068) (44 2309) (88 2673) (88 3039) (17 12943))
+		  (1/4  (183 568) (215 682) (278 1636) (-139 6107) (112 12943) (-234 19703) (132 32807))
+		  (1/4  (186 307) (41 378) (27 829) (-13 1713) (122 2943) (42 12238) (71 58911))
+		  (1/4  (190 577) (76 682) (176 882) (95 1393) (220 2917) (-132 9466) (200 12943))
+		  (1/4  (198 577) (200 606) (127 1393) (-20 2943) (112 3740) (-44 6118) (56 11018))
+		  (1/4  (199 233) (-60 1393) (-76 5357) (-43 12943) (-152 17923) (9 32807) (120 1049433))
+		  (1/4  (215 233) (-216 1568) (12 4662) (-64 6898) (113 12943) (-51 32807) (-32 534568))
+		  (1/4  (215 239) (-248 1568) (76 4662) (296 12943) (132 32807) (64 83270) (32 1493208))
+
+		  (1/4  (160 200) (-1 239) (-4 515) (-8 4030) (-16 50105) (-16 62575) (-32 500150) (-80 4000300))
+		  (1/4  (215 682) (644 1568) (227 5767) (366 6898) (-532 12943)  (227 24331) (-51 32807) (183 534568))
+		  (1/4  (295 4193) (3767 5507) (593 18543) (-1228 39307) (2068 55603) (-962 211050) (-708 390112) (-1587 2867938))
+		  (1/4  (537 1393) (1118 5357) (952 12943) (3032 17923) (-1384 32807) (-1194 157318) (-1870 1049433) (796 21638297))
+		  (1/4  (581 1023) (183 4443) (664 5832) (732 11343) (-171 110443) (-366 595667) (171 4841182) (83 6826318))
+		  (1/4  (581 1252) (764 4853) (1030 5832) (-398 58898) (-764 97232) (195 110443) (537 4841182) (266 6826318))
+		  (1/4  (581 1252) (764 5593) (1030 5827) (366 58898) (195 110443) (537 4841182) (-764 6826318) (-1030 1561886607))
+		  (1/4  (581 1252) (764 5618) (1030 5832) (366 58898) (195 110443) (764 1256859) (537 4841182) (266 6826318))
+		  (1/4  (581 1252) (764 5593) (1030 5832) (366 69051) (195 110443) (366 369957) (171 4841182) (266 6826318))
+		  (1/4  (581 1252) (764 5593) (1030 11557) (1030 11773) (366 58898) (195 110443) (537 4841182) (266 6826318))
+		  (1/4  (581 1252) (1030 5507) (764 5593) (366 58898) (-1030 98821) (195 110443) (537 4841182) (266 6826318))
+		  (1/4  (764 1068) (298 5832) (581 26307) (-183 78813) (-171 110443) (215 314982) (171 4841182) (83 6826318))
+		  (1/4  (808 1477) (1308 2436) (-1635 5283) (-417 5507) (593 6962) (632 390112) (-561 2733307) (266 23747457))
+		  (1/4  (1074 1568) (840 5357) (-779 12943) (625 17923) (-1106 32807) (657 198505) (-259 390112) (657 24185182))
+		  (1/4  (1074 4246) (1257 5357) (1731 6107) (295 12943) (625 19703) (-481 32807) (-1042 39307) (398 390112))
+		  (1/4  (1484 4693) (2097 4831) (366 18543) (1189 49457) (-227 123093) (-879 128643) (481 27872057) (-266 31895807))
+		  (1/4  (1738 4193) (1699 4246) (144 6687) (-1443 32318) (-266 39307) (337 235318) (-227 390112) (-481 2282363))
 		  (1/4  (2363 4557) (1218 5507) (1850 18543) (-266 39307) (-2658 49457) (1257 123093) (-1484 390112) (481 27872057))
-		  
-		  (1/4  (-31739656 201229582) (38819595 231373438) (110380200 284862638) (122355452 312322593) (-134055653 496651953) (5301720 509435077) (63861353 543644509) (68679613 934981432) (130575087 1845907403) (-32548340 2189376182) (-71616726 2539791558) (98822066 4732978887) (119051879 7804016832) (48482068 9233371207) (-99832073 41734246913) (-99143267 66492889557) (-25601898 73276714818) (-79323772 579766497643)) 
-		  (1/4  (16106659 103224943) (48702787 196047454) (18674705 199762118) (8786524 201229582) (-16824928 244653118) (-9582339 261221282) (33092716 266981905) (50379909 270684757) (24748365 909140573) (31675677 1770638022) (1576733 2189376182) (-4742586 2701984943) (-34586991 5475957057) (10864048 14033378718) (-13079131 18986886768) (22266057 25220059245) (17791526 34840696582) (-12650410 193100304493)) 
-		  (1/4  (154370374 124845505) (-90941691 193788912) (64454803 196047454) (-82996236 201229582) (109691394 244653118) (-15562779 462333568) (6518215 553806443) (-169821027 1134156517) (-244516782 1222853176) (100563577 2154947322) (-47118309 2189376182) (-35713908 4006581229) (60656646 5475957057) (-4001125 18986886768) (-68810571 37093513413) (-20888958 100083704193) (16990004 250645741818) (-62587614 5142102426318)) 
-		  (1/4  (-119375678 193788912) (61799442 201229582) (-19991865 272525023) (20438744 321390012) (88331413 331905423) (103467976 343841922) (88464202 378026293) (138122046 600536193) (44232101 653023206) (115219328 846974497) (-81969855 1033937133) (-63521464 1454097393) (-118694678 2189376182) (117332455 2322170807) (-26482877 6884660047) (-18702052 29546599818) (7415308 250645741818) (166718050 512223806648)) 
-		  (1/4  (-85386445 101859193) (4420755 112519818) (43555859 193788912) (15003774 194195097) (108912996 201229582) (61225652 231373438) (16824928 262992072) (73421340 284862638) (123118321 1057929843) (-10593254 2189376182) (40618746 2539791558) (73863237 2616939213) (-30947737 14811180432) (58354910 41734246913) (19908612 66492889557) (5345839 73276714818) (-90280386 120563046313) (61328880 579766497643)) 
-		  (1/4  (-75143577 193788912) (17567341 201229582) (64670845 321390012) (88331413 331905423) (103467976 343841922) (68472337 372954564) (49657844 600536193) (115219328 846974497) (24240236 1012047353) (-81969855 1033937133) (24942738 1454097393) (-118694678 2189376182) (73100354 2322170807) (-88464202 4549886677) (-26482877 6884660047) (-18702052 29546599818) (7415308 250645741818) (34021747 512223806648)) 
-		  (1/4  (-9761163 108220762) (13910116 144252856) (12032992 157157432) (55358773 167207057) (6697039 168623905) (-28651627 193788912) (1825738 201229582) (67020547 215266693) (-1575761 216260702) (45238607 284862638) (10024910 934981432) (20338355 2189376182) (-450675 4832545807) (-27703534 4935283579) (-25688998 7804016832) (-58020549 18986886768) (-28330426 120563046313) (-20446387 69971515635443)) 
-		  (1/4  (-9719634 193788912) (17567341 201229582) (70452403 204415882) (12270610 244653118) (18184957 313467682) (44573394 426775692) (3945487 600536193) (33076315 892642643) (62731148 919331002) (18631836 1012047353) (58964485 1454097393) (32836016 2032914193) (-3430506 2189376182) (-19017973 5475957057) (60427493 6884660047) (-9222216 16406542707) (25467476 22827763470) (-8020348 29546599818)) 
-		  (1/4  (-7707046 100457781) (102467557 168623905) (-37989469 201229582) (-19264491 216904033) (74130709 231373438) (9117882 262992072) (61898132 284862638) (-26046661 314198789) (20721724 327012132) (-6893934 1111885489) (-40541219 1183092682) (-40255386 2189376182) (82347539 2296713307) (31354293 12988236682) (27538131 18221678207) (-68243977 41734246913) (12646329 73276714818) (-45544955 193100304493)) 
-		  (1/4  (-6829481 193788912) (49141523 227661182) (80561462 231373438) (12671730 244653118) (29897458 284862638) (-73630486 355671793) (58626712 398795108) (62468573 509435077) (24454447 543644509) (-19908612 657922943) (28905471 1057929843) (35237534 1845907403) (26678061 2189376182) (-117350972 4866438247) (-61240161 5475957057) (23212961 9075730623) (-20886351 9233371207) (-65421299 60402345333)) 
-		  (1/4  (-6249813 193788912) (56771042 201229582) (28076746 231373438) (-19468648 262992072) (30639871 266981905) (19911270 284862638) (130457979 532399876) (96830507 672554667) (-25661007 1057929843) (13459441 1111885489) (-45480502 1183092682) (5693286 1770638022) (-21577251 2170952313) (-67486342 2189376182) (2925523 2701984943) (27538131 18221678207) (-7198038 193100304493) (36293576 307026452057)) 
-		  (1/4  (-60656646 143846482) (38271221 144309885) (138138220 157565949) (35739707 193788912) (-42115413 201229582) (-49270023 231373438) (94471578 278263393) (-68287996 398795108) (87062724 462333568) (-21411533 593897943) (-13257608 1057929843) (-106971336 1206519637) (34427295 2189376182) (166256019 4006581229) (111296506 4832545807) (58999250 18986886768) (100563577 373139596292) (100694535 5142102426318)) 
-		  (1/4  (-5621437 103224943) (81294931 115811807) (23943179 193788912) (33709426 199762118) (-2077524 201229582) (-31310435 261221282) (4978864 266981905) (-15147806 282218776) (-1688365 909140573) (20050974 1047764193) (-18279356 1770638022) (-1777511 2189376182) (19200593 2701984943) (-21507860 5475957057) (30332696 34840696582) (26011854 48312162432) (7938525 193100304493) (9186926 250645741818)) 
-		  (1/4  (-5497394 101057042) (65180148 144309885) (53832596 193788912) (48554212 201229582) (52075350 447821668) (-105963621 539290393) (-8554603 2060228568) (7313117 2112819717) (-57858314 2189376182) (-3891660 2572149874) (7518287 3261365450) (-19908612 4044044333) (12568802 4866438247) (-83992146 5494891577) (-68408704 9233371207) (6071631 20336334426) (26993421 45384196187) (-20080982 71617196968)) 
-		  (1/4  (-52897653 193788912) (17567341 201229582) (88637360 214539684) (16824928 329492391) (87365276 426775692) (89084239 434859193) (64670845 478798161) (-60879340 600536193) (51820567 706366957) (25661007 1033937133) (-7721255 1119211358) (-11874055 1454097393) (-46608525 2189376182) (-7415308 2674664693) (38361126 6884660047) (-54246761 29546599818) (29095538 42354792693) (55834766 512223806648)) 
-		  (1/4  (-51730315 193788912) (50509639 201229582) (-2925523 224497457) (34338149 231373438) (56651725 266981905) (88974774 284862638) (6009207 367829623) (44851350 532399876) (77361859 672554667) (-36293576 1047764193) (19819495 1057929843) (-26011854 1695830317) (-10691678 1770638022) (-51609424 2170952313) (-31380534 2189376182) (21276728 18221678207) (9186926 250645741818) (-16384964 4125516427007)) 
-		  (1/4  (-50738726 193788912) (95363435 196047454) (69453144 225823278) (69510447 227661182) (22432893 244653118) (-32772323 266981905) (-17689880 284862638) (-25151223 657922943) (45597610 672554667) (-15126313 934981432) (76492809 1770638022) (84039104 2189376182) (-104948381 4832545807) (-85627080 5475957057) (-40656362 5684017953) (-5242611 7804016832) (-197723175 18986886768) (42533486 25220059245)) 
-		  (1/4  (-28765620 120868561) (44046442 160007778) (67427201 167207057) (37325093 191800592) (70499068 270090468) (-57543499 289008998) (17519675 361632045) (-4374603 747769833) (-52576452 2674664693) (-7666625 2971354082) (83775059 3069221943) (44136928 4549886677) (-7704241 4832545807) (109211041 4935283579) (43406332 5271470807) (-4967047 8815417307) (24253605 14033378718) (72936300 69392205693)) 
-		  (1/4  (-19504206 100457781) (24986381 107793452) (26438497 121042733) (40255386 160007778) (28377269 168623905) (23815821 314198789) (-2374068 361632045) (25057307 672554667) (-9351768 773302059) (11008080 1479406293) (574237 2296713307) (-3020779 2701984943) (17648998 4038832337) (-9422284 12139595709) (27538131 12957904393) (20007517 12988236682) (23727647 18710140581) (-4711783 120563046313))       
-		  (1/4  (-42543389 193788912) (74917830 201229582) (28076746 231373438) (16824928 262992072) (30639871 266981905) (74351634 284862638) (21577251 640348873) (78683719 672554667) (-25661007 1057929843) (-4687347 1111885489) (-27333714 1183092682) (5693286 1770638022) (8531273 2189376182) (-76017615 2674664693) (2925523 2701984943) (-39724039 4309606382) (27538131 18221678207) (68819577 193100304493)) 
-		  (1/4  (-41665661 138884933) (61863206 168623905) (-24923249 201229582) (1860735 231373438) (152322833 244685917) (16824928 262992072) (45004160 284862638) (6816407 306903943) (-25731933 2189376182) (-2937113 2539791558) (-80514719 4100676432) (-30142453 5157407572) (88702086 17249711432) (10077565 18986886768) (-34456033 41734246913) (19908612 66492889557) (66436029 73276714818) (-10644159 579766497643)) 
-		  (1/4  (-39775463 119742462) (20197545 168623905) (93476735 201229582) (1860735 231373438) (58490589 262992072) (86669821 284862638) (-4706801 437768635) (41665661 1258140850) (-35068662 1396533757) (-56669435 1624720807) (61079955 2189376182) (69090409 2539791558) (-73253757 3712239557) (42278290 41734246913) (-46591870 52254287493) (59684075 66492889557) (-12188492 73276714818) (-15350960 579766497643)) 
-		  (1/4  (-3944315 103224943) (48706548 136899993) (18362609 186695067) (14767496 193788912) (-25501467 201229582) (-15136563 244653118) (29933522 261221282) (30079929 266981905) (117267526 480808760) (-30911261 1012047353) (40320881 1770638022) (53656250 2189376182) (20888958 2701984943) (-63283169 5475957057) (-32599626 37093513413) (-43463674 43917943025) (-64759288 193100304493) (21735578 5142102426318)) 
-		  (1/4  (-3908713 100351813) (64565359 115453918) (26685223 201229582) (-8153925 214539684) (96935488 385231007) (15853328 459637173) (-19281720 539290393) (-48760063 883337939) (62688235 909140573) (-67639108 1282794079) (-5891323 1304967682) (-10583319 2189376182) (34749426 2572149874) (-55437542 3508373380) (-90085473 4427365493) (-35842901 5494891577) (-35317011 18986886768) (-22926686 45119420807)) 
-		  (1/4  (-36515828 110175338) (5722932 193788912) (17567341 201229582) (83804410 203283777) (85603231 244653118) (79850836 273202197) (68353757 345311195) (-87424385 549758463) (-63893191 1454097393) (-111387800 1459933093) (69893108 1725455932) (-61767440 2189376182) (-19017973 5475957057) (102875038 6930719818) (47464799 16406542707) (21866697 29546599818) (-15003774 37093513413) (-46223313 5142102426318)) 
-		  (1/4  (-36293576 132095062) (57870827 168623905) (-42543389 193788912) (35193791 201229582) (-8216830 231373438) (53118504 262992072) (30639871 266981905) (128791998 284862638) (60536931 672554667) (-25661007 1057929843) (49753017 1111885489) (-45480502 1183092682) (-30600290 1770638022) (-9615515 2189376182) (-69661629 2701984943) (63831707 18221678207) (29095538 193100304493) (-36293576 5142102426318)) 
-		  (1/4  (-35775309 107793452) (-7119735 111530944) (127376638 115811807) (66649464 193788912) (-21949674 201229582) (-43413311 244653118) (-45561148 261221282) (49941099 266981905) (-9186926 396134107) (-886843 1770638022) (73138594 2189376182) (-39140796 2296713307) (61906878 2701984943) (-3565489 5458840213) (-21696619 5475957057) (-7498561 55237647473) (75356069 193100304493) (-1877124 579766497643)) 
-		  (1/4  (-35368492 144309885) (-13432309 201229582) (124560353 231373438) (-8671679 284862638) (3303573 398795108) (141414744 509435077) (203277950 543644509) (-124589816 1845907403) (-32548340 2189376182) (-53309379 2539791558) (115883211 4732978887) (68679613 9075730623) (-1890198 9233371207) (19219806 41734246913) (19908612 66492889557) (60138860 73276714818) (-53675839 102428655030) (-10644159 579766497643)) 
-		  (1/4  (-35368492 110911039) (50372266 113561432) (3303573 168623905) (-16735882 201229582) (74188087 231373438) (30000386 284862638) (106046252 509435077) (99229845 543644509) (-89221324 1845907403) (-67916832 2189376182) (-53309379 2539791558) (-15003774 3658567505) (65510945 4732978887) (-16893972 9233371207) (-19452259 41734246913) (-30463654 66492889557) (75142634 73276714818) (-10644159 579766497643)) 
-		  (1/4  (-34897469 115453918) (87164915 118708522) (27407173 168623905) (87908983 193788912) (-27111639 201229582) (25214128 284862638) (-104763374 426775692) (55687060 600536193) (-49901243 909140573) (3434531 975229968) (-44950370 1454097393) (75180138 2189376182) (27482161 3508373380) (-68146942 4866438247) (-85620582 6884660047) (15583442 9233371207) (30725109 29546599818) (2193045 1442060060693)) 
-		  (1/4  (-32461025 169937257) (42456472 193788912) (60136529 201229582) (45652872 230845763) (-11582317 231373438) (-12390325 448235443) (44415233 539290393) (59855124 595484173) (64938439 1057929843) (30600290 1500534537) (71357041 2189376182) (45920466 2616939213) (48826263 2701984943) (27854052 5494891577) (22522061 7193374037) (-21720539 11115923863) (1241486 14811180432) (-44678980 58240834569)) 
-		  (1/4  (-30911476 193788912) (17567341 201229582) (68472337 272525023) (64670845 321390012) (88331413 331905423) (15003774 343841922) (5425743 600536193) (70987227 846974497) (-37737754 1033937133) (69174839 1454097393) (-30230476 2189376182) (28868253 2322170807) (-26482877 6884660047) (-44232101 24139206772) (-18702052 29546599818) (-44232101 50443911578) (7415308 250645741818) (-10210354 512223806648)) 
-		  (1/4  (-30692741 227661182) (12504894 231373438) (-39446702 244653118) (114600079 262992072) (92590873 284862638) (113856011 314198789) (86140179 346369967) (-22467890 355671793) (-141382552 398795108) (59415160 657922943) (-7326899 1620933557) (-1037771 2189376182) (-79323772 8895085098) (-27205340 17997844652) (-10574983 41734246913) (-27904591 60402345333) (-79821190 73276714818) (16893972 102428655030)) 
-		  (1/4  (-30361861 113561432) (85628068 168623905) (20493345 231373438) (53783788 262992072) (46894358 284862638) (65430523 1172624874) (36958860 1258140850) (-16893972 1624720807) (21304492 2189376182) (-1046915 2539791558) (-16436052 3658567505) (20222978 3712239557) (18632610 9549201618) (-27859034 41734246913) (-6816407 52254287493) (50270473 66492889557) (22880170 73276714818) (-10644159 579766497643)) 
-		  (1/4  (-29735286 115453918) (-1890198 149299093) (12010178 168623905) (30661691 195053432) (7109402 201229582) (55743030 213255960) (32522426 231373438) (65751551 262992072) (35890388 284862638) (40220018 687606629) (-29216048 909140573) (-63654586 2189376182) (44099312 2539791558) (-33529628 41734246913) (-20830644 66492889557) (26660566 73276714818) (28204899 579766497643) (-48926623 1197009532318)) 
-		  
+
+		  (1/4  (-31739656 201229582) (38819595 231373438) (110380200 284862638) (122355452 312322593) (-134055653 496651953) (5301720 509435077) (63861353 543644509) (68679613 934981432) (130575087 1845907403) (-32548340 2189376182) (-71616726 2539791558) (98822066 4732978887) (119051879 7804016832) (48482068 9233371207) (-99832073 41734246913) (-99143267 66492889557) (-25601898 73276714818) (-79323772 579766497643))
+		  (1/4  (16106659 103224943) (48702787 196047454) (18674705 199762118) (8786524 201229582) (-16824928 244653118) (-9582339 261221282) (33092716 266981905) (50379909 270684757) (24748365 909140573) (31675677 1770638022) (1576733 2189376182) (-4742586 2701984943) (-34586991 5475957057) (10864048 14033378718) (-13079131 18986886768) (22266057 25220059245) (17791526 34840696582) (-12650410 193100304493))
+		  (1/4  (154370374 124845505) (-90941691 193788912) (64454803 196047454) (-82996236 201229582) (109691394 244653118) (-15562779 462333568) (6518215 553806443) (-169821027 1134156517) (-244516782 1222853176) (100563577 2154947322) (-47118309 2189376182) (-35713908 4006581229) (60656646 5475957057) (-4001125 18986886768) (-68810571 37093513413) (-20888958 100083704193) (16990004 250645741818) (-62587614 5142102426318))
+		  (1/4  (-119375678 193788912) (61799442 201229582) (-19991865 272525023) (20438744 321390012) (88331413 331905423) (103467976 343841922) (88464202 378026293) (138122046 600536193) (44232101 653023206) (115219328 846974497) (-81969855 1033937133) (-63521464 1454097393) (-118694678 2189376182) (117332455 2322170807) (-26482877 6884660047) (-18702052 29546599818) (7415308 250645741818) (166718050 512223806648))
+		  (1/4  (-85386445 101859193) (4420755 112519818) (43555859 193788912) (15003774 194195097) (108912996 201229582) (61225652 231373438) (16824928 262992072) (73421340 284862638) (123118321 1057929843) (-10593254 2189376182) (40618746 2539791558) (73863237 2616939213) (-30947737 14811180432) (58354910 41734246913) (19908612 66492889557) (5345839 73276714818) (-90280386 120563046313) (61328880 579766497643))
+		  (1/4  (-75143577 193788912) (17567341 201229582) (64670845 321390012) (88331413 331905423) (103467976 343841922) (68472337 372954564) (49657844 600536193) (115219328 846974497) (24240236 1012047353) (-81969855 1033937133) (24942738 1454097393) (-118694678 2189376182) (73100354 2322170807) (-88464202 4549886677) (-26482877 6884660047) (-18702052 29546599818) (7415308 250645741818) (34021747 512223806648))
+		  (1/4  (-9761163 108220762) (13910116 144252856) (12032992 157157432) (55358773 167207057) (6697039 168623905) (-28651627 193788912) (1825738 201229582) (67020547 215266693) (-1575761 216260702) (45238607 284862638) (10024910 934981432) (20338355 2189376182) (-450675 4832545807) (-27703534 4935283579) (-25688998 7804016832) (-58020549 18986886768) (-28330426 120563046313) (-20446387 69971515635443))
+		  (1/4  (-9719634 193788912) (17567341 201229582) (70452403 204415882) (12270610 244653118) (18184957 313467682) (44573394 426775692) (3945487 600536193) (33076315 892642643) (62731148 919331002) (18631836 1012047353) (58964485 1454097393) (32836016 2032914193) (-3430506 2189376182) (-19017973 5475957057) (60427493 6884660047) (-9222216 16406542707) (25467476 22827763470) (-8020348 29546599818))
+		  (1/4  (-7707046 100457781) (102467557 168623905) (-37989469 201229582) (-19264491 216904033) (74130709 231373438) (9117882 262992072) (61898132 284862638) (-26046661 314198789) (20721724 327012132) (-6893934 1111885489) (-40541219 1183092682) (-40255386 2189376182) (82347539 2296713307) (31354293 12988236682) (27538131 18221678207) (-68243977 41734246913) (12646329 73276714818) (-45544955 193100304493))
+		  (1/4  (-6829481 193788912) (49141523 227661182) (80561462 231373438) (12671730 244653118) (29897458 284862638) (-73630486 355671793) (58626712 398795108) (62468573 509435077) (24454447 543644509) (-19908612 657922943) (28905471 1057929843) (35237534 1845907403) (26678061 2189376182) (-117350972 4866438247) (-61240161 5475957057) (23212961 9075730623) (-20886351 9233371207) (-65421299 60402345333))
+		  (1/4  (-6249813 193788912) (56771042 201229582) (28076746 231373438) (-19468648 262992072) (30639871 266981905) (19911270 284862638) (130457979 532399876) (96830507 672554667) (-25661007 1057929843) (13459441 1111885489) (-45480502 1183092682) (5693286 1770638022) (-21577251 2170952313) (-67486342 2189376182) (2925523 2701984943) (27538131 18221678207) (-7198038 193100304493) (36293576 307026452057))
+		  (1/4  (-60656646 143846482) (38271221 144309885) (138138220 157565949) (35739707 193788912) (-42115413 201229582) (-49270023 231373438) (94471578 278263393) (-68287996 398795108) (87062724 462333568) (-21411533 593897943) (-13257608 1057929843) (-106971336 1206519637) (34427295 2189376182) (166256019 4006581229) (111296506 4832545807) (58999250 18986886768) (100563577 373139596292) (100694535 5142102426318))
+		  (1/4  (-5621437 103224943) (81294931 115811807) (23943179 193788912) (33709426 199762118) (-2077524 201229582) (-31310435 261221282) (4978864 266981905) (-15147806 282218776) (-1688365 909140573) (20050974 1047764193) (-18279356 1770638022) (-1777511 2189376182) (19200593 2701984943) (-21507860 5475957057) (30332696 34840696582) (26011854 48312162432) (7938525 193100304493) (9186926 250645741818))
+		  (1/4  (-5497394 101057042) (65180148 144309885) (53832596 193788912) (48554212 201229582) (52075350 447821668) (-105963621 539290393) (-8554603 2060228568) (7313117 2112819717) (-57858314 2189376182) (-3891660 2572149874) (7518287 3261365450) (-19908612 4044044333) (12568802 4866438247) (-83992146 5494891577) (-68408704 9233371207) (6071631 20336334426) (26993421 45384196187) (-20080982 71617196968))
+		  (1/4  (-52897653 193788912) (17567341 201229582) (88637360 214539684) (16824928 329492391) (87365276 426775692) (89084239 434859193) (64670845 478798161) (-60879340 600536193) (51820567 706366957) (25661007 1033937133) (-7721255 1119211358) (-11874055 1454097393) (-46608525 2189376182) (-7415308 2674664693) (38361126 6884660047) (-54246761 29546599818) (29095538 42354792693) (55834766 512223806648))
+		  (1/4  (-51730315 193788912) (50509639 201229582) (-2925523 224497457) (34338149 231373438) (56651725 266981905) (88974774 284862638) (6009207 367829623) (44851350 532399876) (77361859 672554667) (-36293576 1047764193) (19819495 1057929843) (-26011854 1695830317) (-10691678 1770638022) (-51609424 2170952313) (-31380534 2189376182) (21276728 18221678207) (9186926 250645741818) (-16384964 4125516427007))
+		  (1/4  (-50738726 193788912) (95363435 196047454) (69453144 225823278) (69510447 227661182) (22432893 244653118) (-32772323 266981905) (-17689880 284862638) (-25151223 657922943) (45597610 672554667) (-15126313 934981432) (76492809 1770638022) (84039104 2189376182) (-104948381 4832545807) (-85627080 5475957057) (-40656362 5684017953) (-5242611 7804016832) (-197723175 18986886768) (42533486 25220059245))
+		  (1/4  (-28765620 120868561) (44046442 160007778) (67427201 167207057) (37325093 191800592) (70499068 270090468) (-57543499 289008998) (17519675 361632045) (-4374603 747769833) (-52576452 2674664693) (-7666625 2971354082) (83775059 3069221943) (44136928 4549886677) (-7704241 4832545807) (109211041 4935283579) (43406332 5271470807) (-4967047 8815417307) (24253605 14033378718) (72936300 69392205693))
+		  (1/4  (-19504206 100457781) (24986381 107793452) (26438497 121042733) (40255386 160007778) (28377269 168623905) (23815821 314198789) (-2374068 361632045) (25057307 672554667) (-9351768 773302059) (11008080 1479406293) (574237 2296713307) (-3020779 2701984943) (17648998 4038832337) (-9422284 12139595709) (27538131 12957904393) (20007517 12988236682) (23727647 18710140581) (-4711783 120563046313))
+		  (1/4  (-42543389 193788912) (74917830 201229582) (28076746 231373438) (16824928 262992072) (30639871 266981905) (74351634 284862638) (21577251 640348873) (78683719 672554667) (-25661007 1057929843) (-4687347 1111885489) (-27333714 1183092682) (5693286 1770638022) (8531273 2189376182) (-76017615 2674664693) (2925523 2701984943) (-39724039 4309606382) (27538131 18221678207) (68819577 193100304493))
+		  (1/4  (-41665661 138884933) (61863206 168623905) (-24923249 201229582) (1860735 231373438) (152322833 244685917) (16824928 262992072) (45004160 284862638) (6816407 306903943) (-25731933 2189376182) (-2937113 2539791558) (-80514719 4100676432) (-30142453 5157407572) (88702086 17249711432) (10077565 18986886768) (-34456033 41734246913) (19908612 66492889557) (66436029 73276714818) (-10644159 579766497643))
+		  (1/4  (-39775463 119742462) (20197545 168623905) (93476735 201229582) (1860735 231373438) (58490589 262992072) (86669821 284862638) (-4706801 437768635) (41665661 1258140850) (-35068662 1396533757) (-56669435 1624720807) (61079955 2189376182) (69090409 2539791558) (-73253757 3712239557) (42278290 41734246913) (-46591870 52254287493) (59684075 66492889557) (-12188492 73276714818) (-15350960 579766497643))
+		  (1/4  (-3944315 103224943) (48706548 136899993) (18362609 186695067) (14767496 193788912) (-25501467 201229582) (-15136563 244653118) (29933522 261221282) (30079929 266981905) (117267526 480808760) (-30911261 1012047353) (40320881 1770638022) (53656250 2189376182) (20888958 2701984943) (-63283169 5475957057) (-32599626 37093513413) (-43463674 43917943025) (-64759288 193100304493) (21735578 5142102426318))
+		  (1/4  (-3908713 100351813) (64565359 115453918) (26685223 201229582) (-8153925 214539684) (96935488 385231007) (15853328 459637173) (-19281720 539290393) (-48760063 883337939) (62688235 909140573) (-67639108 1282794079) (-5891323 1304967682) (-10583319 2189376182) (34749426 2572149874) (-55437542 3508373380) (-90085473 4427365493) (-35842901 5494891577) (-35317011 18986886768) (-22926686 45119420807))
+		  (1/4  (-36515828 110175338) (5722932 193788912) (17567341 201229582) (83804410 203283777) (85603231 244653118) (79850836 273202197) (68353757 345311195) (-87424385 549758463) (-63893191 1454097393) (-111387800 1459933093) (69893108 1725455932) (-61767440 2189376182) (-19017973 5475957057) (102875038 6930719818) (47464799 16406542707) (21866697 29546599818) (-15003774 37093513413) (-46223313 5142102426318))
+		  (1/4  (-36293576 132095062) (57870827 168623905) (-42543389 193788912) (35193791 201229582) (-8216830 231373438) (53118504 262992072) (30639871 266981905) (128791998 284862638) (60536931 672554667) (-25661007 1057929843) (49753017 1111885489) (-45480502 1183092682) (-30600290 1770638022) (-9615515 2189376182) (-69661629 2701984943) (63831707 18221678207) (29095538 193100304493) (-36293576 5142102426318))
+		  (1/4  (-35775309 107793452) (-7119735 111530944) (127376638 115811807) (66649464 193788912) (-21949674 201229582) (-43413311 244653118) (-45561148 261221282) (49941099 266981905) (-9186926 396134107) (-886843 1770638022) (73138594 2189376182) (-39140796 2296713307) (61906878 2701984943) (-3565489 5458840213) (-21696619 5475957057) (-7498561 55237647473) (75356069 193100304493) (-1877124 579766497643))
+		  (1/4  (-35368492 144309885) (-13432309 201229582) (124560353 231373438) (-8671679 284862638) (3303573 398795108) (141414744 509435077) (203277950 543644509) (-124589816 1845907403) (-32548340 2189376182) (-53309379 2539791558) (115883211 4732978887) (68679613 9075730623) (-1890198 9233371207) (19219806 41734246913) (19908612 66492889557) (60138860 73276714818) (-53675839 102428655030) (-10644159 579766497643))
+		  (1/4  (-35368492 110911039) (50372266 113561432) (3303573 168623905) (-16735882 201229582) (74188087 231373438) (30000386 284862638) (106046252 509435077) (99229845 543644509) (-89221324 1845907403) (-67916832 2189376182) (-53309379 2539791558) (-15003774 3658567505) (65510945 4732978887) (-16893972 9233371207) (-19452259 41734246913) (-30463654 66492889557) (75142634 73276714818) (-10644159 579766497643))
+		  (1/4  (-34897469 115453918) (87164915 118708522) (27407173 168623905) (87908983 193788912) (-27111639 201229582) (25214128 284862638) (-104763374 426775692) (55687060 600536193) (-49901243 909140573) (3434531 975229968) (-44950370 1454097393) (75180138 2189376182) (27482161 3508373380) (-68146942 4866438247) (-85620582 6884660047) (15583442 9233371207) (30725109 29546599818) (2193045 1442060060693))
+		  (1/4  (-32461025 169937257) (42456472 193788912) (60136529 201229582) (45652872 230845763) (-11582317 231373438) (-12390325 448235443) (44415233 539290393) (59855124 595484173) (64938439 1057929843) (30600290 1500534537) (71357041 2189376182) (45920466 2616939213) (48826263 2701984943) (27854052 5494891577) (22522061 7193374037) (-21720539 11115923863) (1241486 14811180432) (-44678980 58240834569))
+		  (1/4  (-30911476 193788912) (17567341 201229582) (68472337 272525023) (64670845 321390012) (88331413 331905423) (15003774 343841922) (5425743 600536193) (70987227 846974497) (-37737754 1033937133) (69174839 1454097393) (-30230476 2189376182) (28868253 2322170807) (-26482877 6884660047) (-44232101 24139206772) (-18702052 29546599818) (-44232101 50443911578) (7415308 250645741818) (-10210354 512223806648))
+		  (1/4  (-30692741 227661182) (12504894 231373438) (-39446702 244653118) (114600079 262992072) (92590873 284862638) (113856011 314198789) (86140179 346369967) (-22467890 355671793) (-141382552 398795108) (59415160 657922943) (-7326899 1620933557) (-1037771 2189376182) (-79323772 8895085098) (-27205340 17997844652) (-10574983 41734246913) (-27904591 60402345333) (-79821190 73276714818) (16893972 102428655030))
+		  (1/4  (-30361861 113561432) (85628068 168623905) (20493345 231373438) (53783788 262992072) (46894358 284862638) (65430523 1172624874) (36958860 1258140850) (-16893972 1624720807) (21304492 2189376182) (-1046915 2539791558) (-16436052 3658567505) (20222978 3712239557) (18632610 9549201618) (-27859034 41734246913) (-6816407 52254287493) (50270473 66492889557) (22880170 73276714818) (-10644159 579766497643))
+		  (1/4  (-29735286 115453918) (-1890198 149299093) (12010178 168623905) (30661691 195053432) (7109402 201229582) (55743030 213255960) (32522426 231373438) (65751551 262992072) (35890388 284862638) (40220018 687606629) (-29216048 909140573) (-63654586 2189376182) (44099312 2539791558) (-33529628 41734246913) (-20830644 66492889557) (26660566 73276714818) (28204899 579766497643) (-48926623 1197009532318))
+
 		  (1/2  (94283734 231373438) (147962666 262992072) (211308992 284862638) (-26800082 318942476) (-69173113 610076381) (-137945216 1111885489) (126007473 1183092682) (333203505 2189376182) (-250903561 2296713307) (248078871 2539791558) (-379960570 5458840213) (-73879914 18221678207) (132652425 30446482737) (68447160 41734246913) (-28954879 66492889557) (35907922 73276714818) (124495078 193100304493) (118351969 579766497643) (18339615 69971515635443))
-		  
-		  (1/4  (-177112869 1047764193) (690072825 1057929843) (94777525 1082548618) (102841728 1770638022) (254740469 1845907403) (-7897447 2189376182) (-276135745 4866438247) (382919489 8634733487) (364832031 9233371207) (-255036003 18221678207) (-47281269 30446482737) (-14754756 31147706551) (145805470 35587716432) (-60553945 41734246913) (275062833 73276714818) (130937707 73745675437) (225667081 91140429801) (-58222931 120563046313) (217205407 250645741818) (-335335373 69971515635443)) 
-		  (1/4  (48554212 1047764193) (-8064203 1695830317) (273129107 1845907403) (256152120 2060228568) (387484239 2170952313) (522262813 2189376182) (139928940 2426435870) (35269543 6249781117) (-116987170 9233371207) (-153310392 14885462059) (243523167 16346803247) (-191276069 18221678207) (-114320902 30446482737) (430509851 31147706551) (-62448154 35587716432) (118676670 41734246913) (-206756368 73276714818) (103732367 73745675437) (887580 250645741818) (-42628659 69971515635443)) 
+
+		  (1/4  (-177112869 1047764193) (690072825 1057929843) (94777525 1082548618) (102841728 1770638022) (254740469 1845907403) (-7897447 2189376182) (-276135745 4866438247) (382919489 8634733487) (364832031 9233371207) (-255036003 18221678207) (-47281269 30446482737) (-14754756 31147706551) (145805470 35587716432) (-60553945 41734246913) (275062833 73276714818) (130937707 73745675437) (225667081 91140429801) (-58222931 120563046313) (217205407 250645741818) (-335335373 69971515635443))
+		  (1/4  (48554212 1047764193) (-8064203 1695830317) (273129107 1845907403) (256152120 2060228568) (387484239 2170952313) (522262813 2189376182) (139928940 2426435870) (35269543 6249781117) (-116987170 9233371207) (-153310392 14885462059) (243523167 16346803247) (-191276069 18221678207) (-114320902 30446482737) (430509851 31147706551) (-62448154 35587716432) (118676670 41734246913) (-206756368 73276714818) (103732367 73745675437) (887580 250645741818) (-42628659 69971515635443))
 		  (1/4  (59529729 1111885489) (411801489 1183092682) (-11697838 1770638022) (-10217933 2189376182) (178183864 2420845318) (481604223 2674664693) (200815307 2701984943) (18311409 4309606382) (-54066665 5684017953) (391091355 9566096322) (433050011 14033378718) (155959834 14474950443) (123563452 18221678207) (-322558047 18986886768) (-187246484 41734246913) (182267620 73276714818) (70949047 120563046313) (85657566 134237866432) (150508360 193100304493) (16824928 804006285737))
-		  (1/4  (79674619 1057929843) (430112898 1183092682) (103029535 1770638022) (419995354 1845907403) (161719567 2189376182) (25897285 2701984943) (-165526275 3651666474) (-450635225 4866438247) (418811986 5684017953) (520079918 9233371207) (-370946465 11079391432) (11498734 14033378718) (1575319 15548138481) (-17734177 18221678207) (310673925 18986886768) (179773324 91140429801) (10643092 193100304493) (158038974 250645741818) (-165442692 804006285737) (119720378 11484937157318)) 
-		  (1/4  (210413195 1047764193) (49034748 1057929843) (129893399 1111885489) (920835218 1222853176) (-367170458 1770638022) (-460082449 2154947322) (471386290 2189376182) (-4742586 2701984943) (-385386694 3651666474) (239038662 5684017953) (399473027 12988236682) (-298167989 14033378718) (111903950 15548138481) (-327400900 18221678207) (-789934617 18986886768) (-490722320 34352737807) (-639330225 193100304493) (-182267620 250645741818) (264670206 804006285737) (460026972 11484937157318)) 
-		  (1/4  (245117311 1057929843) (-441536832 1111885489) (694624721 1183092682) (357582197 1845907403) (993878808 2189376182) (-264511823 2296713307) (279266579 2701984943) (-1351244216 4866438247) (255211890 9233371207) (142361641 10855443178) (-647040605 11079391432) (-55648319 15548138481) (-29232911 18221678207) (533067633 35587716432) (34223580 41734246913) (165442692 73276714818) (-215957611 91140429801) (786436927 120563046313) (939525243 193100304493) (311982932 250645741818)) 
-		  (1/4  (290087814 1057929843) (129893399 1111885489) (189059832 1183092682) (312611694 1770638022) (-177755991 2189376182) (30639871 2539791558) (236310480 2701984943) (285108950 3651666474) (-530648699 5458840213) (208398791 5684017953) (381614163 14033378718) (81264079 15548138481) (-679782152 17249711432) (321741381 18221678207) (130900601 18986886768) (210413195 66492889557) (250865122 193100304493) (28145575 250645741818) (44970503 804006285737) (-460808246 11484937157318)) 
-		  (1/4  (719865552 1057929843) (-120111015 1111885489) (-210078035 1183092682) (62607280 1770638022) (322252837 2189376182) (486314894 2701984943) (254469079 3651666474) (149133453 4832545807) (-401152271 5684017953) (491057480 7804016832) (-30639871 8995467682) (-328807860 14033378718) (392548235 15548138481) (-311284156 17058320068) (-669324927 18221678207) (-180383555 18986886768) (-60419034 193100304493) (278149989 250645741818) (325614788 804006285737) (-180163961 11484937157318)) 
-		  (1/4  (764256596 1183092682) (340757269 1770638022) (82030807 2189376182) (-651971659 2296713307) (188678845 2539791558) (371182743 2701984943) (-541133952 5458840213) (282350263 5684017953) (261942239 9566096322) (414738602 14033378718) (-578034328 17249711432) (219993557 18221678207) (-126062774 18986886768) (-58097368 41734246913) (129149116 66492889557) (53118504 73276714818) (-68972608 120563046313) (210038089 193100304493) (285108950 579766497643) (16824928 804006285737)) 
-		  (1/2  (-389355483 1111885489) (-85198635 1770638022) (942772580 2189376182) (860225796 2296713307) (958295292 2439473093) (1701938869 2701984943) (570217900 3651666474) (-653171089 5684017953) (1290597651 9566096322) (632981931 14033378718) (-258298232 15548138481) (-716081542 18221678207) (-448620821 18986886768) (-1711424041 41734246913) (1131248413 73276714818) (1650144299 120563046313) (1441452520 193100304493) (766713173 250645741818) (800363029 804006285737) (-1590316151 11484937157318)) 
+		  (1/4  (79674619 1057929843) (430112898 1183092682) (103029535 1770638022) (419995354 1845907403) (161719567 2189376182) (25897285 2701984943) (-165526275 3651666474) (-450635225 4866438247) (418811986 5684017953) (520079918 9233371207) (-370946465 11079391432) (11498734 14033378718) (1575319 15548138481) (-17734177 18221678207) (310673925 18986886768) (179773324 91140429801) (10643092 193100304493) (158038974 250645741818) (-165442692 804006285737) (119720378 11484937157318))
+		  (1/4  (210413195 1047764193) (49034748 1057929843) (129893399 1111885489) (920835218 1222853176) (-367170458 1770638022) (-460082449 2154947322) (471386290 2189376182) (-4742586 2701984943) (-385386694 3651666474) (239038662 5684017953) (399473027 12988236682) (-298167989 14033378718) (111903950 15548138481) (-327400900 18221678207) (-789934617 18986886768) (-490722320 34352737807) (-639330225 193100304493) (-182267620 250645741818) (264670206 804006285737) (460026972 11484937157318))
+		  (1/4  (245117311 1057929843) (-441536832 1111885489) (694624721 1183092682) (357582197 1845907403) (993878808 2189376182) (-264511823 2296713307) (279266579 2701984943) (-1351244216 4866438247) (255211890 9233371207) (142361641 10855443178) (-647040605 11079391432) (-55648319 15548138481) (-29232911 18221678207) (533067633 35587716432) (34223580 41734246913) (165442692 73276714818) (-215957611 91140429801) (786436927 120563046313) (939525243 193100304493) (311982932 250645741818))
+		  (1/4  (290087814 1057929843) (129893399 1111885489) (189059832 1183092682) (312611694 1770638022) (-177755991 2189376182) (30639871 2539791558) (236310480 2701984943) (285108950 3651666474) (-530648699 5458840213) (208398791 5684017953) (381614163 14033378718) (81264079 15548138481) (-679782152 17249711432) (321741381 18221678207) (130900601 18986886768) (210413195 66492889557) (250865122 193100304493) (28145575 250645741818) (44970503 804006285737) (-460808246 11484937157318))
+		  (1/4  (719865552 1057929843) (-120111015 1111885489) (-210078035 1183092682) (62607280 1770638022) (322252837 2189376182) (486314894 2701984943) (254469079 3651666474) (149133453 4832545807) (-401152271 5684017953) (491057480 7804016832) (-30639871 8995467682) (-328807860 14033378718) (392548235 15548138481) (-311284156 17058320068) (-669324927 18221678207) (-180383555 18986886768) (-60419034 193100304493) (278149989 250645741818) (325614788 804006285737) (-180163961 11484937157318))
+		  (1/4  (764256596 1183092682) (340757269 1770638022) (82030807 2189376182) (-651971659 2296713307) (188678845 2539791558) (371182743 2701984943) (-541133952 5458840213) (282350263 5684017953) (261942239 9566096322) (414738602 14033378718) (-578034328 17249711432) (219993557 18221678207) (-126062774 18986886768) (-58097368 41734246913) (129149116 66492889557) (53118504 73276714818) (-68972608 120563046313) (210038089 193100304493) (285108950 579766497643) (16824928 804006285737))
+		  (1/2  (-389355483 1111885489) (-85198635 1770638022) (942772580 2189376182) (860225796 2296713307) (958295292 2439473093) (1701938869 2701984943) (570217900 3651666474) (-653171089 5684017953) (1290597651 9566096322) (632981931 14033378718) (-258298232 15548138481) (-716081542 18221678207) (-448620821 18986886768) (-1711424041 41734246913) (1131248413 73276714818) (1650144299 120563046313) (1441452520 193100304493) (766713173 250645741818) (800363029 804006285737) (-1590316151 11484937157318))
 		  (1/2  (-383575951 1082548618) (367447545 1695830317) (470326860 1845907403) (302791880 2060228568) (1332608020 2170952313) (1886585069 2189376182) (-562201563 2426435870) (610170129 2539791558) (-707278553 4732978887) (-215928441 6249781117) (-232950527 9233371207) (201602620 16346803247) (172870593 31147706551) (-125920121 35587716432) (696860645 41734246913) (207464734 66492889557) (-412488923 73276714818) (689924269 250645741818) (305596971 579766497643) (199162583 69971515635443))
-		  
+
 		  (1/2  (468218462 2189376182) (1818521088 2439473093) (1312583386 2701984943) (121856072 5684017953) (-1109476277 6327662603) (570217900 8634733487) (1720710549 9566096322) (718180566 14033378718) (601927564 15548138481) (-1921221601 18221678207) (-59265338 18986886768) (1164382644 30446482737) (-936396880 41734246913) (701135515 73276714818) (1205140059 73745675437) (875117138 120563046313) (236312461 193100304493) (336600275 250645741818) (715164394 804006285737) (-815288990 11484937157318) (-860225796 69971515635443))
 		  )))
-  (for-each 
+  (for-each
    (lambda (formula)
      (let ((r (/ 1 (car formula)))
 	   (sum 0.0))
@@ -32524,14 +32524,14 @@
 	(lambda (arg)
 	  (set! sum (+ sum (* (car arg) (atan (/ 1 (cadr arg)))))))
 	(cdr formula))
-       
+
        (if (> (abs (- (* r sum) our-pi)) 1e-12)
 	   (begin (display formula) (display " = ") (display (* r sum)) (newline)))))
    formulas)
 
   (if with-bigfloats
       (let ((mxerr 0.0))
-	(for-each 
+	(for-each
 	 (lambda (formula)
 	   (let ((r (/ (bignum "1") (car formula)))
 		 (sum (bignum "0.0")))
@@ -32539,7 +32539,7 @@
 	      (lambda (arg)
 		(set! sum (+ sum (* (car arg) (atan (/ (bignum "1") (cadr arg)))))))
 	      (cdr formula))
-	     
+
 	     (let ((err (abs (- (* r sum) (* 4 (atan (bignum "1.0") 1.0))))))
 	       (if (> err mxerr)
 		   (set! mxerr err)))))
@@ -32548,63 +32548,63 @@
 	    (format #t "big max error: ~A~%" mxerr)))))
 
 
-(if with-bigfloats	
-    (letrec ((sin-m*pi/n 
+(if with-bigfloats
+    (letrec ((sin-m*pi/n
 	      (lambda (m1 n1)
-		
+
 		;; this returns an expression giving the exact value of sin(m*pi/n), m and n integer
 		;;   if we can handle n -- currently it can be anything of the form 2^a 3^b 5^c 7^d 11^h 13^e 17^f 257^g
 		;;   so (sin-m*pi/n 1 60) returns an exact expression for sin(pi/60).
-		
+
 		(let ((m (numerator (/ m1 n1)))
 		      (n (denominator (/ m1 n1))))
-		  
+
 		  (set! m (modulo m (* 2 n)))
 		  ;; now it's in lowest terms without extra factors of 2*pi
-		  
+
 		  (cond ((zero? m) 0)
-			
+
 			((zero? n) (error "divide by zero (sin-m*pi/n n = 0)"))
-			
+
 			((= n 1) 0)
-			
+
 			((negative? n)
 			 (let ((val (sin-m*pi/n m (- n))))
 			   (and val `(- ,val))))
-			
-			((> m n) 
+
+			((> m n)
 			 (let ((val (sin-m*pi/n (- m n) n)))
 			   (and val `(- ,val))))
-			
+
 			((= n 2) (if (= m 0) 0 1))
-			
+
 			((= n 3) `(sqrt 3/4))
-			
+
 			((> m 1)
 			 (let ((m1 (sin-m*pi/n (- m 1) n))
 			       (n1 (sin-m*pi/n 1 n))
 			       (m2 (sin-m*pi/n (- m 2) n)))
 			   (and m1 m2 n1
 				`(- (* 2 ,m1 (sqrt (- 1 (* ,n1 ,n1)))) ,m2))))
-			
+
 			((= n 5) `(/ (sqrt (- 10 (* 2 (sqrt 5)))) 4))
-			
+
 			((= n 7) `(let ((A1 (expt (+ -7/3456 (sqrt -49/442368)) 1/3))
 					(A2 (expt (- -7/3456 (sqrt -49/442368)) 1/3)))
 				    (sqrt (+ 7/12 (* -1/2 (+ A1 A2)) (* 1/2 0+i (sqrt 3) (- A1 A2))))))
-			
+
 			((= n 17) `(let* ((A1 (sqrt (- 17 (sqrt 17))))
 					  (A2 (sqrt (+ 17 (sqrt 17))))
 					  (A3 (sqrt (+ 34 (* 6 (sqrt 17)) (* (sqrt 2) (- (sqrt 17) 1) A1) (* -8 (sqrt 2) A2)))))
 				     (* 1/8 (sqrt 2) (sqrt (- 17 (sqrt 17) (* (sqrt 2) (+ A1 A3)))))))
-			
-			
+
+
 			((= n 11) `(let* ((SQRT5 (* 1/2 (- (sqrt 5) 1)))
 					  (B5 (sqrt (+ 2 (* 1/2 (+ (sqrt 5) 1)))))
 					  (B6 (+ SQRT5 (* 0+i B5)))
 					  (B6_2 (* B6 B6))
 					  (B6_3 (* B6 B6 B6))
-					  (B6_4 (* B6 B6 B6 B6)) 
+					  (B6_4 (* B6 B6 B6 B6))
 					  (D1 (+ 6 (* 3/2 B6) (* 3/4 B6_2)))
 					  (D2 (+ SQRT5 (* 0+i B5) (* 1/4 B6_2)))
 					  (D3 (* 1/2 (- (+ 1 (* 0+i (sqrt 11))))))
@@ -32630,18 +32630,18 @@
 					  (D40 (+ 3 (* 3/2 B6) (* 9/4 B6_2) (* 7/8 B6_3) (* 3/16 B6_4) (* 1/2 B6 (+ 6 (* 2 B6)))
 						  (* 1/16 B6_4 D1) (* 1/4 B6_2 D13) (* 1/8 B6_3 (+ 3 (* 3/4 B6_3) (* 3/16 B6_4)))))
 					  (D41 (+ (* 1/4 B6_2 D1) (* 1/8 B6_3 D13) (* 1/16 B6_4 D14) (* 1/2 B6 (+ 4 (* 3/8 B6_4)))))
-					  (D42 (+ 3 (* 3/4 B6_3) (* 3/16 B6_4) (* 1/8 B6_3 D1) (* 1/4 B6_2 D14) 
+					  (D42 (+ 3 (* 3/4 B6_3) (* 3/16 B6_4) (* 1/8 B6_3 D1) (* 1/4 B6_2 D14)
 						  (* 1/2 B6 (+ (* 3/2 B6_2) (* 3/8 B6_3) (* 3/16 B6_4))) (* 1/16 B6_4 (+ 3 (* 3/2 B6) (* 3/8 B6_4)))))
-					  (D43 (+ (* 1/4 B6_3) (* 1/16 B6_4) (* 1/8 B6_3 D8) (* 1/4 B6_2 D2) 
+					  (D43 (+ (* 1/4 B6_3) (* 1/16 B6_4) (* 1/8 B6_3 D8) (* 1/4 B6_2 D2)
 						  (* 1/2 B6 (+ (* 1/2 B6_2) (* 1/8 B6_3))) (* 1/16 B6_4 (+ 1 (* 1/8 B6_4)))))
 					  (D44 (/ (* B6_4 (+ D42 (* D4 D40) (* D3 D41))) (* 16 (expt D16 3/5))))
 					  (D45 (/ (* B6 (+ D42 (* D3 D40) (* D4 D41))) (* 2 (expt D17 3/5))))
 					  (D48 (/ (* B6 (+ D43 (* D3 D35) (* D4 D36))) (* 2 (expt D16 2/5))))
 					  (D49 (/ (* B6_4 (+ D43 (* D4 D35) (* D3 D36))) (* 16 (expt D17 2/5)))))
-				     (* -1/2 0+i 
+				     (* -1/2 0+i
 					(+ (* 1/5 (- D32 D33 D34 D48 D44))
 					   (* 1/5 (+ D38 D30 D39 D49 D45))))))
-			
+
 			((= n 13)
 			 `(let* ((A1 (/ (- -1 (sqrt 13)) 2))
 				 (A2 (/ (+ -1 (sqrt 13)) 2))
@@ -32662,7 +32662,7 @@
 					   (* A4 (+ (/ (+ A8 (* A17 A12)) (* 2 (expt (+ 6 A13 A15 A9) 1/3)))
 						    (/ (+ A11 (* A17 A9)) (* -2 (expt (+ 6 A16 A14 A12) 1/3)))
 						    (* 1/4 A4 (- (expt (+ 6 A13 A15 A9) 1/3) (expt (+ 6 A16 A14 A12) 1/3)))))))))
-			
+
 			((= n 257)
 			 `(let* ((A1 (sqrt (- 514 (* 2 (sqrt 257)))))
 				 (A2 (- 257 (* 15 (sqrt 257))))
@@ -32700,8 +32700,8 @@
 								   (* -8 (sqrt (* 2 (+ A28 (* 4 A18) (* 4 A17) (* 2 A13) (* -8 A26) (* -4 A27)
 										       (* -8 (sqrt (+ A23 (- A15) (- A14) (* -4 A18) (* 6 A17))))
 										       (* -8 (sqrt (+ A24 (- A15) A20 (* 6 A18) (* 4 A13)))))))))))))))))
-			
-			((or (= (modulo n 2) 0) (= (modulo n 3) 0) (= (modulo n 5) 0) (= (modulo n 7) 0) 
+
+			((or (= (modulo n 2) 0) (= (modulo n 3) 0) (= (modulo n 5) 0) (= (modulo n 7) 0)
 			     (= (modulo n 17) 0) (= (modulo n 13) 0) (= (modulo n 257) 0) (= (modulo n 11) 0))
 			 (let ((divisor (if (= (modulo n 2) 0) 2
 					    (if (= (modulo n 3) 0) 3
@@ -32717,9 +32717,9 @@
 				     (/ (- (expt (+ (sqrt (- 1 (* ex ex))) (* 0+i ex)) (/ 1 ,divisor))
 					   (expt (- (sqrt (- 1 (* ex ex))) (* 0+i ex)) (/ 1 ,divisor)))
 					0+2i))))))
-			
+
 			(else #f))))))
-      
+
       (let ((maxerr 0.0)
 	    (max-case #f)
 	    (cases 0))
@@ -32736,17 +32736,17 @@
 				   lst))))
 	      (let ((val (sin (/ (* m our-pi) n)))
 		    (expr (bigify (sin-m*pi/n m n))))
-		(if expr 
+		(if expr
 		    (let ((err (magnitude (- val (eval expr)))))
 		      (set! cases (+ cases 1))
-		      (if (> err maxerr) 
+		      (if (> err maxerr)
 			  (begin
 			    (set! max-case (/ m n))
 			    (set! maxerr err)))))))))
 	(if (> maxerr 1e-35)
 	    (format #t "sin-m*pi/n (~A cases) max err ~A at ~A~%" cases maxerr max-case))))
     )
-    
+
 
 (test (integer? (expt 2.3 54)) #f)
 (test (zero? (- (expt 2.3 54) (floor (expt 2.3 54)))) #f)
@@ -32787,7 +32787,7 @@
       (num-test (* 4.0e170 5.0e170 2.0e-170 3.0e-170) 120.0)
       (num-test (* 1000000.0 (+ 1.0 1.2345e-10 -1.0)) 1.2345e-4)
       (num-test (* 1000000.0 (- 1.0 -1.2345e-10 1.0)) 1.2345e-4)
-      
+
       ;; from Knuth IIp245(3rd)
       (let* ((f (lambda (x) (/ (- 1 (expt x 107)) (- 1 x))))
 	     (g (lambda (y) (f (* (- 1/3 (* y y)) (+ 3 (* 3.45 y y))))))
@@ -32808,25 +32808,25 @@
       ))
 
 (num-test (tan (/ our-pi 4)) 1.0)
-  
-(num-test (+ (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10))) 
+
+(num-test (+ (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10)))
 	  4197377/1049600)
-(num-test (- (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10))) 
+(num-test (- (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10)))
 	  -3073/1049600)
-(num-test (* (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10))) 
+(num-test (* (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10)))
 	  4098/1025)
-(num-test (/ (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10))) 
+(num-test (/ (/ (expt 2 11) (+ (expt 2 10) 1)) (/ (+ (expt 2 11) 1) (expt 2 10)))
 	  2097152/2100225)
 
-(if with-64-bit-ints 
+(if with-64-bit-ints
     (begin
-      (num-test (+ (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20))) 
+      (num-test (+ (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20)))
 		4398049656833/1099512676352)
-      (num-test (- (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20))) 
+      (num-test (- (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20)))
 		-3145729/1099512676352)
-      (num-test (* (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20))) 
+      (num-test (* (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20)))
 		4194306/1048577)
-      (num-test (/ (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20))) 
+      (num-test (/ (/ (expt 2 21) (+ (expt 2 20) 1)) (/ (+ (expt 2 21) 1) (expt 2 20)))
 		2199023255552/2199026401281)
 
       (num-test (+ (/ (expt 2 31) (+ (expt 2 20) 1)) (/ (+ (expt 2 31) 1) (expt 2 20)))
@@ -32903,9 +32903,9 @@
       )
     (begin
       (num-test (+ 1/98947 2/97499 3/76847 4/61981) 6166252158685494/45950293466358141571)
-      (num-test (- 1/98947 2/97499 3/76847 4/61981) -5237466172928308/45950293466358141571) 
+      (num-test (- 1/98947 2/97499 3/76847 4/61981) -5237466172928308/45950293466358141571)
       (num-test (* 1/98947 2/97499 3/76847 4/61981) 24/45950293466358141571)
-      (num-test (/ 1/98947 2/97499 3/76847 4/61981) 464392992878593/2374728) 
+      (num-test (/ 1/98947 2/97499 3/76847 4/61981) 464392992878593/2374728)
       ))
 
 (if (not with-bignums)
@@ -32917,7 +32917,7 @@
       )
     (begin
       (num-test (+ 1/98947 2/97499 3/76847 4/61981 5/59981) 599609438061905323469/2756144552405627689570151)
-      (num-test (- 1/98947 2/97499 3/76847 4/61981 5/59981) -543899925850203550003/2756144552405627689570151) 
+      (num-test (- 1/98947 2/97499 3/76847 4/61981 5/59981) -543899925850203550003/2756144552405627689570151)
       (num-test (* 1/98947 2/97499 3/76847 4/61981 5/59981) 120/2756144552405627689570151)
       (num-test (/ 1/98947 2/97499 3/76847 4/61981 5/59981) 27854756105850886733/11873640)
       ))
@@ -32930,9 +32930,9 @@
       (num-test (/ 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) 2.6040239996689e+16)
       )
     (begin
-      (num-test (+ 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) 56471455498794722585779775/183561983334767209753061626751) 
+      (num-test (+ 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) 56471455498794722585779775/183561983334767209753061626751)
       (num-test (- 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) -52761146275983172771170709/183561983334767209753061626751)
-      (num-test (* 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) 720/183561983334767209753061626751) 
+      (num-test (* 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) 720/183561983334767209753061626751)
       (num-test (/ 1/98947 2/97499 3/76847 4/61981 5/59981 6/66601) 1855154611405774907304533/71241840)
       ))
 
@@ -32971,7 +32971,7 @@
 (num-test (* our-pi (+ 1.0 (atan (tan (acos (cos (asin (sin (/ 1.0 (/ 1.0 our-pi)))))))))) our-pi)
 (num-test (/ 1.0 (/ 1.0 1.0+1.0i)) 1.0+1.0i)
 
-(let* ((angle 0.0) 
+(let* ((angle 0.0)
        (z 1.18)
        (result (* z (cos angle))))
   (do ((k 0 (+ 1 k)))
@@ -33030,29 +33030,29 @@
 
 	)))
 
-(let ((dht (lambda (data) 
+(let ((dht (lambda (data)
 	     ; the Hartley transform of 'data'
-	     (let* ((len (vector-length data)) 
+	     (let* ((len (vector-length data))
 		    (arr (make-vector len 0.0))
 		    (w (/ (* 2.0 our-pi) len)))
 	       (do ((i 0 (+ 1 i)))
 		   ((= i len))
 		 (do ((j 0 (+ 1 j)))
 		     ((= j len))
-		   (vector-set! arr i (+ (vector-ref arr i) 
-				      (* (vector-ref data j) 
-					 (+ (cos (* i j w)) 
+		   (vector-set! arr i (+ (vector-ref arr i)
+				      (* (vector-ref data j)
+					 (+ (cos (* i j w))
 					    (sin (* i j w))))))))
 	       arr)))
-      (data (list->vector '(0.9196 0.9457 0.0268 0.0839 0.1974 0.1060 0.1463 0.3513 0.0391 0.6310 
-			    0.9556 0.6259 0.9580 0.8848 0.0104 0.1440 0.0542 0.3001 0.1844 0.3781 
-			    0.9641 0.6051 0.3319 0.6143 0.1828 0.2290 0.4026 0.5990 0.7906 0.0403 
+      (data (list->vector '(0.9196 0.9457 0.0268 0.0839 0.1974 0.1060 0.1463 0.3513 0.0391 0.6310
+			    0.9556 0.6259 0.9580 0.8848 0.0104 0.1440 0.0542 0.3001 0.1844 0.3781
+			    0.9641 0.6051 0.3319 0.6143 0.1828 0.2290 0.4026 0.5990 0.7906 0.0403
 			    0.7882 0.1591)))
       (saved-data (make-vector 32 0.0)))
-  (do ((i 0 (+ i 1))) 
-      ((= i 32)) 
+  (do ((i 0 (+ i 1)))
+      ((= i 32))
     (vector-set! saved-data i (vector-ref data i)))
-  (dht data) 
+  (dht data)
   (dht data)
   (let ((mx 0.0))
     (do ((i 0 (+ i 1)))
@@ -33094,7 +33094,7 @@
       (num-test (random 0) 0)
       (num-test (random 0.0) 0.0)
 
-      (let ((vr (v 1000 
+      (let ((vr (v 1000
 		   1.0
 		   (lambda (val)
 		     (and (real? val)
@@ -33104,7 +33104,7 @@
 		(> vr 400))
 	    (format #t "(random 1.0) not so random? ~A~%" vr)))
 
-      (let ((vr (v 1000 
+      (let ((vr (v 1000
 		   100
 		   (lambda (val)
 		     (and (integer? val)
@@ -33115,7 +33115,7 @@
 	    (format #t "(random 100) not so random? ~A~%" vr)))
 
       ;; this assumes random can take a fraction
-      (let ((vr (v 1000 
+      (let ((vr (v 1000
 		   1/2
 		   (lambda (val)
 		     (and (rational? val)
@@ -33125,7 +33125,7 @@
 		(> vr 400))
 	    (format #t "(random 1/2) not so random? ~A~%" vr)))
 
-      (let ((vr (v 1000 
+      (let ((vr (v 1000
 		   -10.0
 		   (lambda (val)
 		     (and (real? val)
@@ -33159,7 +33159,7 @@
 	    (num-test (random (bignum "0")) 0)
 	    (num-test (random (bignum "0.0")) 0.0)
 
-	    (let ((vr (v 1000 
+	    (let ((vr (v 1000
 			 (bignum "1.0")
 			 (lambda (val)
 			   (and (real? val)
@@ -33169,7 +33169,7 @@
 		      (> vr 400))
 		  (format #t "(big-random 1.0) not so random? ~A~%" vr)))
 
-	    (let ((vr (v 1000 
+	    (let ((vr (v 1000
 			 (bignum "100")
 			 (lambda (val)
 			   (and (integer? val)
@@ -33179,7 +33179,7 @@
 		      (> vr 400))
 		  (format #t "(big-random 100) not so random? ~A~%" vr)))
 
-	    (let ((vr (v 1000 
+	    (let ((vr (v 1000
 			 (bignum "1/2")
 			 (lambda (val)
 			   (and (rational? val)
@@ -33189,7 +33189,7 @@
 		      (> vr 400))
 		  (format #t "(big-random 1/2) not so random? ~A~%" vr)))
 
-	    (let ((vr (v 1000 
+	    (let ((vr (v 1000
 			 (bignum "-10.0")
 			 (lambda (val)
 			   (and (real? val)
@@ -33252,7 +33252,7 @@
       (f1.0 (string->number "1.0"))
       (f1e300 (and (string->number "1+3i") (string->number "1e300")))
       (f1e-300 (and (string->number "1+3i") (string->number "1e-300"))))
-  
+
   (test (eqv? 1 f1.0) #f )
   (test (eqv? 0 f0.0) #f )
   (test (eqv? f0.0 f0.0) #t )
@@ -33277,7 +33277,7 @@
   (num-test (expt f-3.25 0) 1.0 )
   (num-test (atan 1 1) (atan 1)))
 
-(if with-bignums 
+(if with-bignums
     (letrec ((tb (lambda (n1 n2)
 		   (= n1 (+ (* n2 (quotient n1 n2))
 			    (remainder n1 n2))))))
@@ -33285,7 +33285,7 @@
 	    (b3-2 (string->number "33333333333333333332"))
 	    (b3-0 (string->number "33333333333333333330"))
 	    (b2-0 (string->number "2177452800")))
-  
+
 	(num-test (modulo b3-3 3) 0 )
 	(num-test (modulo b3-3 -3) 0 )
 	(num-test (remainder b3-3 3) 0 )
@@ -33298,7 +33298,7 @@
 	(num-test (modulo (- b3-2) -3) -2 )
 	(num-test (remainder (- b3-2) 3) -2 )
 	(num-test (remainder (- b3-2) -3) -2 )
-	
+
 	(num-test (modulo 3 b3-3) 3 )
 	(num-test (modulo -3 b3-3) b3-0 )
 	(num-test (remainder 3 b3-3) 3 )
@@ -33306,7 +33306,7 @@
 	(num-test (modulo -3 (- b3-3)) -3 )
 	(num-test (remainder 3 (- b3-3)) 3 )
 	(num-test (remainder -3 (- b3-3)) -3 )
-	
+
 	(num-test (modulo (- b2-0) 86400) 0 )
 	(num-test (modulo b2-0 -86400) 0 )
 	(num-test (modulo b2-0 86400) 0 )
@@ -33317,7 +33317,7 @@
       (num-test (abs 12345678901234567890) 12345678901234567890)
       (num-test (modulo 12345678901234567890 3123) 1071)
       (num-test (modulo 12345678901234567890 12345678901234567) 890)
-      
+
       (test (even? 12345678901234567890) #t)
       (test (even? 12345678901234567891) #f)
       (test (odd? 12345678901234567891) #t)
@@ -33334,13 +33334,13 @@
       (test (>= 12345678901234567890 12345678901234567891) #f)
       (test (<= 12345678901234567890 12345678901234567891) #t)
       (test (= 12345678901234567890 12345678901234567891) #f)
-      
+
       (num-test (max 12345678901234567890 12345678901234567891) 12345678901234567891)
       (num-test (min 12345678901234567890 12345678901234567891) 12345678901234567890)
       (num-test (gcd 12345678901234567890 12345) 15)
-      
+
       ;;  (test (not (= (sin 12345678901234567890) (cos 12345678901234567890))) #t) ; and so on
-      
+
       (num-test (+ 4611686018427387904 1) 4611686018427387905) ; (expt 2 62) + 1 -- should work in both cases
       (num-test (+ 4611686018427387904 -1) 4611686018427387903)
       (num-test (+ 4611686018427387904 4611686018427387904) 9223372036854775808)
@@ -33354,7 +33354,7 @@
       (num-test (+ -8589934591 -4611686018427387904) -4611686027017322495)
       (num-test (+ 8589934591 -4611686018427387904) -4611686009837453313)
       (num-test (+ 2147483649 4611686018427387904 2147483649 4611686018427387904) 9223372041149743106)
-      (num-test (+ 9223372041149743106 9223372041149743106) 18446744082299486212) 
+      (num-test (+ 9223372041149743106 9223372041149743106) 18446744082299486212)
       (num-test (+ 9223372041149743106 -9223372041149743106) 0)
       (num-test (+ 18446744082299486212 1) 18446744082299486213)
       (num-test (+ 9223372036854775807 -1) 9223372036854775806)
@@ -33363,19 +33363,19 @@
       (num-test (+ 1073741825 1073741825) 2147483650)
       (num-test (+ 2147483649 -4611686018427387904 -2147483649 4611686018427387904) 0)
       (num-test (+ 1099511627775 9223372036854775807) 9223373136366403582)
-      (num-test (+ 576460752303423488 576460752303423488 576460752303423488 576460752303423488 
-		   576460752303423488 576460752303423488 576460752303423488 576460752303423488 
-		   576460752303423488 576460752303423488 576460752303423488 576460752303423488 
+      (num-test (+ 576460752303423488 576460752303423488 576460752303423488 576460752303423488
+		   576460752303423488 576460752303423488 576460752303423488 576460752303423488
+		   576460752303423488 576460752303423488 576460752303423488 576460752303423488
 		   576460752303423488 576460752303423488 576460752303423488 576460752303423488)
 		9223372036854775808)
-      (num-test (+ -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488 
-		   -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488 
-		   -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488 
+      (num-test (+ -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488
+		   -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488
+		   -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488
 		   -576460752303423488 -576460752303423488 -576460752303423488 -576460752303423488)
 		-9223372036854775808) ; this fits in both cases = -(expt 2 63)
-      
+
       (num-test (+ 1e400 1e399) 1.1e400)
-      
+
       (test (real? 9223372036854775808) #t)
       (test (integer? 9223372036854775808) #t)
       (test (number? 9223372036854775808) #t)
@@ -33384,7 +33384,7 @@
       (test (positive? 9223372036854775808) #t)
       (test (negative? 9223372036854775808) #f)
       (test (zero? 9223372036854775808) #f)
-      
+
       (test (real? 9223372036854775808.1) #t)
       (test (integer? 9223372036854775808.1) #f)
       (test (number? 9223372036854775808.1) #t)
@@ -33393,7 +33393,7 @@
       (test (positive? 9223372036854775808.1) #t)
       (test (negative? 9223372036854775808.1) #f)
       (test (zero? 9223372036854775808.1) #f)
-      
+
       (test (real? 9223372036854775808/3) #t)
       (test (integer? 9223372036854775808/3) #f)
       (test (number? 9223372036854775808/3) #t)
@@ -33402,43 +33402,43 @@
       (test (positive? 9223372036854775808/3) #t)
       (test (negative? 9223372036854775808/3) #f)
       (test (zero? 9223372036854775808/3) #f)
-      
+
       (test (real? 9223372036854775808.1+1.5i) #f)
       (test (integer? 9223372036854775808.1+1.5i) #f)
       (test (number? 9223372036854775808.1+1.5i) #t)
       (test (rational? 9223372036854775808.1+1.5i) #f)
       (test (complex? 9223372036854775808.1+1.5i) #t)
       (test (zero? 9223372036854775808.1+1.5i) #f)
-      
+
       (num-test (+ 2147483647 1) 2147483648)
       (num-test (+ 2147483648 -1) 2147483647)
       (num-test (+ 2147483647 2) 2147483649)
       (num-test (+ 2147483648 -2) 2147483646)
       (num-test (+ 2147483648 1) 2147483649)
       (num-test (+ 2147483649 -1) 2147483648)
-      
+
       (num-test (+ 9223372036854775807 1) 9223372036854775808)
       (num-test (+ 9223372036854775808 -1) 9223372036854775807)
       (num-test (+ 9223372036854775807 2) 9223372036854775809)
       (num-test (+ 9223372036854775808 -2) 9223372036854775806)
       (num-test (+ 9223372036854775808 1) 9223372036854775809)
       (num-test (+ 9223372036854775809 -1) 9223372036854775808)
-      
+
       (test (rational? 1234567891234567890/1234567) #t)
       (test (real? 1234567891234567890/1234567) #t)
       (test (complex? 1234567891234567890/1234567) #t)
       (test (number? 1234567891234567890/1234567) #t)
       (test (integer? 1234567891234567890/1234567) #f)
-      
+
       (num-test (numerator 1234567891234567890/1234567) 1234567891234567890)
       (num-test (denominator 1234567891234567890/1234567) 1234567)
-      
+
       (num-test (numerator 9223372036854775808/9223372036854775807) 9223372036854775808)
       (num-test (denominator 9223372036854775808/9223372036854775807) 9223372036854775807)
-      
+
       (num-test (+ 9223372036854775808/9223372036854775808) 1)
       (test (integer? 9223372036854775808/9223372036854775808) #t)
-      
+
       (test (even? 9223372036854775808) #t)
       (test (odd? 9223372036854775808) #f)
       (test (even? 1234567891234567891) #f)
@@ -33467,20 +33467,20 @@
       (test (odd? -2147483647) #t)
       (test (odd? -2147483648) #f)
       (test (odd? -2147483649) #t)
-      
+
       (test (even? 9223372036854775808/9223372036854775807) 'error)
-      
+
       (num-test (numerator (/ 2 -1)) -2)
       (num-test (denominator (/ 2 -1)) 1)
       (num-test (numerator (/ 9223372036854775808 -9223372036854775807)) -9223372036854775808)
       (num-test (denominator (/ 9223372036854775808 -9223372036854775807)) 9223372036854775807)
-      
+
       (num-test (+ 9223372036854775808 3/4) 36893488147419103235/4)
       (num-test (+ 3/4 9223372036854775808) 36893488147419103235/4)
       (num-test (+ 9223372036854775808/4 3) 2305843009213693955)
       (num-test (+ 3 9223372036854775808/4) 2305843009213693955)
-      (num-test (+ 9223372036854775807/4 3) 9223372036854775819/4) 
-      (num-test (+ 3 9223372036854775807/4) 9223372036854775819/4) 
+      (num-test (+ 9223372036854775807/4 3) 9223372036854775819/4)
+      (num-test (+ 3 9223372036854775807/4) 9223372036854775819/4)
       (num-test (+ 9223372036854775807/4 3/4) 4611686018427387905/2)
       (num-test (+ 3/4 9223372036854775807/4) 4611686018427387905/2)
       (num-test (+ 9223372036854775807/4 3/4 4611686018427387905/2) 4611686018427387905)
@@ -33492,12 +33492,12 @@
       (num-test (+ 1/65537 -1/65538) 1/4295163906)
       (num-test (+ 1/2147483648 1/2147483647) 4294967295/4611686016279904256)
       (num-test (+ 2147483648) 2147483648)
-      
+
       (num-test (lcm 557057 23068673 167772161) 2155967190204955525121)
       (num-test (lcm 132120577 33292289) 4398596432330753)
       (num-test (lcm 132120577 33292289 260046847) 1143841133453061178785791)
       (num-test (lcm 2353913150770005286438421033702874906038383291674012942337 9641628265553941653251772554046975615133217962696757011808257) 22695555569123220026272727097682721551725929819788097280747860983024240452040931523149698041303750665450606153441476609)
-      
+
       (num-test (gcd 2155967190204955525121 12850565775361 93458656690177) 557057)
       (num-test (gcd 2155967190204955525121 -12850565775361 93458656690177) 557057)
       (num-test (gcd 2155967190204955525121 0) 2155967190204955525121)
@@ -33508,58 +33508,58 @@
       (num-test (+ -1000000000 -1000000000 -1000000000) -3000000000)
       (num-test (* 1000000000 1000000000 1000000000) 1000000000000000000000000000)
       (num-test (/ 1 1000000000 1000000000 1000000000) 1/1000000000000000000000000000)
-      
-      (if with-generic-modulo 
+
+      (if with-generic-modulo
 	  (begin
 	    (num-test (lcm 2/132120577 3/33292289 4/260046847) 12)
 	    (num-test (lcm 132120577/12 33292289/6 260046847/4) 1143841133453061178785791/2)
 	    ))
 
-      (if with-bigfloats 
+      (if with-bigfloats
 	  (begin
 	    (num-test (+ 9223372036854775808.0 3.4) 9.2233720368547758114E18)
 	    (num-test (+ 9223372036854775808.0+1.5i 3.4) 9.2233720368547758114E18+1.5i)
-	    
+
 	    (num-test (+ 1.5 9223372036854775808.0) 9.2233720368547758095E18)
 	    (num-test (+ 3/2 9223372036854775808.0) 9.2233720368547758095E18)
 	    (num-test (+ 1 1/2 9223372036854775808.0) 9.2233720368547758095E18)
 	    (num-test (+ 1 1/2 9223372036854775808.0 0+i) 9.2233720368547758095E18+1.0i)
 	    (num-test (+ 1 1/2 9223372036854775808.0 0-i) 9.2233720368547758095E18-1.0i)
 	    (num-test (+ 1 1/2 0+9223372036854775808.0i 0-i) 1.5+9.223372036854775807E18i)
-	    
+
 	    (num-test (real-part 9223372036854775808.0+1.5i) 9.223372036854775808E18)
 	    (num-test (imag-part 9223372036854775808.0+1.5i) 1.5)
 	    (num-test (real-part 1.5+9223372036854775808.0i) 1.5)
 	    (num-test (imag-part 1.5+9223372036854775808.0i) 9.223372036854775808E18)
-	    
+
 	    (num-test (real-part 9223372036854775808.0) 9223372036854775808.0)
 	    (num-test (imag-part 9223372036854775808.0) 0)
 	    (num-test (real-part 0+9223372036854775808.0i) 0.0)
 	    (num-test (imag-part 0+9223372036854775808.0i) 9223372036854775808.0)
 	    (num-test (real-part 0+1e400i) 0.0)
 	    (num-test (imag-part 0+1e400i) 1e400)
-	    
+
 	    (num-test (abs 9223372036854775808.0) 9223372036854775808.0)
 	    (num-test (abs -9223372036854775808.0) 9223372036854775808.0)
-	    
+
 	    (test (exact? 9223372036854775808.1) #f)
 	    (test (exact? 9223372036854775808) #t)
 	    (test (exact? 9223372036854775808/3) #t)
 	    (test (exact? 9223372036854775808.1+1.0i) #f)
-	    
+
 	    (test (inexact? 9223372036854775808.1) #t)
 	    (test (inexact? 9223372036854775808) #f)
 	    (test (inexact? 9223372036854775808/3) #f)
 	    (test (inexact? 9223372036854775808.1+1.0i) #t)
-	    
+
 	    (num-test (magnitude 9223372036854775808.1) 9223372036854775808.1)
-	    (num-test (magnitude 9223372036854775808) 9223372036854775808) 
-	    (num-test (magnitude 9223372036854775808/3) 9223372036854775808/3) 
+	    (num-test (magnitude 9223372036854775808) 9223372036854775808)
+	    (num-test (magnitude 9223372036854775808/3) 9223372036854775808/3)
 	    (num-test (magnitude 9223372036854775808.1+1.0e19i) 1.360406526484765934746566522678055771386E19)
 	    (num-test (magnitude 1.0e19+9223372036854775808.1i) 1.360406526484765934746566522678055771386E19)
-	    ;; maxima's sqrt(2.0) is not very accurate!  use arprec: 
+	    ;; maxima's sqrt(2.0) is not very accurate!  use arprec:
 	    (num-test (magnitude 14142135623730950488.0168872420969+14142135623730950488.0168872420969i) 1.9999999999999999999999999999999885751772054578776001965575456E19)
-	    
+
 	    (num-test (cos 100000000000000000000000000000000)   -9.207313839241906875982573440296245746235E-1)
 	    (num-test (cos 100000000000000000000000000000000.0) -9.207313839241906875982573440296245746235E-1)
 
@@ -33568,7 +33568,7 @@
 	    ;; this test requires 500 bits of precision
 	    (num-test (sin 31415926535897932384626433832795028841) -8.2584214320186030736155068085595298665361290626210864656288000E-1)
 	    (num-test (sin 1.0) 0.84147098480789650665250232163029899962256306079837106567275170999191) ; if bignum here
-	
+
 	    ;;	(num-test (cos 31415926535897932384626433832795028841.971693993751058209749445) 9.9999999999999999999999999999999999999999999997668194606778265E-1)
 	    ;; 500 bits
 	    (num-test (cos 1.0) 5.4030230586813971740093660744297660373231042061792222767009714E-1)
@@ -33612,7 +33612,7 @@
 		  (let ((sin-val-2 (number->string (sin (/ k (bignum "10"))))))
 		    (if (not (string=? (substring (list-ref sin-vals k) 3 60) (substring sin-val-2 2 59)))
 			(format #t "(sin (/ ~A 10)) mp: ~A does not match~%~A~%" k (substring (list-ref sin-vals k) 3 60) (substring sin-val-2 2 59))))))
-	      
+
 	      (let ((sin-vals (list   ;arprec mathtool table[Sin[k/10], {k, 0, 30}]
 			       0.00000000000000000000000000000000000000000000000000000000000000000000
 			       0.09983341664682815230681419841062202698991538801798225999276686156165
@@ -33657,7 +33657,7 @@
 			      (set! mxerr err)))))))
 		(if (> mxerr 1e-35)
 		    (format #t "(sin big-angle) max error: ~A" mxerr)))
-	      
+
 	      (let ((cos-vals (list ; arprec mathtool table[Cos[k/20], {k, 0, 30}]
 			       "1.00000000000000000000000000000000000000000000000000000000000000000000"
 			       "0.99875026039496624656287081115652109495898026202467575301500996478674"
@@ -33695,8 +33695,8 @@
 		  (let ((cos-val-2 (number->string (cos (/ k (bignum "20"))))))
 		    (if (not (string=? (substring (list-ref cos-vals k) 3 60) (substring cos-val-2 2 59)))
 			(format #t "(cos (/ ~A 20)) mp: ~A does not match~%~A~%" k (substring (list-ref cos-vals k) 3 60) (substring cos-val-2 2 59))))))
-	      
-	      
+
+
 	      (let ((exps (list  ; table[Exp[k/10], {k, 0, 30}]
 			   1.00000000000000000000000000000000000000000000000000000000000000000000
 			   1.10517091807564762481170782649024666822454719473751871879286328944096
@@ -33734,8 +33734,8 @@
 		  (let ((val (exp (/ i (bignum "10")))))
 		    (if (> (magnitude (- val (list-ref exps i))) 1e-36)
 			(format #t "(exp ~A) -> ~A ~A~%[~A]~%" (/ i 10) val (list-ref exps i) (magnitude (- val (list-ref exps i))))))))
-	      
-	      
+
+
 	      (let ((logs (list ; table[Log[k/10 + 1.0], {k, 0, 30}]
 			   0.00000000000000000000000000000000000000000000000000000000000000000000e0
 			   0.09531017980432486004395212328076509222060536530864419918523980816300
@@ -33768,13 +33768,13 @@
 			   1.33500106673234008540826809866166589771177790703061109662531234493511
 			   1.36097655313560074343074122380348010185165701395418359212041194333338
 			   1.38629436111989061883446424291635313615100026872051050824136001898678)))
-		
+
 		(do ((i 0 (+ i 1)))
 		    ((= i 30))
 		  (let ((val (log (+ (/ i (bignum "10")) (bignum "1.0")))))
 		    (if (> (magnitude (- val (list-ref logs i))) 1e-36)
 			(format #t "(log ~A) -> ~A ~A~%[~A]~%" (+ 1.0 (/ i 10)) val (list-ref logs i) (magnitude (- val (list-ref logs i))))))))
-	      
+
 	      (let ((sqrts (list ; table[Sqrt[k/10], {k, 0, 30}]
 			    0.00000000000000000000000000000000000000000000000000000000000000000000e0
 			    0.31622776601683793319988935444327185337195551393252168268575048527925
@@ -33812,7 +33812,7 @@
 		  (let ((val (sqrt (/ i (bignum "10")))))
 		    (if (> (magnitude (- val (list-ref sqrts i))) 1e-36)
 			(format #t "(sqrt ~A) -> ~A ~A~%[~A]~%" (/ i 10) val (list-ref sqrts i) (magnitude (- val (list-ref sqrts i))))))))
-	      
+
 	      (let ((atans (list ; table[Arctan[k/10], {k, 0, 30}]
 			    0.00000000000000000000000000000000000000000000000000000000000000000000e0
 			    0.09966865249116202737844611987802059024327832250431464801550877681002
@@ -33850,7 +33850,7 @@
 		  (let ((val (atan (/ i (bignum "10")))))
 		    (if (> (magnitude (- val (list-ref atans i))) 1e-36)
 			(format #t "(atan ~A) -> ~A ~A~%[~A]~%" (/ i 10) val (list-ref atans i) (magnitude (- val (list-ref atans i))))))))
-	      
+
 	      (let ((asins (list ; table[Arcsin[k/30], {k, 0, 30}]
 			    0.00000000000000000000000000000000000000000000000000000000000000000000e0
 			    0.03333950926130208699143488077083860917565937855129663393680393744362
@@ -33888,7 +33888,7 @@
 		  (let ((val (asin (/ i (bignum "30")))))
 		    (if (> (magnitude (- val (list-ref asins i))) 1e-36)
 			(format #t "(asin ~A) -> ~A ~A~%[~A]~%" (/ i 30) val (list-ref asins i) (magnitude (- val (list-ref asins i))))))))
-	      
+
 	      (let ((acoss (list ; table[Arccos[k/30], {k, 0, 30}]
 			    1.57079632679489661923132169163975144209858469968755291048747229615390
 			    1.53745681753359453223988681086891283292292532113625627655066835871028
@@ -33926,7 +33926,7 @@
 		  (let ((val (acos (/ i (bignum "30")))))
 		    (if (> (magnitude (- val (list-ref acoss i))) 1e-36)
 			(format #t "(acos ~A) -> ~A ~A~%[~A]~%" (/ i 30) val (list-ref acoss i) (magnitude (- val (list-ref acoss i))))))))
-	      
+
 	      (let ((tans (list ; table[Tan[k/10], {k, 0, 30}]
 			   0.00000000000000000000000000000000000000000000000000000000000000000000e0
 			   0.10033467208545054505808004578111153681900480457644204002220806579803
@@ -33964,8 +33964,8 @@
 		  (let ((val (tan (/ i (bignum "10")))))
 		    (if (> (magnitude (- val (list-ref tans i))) 1e-35)
 			(format #t "(tan ~A) -> ~A ~A~%[~A]~%" (/ i 10) val (list-ref tans i) (magnitude (- val (list-ref tans i))))))))
-	      
-	      
+
+
 	      (let ((max-s-error 0.0)
 		    (max-s-error-case 0)
 		    (max-sh-error 0.0)
@@ -33990,25 +33990,25 @@
 		    (format #t "s^2 + c^2 error: ~A at ~A~%" max-s-error max-s-error-case))
 		(if (> max-sh-error 1e-33)
 		    (format #t "sh^2 + ch^2 error: ~A at ~A~%" max-sh-error max-sh-error-case)))
-	      
-	      
+
+
 	      (set! (bignum-precision) old-prec)
 	      )))
-      
+
       (num-test (abs 9223372036854775808/3) 9223372036854775808/3)
       (num-test (abs -9223372036854775808/3) 9223372036854775808/3)
-      
+
       (num-test (abs 9223372036854775808) 9223372036854775808)
       (num-test (abs -9223372036854775808) 9223372036854775808)
-      
+
       (num-test (abs 1231234567891234567895/4924938271564938271564) 1231234567891234567895/4924938271564938271564)
       (num-test (abs -1231234567891234567895/4924938271564938271564) 1231234567891234567895/4924938271564938271564)
       (num-test (abs 5/4924938271564938271564) 5/4924938271564938271564)
       (num-test (abs -5/4924938271564938271564) 5/4924938271564938271564)
-      
+
       (num-test (abs 1231234567891234567895.4924938271564938271564) 1231234567891234567895.4924938271564938271564)
       (num-test (abs -1231234567891234567895.4924938271564938271564) 1231234567891234567895.4924938271564938271564)
-      
+
       (letrec ((sum-cot (lambda (n)
 			  (let ((sum 0.0))
 			    (do ((k 1 (+ k 1)))
@@ -34044,7 +34044,7 @@
 
 (let ((number-to-string-top 0))
   (let* ((last-good 0)
-	 (first-bad 
+	 (first-bad
 	  (call/cc
 	   (lambda (return)
 	     (do ((i 1 (+ i 1))
@@ -34056,7 +34056,7 @@
 		   (set! last-good k)
 		   (if (not (positive? k))
 		       (return (- (* 2 last-good) 1))
-		       (letrec ((search 
+		       (letrec ((search
 				 (lambda (lo hi)
 				   (if (= lo hi)
 				       hi
@@ -34073,8 +34073,8 @@
     (if (and (integer? first-bad)
 	     (or (not (defined? 'most-positive-fixnum))
 		 (< first-bad most-positive-fixnum)))
-	(begin 
-	  (display "string->number ints fail around ") 
+	(begin
+	  (display "string->number ints fail around ")
 	  (display first-bad)
 	  (display " (2^")
 	  (display (/ (log first-bad) (log 2.0)))
@@ -34082,7 +34082,7 @@
 	  (newline))))
 
 (let* ((last-good 0)
-       (first-bad 
+       (first-bad
 	(call/cc
 	 (lambda (return)
 	   (do ((i 1 (+ i 1))
@@ -34091,7 +34091,7 @@
 	     (if (and (eqv? k (string->number (number->string k)))
 		      (eqv? (- k) (string->number (number->string (- k)))))
 		 (set! last-good k)
-		 (letrec ((search 
+		 (letrec ((search
 			   (lambda (lo hi)
 			     (if (= (inexact->exact (floor lo)) (inexact->exact (floor hi)))
 				 hi
@@ -34106,7 +34106,7 @@
 		   (return (search last-good (* 2 last-good))))))))))
   (if (and (number? first-bad)
 	   (< first-bad (+ 1.0 first-bad))) ; else infinite I guess
-      (begin 
+      (begin
 	(display "string->number floats fail around ")  ; (eqv? (string->number (number->string 1e-10)) 1e-10)
 	(display first-bad)
 	(display " (2^")
@@ -34115,7 +34115,7 @@
 	(newline))))
 
 (let* ((last-good 0)
-       (first-bad 
+       (first-bad
 	(call/cc
 	 (lambda (return)
 	   (do ((i 1 (+ i 1))
@@ -34123,9 +34123,9 @@
 	       ((= i 100) #f)
 	     (if (and (< (abs (- k (string->number (number->string k)))) (/ k 1e14)) ; 1e18 is ok too
 		      (< (abs (- (- k) (string->number (number->string (- k))))) (/ k 1e14)))
-		 ;; this gets confused (in eqv?) by .999.... -> 1 
+		 ;; this gets confused (in eqv?) by .999.... -> 1
 		 (set! last-good k)
-		 (letrec ((search 
+		 (letrec ((search
 			   (lambda (lo hi)
 			     (if (= (inexact->exact (floor (/ 1.0 lo))) (inexact->exact (floor (/ 1.0 hi))))
 				 hi
@@ -34139,8 +34139,8 @@
 					   (search lo mid))))))))
 		   (return (search (/ last-good 2.0) last-good)))))))))
   (if (number? first-bad)
-      (begin 
-	(display "string->number floats fail around ") 
+      (begin
+	(display "string->number floats fail around ")
 	(display first-bad)
 	(display " (2^")
 	(display (/ (log first-bad) (log 2.0)))
@@ -34148,7 +34148,7 @@
 	(newline))))
 
 (let* ((last-good 0)
-       (first-bad 
+       (first-bad
 	(call/cc
 	 (lambda (return)
 	   (do ((i 1 (+ i 1))
@@ -34157,7 +34157,7 @@
 	     (if (and (eqv? k (string->number (number->string k)))
 		      (eqv? (- k) (string->number (number->string (- k)))))
 		 (set! last-good k)
-		 (letrec ((search 
+		 (letrec ((search
 			   (lambda (lo hi)
 			     (if (= (inexact->exact (floor lo)) (inexact->exact (floor hi)))
 				 hi
@@ -34171,8 +34171,8 @@
 					   (search lo mid))))))))
 		   (return (search last-good (* 2 last-good))))))))))
   (if (number? first-bad)
-      (begin 
-	(display "string->number ratios fail around ") 
+      (begin
+	(display "string->number ratios fail around ")
 	(display first-bad)
 	(display " (2^")
 	(display (/ (log first-bad) (log 2.0)))
@@ -34181,425 +34181,425 @@
 
 
 (if (not (eqv? 0 (string->number (number->string 0))))
-    (begin (display "(string<->number 0) -> ") (display (number->string 0)) 
+    (begin (display "(string<->number 0) -> ") (display (number->string 0))
 	   (display " -> ") (display (string->number (number->string 0))) (newline)))
 (if (not (eqv? 1 (string->number (number->string 1))))
-    (begin (display "(string<->number 1) -> ") (display (number->string 1)) 
+    (begin (display "(string<->number 1) -> ") (display (number->string 1))
 	   (display " -> ") (display (string->number (number->string 1))) (newline)))
 (if (not (eqv? 2 (string->number (number->string 2))))
-    (begin (display "(string<->number 2) -> ") (display (number->string 2)) 
+    (begin (display "(string<->number 2) -> ") (display (number->string 2))
 	   (display " -> ") (display (string->number (number->string 2))) (newline)))
 (if (not (eqv? 3 (string->number (number->string 3))))
-    (begin (display "(string<->number 3) -> ") (display (number->string 3)) 
+    (begin (display "(string<->number 3) -> ") (display (number->string 3))
 	   (display " -> ") (display (string->number (number->string 3))) (newline)))
 (if (not (eqv? 10 (string->number (number->string 10))))
-    (begin (display "(string<->number 10) -> ") (display (number->string 10)) 
+    (begin (display "(string<->number 10) -> ") (display (number->string 10))
 	   (display " -> ") (display (string->number (number->string 10))) (newline)))
 (if (not (eqv? 1234 (string->number (number->string 1234))))
-    (begin (display "(string<->number 1234) -> ") (display (number->string 1234)) 
+    (begin (display "(string<->number 1234) -> ") (display (number->string 1234))
 	   (display " -> ") (display (string->number (number->string 1234))) (newline)))
 (if (not (eqv? 1234000000 (string->number (number->string 1234000000))))
-    (begin (display "(string<->number 1234000000) -> ") (display (number->string 1234000000)) 
+    (begin (display "(string<->number 1234000000) -> ") (display (number->string 1234000000))
 	   (display " -> ") (display (string->number (number->string 1234000000))) (newline)))
 (if (not (eqv? 500029 (string->number (number->string 500029))))
-    (begin (display "(string<->number 500029) -> ") (display (number->string 500029)) 
+    (begin (display "(string<->number 500029) -> ") (display (number->string 500029))
 	   (display " -> ") (display (string->number (number->string 500029))) (newline)))
 (if (not (eqv? 362880 (string->number (number->string 362880))))
-    (begin (display "(string<->number 362880) -> ") (display (number->string 362880)) 
+    (begin (display "(string<->number 362880) -> ") (display (number->string 362880))
 	   (display " -> ") (display (string->number (number->string 362880))) (newline)))
 (if (not (eqv? 0/1 (string->number (number->string 0/1))))
-        (begin (display "(string<->number 0/1) -> ") (display (number->string 0/1)) 
+        (begin (display "(string<->number 0/1) -> ") (display (number->string 0/1))
 	       (display " -> ") (display (string->number (number->string 0/1))) (newline)))
 (if (not (eqv? 0/2 (string->number (number->string 0/2))))
-        (begin (display "(string<->number 0/2) -> ") (display (number->string 0/2)) 
+        (begin (display "(string<->number 0/2) -> ") (display (number->string 0/2))
 	       (display " -> ") (display (string->number (number->string 0/2))) (newline)))
 (if (not (eqv? 0/3 (string->number (number->string 0/3))))
-        (begin (display "(string<->number 0/3) -> ") (display (number->string 0/3)) 
+        (begin (display "(string<->number 0/3) -> ") (display (number->string 0/3))
 	       (display " -> ") (display (string->number (number->string 0/3))) (newline)))
 (if (not (eqv? 0/10 (string->number (number->string 0/10))))
-        (begin (display "(string<->number 0/10) -> ") (display (number->string 0/10)) 
+        (begin (display "(string<->number 0/10) -> ") (display (number->string 0/10))
 	       (display " -> ") (display (string->number (number->string 0/10))) (newline)))
 (if (not (eqv? 0/1234 (string->number (number->string 0/1234))))
-        (begin (display "(string<->number 0/1234) -> ") (display (number->string 0/1234)) 
+        (begin (display "(string<->number 0/1234) -> ") (display (number->string 0/1234))
 	       (display " -> ") (display (string->number (number->string 0/1234))) (newline)))
 (if (not (eqv? 0/1234000000 (string->number (number->string 0/1234000000))))
-        (begin (display "(string<->number 0/1234000000) -> ") (display (number->string 0/1234000000)) 
+        (begin (display "(string<->number 0/1234000000) -> ") (display (number->string 0/1234000000))
 	       (display " -> ") (display (string->number (number->string 0/1234000000))) (newline)))
 (if (not (eqv? 0/500029 (string->number (number->string 0/500029))))
-        (begin (display "(string<->number 0/500029) -> ") (display (number->string 0/500029)) 
+        (begin (display "(string<->number 0/500029) -> ") (display (number->string 0/500029))
 	       (display " -> ") (display (string->number (number->string 0/500029))) (newline)))
 (if (not (eqv? 0/362880 (string->number (number->string 0/362880))))
-        (begin (display "(string<->number 0/362880) -> ") (display (number->string 0/362880)) 
+        (begin (display "(string<->number 0/362880) -> ") (display (number->string 0/362880))
 	       (display " -> ") (display (string->number (number->string 0/362880))) (newline)))
 (if (not (eqv? 1/1 (string->number (number->string 1/1))))
-        (begin (display "(string<->number 1/1) -> ") (display (number->string 1/1)) 
+        (begin (display "(string<->number 1/1) -> ") (display (number->string 1/1))
 	       (display " -> ") (display (string->number (number->string 1/1))) (newline)))
 (if (not (eqv? 1/2 (string->number (number->string 1/2))))
-        (begin (display "(string<->number 1/2) -> ") (display (number->string 1/2)) 
+        (begin (display "(string<->number 1/2) -> ") (display (number->string 1/2))
 	       (display " -> ") (display (string->number (number->string 1/2))) (newline)))
 (if (not (eqv? 1/3 (string->number (number->string 1/3))))
-        (begin (display "(string<->number 1/3) -> ") (display (number->string 1/3)) 
+        (begin (display "(string<->number 1/3) -> ") (display (number->string 1/3))
 	       (display " -> ") (display (string->number (number->string 1/3))) (newline)))
 (if (not (eqv? 1/10 (string->number (number->string 1/10))))
-        (begin (display "(string<->number 1/10) -> ") (display (number->string 1/10)) 
+        (begin (display "(string<->number 1/10) -> ") (display (number->string 1/10))
 	       (display " -> ") (display (string->number (number->string 1/10))) (newline)))
 (if (not (eqv? 1/1234 (string->number (number->string 1/1234))))
-        (begin (display "(string<->number 1/1234) -> ") (display (number->string 1/1234)) 
+        (begin (display "(string<->number 1/1234) -> ") (display (number->string 1/1234))
 	       (display " -> ") (display (string->number (number->string 1/1234))) (newline)))
 (if (not (eqv? 1/1234000000 (string->number (number->string 1/1234000000))))
-        (begin (display "(string<->number 1/1234000000) -> ") (display (number->string 1/1234000000)) 
+        (begin (display "(string<->number 1/1234000000) -> ") (display (number->string 1/1234000000))
 	       (display " -> ") (display (string->number (number->string 1/1234000000))) (newline)))
 (if (not (eqv? 1/500029 (string->number (number->string 1/500029))))
-        (begin (display "(string<->number 1/500029) -> ") (display (number->string 1/500029)) 
+        (begin (display "(string<->number 1/500029) -> ") (display (number->string 1/500029))
 	       (display " -> ") (display (string->number (number->string 1/500029))) (newline)))
 (if (not (eqv? 1/362880 (string->number (number->string 1/362880))))
-        (begin (display "(string<->number 1/362880) -> ") (display (number->string 1/362880)) 
+        (begin (display "(string<->number 1/362880) -> ") (display (number->string 1/362880))
 	       (display " -> ") (display (string->number (number->string 1/362880))) (newline)))
 (if (not (eqv? 2/1 (string->number (number->string 2/1))))
-        (begin (display "(string<->number 2/1) -> ") (display (number->string 2/1)) 
+        (begin (display "(string<->number 2/1) -> ") (display (number->string 2/1))
 	       (display " -> ") (display (string->number (number->string 2/1))) (newline)))
 (if (not (eqv? 2/2 (string->number (number->string 2/2))))
-        (begin (display "(string<->number 2/2) -> ") (display (number->string 2/2)) 
+        (begin (display "(string<->number 2/2) -> ") (display (number->string 2/2))
 	       (display " -> ") (display (string->number (number->string 2/2))) (newline)))
 (if (not (eqv? 2/3 (string->number (number->string 2/3))))
-        (begin (display "(string<->number 2/3) -> ") (display (number->string 2/3)) 
+        (begin (display "(string<->number 2/3) -> ") (display (number->string 2/3))
 	       (display " -> ") (display (string->number (number->string 2/3))) (newline)))
 (if (not (eqv? 2/10 (string->number (number->string 2/10))))
-        (begin (display "(string<->number 2/10) -> ") (display (number->string 2/10)) 
+        (begin (display "(string<->number 2/10) -> ") (display (number->string 2/10))
 	       (display " -> ") (display (string->number (number->string 2/10))) (newline)))
 (if (not (eqv? 2/1234 (string->number (number->string 2/1234))))
-        (begin (display "(string<->number 2/1234) -> ") (display (number->string 2/1234)) 
+        (begin (display "(string<->number 2/1234) -> ") (display (number->string 2/1234))
 	       (display " -> ") (display (string->number (number->string 2/1234))) (newline)))
 (if (not (eqv? 2/1234000000 (string->number (number->string 2/1234000000))))
-        (begin (display "(string<->number 2/1234000000) -> ") (display (number->string 2/1234000000)) 
+        (begin (display "(string<->number 2/1234000000) -> ") (display (number->string 2/1234000000))
 	       (display " -> ") (display (string->number (number->string 2/1234000000))) (newline)))
 (if (not (eqv? 2/500029 (string->number (number->string 2/500029))))
-        (begin (display "(string<->number 2/500029) -> ") (display (number->string 2/500029)) 
+        (begin (display "(string<->number 2/500029) -> ") (display (number->string 2/500029))
 	       (display " -> ") (display (string->number (number->string 2/500029))) (newline)))
 (if (not (eqv? 2/362880 (string->number (number->string 2/362880))))
-        (begin (display "(string<->number 2/362880) -> ") (display (number->string 2/362880)) 
+        (begin (display "(string<->number 2/362880) -> ") (display (number->string 2/362880))
 	       (display " -> ") (display (string->number (number->string 2/362880))) (newline)))
 (if (not (eqv? 3/1 (string->number (number->string 3/1))))
-        (begin (display "(string<->number 3/1) -> ") (display (number->string 3/1)) 
+        (begin (display "(string<->number 3/1) -> ") (display (number->string 3/1))
 	       (display " -> ") (display (string->number (number->string 3/1))) (newline)))
 (if (not (eqv? 3/2 (string->number (number->string 3/2))))
-        (begin (display "(string<->number 3/2) -> ") (display (number->string 3/2)) 
+        (begin (display "(string<->number 3/2) -> ") (display (number->string 3/2))
 	       (display " -> ") (display (string->number (number->string 3/2))) (newline)))
 (if (not (eqv? 3/3 (string->number (number->string 3/3))))
-        (begin (display "(string<->number 3/3) -> ") (display (number->string 3/3)) 
+        (begin (display "(string<->number 3/3) -> ") (display (number->string 3/3))
 	       (display " -> ") (display (string->number (number->string 3/3))) (newline)))
 (if (not (eqv? 3/10 (string->number (number->string 3/10))))
-        (begin (display "(string<->number 3/10) -> ") (display (number->string 3/10)) 
+        (begin (display "(string<->number 3/10) -> ") (display (number->string 3/10))
 	       (display " -> ") (display (string->number (number->string 3/10))) (newline)))
 (if (not (eqv? 3/1234 (string->number (number->string 3/1234))))
-        (begin (display "(string<->number 3/1234) -> ") (display (number->string 3/1234)) 
+        (begin (display "(string<->number 3/1234) -> ") (display (number->string 3/1234))
 	       (display " -> ") (display (string->number (number->string 3/1234))) (newline)))
 (if (not (eqv? 3/1234000000 (string->number (number->string 3/1234000000))))
-        (begin (display "(string<->number 3/1234000000) -> ") (display (number->string 3/1234000000)) 
+        (begin (display "(string<->number 3/1234000000) -> ") (display (number->string 3/1234000000))
 	       (display " -> ") (display (string->number (number->string 3/1234000000))) (newline)))
 (if (not (eqv? 3/500029 (string->number (number->string 3/500029))))
-        (begin (display "(string<->number 3/500029) -> ") (display (number->string 3/500029)) 
+        (begin (display "(string<->number 3/500029) -> ") (display (number->string 3/500029))
 	       (display " -> ") (display (string->number (number->string 3/500029))) (newline)))
 (if (not (eqv? 3/362880 (string->number (number->string 3/362880))))
-        (begin (display "(string<->number 3/362880) -> ") (display (number->string 3/362880)) 
+        (begin (display "(string<->number 3/362880) -> ") (display (number->string 3/362880))
 	       (display " -> ") (display (string->number (number->string 3/362880))) (newline)))
 (if (not (eqv? 10/1 (string->number (number->string 10/1))))
-        (begin (display "(string<->number 10/1) -> ") (display (number->string 10/1)) 
+        (begin (display "(string<->number 10/1) -> ") (display (number->string 10/1))
 	       (display " -> ") (display (string->number (number->string 10/1))) (newline)))
 (if (not (eqv? 10/2 (string->number (number->string 10/2))))
-        (begin (display "(string<->number 10/2) -> ") (display (number->string 10/2)) 
+        (begin (display "(string<->number 10/2) -> ") (display (number->string 10/2))
 	       (display " -> ") (display (string->number (number->string 10/2))) (newline)))
 (if (not (eqv? 10/3 (string->number (number->string 10/3))))
-        (begin (display "(string<->number 10/3) -> ") (display (number->string 10/3)) 
+        (begin (display "(string<->number 10/3) -> ") (display (number->string 10/3))
 	       (display " -> ") (display (string->number (number->string 10/3))) (newline)))
 (if (not (eqv? 10/10 (string->number (number->string 10/10))))
-        (begin (display "(string<->number 10/10) -> ") (display (number->string 10/10)) 
+        (begin (display "(string<->number 10/10) -> ") (display (number->string 10/10))
 	       (display " -> ") (display (string->number (number->string 10/10))) (newline)))
 (if (not (eqv? 10/1234 (string->number (number->string 10/1234))))
-        (begin (display "(string<->number 10/1234) -> ") (display (number->string 10/1234)) 
+        (begin (display "(string<->number 10/1234) -> ") (display (number->string 10/1234))
 	       (display " -> ") (display (string->number (number->string 10/1234))) (newline)))
 (if (not (eqv? 10/1234000000 (string->number (number->string 10/1234000000))))
-        (begin (display "(string<->number 10/1234000000) -> ") (display (number->string 10/1234000000)) 
+        (begin (display "(string<->number 10/1234000000) -> ") (display (number->string 10/1234000000))
 	       (display " -> ") (display (string->number (number->string 10/1234000000))) (newline)))
 (if (not (eqv? 10/500029 (string->number (number->string 10/500029))))
-        (begin (display "(string<->number 10/500029) -> ") (display (number->string 10/500029)) 
+        (begin (display "(string<->number 10/500029) -> ") (display (number->string 10/500029))
 	       (display " -> ") (display (string->number (number->string 10/500029))) (newline)))
 (if (not (eqv? 10/362880 (string->number (number->string 10/362880))))
-        (begin (display "(string<->number 10/362880) -> ") (display (number->string 10/362880)) 
+        (begin (display "(string<->number 10/362880) -> ") (display (number->string 10/362880))
 	       (display " -> ") (display (string->number (number->string 10/362880))) (newline)))
 (if (not (eqv? 1234/1 (string->number (number->string 1234/1))))
-        (begin (display "(string<->number 1234/1) -> ") (display (number->string 1234/1)) 
+        (begin (display "(string<->number 1234/1) -> ") (display (number->string 1234/1))
 	       (display " -> ") (display (string->number (number->string 1234/1))) (newline)))
 (if (not (eqv? 1234/2 (string->number (number->string 1234/2))))
-        (begin (display "(string<->number 1234/2) -> ") (display (number->string 1234/2)) 
+        (begin (display "(string<->number 1234/2) -> ") (display (number->string 1234/2))
 	       (display " -> ") (display (string->number (number->string 1234/2))) (newline)))
 (if (not (eqv? 1234/3 (string->number (number->string 1234/3))))
-        (begin (display "(string<->number 1234/3) -> ") (display (number->string 1234/3)) 
+        (begin (display "(string<->number 1234/3) -> ") (display (number->string 1234/3))
 	       (display " -> ") (display (string->number (number->string 1234/3))) (newline)))
 (if (not (eqv? 1234/10 (string->number (number->string 1234/10))))
-        (begin (display "(string<->number 1234/10) -> ") (display (number->string 1234/10)) 
+        (begin (display "(string<->number 1234/10) -> ") (display (number->string 1234/10))
 	       (display " -> ") (display (string->number (number->string 1234/10))) (newline)))
 (if (not (eqv? 1234/1234 (string->number (number->string 1234/1234))))
-        (begin (display "(string<->number 1234/1234) -> ") (display (number->string 1234/1234)) 
+        (begin (display "(string<->number 1234/1234) -> ") (display (number->string 1234/1234))
 	       (display " -> ") (display (string->number (number->string 1234/1234))) (newline)))
 (if (not (eqv? 1234/1234000000 (string->number (number->string 1234/1234000000))))
-        (begin (display "(string<->number 1234/1234000000) -> ") (display (number->string 1234/1234000000)) 
+        (begin (display "(string<->number 1234/1234000000) -> ") (display (number->string 1234/1234000000))
 	       (display " -> ") (display (string->number (number->string 1234/1234000000))) (newline)))
 (if (not (eqv? 1234/500029 (string->number (number->string 1234/500029))))
-        (begin (display "(string<->number 1234/500029) -> ") (display (number->string 1234/500029)) 
+        (begin (display "(string<->number 1234/500029) -> ") (display (number->string 1234/500029))
 	       (display " -> ") (display (string->number (number->string 1234/500029))) (newline)))
 (if (not (eqv? 1234/362880 (string->number (number->string 1234/362880))))
-        (begin (display "(string<->number 1234/362880) -> ") (display (number->string 1234/362880)) 
+        (begin (display "(string<->number 1234/362880) -> ") (display (number->string 1234/362880))
 	       (display " -> ") (display (string->number (number->string 1234/362880))) (newline)))
 (if (not (eqv? 1234000000/1 (string->number (number->string 1234000000/1))))
-        (begin (display "(string<->number 1234000000/1) -> ") (display (number->string 1234000000/1)) 
+        (begin (display "(string<->number 1234000000/1) -> ") (display (number->string 1234000000/1))
 	       (display " -> ") (display (string->number (number->string 1234000000/1))) (newline)))
 (if (not (eqv? 1234000000/2 (string->number (number->string 1234000000/2))))
-        (begin (display "(string<->number 1234000000/2) -> ") (display (number->string 1234000000/2)) 
+        (begin (display "(string<->number 1234000000/2) -> ") (display (number->string 1234000000/2))
 	       (display " -> ") (display (string->number (number->string 1234000000/2))) (newline)))
 (if (not (eqv? 1234000000/3 (string->number (number->string 1234000000/3))))
-        (begin (display "(string<->number 1234000000/3) -> ") (display (number->string 1234000000/3)) 
+        (begin (display "(string<->number 1234000000/3) -> ") (display (number->string 1234000000/3))
 	       (display " -> ") (display (string->number (number->string 1234000000/3))) (newline)))
 (if (not (eqv? 1234000000/10 (string->number (number->string 1234000000/10))))
-        (begin (display "(string<->number 1234000000/10) -> ") (display (number->string 1234000000/10)) 
+        (begin (display "(string<->number 1234000000/10) -> ") (display (number->string 1234000000/10))
 	       (display " -> ") (display (string->number (number->string 1234000000/10))) (newline)))
 (if (not (eqv? 1234000000/1234 (string->number (number->string 1234000000/1234))))
-        (begin (display "(string<->number 1234000000/1234) -> ") (display (number->string 1234000000/1234)) 
+        (begin (display "(string<->number 1234000000/1234) -> ") (display (number->string 1234000000/1234))
 	       (display " -> ") (display (string->number (number->string 1234000000/1234))) (newline)))
 (if (not (eqv? 1234000000/1234000000 (string->number (number->string 1234000000/1234000000))))
-        (begin (display "(string<->number 1234000000/1234000000) -> ") (display (number->string 1234000000/1234000000)) 
+        (begin (display "(string<->number 1234000000/1234000000) -> ") (display (number->string 1234000000/1234000000))
 	       (display " -> ") (display (string->number (number->string 1234000000/1234000000))) (newline)))
 (if (not (eqv? 1234000000/500029 (string->number (number->string 1234000000/500029))))
-        (begin (display "(string<->number 1234000000/500029) -> ") (display (number->string 1234000000/500029)) 
+        (begin (display "(string<->number 1234000000/500029) -> ") (display (number->string 1234000000/500029))
 	       (display " -> ") (display (string->number (number->string 1234000000/500029))) (newline)))
 (if (not (eqv? 1234000000/362880 (string->number (number->string 1234000000/362880))))
-        (begin (display "(string<->number 1234000000/362880) -> ") (display (number->string 1234000000/362880)) 
+        (begin (display "(string<->number 1234000000/362880) -> ") (display (number->string 1234000000/362880))
 	       (display " -> ") (display (string->number (number->string 1234000000/362880))) (newline)))
 (if (not (eqv? 500029/1 (string->number (number->string 500029/1))))
-        (begin (display "(string<->number 500029/1) -> ") (display (number->string 500029/1)) 
+        (begin (display "(string<->number 500029/1) -> ") (display (number->string 500029/1))
 	       (display " -> ") (display (string->number (number->string 500029/1))) (newline)))
 (if (not (eqv? 500029/2 (string->number (number->string 500029/2))))
-        (begin (display "(string<->number 500029/2) -> ") (display (number->string 500029/2)) 
+        (begin (display "(string<->number 500029/2) -> ") (display (number->string 500029/2))
 	       (display " -> ") (display (string->number (number->string 500029/2))) (newline)))
 (if (not (eqv? 500029/3 (string->number (number->string 500029/3))))
-        (begin (display "(string<->number 500029/3) -> ") (display (number->string 500029/3)) 
+        (begin (display "(string<->number 500029/3) -> ") (display (number->string 500029/3))
 	       (display " -> ") (display (string->number (number->string 500029/3))) (newline)))
 (if (not (eqv? 500029/10 (string->number (number->string 500029/10))))
-        (begin (display "(string<->number 500029/10) -> ") (display (number->string 500029/10)) 
+        (begin (display "(string<->number 500029/10) -> ") (display (number->string 500029/10))
 	       (display " -> ") (display (string->number (number->string 500029/10))) (newline)))
 (if (not (eqv? 500029/1234 (string->number (number->string 500029/1234))))
-        (begin (display "(string<->number 500029/1234) -> ") (display (number->string 500029/1234)) 
+        (begin (display "(string<->number 500029/1234) -> ") (display (number->string 500029/1234))
 	       (display " -> ") (display (string->number (number->string 500029/1234))) (newline)))
 (if (not (eqv? 500029/1234000000 (string->number (number->string 500029/1234000000))))
-        (begin (display "(string<->number 500029/1234000000) -> ") (display (number->string 500029/1234000000)) 
+        (begin (display "(string<->number 500029/1234000000) -> ") (display (number->string 500029/1234000000))
 	       (display " -> ") (display (string->number (number->string 500029/1234000000))) (newline)))
 (if (not (eqv? 500029/500029 (string->number (number->string 500029/500029))))
-        (begin (display "(string<->number 500029/500029) -> ") (display (number->string 500029/500029)) 
+        (begin (display "(string<->number 500029/500029) -> ") (display (number->string 500029/500029))
 	       (display " -> ") (display (string->number (number->string 500029/500029))) (newline)))
 (if (not (eqv? 500029/362880 (string->number (number->string 500029/362880))))
-        (begin (display "(string<->number 500029/362880) -> ") (display (number->string 500029/362880)) 
+        (begin (display "(string<->number 500029/362880) -> ") (display (number->string 500029/362880))
 	       (display " -> ") (display (string->number (number->string 500029/362880))) (newline)))
 (if (not (eqv? 362880/1 (string->number (number->string 362880/1))))
-        (begin (display "(string<->number 362880/1) -> ") (display (number->string 362880/1)) 
+        (begin (display "(string<->number 362880/1) -> ") (display (number->string 362880/1))
 	       (display " -> ") (display (string->number (number->string 362880/1))) (newline)))
 (if (not (eqv? 362880/2 (string->number (number->string 362880/2))))
-        (begin (display "(string<->number 362880/2) -> ") (display (number->string 362880/2)) 
+        (begin (display "(string<->number 362880/2) -> ") (display (number->string 362880/2))
 	       (display " -> ") (display (string->number (number->string 362880/2))) (newline)))
 (if (not (eqv? 362880/3 (string->number (number->string 362880/3))))
-        (begin (display "(string<->number 362880/3) -> ") (display (number->string 362880/3)) 
+        (begin (display "(string<->number 362880/3) -> ") (display (number->string 362880/3))
 	       (display " -> ") (display (string->number (number->string 362880/3))) (newline)))
 (if (not (eqv? 362880/10 (string->number (number->string 362880/10))))
-        (begin (display "(string<->number 362880/10) -> ") (display (number->string 362880/10)) 
+        (begin (display "(string<->number 362880/10) -> ") (display (number->string 362880/10))
 	       (display " -> ") (display (string->number (number->string 362880/10))) (newline)))
 (if (not (eqv? 362880/1234 (string->number (number->string 362880/1234))))
-        (begin (display "(string<->number 362880/1234) -> ") (display (number->string 362880/1234)) 
+        (begin (display "(string<->number 362880/1234) -> ") (display (number->string 362880/1234))
 	       (display " -> ") (display (string->number (number->string 362880/1234))) (newline)))
 (if (not (eqv? 362880/1234000000 (string->number (number->string 362880/1234000000))))
-        (begin (display "(string<->number 362880/1234000000) -> ") (display (number->string 362880/1234000000)) 
+        (begin (display "(string<->number 362880/1234000000) -> ") (display (number->string 362880/1234000000))
 	       (display " -> ") (display (string->number (number->string 362880/1234000000))) (newline)))
 (if (not (eqv? 362880/500029 (string->number (number->string 362880/500029))))
-        (begin (display "(string<->number 362880/500029) -> ") (display (number->string 362880/500029)) 
+        (begin (display "(string<->number 362880/500029) -> ") (display (number->string 362880/500029))
 	       (display " -> ") (display (string->number (number->string 362880/500029))) (newline)))
 (if (not (eqv? 362880/362880 (string->number (number->string 362880/362880))))
-        (begin (display "(string<->number 362880/362880) -> ") (display (number->string 362880/362880)) 
+        (begin (display "(string<->number 362880/362880) -> ") (display (number->string 362880/362880))
 	       (display " -> ") (display (string->number (number->string 362880/362880))) (newline)))
 
 (let ((fequal? (lambda (a b) (< (magnitude (- a b)) 1e-14))))
   (if (not (fequal? 0.000000 (string->number (number->string 0.000000))))
-      (begin (display "(string<->number 0.000000) -> ") (display (number->string 0.000000)) 
+      (begin (display "(string<->number 0.000000) -> ") (display (number->string 0.000000))
 	     (display " -> ") (display (string->number (number->string 0.000000))) (newline)))
   (if (not (fequal? 0.000000 (string->number (number->string 0.000000))))
-      (begin (display "(string<->number 0.000000) -> ") (display (number->string 0.000000)) 
+      (begin (display "(string<->number 0.000000) -> ") (display (number->string 0.000000))
 	     (display " -> ") (display (string->number (number->string 0.000000))) (newline)))
   (if (not (fequal? 1.000000 (string->number (number->string 1.000000))))
-      (begin (display "(string<->number 1.000000) -> ") (display (number->string 1.000000)) 
+      (begin (display "(string<->number 1.000000) -> ") (display (number->string 1.000000))
 	     (display " -> ") (display (string->number (number->string 1.000000))) (newline)))
   (if (not (fequal? 3.141593 (string->number (number->string 3.141593))))
-      (begin (display "(string<->number 3.141593) -> ") (display (number->string 3.141593)) 
+      (begin (display "(string<->number 3.141593) -> ") (display (number->string 3.141593))
 	     (display " -> ") (display (string->number (number->string 3.141593))) (newline)))
   (if (not (fequal? 2.718282 (string->number (number->string 2.718282))))
-      (begin (display "(string<->number 2.718282) -> ") (display (number->string 2.718282)) 
+      (begin (display "(string<->number 2.718282) -> ") (display (number->string 2.718282))
 	     (display " -> ") (display (string->number (number->string 2.718282))) (newline)))
   (if (not (fequal? 1234.000000 (string->number (number->string 1234.000000))))
-      (begin (display "(string<->number 1234.000000) -> ") (display (number->string 1234.000000)) 
+      (begin (display "(string<->number 1234.000000) -> ") (display (number->string 1234.000000))
 	     (display " -> ") (display (string->number (number->string 1234.000000))) (newline)))
   (if (not (fequal? 1234000000.000000 (string->number (number->string 1234000000.000000))))
-      (begin (display "(string<->number 1234000000.000000) -> ") (display (number->string 1234000000.000000)) 
+      (begin (display "(string<->number 1234000000.000000) -> ") (display (number->string 1234000000.000000))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000))) (newline)))
   (if (not (fequal? 0.000000+0.000000i (string->number (number->string 0.000000+0.000000i))))
-      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i)) 
+      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+0.000000i))) (newline)))
   (if (not (fequal? 0.000000+0.000000i (string->number (number->string 0.000000+0.000000i))))
-      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i)) 
+      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+0.000000i))) (newline)))
   (if (not (fequal? 0.000000+1.000000i (string->number (number->string 0.000000+1.000000i))))
-      (begin (display "(string<->number 0.000000+1.000000i) -> ") (display (number->string 0.000000+1.000000i)) 
+      (begin (display "(string<->number 0.000000+1.000000i) -> ") (display (number->string 0.000000+1.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+1.000000i))) (newline)))
   (if (not (fequal? 0.000000+3.141593i (string->number (number->string 0.000000+3.141593i))))
-      (begin (display "(string<->number 0.000000+3.141593i) -> ") (display (number->string 0.000000+3.141593i)) 
+      (begin (display "(string<->number 0.000000+3.141593i) -> ") (display (number->string 0.000000+3.141593i))
 	     (display " -> ") (display (string->number (number->string 0.000000+3.141593i))) (newline)))
   (if (not (fequal? 0.000000+2.718282i (string->number (number->string 0.000000+2.718282i))))
-      (begin (display "(string<->number 0.000000+2.718282i) -> ") (display (number->string 0.000000+2.718282i)) 
+      (begin (display "(string<->number 0.000000+2.718282i) -> ") (display (number->string 0.000000+2.718282i))
 	     (display " -> ") (display (string->number (number->string 0.000000+2.718282i))) (newline)))
   (if (not (fequal? 0.000000+1234.000000i (string->number (number->string 0.000000+1234.000000i))))
-      (begin (display "(string<->number 0.000000+1234.000000i) -> ") (display (number->string 0.000000+1234.000000i)) 
+      (begin (display "(string<->number 0.000000+1234.000000i) -> ") (display (number->string 0.000000+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+1234.000000i))) (newline)))
   (if (not (fequal? 0.000000+1234000000.000000i (string->number (number->string 0.000000+1234000000.000000i))))
-      (begin (display "(string<->number 0.000000+1234000000.000000i) -> ") (display (number->string 0.000000+1234000000.000000i)) 
+      (begin (display "(string<->number 0.000000+1234000000.000000i) -> ") (display (number->string 0.000000+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+1234000000.000000i))) (newline)))
   (if (not (fequal? 0.000000+0.000000i (string->number (number->string 0.000000+0.000000i))))
-      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i)) 
+      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+0.000000i))) (newline)))
   (if (not (fequal? 0.000000+0.000000i (string->number (number->string 0.000000+0.000000i))))
-      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i)) 
+      (begin (display "(string<->number 0.000000+0.000000i) -> ") (display (number->string 0.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+0.000000i))) (newline)))
   (if (not (fequal? 0.000000+1.000000i (string->number (number->string 0.000000+1.000000i))))
-      (begin (display "(string<->number 0.000000+1.000000i) -> ") (display (number->string 0.000000+1.000000i)) 
+      (begin (display "(string<->number 0.000000+1.000000i) -> ") (display (number->string 0.000000+1.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+1.000000i))) (newline)))
   (if (not (fequal? 0.000000+3.141593i (string->number (number->string 0.000000+3.141593i))))
-      (begin (display "(string<->number 0.000000+3.141593i) -> ") (display (number->string 0.000000+3.141593i)) 
+      (begin (display "(string<->number 0.000000+3.141593i) -> ") (display (number->string 0.000000+3.141593i))
 	     (display " -> ") (display (string->number (number->string 0.000000+3.141593i))) (newline)))
   (if (not (fequal? 0.000000+2.718282i (string->number (number->string 0.000000+2.718282i))))
-      (begin (display "(string<->number 0.000000+2.718282i) -> ") (display (number->string 0.000000+2.718282i)) 
+      (begin (display "(string<->number 0.000000+2.718282i) -> ") (display (number->string 0.000000+2.718282i))
 	     (display " -> ") (display (string->number (number->string 0.000000+2.718282i))) (newline)))
   (if (not (fequal? 0.000000+1234.000000i (string->number (number->string 0.000000+1234.000000i))))
-      (begin (display "(string<->number 0.000000+1234.000000i) -> ") (display (number->string 0.000000+1234.000000i)) 
+      (begin (display "(string<->number 0.000000+1234.000000i) -> ") (display (number->string 0.000000+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+1234.000000i))) (newline)))
   (if (not (fequal? 0.000000+1234000000.000000i (string->number (number->string 0.000000+1234000000.000000i))))
-      (begin (display "(string<->number 0.000000+1234000000.000000i) -> ") (display (number->string 0.000000+1234000000.000000i)) 
+      (begin (display "(string<->number 0.000000+1234000000.000000i) -> ") (display (number->string 0.000000+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 0.000000+1234000000.000000i))) (newline)))
   (if (not (fequal? 1.000000+0.000000i (string->number (number->string 1.000000+0.000000i))))
-      (begin (display "(string<->number 1.000000+0.000000i) -> ") (display (number->string 1.000000+0.000000i)) 
+      (begin (display "(string<->number 1.000000+0.000000i) -> ") (display (number->string 1.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 1.000000+0.000000i))) (newline)))
   (if (not (fequal? 1.000000+0.000000i (string->number (number->string 1.000000+0.000000i))))
-      (begin (display "(string<->number 1.000000+0.000000i) -> ") (display (number->string 1.000000+0.000000i)) 
+      (begin (display "(string<->number 1.000000+0.000000i) -> ") (display (number->string 1.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 1.000000+0.000000i))) (newline)))
   (if (not (fequal? 1.000000+1.000000i (string->number (number->string 1.000000+1.000000i))))
-      (begin (display "(string<->number 1.000000+1.000000i) -> ") (display (number->string 1.000000+1.000000i)) 
+      (begin (display "(string<->number 1.000000+1.000000i) -> ") (display (number->string 1.000000+1.000000i))
 	     (display " -> ") (display (string->number (number->string 1.000000+1.000000i))) (newline)))
   (if (not (fequal? 1.000000+3.141593i (string->number (number->string 1.000000+3.141593i))))
-      (begin (display "(string<->number 1.000000+3.141593i) -> ") (display (number->string 1.000000+3.141593i)) 
+      (begin (display "(string<->number 1.000000+3.141593i) -> ") (display (number->string 1.000000+3.141593i))
 	     (display " -> ") (display (string->number (number->string 1.000000+3.141593i))) (newline)))
   (if (not (fequal? 1.000000+2.718282i (string->number (number->string 1.000000+2.718282i))))
-      (begin (display "(string<->number 1.000000+2.718282i) -> ") (display (number->string 1.000000+2.718282i)) 
+      (begin (display "(string<->number 1.000000+2.718282i) -> ") (display (number->string 1.000000+2.718282i))
 	     (display " -> ") (display (string->number (number->string 1.000000+2.718282i))) (newline)))
   (if (not (fequal? 1.000000+1234.000000i (string->number (number->string 1.000000+1234.000000i))))
-      (begin (display "(string<->number 1.000000+1234.000000i) -> ") (display (number->string 1.000000+1234.000000i)) 
+      (begin (display "(string<->number 1.000000+1234.000000i) -> ") (display (number->string 1.000000+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 1.000000+1234.000000i))) (newline)))
   (if (not (fequal? 1.000000+1234000000.000000i (string->number (number->string 1.000000+1234000000.000000i))))
-      (begin (display "(string<->number 1.000000+1234000000.000000i) -> ") (display (number->string 1.000000+1234000000.000000i)) 
+      (begin (display "(string<->number 1.000000+1234000000.000000i) -> ") (display (number->string 1.000000+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 1.000000+1234000000.000000i))) (newline)))
   (if (not (fequal? 3.141593+0.000000i (string->number (number->string 3.141593+0.000000i))))
-      (begin (display "(string<->number 3.141593+0.000000i) -> ") (display (number->string 3.141593+0.000000i)) 
+      (begin (display "(string<->number 3.141593+0.000000i) -> ") (display (number->string 3.141593+0.000000i))
 	     (display " -> ") (display (string->number (number->string 3.141593+0.000000i))) (newline)))
   (if (not (fequal? 3.141593+0.000000i (string->number (number->string 3.141593+0.000000i))))
-      (begin (display "(string<->number 3.141593+0.000000i) -> ") (display (number->string 3.141593+0.000000i)) 
+      (begin (display "(string<->number 3.141593+0.000000i) -> ") (display (number->string 3.141593+0.000000i))
 	     (display " -> ") (display (string->number (number->string 3.141593+0.000000i))) (newline)))
   (if (not (fequal? 3.141593+1.000000i (string->number (number->string 3.141593+1.000000i))))
-      (begin (display "(string<->number 3.141593+1.000000i) -> ") (display (number->string 3.141593+1.000000i)) 
+      (begin (display "(string<->number 3.141593+1.000000i) -> ") (display (number->string 3.141593+1.000000i))
 	     (display " -> ") (display (string->number (number->string 3.141593+1.000000i))) (newline)))
   (if (not (fequal? 3.141593+3.141593i (string->number (number->string 3.141593+3.141593i))))
-      (begin (display "(string<->number 3.141593+3.141593i) -> ") (display (number->string 3.141593+3.141593i)) 
+      (begin (display "(string<->number 3.141593+3.141593i) -> ") (display (number->string 3.141593+3.141593i))
 	     (display " -> ") (display (string->number (number->string 3.141593+3.141593i))) (newline)))
   (if (not (fequal? 3.141593+2.718282i (string->number (number->string 3.141593+2.718282i))))
-      (begin (display "(string<->number 3.141593+2.718282i) -> ") (display (number->string 3.141593+2.718282i)) 
+      (begin (display "(string<->number 3.141593+2.718282i) -> ") (display (number->string 3.141593+2.718282i))
 	     (display " -> ") (display (string->number (number->string 3.141593+2.718282i))) (newline)))
   (if (not (fequal? 3.141593+1234.000000i (string->number (number->string 3.141593+1234.000000i))))
-      (begin (display "(string<->number 3.141593+1234.000000i) -> ") (display (number->string 3.141593+1234.000000i)) 
+      (begin (display "(string<->number 3.141593+1234.000000i) -> ") (display (number->string 3.141593+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 3.141593+1234.000000i))) (newline)))
   (if (not (fequal? 3.141593+1234000000.000000i (string->number (number->string 3.141593+1234000000.000000i))))
-      (begin (display "(string<->number 3.141593+1234000000.000000i) -> ") (display (number->string 3.141593+1234000000.000000i)) 
+      (begin (display "(string<->number 3.141593+1234000000.000000i) -> ") (display (number->string 3.141593+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 3.141593+1234000000.000000i))) (newline)))
   (if (not (fequal? 2.718282+0.000000i (string->number (number->string 2.718282+0.000000i))))
-      (begin (display "(string<->number 2.718282+0.000000i) -> ") (display (number->string 2.718282+0.000000i)) 
+      (begin (display "(string<->number 2.718282+0.000000i) -> ") (display (number->string 2.718282+0.000000i))
 	     (display " -> ") (display (string->number (number->string 2.718282+0.000000i))) (newline)))
   (if (not (fequal? 2.718282+0.000000i (string->number (number->string 2.718282+0.000000i))))
-      (begin (display "(string<->number 2.718282+0.000000i) -> ") (display (number->string 2.718282+0.000000i)) 
+      (begin (display "(string<->number 2.718282+0.000000i) -> ") (display (number->string 2.718282+0.000000i))
 	     (display " -> ") (display (string->number (number->string 2.718282+0.000000i))) (newline)))
   (if (not (fequal? 2.718282+1.000000i (string->number (number->string 2.718282+1.000000i))))
-      (begin (display "(string<->number 2.718282+1.000000i) -> ") (display (number->string 2.718282+1.000000i)) 
+      (begin (display "(string<->number 2.718282+1.000000i) -> ") (display (number->string 2.718282+1.000000i))
 	     (display " -> ") (display (string->number (number->string 2.718282+1.000000i))) (newline)))
   (if (not (fequal? 2.718282+3.141593i (string->number (number->string 2.718282+3.141593i))))
-      (begin (display "(string<->number 2.718282+3.141593i) -> ") (display (number->string 2.718282+3.141593i)) 
+      (begin (display "(string<->number 2.718282+3.141593i) -> ") (display (number->string 2.718282+3.141593i))
 	     (display " -> ") (display (string->number (number->string 2.718282+3.141593i))) (newline)))
   (if (not (fequal? 2.718282+2.718282i (string->number (number->string 2.718282+2.718282i))))
-      (begin (display "(string<->number 2.718282+2.718282i) -> ") (display (number->string 2.718282+2.718282i)) 
+      (begin (display "(string<->number 2.718282+2.718282i) -> ") (display (number->string 2.718282+2.718282i))
 	     (display " -> ") (display (string->number (number->string 2.718282+2.718282i))) (newline)))
   (if (not (fequal? 2.718282+1234.000000i (string->number (number->string 2.718282+1234.000000i))))
-      (begin (display "(string<->number 2.718282+1234.000000i) -> ") (display (number->string 2.718282+1234.000000i)) 
+      (begin (display "(string<->number 2.718282+1234.000000i) -> ") (display (number->string 2.718282+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 2.718282+1234.000000i))) (newline)))
   (if (not (fequal? 2.718282+1234000000.000000i (string->number (number->string 2.718282+1234000000.000000i))))
-      (begin (display "(string<->number 2.718282+1234000000.000000i) -> ") (display (number->string 2.718282+1234000000.000000i)) 
+      (begin (display "(string<->number 2.718282+1234000000.000000i) -> ") (display (number->string 2.718282+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 2.718282+1234000000.000000i))) (newline)))
   (if (not (fequal? 1234.000000+0.000000i (string->number (number->string 1234.000000+0.000000i))))
-      (begin (display "(string<->number 1234.000000+0.000000i) -> ") (display (number->string 1234.000000+0.000000i)) 
+      (begin (display "(string<->number 1234.000000+0.000000i) -> ") (display (number->string 1234.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+0.000000i))) (newline)))
   (if (not (fequal? 1234.000000+0.000000i (string->number (number->string 1234.000000+0.000000i))))
-      (begin (display "(string<->number 1234.000000+0.000000i) -> ") (display (number->string 1234.000000+0.000000i)) 
+      (begin (display "(string<->number 1234.000000+0.000000i) -> ") (display (number->string 1234.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+0.000000i))) (newline)))
   (if (not (fequal? 1234.000000+1.000000i (string->number (number->string 1234.000000+1.000000i))))
-      (begin (display "(string<->number 1234.000000+1.000000i) -> ") (display (number->string 1234.000000+1.000000i)) 
+      (begin (display "(string<->number 1234.000000+1.000000i) -> ") (display (number->string 1234.000000+1.000000i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+1.000000i))) (newline)))
   (if (not (fequal? 1234.000000+3.141593i (string->number (number->string 1234.000000+3.141593i))))
-      (begin (display "(string<->number 1234.000000+3.141593i) -> ") (display (number->string 1234.000000+3.141593i)) 
+      (begin (display "(string<->number 1234.000000+3.141593i) -> ") (display (number->string 1234.000000+3.141593i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+3.141593i))) (newline)))
   (if (not (fequal? 1234.000000+2.718282i (string->number (number->string 1234.000000+2.718282i))))
-      (begin (display "(string<->number 1234.000000+2.718282i) -> ") (display (number->string 1234.000000+2.718282i)) 
+      (begin (display "(string<->number 1234.000000+2.718282i) -> ") (display (number->string 1234.000000+2.718282i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+2.718282i))) (newline)))
   (if (not (fequal? 1234.000000+1234.000000i (string->number (number->string 1234.000000+1234.000000i))))
-      (begin (display "(string<->number 1234.000000+1234.000000i) -> ") (display (number->string 1234.000000+1234.000000i)) 
+      (begin (display "(string<->number 1234.000000+1234.000000i) -> ") (display (number->string 1234.000000+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+1234.000000i))) (newline)))
   (if (not (fequal? 1234.000000+1234000000.000000i (string->number (number->string 1234.000000+1234000000.000000i))))
-      (begin (display "(string<->number 1234.000000+1234000000.000000i) -> ") (display (number->string 1234.000000+1234000000.000000i)) 
+      (begin (display "(string<->number 1234.000000+1234000000.000000i) -> ") (display (number->string 1234.000000+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 1234.000000+1234000000.000000i))) (newline)))
   (if (not (fequal? 1234000000.000000+0.000000i (string->number (number->string 1234000000.000000+0.000000i))))
-      (begin (display "(string<->number 1234000000.000000+0.000000i) -> ") (display (number->string 1234000000.000000+0.000000i)) 
+      (begin (display "(string<->number 1234000000.000000+0.000000i) -> ") (display (number->string 1234000000.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+0.000000i))) (newline)))
   (if (not (fequal? 1234000000.000000+0.000000i (string->number (number->string 1234000000.000000+0.000000i))))
-      (begin (display "(string<->number 1234000000.000000+0.000000i) -> ") (display (number->string 1234000000.000000+0.000000i)) 
+      (begin (display "(string<->number 1234000000.000000+0.000000i) -> ") (display (number->string 1234000000.000000+0.000000i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+0.000000i))) (newline)))
   (if (not (fequal? 1234000000.000000+1.000000i (string->number (number->string 1234000000.000000+1.000000i))))
-      (begin (display "(string<->number 1234000000.000000+1.000000i) -> ") (display (number->string 1234000000.000000+1.000000i)) 
+      (begin (display "(string<->number 1234000000.000000+1.000000i) -> ") (display (number->string 1234000000.000000+1.000000i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+1.000000i))) (newline)))
   (if (not (fequal? 1234000000.000000+3.141593i (string->number (number->string 1234000000.000000+3.141593i))))
-      (begin (display "(string<->number 1234000000.000000+3.141593i) -> ") (display (number->string 1234000000.000000+3.141593i)) 
+      (begin (display "(string<->number 1234000000.000000+3.141593i) -> ") (display (number->string 1234000000.000000+3.141593i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+3.141593i))) (newline)))
   (if (not (fequal? 1234000000.000000+2.718282i (string->number (number->string 1234000000.000000+2.718282i))))
-      (begin (display "(string<->number 1234000000.000000+2.718282i) -> ") (display (number->string 1234000000.000000+2.718282i)) 
+      (begin (display "(string<->number 1234000000.000000+2.718282i) -> ") (display (number->string 1234000000.000000+2.718282i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+2.718282i))) (newline)))
   (if (not (fequal? 1234000000.000000+1234.000000i (string->number (number->string 1234000000.000000+1234.000000i))))
-      (begin (display "(string<->number 1234000000.000000+1234.000000i) -> ") (display (number->string 1234000000.000000+1234.000000i)) 
+      (begin (display "(string<->number 1234000000.000000+1234.000000i) -> ") (display (number->string 1234000000.000000+1234.000000i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+1234.000000i))) (newline)))
   (if (not (fequal? 1234000000.000000+1234000000.000000i (string->number (number->string 1234000000.000000+1234000000.000000i))))
-      (begin (display "(string<->number 1234000000.000000+1234000000.000000i) -> ") (display (number->string 1234000000.000000+1234000000.000000i)) 
+      (begin (display "(string<->number 1234000000.000000+1234000000.000000i) -> ") (display (number->string 1234000000.000000+1234000000.000000i))
 	     (display " -> ") (display (string->number (number->string 1234000000.000000+1234000000.000000i))) (newline)))
   (if (not with-bigfloats)
       (begin
 	(if (not (fequal? 0.0000001 (string->number (number->string 0.0000001))))
-	    (begin (display "(string<->number 0.0000001) -> ") (display (number->string 0.0000001)) 
+	    (begin (display "(string<->number 0.0000001) -> ") (display (number->string 0.0000001))
 		   (display " -> ") (display (string->number (number->string 0.0000001))) (newline)))
 	(if (not (fequal? 0.0000001001 (string->number (number->string 0.0000001001))))
-	    (begin (display "(string<->number 0.0000001001) -> ") (display (number->string 0.0000001001)) 
+	    (begin (display "(string<->number 0.0000001001) -> ") (display (number->string 0.0000001001))
 		   (display " -> ") (display (string->number (number->string 0.0000001001))) (newline)))))
   )
 
@@ -34625,25 +34625,25 @@
       ((or (not happy)
 	   (= i 17)))
     (if (not (eqv? 0 (string->number (number->string 0 i) i)))
-	(begin 
-	  (set! happy #f) 
-	  (display "(string<->number 0 ") (display i) (display " -> ") (display (number->string 0 i)) 
+	(begin
+	  (set! happy #f)
+	  (display "(string<->number 0 ") (display i) (display " -> ") (display (number->string 0 i))
 	  (display " -> ") (display (string->number (number->string 0 i) i)) (newline)))
     (if (not (eqv? 1234 (string->number (number->string 1234 i) i)))
-	(begin 
-	  (set! happy #f) 
-	  (display "(string<->number 1234 ") (display i) (display " -> ") (display (number->string 1234 i)) 
+	(begin
+	  (set! happy #f)
+	  (display "(string<->number 1234 ") (display i) (display " -> ") (display (number->string 1234 i))
 	  (display " -> ") (display (string->number (number->string 1234 i) i)) (newline)))
     (if (not (eqv? -1234 (string->number (number->string -1234 i) i)))
-	(begin 
-	  (set! happy #f) 
-	  (display "(string<->number -1234 ") (display i) (display " -> ") (display (number->string -1234 i)) 
+	(begin
+	  (set! happy #f)
+	  (display "(string<->number -1234 ") (display i) (display " -> ") (display (number->string -1234 i))
 	  (display " -> ") (display (string->number (number->string -1234 i) i)) (newline)))))
 
 (for-each
  (lambda (radix)
    (let* ((last-good 0)
-	  (first-bad 
+	  (first-bad
 	   (call/cc
 	    (lambda (return)
 	      (do ((i 1 (+ i 1))
@@ -34655,7 +34655,7 @@
 		    (set! last-good k)
 		    (if (negative? k)
 			(return (- (* 2 last-good) 1))
-			(letrec ((search 
+			(letrec ((search
 				  (lambda (lo hi)
 				    (if (= lo hi)
 					hi
@@ -34671,8 +34671,8 @@
 	     (and (not (number? number-to-string-top))
 		  (number? first-bad)))
 	 (if (integer? first-bad)
-	     (begin 
-	       (display "string->number ints (radix ") (display radix) (display ") fail around ") 
+	     (begin
+	       (display "string->number ints (radix ") (display radix) (display ") fail around ")
 	       (display first-bad)
 	       (display " (2^")
 	       (display (/ (log first-bad) (log 2.0)))
@@ -34684,7 +34684,7 @@
  (list 2 8 16 7 12)))
 
 ;;  (do ((i 0 (+ i 1)) (n 1 (* n 2))) ((= i 63)) (display n) (display " ") (display (number->string n 16)) (newline))
- 
+
 (test (number->string 3/4 2) "11/100")
 (test (number->string 3/4 8) "3/4")
 (test (number->string 3/4 16) "3/4")
@@ -34713,19 +34713,19 @@
       ((or (not happy)
 	   (= i 17)))
     (if (not (eqv? 3/4 (string->number (number->string 3/4 i) i)))
-	(begin 
-	  (set! happy #f) 
-	  (display "(string<->number 3/4 ") (display i) (display ") -> ") (display (number->string 3/4 i)) 
+	(begin
+	  (set! happy #f)
+	  (display "(string<->number 3/4 ") (display i) (display ") -> ") (display (number->string 3/4 i))
 	  (display " -> ") (display (string->number (number->string 3/4 i) i)) (newline)))
     (if (not (eqv? 1234/11 (string->number (number->string 1234/11 i) i)))
-	(begin 
-	  (set! happy #f) 
-	  (display "(string<->number 1234/11 ") (display i) (display ") -> ") (display (number->string 1234/11 i)) 
+	(begin
+	  (set! happy #f)
+	  (display "(string<->number 1234/11 ") (display i) (display ") -> ") (display (number->string 1234/11 i))
 	  (display " -> ") (display (string->number (number->string 1234/11 i) i)) (newline)))
     (if (not (eqv? -1234/11 (string->number (number->string -1234/11 i) i)))
-	(begin 
-	  (set! happy #f) 
-	  (display "(string<->number -1234/11 ") (display i) (display ") -> ") (display (number->string -1234/11 i)) 
+	(begin
+	  (set! happy #f)
+	  (display "(string<->number -1234/11 ") (display i) (display ") -> ") (display (number->string -1234/11 i))
 	  (display " -> ") (display (string->number (number->string -1234/11 i) i)) (newline)))))
 
 (test (< (abs (- (string->number "3.1415926535897932384626433832795029") 3.1415926535897932384626433832795029)) 1e-7) #t)
@@ -34783,9 +34783,9 @@
 			    (not (= val base)))
 		       (begin
 			 (display "(string->number ") (display (string-append "1" exponent "1")) (display " ") (display base)
-			 (display ") returned ") (display (string->number (string-append "1" exponent "1") base)) 
+			 (display ") returned ") (display (string->number (string-append "1" exponent "1") base))
 			 (display "?") (newline)))))
-	     
+
 	     (do ((base 2 (+ base 1)))
 		 ((= base 11))
 	       (let ((val (string->number (string-append "1.1" exponent "1") base)))
@@ -34793,9 +34793,9 @@
 			    (not (= val (+ base 1))))
 		       (begin
 			 (display "(string->number ") (display (string-append "1.1" exponent "1")) (display " ") (display base)
-			 (display ") returned ") (display (string->number (string-append "1.1" exponent "1") base)) 
+			 (display ") returned ") (display (string->number (string-append "1.1" exponent "1") base))
 			 (display "?") (newline)))))
-	     
+
 	     (do ((base 2 (+ base 1)))
 		 ((= base 11))
 	       (let ((val (string->number (string-append "1" exponent "+1") base)))
@@ -34803,11 +34803,11 @@
 			  (not (= val base)))
 		       (begin
 			 (display "(string->number ") (display (string-append "1" exponent "+1")) (display " ") (display base)
-			 (display ") returned ") (display (string->number (string-append "1" exponent "+1") base)) 
+			 (display ") returned ") (display (string->number (string-append "1" exponent "+1") base))
 			 (display "?") (newline)))))
 					; in base 16 this is still not a number because of the + (or -)
 					; but "1e+1i" is a number -- gad!
-	     
+
 	     (do ((base 2 (+ base 1)))
 		 ((= base 11))
 	       (let ((val (string->number (string-append "1" exponent "-1+1i") base)))
@@ -34815,7 +34815,7 @@
 			  (> (magnitude (- val (make-rectangular (/ base) 1))) 1e-6))
 		       (begin
 			 (display "(string->number ") (display (string-append "1" exponent "-1+1i")) (display " ") (display base)
-			 (display ") returned ") (display (string->number (string-append "1" exponent "-1+1i") base)) 
+			 (display ") returned ") (display (string->number (string-append "1" exponent "-1+1i") base))
 			 (display "?") (newline)))))))
 
 	 (list #\e #\d #\f #\s #\l))
@@ -34835,8 +34835,8 @@
 		(set! val (+ val incr)))
 	      (if (> (abs (- val (string->number "11.111111111111111111111111111111111111111111111111111111111111111111111111111111111111" i))) 1e-7)
 		  (begin
-		    (set! happy #f) 
-		    (display "(string->number 11.111... ") (display i) (display ") -> ") 
+		    (set! happy #f)
+		    (display "(string->number 11.111... ") (display i) (display ") -> ")
 		    (display (string->number "11.111111111111111111111111111111111111111111111111111111111111111111111111111111111111" i))
 		    (display " but expected ") (display val) (newline))))
 
@@ -34846,7 +34846,7 @@
 	      (let ((val (exact->inexact (* i i))))
 		(if (> (abs (- val (string->number str i))) 1e-7)
 		    (begin
-		      (set! happy #f) 
+		      (set! happy #f)
 		      (display "(string->number ")
 		      (display (string-ref digits i)) (display (string-ref digits i)) (display ".")
 		      (display (string-ref digits i)) (display (string-ref digits i)) (display (string-ref digits i)) (display "... ")
@@ -34863,7 +34863,7 @@
 		  (let ((val (exact->inexact (* i i))))
 		    (if (> (abs (- val (string->number str i))) 1e-7)
 			(begin
-			  (set! happy #f) 
+			  (set! happy #f)
 			  (display "(string->number ")
 			  (display str) (display " ")
 			  (display i) (display ") -> ")
@@ -34875,28 +34875,28 @@
 	      ((or (not happy)
 		   (= i 17)))
 	    (if (> (abs (- 0.75 (string->number (number->string 0.75 i) i))) 1e-6)
-		(begin 
-		  (set! happy #f) 
-		  (display "(string<->number 0.75 ") (display i) (display ") -> ") (display (number->string 0.75 i)) 
+		(begin
+		  (set! happy #f)
+		  (display "(string<->number 0.75 ") (display i) (display ") -> ") (display (number->string 0.75 i))
 		  (display " -> ") (display (string->number (number->string 0.75 i) i)) (newline)))
 	    (if (> (abs (- 1234.75 (string->number (number->string 1234.75 i) i))) 1e-6)
-		(begin 
-		  (set! happy #f) 
-		  (display "(string<->number 1234.75 ") (display i) (display ") -> ") (display (number->string 1234.75 i)) 
+		(begin
+		  (set! happy #f)
+		  (display "(string<->number 1234.75 ") (display i) (display ") -> ") (display (number->string 1234.75 i))
 		  (display " -> ") (display (string->number (number->string 1234.75 i) i)) (newline)))
 	    (if (> (abs (- -1234.25 (string->number (number->string -1234.25 i) i))) 1e-6)
-		(begin 
-		  (set! happy #f) 
-		  (display "(string<->number -1234.25 ") (display i) (display ") -> ") (display (number->string -1234.25 i)) 
+		(begin
+		  (set! happy #f)
+		  (display "(string<->number -1234.25 ") (display i) (display ") -> ") (display (number->string -1234.25 i))
 		  (display " -> ") (display (string->number (number->string -1234.25 i) i)) (newline)))
-	    
+
 	    (let ((val (string->number (number->string 12.5+3.75i i) i)))
 	      (if (or (not (number? val))
 		      (> (abs (- (real-part val) 12.5)) 1e-6)
 		      (> (abs (- (imag-part val) 3.75)) 1e-6))
-		  (begin 
-		    (set! happy #f) 
-		    (display "(string<->number 12.5+3.75i ") (display i) (display ") -> ") (display (number->string 12.5+3.75i i)) 
+		  (begin
+		    (set! happy #f)
+		    (display "(string<->number 12.5+3.75i ") (display i) (display ") -> ") (display (number->string 12.5+3.75i i))
 		    (display " -> ") (display (string->number (number->string 12.5+3.75i i) i)) (newline))))
 
 	    (let ((happy #t))
@@ -34910,11 +34910,11 @@
 			 (rlstr (number->string rl base))
 			 (imstr (number->string im base))
 			 (val (make-rectangular rl im))
-			 (str (string-append rlstr 
+			 (str (string-append rlstr
 					     (if (or (negative? im)
 						     (char=? (string-ref imstr 0) #\-)) ; sigh -- -0.0 is not negative!
-						 "" "+") 
-					     imstr 
+						 "" "+")
+					     imstr
 					     "i")))
 		    (let* ((sn (string->number str base))
 			   (nsn (and (number? sn) (number->string sn base)))
@@ -34942,7 +34942,7 @@
 	   (not (string=? val "1.0-i")))
       (begin
 	(display "(number->string 1.0-1.0i) returned ") (display val) (display "?") (newline))))
-	
+
 (let ((string->number-2 (lambda (str radix)
 			  (let ((old-str (if (string? str) (string-copy str) str)))
 			    (let ((val (string->number str radix)))
@@ -34965,7 +34965,7 @@
   (num-test (string->number-2 "-11" 16) -17)
   (num-test (string->number-2 "aa" 16) 170)
   (num-test (string->number-2 "-aa" 16) -170)
-  
+
   (for-each
    (lambda (str rval fval)
      (let ((happy #t))
@@ -34996,12 +34996,12 @@
 	 (lambda (a b radix) (= a b))
 	 (lambda (a b radix) (< (abs (- a b)) (/ 1.0 (* radix radix radix))))
 	 ))
-  
+
   (num-test (string->number-2 "34" 2) #f)
   (num-test (string->number-2 "19" 8) #f)
   (num-test (string->number-2 "1c" 10) #f)
   (num-test (string->number-2 "1c" 16) 28)
-  
+
   (test (string->number-1 "") #f )
   (test (string->number-1 ".") #f )
   (test (string->number-1 "d") #f )
@@ -35016,13 +35016,13 @@
   (test (string->number-1 "3.3I") #f )
   (test (string->number-1 "-") #f )
   (test (string->number-1 "+") #f )
-  
+
   (test (string->number-1 "#i1-1ei") #f)
   (test (string->number-1 "#i-2e+i") #f)
   (test (string->number-1 "#i1+i1i") #f)
   (test (string->number-1 "#i1+1") #f)
   (test (string->number-1 "#i2i.") #f)
-  
+
   (num-test (string->number-1 "3.4e3") 3400.0)
   (num-test (string->number-1 "0") 0)
   (num-test (string->number-1 "#x#e-2e2") -738)
@@ -35034,7 +35034,7 @@
 (test (= 0.3 3e-1 3d-1 0.3e0 3e-1) #t)
 (test (= 0 +0 0.0 +0.0 0/1 +0/24 0+0i #e0 #b0 #x0 #o0 #e#b0) #t)
 
-(let ((things (vector 123 #e123 #b1111011 #e#b1111011 #b#e1111011 #o173 #e#o173 #o#e173 
+(let ((things (vector 123 #e123 #b1111011 #e#b1111011 #b#e1111011 #o173 #e#o173 #o#e173
 		      #x7b #e#x7b #x#e7b (string->number "123") 246/2 #e123/1 #d123 #e#d123 #d#e123)))
   (do ((i 0 (+ i 1)))
       ((= i (- (vector-length things) 1)))
@@ -35053,7 +35053,7 @@
 
 (for-each
   (lambda (n)
-    (let ((nb 
+    (let ((nb
 	   (catch #t
 		  (lambda ()
 		    (number? n))
@@ -35079,8 +35079,8 @@
 	'2e2+1e3i '2e2-2e2i '2.0e2+i '1+2.0e2i '2.0e+2-2.0e-1i '2/3-2.0e3i '2e-3-2/3i
 	'-2.0e-2-2.0e-2i '+2.0e+2+2.0e+2i '+2/3-2/3i '2e2-2/3i
 	'1e1-i '1.-i '.0+i '-.0-1e-1i '1.+.1i '0.-.1i
-	'.1+.0i '1.+.0i '.1+.1i '1.-.1i '.0+.00i '.10+.0i '-1.+.0i '.1-.01i '1.0+.1i 
-	'1e1+.1i '-1.-.10i '1e01+.0i '0e11+.0i '1.e1+.0i '1.00-.0i '-1e1-.0i '1.-.1e0i 
+	'.1+.0i '1.+.0i '.1+.1i '1.-.1i '.0+.00i '.10+.0i '-1.+.0i '.1-.01i '1.0+.1i
+	'1e1+.1i '-1.-.10i '1e01+.0i '0e11+.0i '1.e1+.0i '1.00-.0i '-1e1-.0i '1.-.1e0i
 	'1.+.001i '1e10-.1i '1e+0-.1i '-0e0-.1i
 	'-1.0e-1-1.0e-1i '-111e1-.1i '1.1-.1e11i '-1e-1-.11i '-1.1-.1e1i '-.1+.1i
 	))
@@ -35115,26 +35115,26 @@
 	'2e2+1e3i '2e2-2e2i '2.0e2+i '1+2.0e2i '2.0e+2-2.0e-1i '2/3-2.0e3i '2e-3-2/3i
 	'-2.0e-2-2.0e-2i '+2.0e+2+2.0e+2i '+2/3-2/3i '2e2-2/3i
 	'1e1-i '1.-i '.0+i '-.0-1e-1i '1.+.1i '0.-.1i
-	'.1+.0i '1.+.0i '.1+.1i '1.-.1i '.0+.00i '.10+.0i '-1.+.0i '.1-.01i '1.0+.1i 
-	'1e1+.1i '-1.-.10i '1e01+.0i '0e11+.0i '1.e1+.0i '1.00-.0i '-1e1-.0i '1.-.1e0i 
+	'.1+.0i '1.+.0i '.1+.1i '1.-.1i '.0+.00i '.10+.0i '-1.+.0i '.1-.01i '1.0+.1i
+	'1e1+.1i '-1.-.10i '1e01+.0i '0e11+.0i '1.e1+.0i '1.00-.0i '-1e1-.0i '1.-.1e0i
 	'1.+.001i '1e10-.1i '1e+0-.1i '-0e0-.1i
 	'-1.0e-1-1.0e-1i '-111e1-.1i '1.1-.1e11i '-1e-1-.11i '-1.1-.1e1i)
 
-  (list 1.0 -1.0 1.0 0.1 -0.1 0.1 0.0 0.0 0.0 0.0 0.0 -0.0 0.0 1.1 -1.1 1.1 100.0 -100.0 
-	100.0 0.011 -0.011 0.011 110.0 -110.0 110.0 0.5 -0.5 0.5 100.0 -100.0 100.0 100.0 
-	-100.0 100.0 100.0 -100.0 100.0 100.0 -100.0 100.0 1.0 1.0 -1.0 -1.0 1.0 1.0 -1.0 
-	-1.0 0.66666666666667 0.66666666666667 -0.66666666666667 1.0 1.0 0.66666666666667 
-	2.3 0.66666666666667 200.0 200.0 200.0 1.0 200.0 0.66666666666667 0.002 -0.02 200.0 
-	0.66666666666667 200.0 10.0 1.0 0.0 -0.0 1.0 0.0 0.1 1.0 0.1 1.0 0.0 0.1 -1.0 0.1 
-	1.0 10.0 -1.0 10.0 0.0 10.0 1.0 -10.0 1.0 1.0 10000000000.0 1.0 -0.0 -0.1 -1110.0 
+  (list 1.0 -1.0 1.0 0.1 -0.1 0.1 0.0 0.0 0.0 0.0 0.0 -0.0 0.0 1.1 -1.1 1.1 100.0 -100.0
+	100.0 0.011 -0.011 0.011 110.0 -110.0 110.0 0.5 -0.5 0.5 100.0 -100.0 100.0 100.0
+	-100.0 100.0 100.0 -100.0 100.0 100.0 -100.0 100.0 1.0 1.0 -1.0 -1.0 1.0 1.0 -1.0
+	-1.0 0.66666666666667 0.66666666666667 -0.66666666666667 1.0 1.0 0.66666666666667
+	2.3 0.66666666666667 200.0 200.0 200.0 1.0 200.0 0.66666666666667 0.002 -0.02 200.0
+	0.66666666666667 200.0 10.0 1.0 0.0 -0.0 1.0 0.0 0.1 1.0 0.1 1.0 0.0 0.1 -1.0 0.1
+	1.0 10.0 -1.0 10.0 0.0 10.0 1.0 -10.0 1.0 1.0 10000000000.0 1.0 -0.0 -0.1 -1110.0
 	1.1 -0.1 -1.1)
 
-  (list 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
-	0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 -1.0 
-	-1.0 1.0 1.0 -1.0 -1.0 1.0 1.0 -1.0 1.0 0.66666666666667 -0.66666666666667 
-	0.66666666666667 -0.66666666666667 -2.3 1000.0 -200.0 1.0 200.0 -0.2 -2000.0 
-	-0.66666666666667 -0.02 200.0 -0.66666666666667 -0.66666666666667 -1.0 -1.0 1.0 
-	-0.1 0.1 -0.1 0.0 0.0 0.1 -0.1 0.0 0.0 0.0 -0.01 0.1 0.1 -0.1 0.0 0.0 0.0 0.0 
+  (list 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+	0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 -1.0
+	-1.0 1.0 1.0 -1.0 -1.0 1.0 1.0 -1.0 1.0 0.66666666666667 -0.66666666666667
+	0.66666666666667 -0.66666666666667 -2.3 1000.0 -200.0 1.0 200.0 -0.2 -2000.0
+	-0.66666666666667 -0.02 200.0 -0.66666666666667 -0.66666666666667 -1.0 -1.0 1.0
+	-0.1 0.1 -0.1 0.0 0.0 0.1 -0.1 0.0 0.0 0.0 -0.01 0.1 0.1 -0.1 0.0 0.0 0.0 0.0
 	0.0 -0.1 0.001 -0.1 -0.1 -0.1 -0.1 -0.1 -10000000000.0 -0.11 -1.0))
 
 
@@ -35150,7 +35150,7 @@
     (if (number? (string->number name))
 	(begin
 	  (display "(string->number ") (display name) (display ") returned ") (display (string->number name)) (display "?") (newline))))
-    
+
  (list '1e '--1 '++1 '+. '+.+ '.. '.- '1e- '+ '- '-e1
        '1/2/3 '1/2+/2 '/2 '2/ '1+2 '1/+i '1/2e1 '1/2.
        '1..0 '1.+0 '1--1 '1+- '1.0++i '1.0-ie++2 '1+1 '1.0. '1.0e
@@ -35161,15 +35161,15 @@
        '1/2i '2i/3 '2+/i '2+2/i '2+2/-i '2/- '2/+ '2/+3
        '1e1.0 '1e1e2 '1+ie2 '1ei1 '1e/2 '0-- '1+ '1- '.1. '.1+
        '1//2 '1/-/2 '1/2/ '1// '+/1 '.0.
-       '+0ei '0e++i '+0e+i '0e+-i '+0e-i '+00ei '+.0ei '0+0ei '-01ei '+.1ei 
-       '1-1ei '-1.ei '0+.i '0-.i '1+e0i '1+/0i '1-/0i '1+e1i '1+/1i '10+.i 
-       '.0+.i '-0+.i '.1+.i '0.+.i '00-.i '.1-.i '1.-.i '1e++0i '1e--1i '.1e++i 
-       '+10e+i '1+0e+i '+01e+i '+0e+-i '.1e+-i '1-10ei '0e++00i '1e--.1i '1.e-+1i 
-       '1-0.e+i '1.+1e+i '-1.e--i '1.e+-.0i '1-e+01i '1-/101i '1+/10i '1-e10i 
-       '-1+e+1i '.1-e-1i '1-/0e1i '1e10+.i '1/1.1+i '1/11.+i 
+       '+0ei '0e++i '+0e+i '0e+-i '+0e-i '+00ei '+.0ei '0+0ei '-01ei '+.1ei
+       '1-1ei '-1.ei '0+.i '0-.i '1+e0i '1+/0i '1-/0i '1+e1i '1+/1i '10+.i
+       '.0+.i '-0+.i '.1+.i '0.+.i '00-.i '.1-.i '1.-.i '1e++0i '1e--1i '.1e++i
+       '+10e+i '1+0e+i '+01e+i '+0e+-i '.1e+-i '1-10ei '0e++00i '1e--.1i '1.e-+1i
+       '1-0.e+i '1.+1e+i '-1.e--i '1.e+-.0i '1-e+01i '1-/101i '1+/10i '1-e10i
+       '-1+e+1i '.1-e-1i '1-/0e1i '1e10+.i '1/1.1+i '1/11.+i
        '1/2e1-i '-1.0e-1-1-1.0e-1i '-1.0e-1-1.0e-1-1i
-       '1.0e2/3 '-1e--1.e1i '-11e--1e1i '1e--1.1e1i '1.e-1-1.ei '-1.e--1.ei 
-       '-1.1e1-e1i '-1.e1-e-1i '.1e1-e-11i 
+       '1.0e2/3 '-1e--1.e1i '-11e--1e1i '1e--1.1e1i '1.e-1-1.ei '-1.e--1.ei
+       '-1.1e1-e1i '-1.e1-e-1i '.1e1-e-11i
        '3.-3. '1'2 '+-2 '1?
        '1a '1.a '-a '+a '1.. '..1 '-..1 '1ee1 '1ef2 '1+ief2 '1.+ '1.0- '1/2+/3
        '1'2 '1-#i '1-i. '1-ie '1... '1//1...
@@ -35177,22 +35177,22 @@
  (list "1e" "--1" "++1" "+." "+.+" ".." ".-" "1e-" "+" "-" "-e1"
        "1/2/3" "1/2+/2" "/2" "2/" "1+2" "1/+i" "1/2e1" "1/2."
        "1..0" "1.+0" "1--1" "1+-" "1.0++i" "1.0-ie++2" "1+1" "1.0." "1.0e"
-       "1ee2" "1.0e2e2" "1es2" "1e1.0" "1.0.0" "1/2.0" "1+i2" "1+1.0i0" 
-       "+.i" "i" "e" "e1" "1e.1" "1+.i" "1.0e.1" 
-       "-.1ei" "-1.0+1.0" "1.0+1.0i+1.0" "1.1/2" "1/2.0" 
-       "1/e" "1/i" "e/i" "1e2/3" "2/1e2" "1e2+1e2ii" "1i-1.0" "1.0-i/2" 
-       "1/2i" "2i/3" "2+/i" "2+2/i" "2+2/-i" "2/-" "2/+" "2/+3" 
-       "1e1.0" "1e1e2" "1+ie2" "1ei1" "1e/2" "0--" "1+" "1-" ".1." ".1+" 
+       "1ee2" "1.0e2e2" "1es2" "1e1.0" "1.0.0" "1/2.0" "1+i2" "1+1.0i0"
+       "+.i" "i" "e" "e1" "1e.1" "1+.i" "1.0e.1"
+       "-.1ei" "-1.0+1.0" "1.0+1.0i+1.0" "1.1/2" "1/2.0"
+       "1/e" "1/i" "e/i" "1e2/3" "2/1e2" "1e2+1e2ii" "1i-1.0" "1.0-i/2"
+       "1/2i" "2i/3" "2+/i" "2+2/i" "2+2/-i" "2/-" "2/+" "2/+3"
+       "1e1.0" "1e1e2" "1+ie2" "1ei1" "1e/2" "0--" "1+" "1-" ".1." ".1+"
        "1//2" "1/-/2" "1/2/" "1//" "+/1" ".0."
-       "+0ei" "0e++i" "+0e+i" "0e+-i" "+0e-i" "+00ei" "+.0ei" "0+0ei" "-01ei" "+.1ei" 
-       "1-1ei" "-1.ei" "0+.i" "0-.i" "1+e0i" "1+/0i" "1-/0i" "1+e1i" "1+/1i" "10+.i" 
-       ".0+.i" "-0+.i" ".1+.i" "0.+.i" "00-.i" ".1-.i" "1.-.i" "1e++0i" "1e--1i" ".1e++i" 
-       "+10e+i" "1+0e+i" "+01e+i" "+0e+-i" ".1e+-i" "1-10ei" "0e++00i" "1e--.1i" "1.e-+1i" 
-       "1-0.e+i" "1.+1e+i" "-1.e--i" "1.e+-.0i" "1-e+01i" "1-/101i" "1+/10i" "1-e10i" 
-       "-1+e+1i" ".1-e-1i" "1-/0e1i" "1e10+.i" "1/1.1+i" "1/11.+i" 
-       "1/2e1-i" "-1.0e-1-1-1.0e-1i" "-1.0e-1-1.0e-1-1i" 
-       "1.0e2/3" "-1e--1.e1i" "-11e--1e1i" "1e--1.1e1i" "1.e-1-1.ei" "-1.e--1.ei" 
-       "-1.1e1-e1i" "-1.e1-e-1i" ".1e1-e-11i" 
+       "+0ei" "0e++i" "+0e+i" "0e+-i" "+0e-i" "+00ei" "+.0ei" "0+0ei" "-01ei" "+.1ei"
+       "1-1ei" "-1.ei" "0+.i" "0-.i" "1+e0i" "1+/0i" "1-/0i" "1+e1i" "1+/1i" "10+.i"
+       ".0+.i" "-0+.i" ".1+.i" "0.+.i" "00-.i" ".1-.i" "1.-.i" "1e++0i" "1e--1i" ".1e++i"
+       "+10e+i" "1+0e+i" "+01e+i" "+0e+-i" ".1e+-i" "1-10ei" "0e++00i" "1e--.1i" "1.e-+1i"
+       "1-0.e+i" "1.+1e+i" "-1.e--i" "1.e+-.0i" "1-e+01i" "1-/101i" "1+/10i" "1-e10i"
+       "-1+e+1i" ".1-e-1i" "1-/0e1i" "1e10+.i" "1/1.1+i" "1/11.+i"
+       "1/2e1-i" "-1.0e-1-1-1.0e-1i" "-1.0e-1-1.0e-1-1i"
+       "1.0e2/3" "-1e--1.e1i" "-11e--1e1i" "1e--1.1e1i" "1.e-1-1.ei" "-1.e--1.ei"
+       "-1.1e1-e1i" "-1.e1-e-1i" ".1e1-e-11i"
        "3.-3." "'1'2" "'+-2" "'1?"
        "1a" "1.a" "-a" "+a" "1.." "..1" "-..1" "1ee1" "1ef2" "1+ief2" "1.+" "1.0-" "1/2+/3"
        "'1'2" "1-#i" "1-i." "1-ie" "1..." "1/1/1/1"
@@ -35203,13 +35203,13 @@
 (test (string->number "''1") #f)
 
 (test (let ((val (catch #t (lambda ()
-			     (= 1 
-				01 +1 1. 
-				001 +01 1/1 1.0 1e0 01. +1. 
-				0001 +001 1/01 .1e1 01/1 +1/1 1.00 1e00 01.0 +1.0 1e+0 1e-0 01e0 +1e0 1.e0 001. +01. 1+0i 1-0i 
-				11/11 00001 +0001 1/001 .1e01 01/01 +1/01 .1e+1 10e-1 0.1e1 +.1e1 .10e1 001/1 +01/1 10/10 1.000 1e000 01.00 +1.00 1e+00 1e-00 01e00 +1e00 1.e00 001.0 +01.0 01e+0 +1e+0 1.e+0 01e-0 +1e-0 1.e-0 001e0 +01e0 1.0e0 01.e0 +1.e0 0001. +001. 1+00i 1-00i 1+.0i 1-.0i 01+0i +1+0i 1.+0i 01-0i +1-0i 1.-0i 1+0.i 1-0.i 
-				11/011 011/11 +11/11 000001 +00001 1/0001 .1e001 01/001 +1/001 .1e+01 10e-01 0.1e01 +.1e01 .10e01 001/01 +01/01 0.1e+1 +.1e+1 .10e+1 010e-1 +10e-1 10.e-1 00.1e1 +0.1e1 0.10e1 +.10e1 .100e1 0001/1 +001/1 10/010 010/10 +10/10 1.0000 1e0000 01.000 +1.000 1e+000 1e-000 01e000 +1e000 1.e000 001.00 +01.00 01e+00 +1e+00 1.e+00 01e-00 +1e-00 1.e-00 001e00 +01e00 1.0e00 01.e00 +1.e00 0001.0 +001.0 001e+0 +01e+0 1.0e+0 01.e+0 +1.e+0 001e-0 +01e-0 1.0e-0 01.e-0 +1.e-0 0001e0 +001e0 1.00e0 01.0e0 +1.0e0 001.e0 +01.e0 00001. +0001. 1+0e1i 1-0e1i 1+0/1i 1-0/1i 1+000i 1-000i 1+.00i 1-.00i 01+00i +1+00i 1.+00i 01-00i +1-00i 1.-00i 1+0.0i 1-0.0i 01+.0i +1+.0i 1.+.0i 01-.0i +1-.0i 1.-.0i 001+0i +01+0i 1/1+0i 1.0+0i 1e0+0i 01.+0i +1.+0i 001-0i +01-0i 1/1-0i 1.0-0i 1e0-0i 01.-0i +1.-0i 1+0e0i 1-0e0i 1+00.i 1-00.i 01+0.i +1+0.i 1.+0.i 01-0.i +1-0.i 1.-0.i 
-				111/111 11/0011 011/011 +11/011 0011/11 +011/11 101/101 0000001 +000001 1/00001 .1e0001 01/0001 +1/0001 .1e+001 10e-001 0.1e001 +.1e001 .10e001 001/001 +01/001 0.1e+01 +.1e+01 .10e+01 010e-01 +10e-01 10.e-01 00.1e01 +0.1e01 0.10e01 +.10e01 .100e01 0001/01 +001/01 00.1e+1 +0.1e+1 0.10e+1 +.10e+1 .100e+1 0010e-1 +010e-1 10.0e-1 010.e-1 +10.e-1 000.1e1 +00.1e1 00.10e1 +0.10e1 0.100e1 +.100e1 .1000e1 00001/1 +0001/1 110/110 10/0010 010/010 +10/010 0010/10 +010/10 100/100 1.00000 1e00000 01.0000 +1.0000 1e+0000 1e-0000 01e0000 +1e0000 1.e0000 001.000 +01.000 01e+000 +1e+000 1.e+000 01e-000 +1e-000 1.e-000 001e000 +01e000 1.0e000 01.e000 +1.e000 0001.00 +001.00 001e+00 +01e+00 1.0e+00 01.e+00 +1.e+00 001e-00 +01e-00 1.0e-00 01.e-00 +1.e-00 0001e00 +001e00 1.00e00 01.0e00 +1.0e00 001.e00 +01.e00 00001.0 +0001.0 0001e+0 +001e+0 1.00e+0 01.0e+0 +1.0e+0 001.e+0 +01.e+0 0001e-0 +001e-0 1.00e-0 01.0e-0 +1.0e-0 001.e-0 +01.e-0 00001e0 +0001e0 1.000e0 01.00e0 +1.00e0 001.0e0 +01.0e0 0001.e0 +001.e0 000001. +00001. 1+0e11i 1-0e11i 1+0/11i 1-0/11i 1+0e01i 1-0e01i 1+0/01i 1-0/01i 1+0e+1i 1-0e+1i 1+0e-1i 1-0e-1i 1+00e1i 1-00e1i 1+.0e1i 1-.0e1i 01+0e1i +1+0e1i 1.+0e1i 01-0e1i +1-0e1i 1.-0e1i 1+0.e1i 1-0.e1i 1+00/1i 1-00/1i 01+0/1i +1+0/1i 1.+0/1i 01-0/1i +1-0/1i 1.-0/1i 1+0e10i 1-0e10i 1+0/10i 1-0/10i 1+0000i 1-0000i 1+.000i 1-.000i 01+000i +1+000i 1.+000i 01-000i +1-000i 1.-000i 1+0.00i 1-0.00i 01+.00i +1+.00i 1.+.00i 01-.00i +1-.00i 1.-.00i 001+00i +01+00i 1/1+00i 1.0+00i 1e0+00i 01.+00i +1.+00i 001-00i +01-00i 1/1-00i 1.0-00i 1e0-00i 01.-00i +1.-00i 1+0e00i 1-0e00i 1+00.0i 1-00.0i 01+0.0i +1+0.0i 1.+0.0i 01-0.0i +1-0.0i 1.-0.0i 001+.0i +01+.0i 1/1+.0i 1.0+.0i 1e0+.0i 01.+.0i +1.+.0i 001-.0i +01-.0i 1/1-.0i 1.0-.0i 1e0-.0i 01.-.0i +1.-.0i 0001+0i +001+0i 1/01+0i .1e1+0i 01/1+0i +1/1+0i 1.00+0i 1e00+0i 01.0+0i +1.0+0i 1e+0+0i 1e-0+0i 01e0+0i +1e0+0i 1.e0+0i 001.+0i +01.+0i 1+0e+0i 1-0e+0i 0001-0i +001-0i 1/01-0i .1e1-0i 01/1-0i +1/1-0i 1.00-0i 1e00-0i 01.0-0i +1.0-0i 1e+0-0i 1e-0-0i 01e0-0i +1e0-0i 1.e0-0i 001.-0i +01.-0i 1+0e-0i 1-0e-0i 1+00e0i 1-00e0i 1+.0e0i 1-.0e0i 01+0e0i +1+0e0i 1.+0e0i 01-0e0i +1-0e0i 1.-0e0i 1+0.e0i 1-0.e0i 1+000.i 1-000.i 01+00.i +1+00.i 1.+00.i 01-00.i +1-00.i 1.-00.i 001+0.i +01+0.i 1/1+0.i 1.0+0.i 1e0+0.i 01.+0.i +1.+0.i 001-0.i +01-0.i 1/1-0.i 1.0-0.i 1e0-0.i 01.-0.i +1.-0.i 
+			     (= 1
+				01 +1 1.
+				001 +01 1/1 1.0 1e0 01. +1.
+				0001 +001 1/01 .1e1 01/1 +1/1 1.00 1e00 01.0 +1.0 1e+0 1e-0 01e0 +1e0 1.e0 001. +01. 1+0i 1-0i
+				11/11 00001 +0001 1/001 .1e01 01/01 +1/01 .1e+1 10e-1 0.1e1 +.1e1 .10e1 001/1 +01/1 10/10 1.000 1e000 01.00 +1.00 1e+00 1e-00 01e00 +1e00 1.e00 001.0 +01.0 01e+0 +1e+0 1.e+0 01e-0 +1e-0 1.e-0 001e0 +01e0 1.0e0 01.e0 +1.e0 0001. +001. 1+00i 1-00i 1+.0i 1-.0i 01+0i +1+0i 1.+0i 01-0i +1-0i 1.-0i 1+0.i 1-0.i
+				11/011 011/11 +11/11 000001 +00001 1/0001 .1e001 01/001 +1/001 .1e+01 10e-01 0.1e01 +.1e01 .10e01 001/01 +01/01 0.1e+1 +.1e+1 .10e+1 010e-1 +10e-1 10.e-1 00.1e1 +0.1e1 0.10e1 +.10e1 .100e1 0001/1 +001/1 10/010 010/10 +10/10 1.0000 1e0000 01.000 +1.000 1e+000 1e-000 01e000 +1e000 1.e000 001.00 +01.00 01e+00 +1e+00 1.e+00 01e-00 +1e-00 1.e-00 001e00 +01e00 1.0e00 01.e00 +1.e00 0001.0 +001.0 001e+0 +01e+0 1.0e+0 01.e+0 +1.e+0 001e-0 +01e-0 1.0e-0 01.e-0 +1.e-0 0001e0 +001e0 1.00e0 01.0e0 +1.0e0 001.e0 +01.e0 00001. +0001. 1+0e1i 1-0e1i 1+0/1i 1-0/1i 1+000i 1-000i 1+.00i 1-.00i 01+00i +1+00i 1.+00i 01-00i +1-00i 1.-00i 1+0.0i 1-0.0i 01+.0i +1+.0i 1.+.0i 01-.0i +1-.0i 1.-.0i 001+0i +01+0i 1/1+0i 1.0+0i 1e0+0i 01.+0i +1.+0i 001-0i +01-0i 1/1-0i 1.0-0i 1e0-0i 01.-0i +1.-0i 1+0e0i 1-0e0i 1+00.i 1-00.i 01+0.i +1+0.i 1.+0.i 01-0.i +1-0.i 1.-0.i
+				111/111 11/0011 011/011 +11/011 0011/11 +011/11 101/101 0000001 +000001 1/00001 .1e0001 01/0001 +1/0001 .1e+001 10e-001 0.1e001 +.1e001 .10e001 001/001 +01/001 0.1e+01 +.1e+01 .10e+01 010e-01 +10e-01 10.e-01 00.1e01 +0.1e01 0.10e01 +.10e01 .100e01 0001/01 +001/01 00.1e+1 +0.1e+1 0.10e+1 +.10e+1 .100e+1 0010e-1 +010e-1 10.0e-1 010.e-1 +10.e-1 000.1e1 +00.1e1 00.10e1 +0.10e1 0.100e1 +.100e1 .1000e1 00001/1 +0001/1 110/110 10/0010 010/010 +10/010 0010/10 +010/10 100/100 1.00000 1e00000 01.0000 +1.0000 1e+0000 1e-0000 01e0000 +1e0000 1.e0000 001.000 +01.000 01e+000 +1e+000 1.e+000 01e-000 +1e-000 1.e-000 001e000 +01e000 1.0e000 01.e000 +1.e000 0001.00 +001.00 001e+00 +01e+00 1.0e+00 01.e+00 +1.e+00 001e-00 +01e-00 1.0e-00 01.e-00 +1.e-00 0001e00 +001e00 1.00e00 01.0e00 +1.0e00 001.e00 +01.e00 00001.0 +0001.0 0001e+0 +001e+0 1.00e+0 01.0e+0 +1.0e+0 001.e+0 +01.e+0 0001e-0 +001e-0 1.00e-0 01.0e-0 +1.0e-0 001.e-0 +01.e-0 00001e0 +0001e0 1.000e0 01.00e0 +1.00e0 001.0e0 +01.0e0 0001.e0 +001.e0 000001. +00001. 1+0e11i 1-0e11i 1+0/11i 1-0/11i 1+0e01i 1-0e01i 1+0/01i 1-0/01i 1+0e+1i 1-0e+1i 1+0e-1i 1-0e-1i 1+00e1i 1-00e1i 1+.0e1i 1-.0e1i 01+0e1i +1+0e1i 1.+0e1i 01-0e1i +1-0e1i 1.-0e1i 1+0.e1i 1-0.e1i 1+00/1i 1-00/1i 01+0/1i +1+0/1i 1.+0/1i 01-0/1i +1-0/1i 1.-0/1i 1+0e10i 1-0e10i 1+0/10i 1-0/10i 1+0000i 1-0000i 1+.000i 1-.000i 01+000i +1+000i 1.+000i 01-000i +1-000i 1.-000i 1+0.00i 1-0.00i 01+.00i +1+.00i 1.+.00i 01-.00i +1-.00i 1.-.00i 001+00i +01+00i 1/1+00i 1.0+00i 1e0+00i 01.+00i +1.+00i 001-00i +01-00i 1/1-00i 1.0-00i 1e0-00i 01.-00i +1.-00i 1+0e00i 1-0e00i 1+00.0i 1-00.0i 01+0.0i +1+0.0i 1.+0.0i 01-0.0i +1-0.0i 1.-0.0i 001+.0i +01+.0i 1/1+.0i 1.0+.0i 1e0+.0i 01.+.0i +1.+.0i 001-.0i +01-.0i 1/1-.0i 1.0-.0i 1e0-.0i 01.-.0i +1.-.0i 0001+0i +001+0i 1/01+0i .1e1+0i 01/1+0i +1/1+0i 1.00+0i 1e00+0i 01.0+0i +1.0+0i 1e+0+0i 1e-0+0i 01e0+0i +1e0+0i 1.e0+0i 001.+0i +01.+0i 1+0e+0i 1-0e+0i 0001-0i +001-0i 1/01-0i .1e1-0i 01/1-0i +1/1-0i 1.00-0i 1e00-0i 01.0-0i +1.0-0i 1e+0-0i 1e-0-0i 01e0-0i +1e0-0i 1.e0-0i 001.-0i +01.-0i 1+0e-0i 1-0e-0i 1+00e0i 1-00e0i 1+.0e0i 1-.0e0i 01+0e0i +1+0e0i 1.+0e0i 01-0e0i +1-0e0i 1.-0e0i 1+0.e0i 1-0.e0i 1+000.i 1-000.i 01+00.i +1+00.i 1.+00.i 01-00.i +1-00.i 1.-00.i 001+0.i +01+0.i 1/1+0.i 1.0+0.i 1e0+0.i 01.+0.i +1.+0.i 001-0.i +01-0.i 1/1-0.i 1.0-0.i 1e0-0.i 01.-0.i +1.-0.i
 				111/0111 0111/111 +111/111 11/00011 011/0011 +11/0011 0011/011 +011/011 00011/11 +0011/11 101/0101 0101/101 +101/101 00000001 +0000001 1/000001 .1e00001 01/00001 +1/00001 .1e+0001 10e-0001 0.1e0001 +.1e0001 .10e0001 001/0001 +01/0001 0.1e+001 +.1e+001 .10e+001 010e-001 +10e-001 10.e-001 00.1e001 +0.1e001 0.10e001 +.10e001 .100e001 0001/001 +001/001 00.1e+01 +0.1e+01 0.10e+01 +.10e+01 .100e+01 0010e-01 +010e-01 10.0e-01 010.e-01 +10.e-01 000.1e01 +00.1e01 00.10e01 +0.10e01 0.100e01 +.100e01 .1000e01 00001/01 +0001/01 000.1e+1 +00.1e+1 00.10e+1 +0.10e+1 0.100e+1 +.100e+1 .1000e+1 00010e-1 +0010e-1 10.00e-1 010.0e-1 +10.0e-1 0010.e-1 +010.e-1 0000.1e1 +000.1e1 000.10e1 +00.10e1 00.100e1 +0.100e1 0.1000e1 +.1000e1 .10000e1 000001/1 +00001/1 110/0110 0110/110 +110/110 10/00010 010/0010 +10/0010 0010/010 +010/010 00010/10 +0010/10 100/0100 0100/100 +100/100 1.000000 1e000000 01.00000 +1.00000 1e+00000 1e-00000 01e00000 +1e00000 1.e00000 001.0000 +01.0000 01e+0000 +1e+0000 1.e+0000 01e-0000 +1e-0000 1.e-0000 001e0000 +01e0000 1.0e0000 01.e0000 +1.e0000 0001.000 +001.000 001e+000 +01e+000 1.0e+000 01.e+000 +1.e+000 001e-000 +01e-000 1.0e-000 01.e-000 +1.e-000 0001e000 +001e000 1.00e000 01.0e000 +1.0e000 001.e000 +01.e000 00001.00 +0001.00 0001e+00 +001e+00 1.00e+00 01.0e+00 +1.0e+00 001.e+00 +01.e+00 0001e-00 +001e-00 1.00e-00 01.0e-00 +1.0e-00 001.e-00 +01.e-00 00001e00 +0001e00 1.000e00 01.00e00 +1.00e00 001.0e00 +01.0e00 0001.e00 +001.e00 000001.0 +00001.0 00001e+0 +0001e+0 1.000e+0 01.00e+0 +1.00e+0 001.0e+0 +01.0e+0 0001.e+0 +001.e+0 00001e-0 +0001e-0 1.000e-0 01.00e-0 +1.00e-0 001.0e-0 +01.0e-0 0001.e-0 +001.e-0 000001e0 +00001e0 1.0000e0 01.000e0 +1.000e0 001.00e0 +01.00e0 0001.0e0 +001.0e0 00001.e0 +0001.e0 0000001. +000001.))
 			(lambda args 'error))))
 	val)
@@ -35242,14 +35242,14 @@
 
 ;; remove "l" and "s" and others...
 
-(list "111/111" "11/0011" "011/011" "+11/011" "0011/11" "+011/11" "#e11/11" "#i11/11" "#b11/11" "#x11/11" "#d11/11" "#o11/11" "101/101" "0000001" "+000001" "#e00001" "#i00001" "1/00001" "#b00001" "#x00001" "#d00001" "#o00001" "#e+0001" "#i+0001" "#b+0001" "#x+0001" "#d+0001" "#o+0001" ".1e0001" "01/0001" "+1/0001" ".1d0001" ".1f0001" ".1e+001" ".1d+001" ".1f+001" "10e-001" "10d-001" "10f-001" "0.1e001" "+.1e001" ".10e001" "#b#e001" "#x#e001" "#d#e001" "#o#e001" "#b#i001" "#x#i001" "#d#i001" "#o#i001" "001/001" "+01/001" "#e1/001" "#i1/001" "#b1/001" "#x1/001" "#d1/001" "#o1/001" "#e#b001" "#i#b001" "#e#x001" "#i#x001" "0.1d001" "+.1d001" ".10d001" "#e#d001" "#i#d001" "#e#o001" "#i#o001" "0.1f001" "+.1f001" ".10f001" "0.1e+01" "+.1e+01" ".10e+01" "#b#e+01" "#x#e+01" "#d#e+01" "#o#e+01" "#b#i+01" "#x#i+01" "#d#i+01" "#o#i+01" "#e#b+01" "#i#b+01" "#e#x+01" "#i#x+01" "0.1d+01" "+.1d+01" ".10d+01" "#e#d+01" "#i#d+01" "#e#o+01" "#i#o+01" "0.1f+01" "+.1f+01" ".10f+01" "010e-01" "+10e-01" "10.e-01" "010d-01" "+10d-01" "10.d-01" "010f-01" "+10f-01" "1.00000" "1e00000" "1d00000" "1f00000" "01.0000" "+1.0000" "1e+0000" "1d+0000" "1f+0000" "1e-0000" "1d-0000" "1f-0000" "01e0000" "+1e0000" "1.e0000" "01d0000" "+1d0000" "1.d0000" "01f0000" "+1f0000" "1.f0000" "001.000" "+01.000" "#e1.000" "#i1.000" "#d1.000" "01e+000" "+1e+000" "1.e+000" "01d+000" "+1d+000" "1.d+000" "01f+000" "+1f+000" "1.f+000" "01e-000" "+1e-000" "1.e-000" "01d-000" "+1d-000" "1.d-000" "01f-000" "+1f-000" "1.f-000" "001e000" "+01e000" "#e1e000" "#i1e000" "#d1e000" "1.0e000" "+1.e000" "001d000" "+01d000" "#e1d000" "#i1d000" "#d1d000" "1.0d000" "01.d000" "+1.d000" "001f000" "+01f000" "#e1f000" "#i1f000" "#d1f000" "1.0f000" "01.f000" "+1.f000" "0001.00" "+001.00" "#e01.00" "#i01.00" "#d01.00" "#e+1.00" "#i+1.00" "#d+1.00" "001e+00" "+01e+00" "#e1e+00" "#i1e+00" "#d1e+00" "1.0e+00" "01.e+00" "+1.e+00" "001d+00" "+01d+00" "#e1d+00" "#i1d+00" "#d1d+00" "1.0d+00" "01.d+00" "+1.d+00" "001f+00" "+01f+00" "#e1f+00" "#i1f+00" "#d1f+00" "1.0f+00" "01.f+00" "+1.f+00" "001e-00" "+01e-00" "#e1e-00" "#i1e-00" "#d1e-00" "1.0e-00" "01.e-00" "+1.e-00" "001d-00" "+01d-00" "#e1d-00" "#i1d-00" "#d1d-00" "1.0d-00" "01.d-00" "+1.d-00" "001f-00" "+01f-00" "#e1f-00" "#i1f-00" "#d1f-00" "1.0f-00" "0001.f0" "+001.f0" "#e01.f0" "#i01.f0" "#d01.f0" "#e+1.f0" "#i+1.f0" "#d+1.f0" "#xf0/f0" "000001." "+00001." "#e0001." "#i0001." "#d0001." "#e+001." "#i+001." "#d+001." "#d#e01." "#d#i01." "#e#d01." "#i#d01." "#d#e+1." "#d#i+1." "#e#d+1." "#i#d+1." "#x1e/1e" "#xe/00e" "#x0e/0e" "#x+e/0e" "#xee/ee" "#x00e/e" "#x+0e/e" "#x#ee/e" "#x#ie/e" "#e#xe/e" "#i#xe/e" "#xbe/be" "#xde/de" "#xfe/fe" "1+0e11i" "1-0e11i" "1+0/11i" "1-0/11i" "1+0d11i" "1-0d11i" "1+0f11i" "1-0f11i" "1+0e01i" "1-0e01i" "1+0/01i" "1-0/01i" "1+0d01i" "1-0d01i" "1+0f01i" "1-0f01i" "1+0e+1i" "1-0e+1i" "1+0d+1i" "1-0d+1i" "1+0f+1i" "1-0f+1i" "1+0e-1i" "1-0e-1i" "1+0d-1i" "1-0d-1i" "1+0f-1i" "1-0f-1i" "1+00e1i" "1-00e1i" "1+.0e1i" "1-.0e1i" "01+0e1i" "+1+0e1i" "1.+0e1i" "01-0e1i" "+1-0e1i" "1.-0e1i" "1+0.e1i" "1-0.e1i" "1+00/1i" "1-00/1i" "01+0/1i" "+1+0/1i" "1.+0/1i" "01-0/1i" "+1-0/1i" "1.-0/1i" "1+00d1i" "1-00d1i" "1+.0d1i" "1-.0d1i" "01+0d1i" "+1+0d1i" "1.+0d1i" "01-0d1i" "+1-0d1i" "1.-0d1i" "1+0.d1i" "1-0.d1i" "1+00f1i" "1-00f1i" "1+.0f1i" "1-.0f1i" "01+0f1i" "+1+0f1i" "1.+0f1i" "01-0f1i" "+1-0f1i" "1.-0f1i" "1+0.f1i" "1-0.f1i" "1+0e10i" "1-0e10i" "1+0/10i" "1-0/10i" "1+0d10i" "1-0d10i" "1+0f10i" "1-0f10i" "1+0000i" "1-0000i" "1+.000i" "1-.000i" "01+000i" "+1+000i" "1.+000i" "01-000i" "+1-000i" "1.-000i" "1+0.00i" "1-0.00i" "01+.00i" "+1+.00i" "1.+.00i" "01-.00i" "+1-.00i" "1.-.00i" "001+00i" "+01+00i" "#e1+00i" "#i1+00i" "1/1+00i" "#b1+00i" "#x1+00i" "#d1+00i" "#o1+00i" "1.0+00i" "1e0+00i" "1d0+00i" "1f0+00i" "01.+00i" "+1.+00i" "001-00i" "+01-00i" "#e1-00i" "#i1-00i" "1/1-00i" "#b1-00i" "#x1-00i" "#d1-00i" "#o1-00i" "1.0-00i" "1e0-00i" "1d0-00i" "1f0-00i" "01.-00i" "+1.-00i" "1+0e00i" "1-0e00i" "1+0d00i" "1-0d00i" "1+0f00i" "1-0f00i" "1+00.0i" "1-00.0i" "01+0.0i" "+1+0.0i" "1.+0.0i" "01-0.0i" "+1-0.0i" "1.-0.0i" "001+.0i" "+01+.0i" "#e1+.0i" "#i1+.0i" "1/1+.0i" "#d1+.0i" "1.0+.0i" "1e0+.0i" "1d0+.0i" "1f0+.0i" "01.+.0i" "+1.+.0i" "001-.0i" "+01-.0i" "#e1-.0i" "#i1-.0i" "1/1-.0i" "#d1-.0i" "1.0-.0i" "1e0-.0i" "1d0-.0i" "1f0-.0i" "01.-.0i" "+1.-.0i" "0001+0i" "+001+0i" "#e01+0i" "#i01+0i" "1/01+0i" "#b01+0i" "#x01+0i" "#d01+0i" "#o01+0i" "#e+1+0i" "#i+1+0i" "#b+1+0i" "#x+1+0i" "#d+1+0i" "#o+1+0i" ".1e1+0i" "01/1+0i" "+1/1+0i" ".1d1+0i" ".1f1+0i" "1.00+0i" "1e00+0i" "1d00+0i" "1f00+0i" "01.0+0i" "+1.0+0i" "1e+0+0i" "1d+0+0i" "1f+0+0i" "1e-0+0i" "1d-0+0i" "1f-0+0i" "01e0+0i" "+1e0+0i" "1.e0+0i" "01d0+0i" "+1d0+0i" "1.d0+0i" "01f0+0i" "+1f0+0i" "1.f0+0i" "001.+0i" "+01.+0i" "#e1.+0i" "#i1.+0i" "#d1.+0i" "1+0e+0i" "1-0e+0i" "1+0d+0i" "1-0d+0i" "1+0f+0i" "1-0f+0i" "0001-0i" "+001-0i" "#e01-0i" "#i01-0i" "1/01-0i" "#b01-0i" "#x01-0i" "#d01-0i" "#o01-0i" "#e+1-0i" "#i+1-0i" "#b+1-0i" "#x+1-0i" "#d+1-0i" "#o+1-0i" ".1e1-0i" "01/1-0i" "+1/1-0i" ".1d1-0i" ".1f1-0i" "1.00-0i" "1e00-0i" "1d00-0i" "1f00-0i" "01.0-0i" "+1.0-0i" "1e+0-0i" "1d+0-0i" "1f+0-0i" "1e-0-0i" "1d-0-0i" "1f-0-0i" "01e0-0i" "+1e0-0i" "1.e0-0i" "01d0-0i" "+1d0-0i" "1.d0-0i" "01f0-0i" "+1f0-0i" "1.f0-0i" "001.-0i" "+01.-0i" "#e1.-0i" "#i1.-0i" "#d1.-0i" "1+0e-0i" "1-0e-0i" "1+0d-0i" "1-0d-0i" "1+0f-0i" "1-0f-0i" "1+00e0i" "1-00e0i" "1+.0e0i" "1-.0e0i" "01+0e0i" "+1+0e0i" "1.+0e0i" "01-0e0i" "+1-0e0i" "1.-0e0i" "1+0.e0i" "1-0.e0i" "1+00d0i" "1-00d0i" "1+.0d0i" "1-.0d0i" "01+0d0i" "+1+0d0i" "1.+0d0i" "01-0d0i" "+1-0d0i" "1.-0d0i" "1+0.d0i" "1-0.d0i" "1+00f0i" "1-00f0i" "1+.0f0i" "1-.0f0i" "01+0f0i" "+1+0f0i" "1.+0f0i" "01-0f0i" "+1-0f0i" "1.-0f0i" 
+(list "111/111" "11/0011" "011/011" "+11/011" "0011/11" "+011/11" "#e11/11" "#i11/11" "#b11/11" "#x11/11" "#d11/11" "#o11/11" "101/101" "0000001" "+000001" "#e00001" "#i00001" "1/00001" "#b00001" "#x00001" "#d00001" "#o00001" "#e+0001" "#i+0001" "#b+0001" "#x+0001" "#d+0001" "#o+0001" ".1e0001" "01/0001" "+1/0001" ".1d0001" ".1f0001" ".1e+001" ".1d+001" ".1f+001" "10e-001" "10d-001" "10f-001" "0.1e001" "+.1e001" ".10e001" "#b#e001" "#x#e001" "#d#e001" "#o#e001" "#b#i001" "#x#i001" "#d#i001" "#o#i001" "001/001" "+01/001" "#e1/001" "#i1/001" "#b1/001" "#x1/001" "#d1/001" "#o1/001" "#e#b001" "#i#b001" "#e#x001" "#i#x001" "0.1d001" "+.1d001" ".10d001" "#e#d001" "#i#d001" "#e#o001" "#i#o001" "0.1f001" "+.1f001" ".10f001" "0.1e+01" "+.1e+01" ".10e+01" "#b#e+01" "#x#e+01" "#d#e+01" "#o#e+01" "#b#i+01" "#x#i+01" "#d#i+01" "#o#i+01" "#e#b+01" "#i#b+01" "#e#x+01" "#i#x+01" "0.1d+01" "+.1d+01" ".10d+01" "#e#d+01" "#i#d+01" "#e#o+01" "#i#o+01" "0.1f+01" "+.1f+01" ".10f+01" "010e-01" "+10e-01" "10.e-01" "010d-01" "+10d-01" "10.d-01" "010f-01" "+10f-01" "1.00000" "1e00000" "1d00000" "1f00000" "01.0000" "+1.0000" "1e+0000" "1d+0000" "1f+0000" "1e-0000" "1d-0000" "1f-0000" "01e0000" "+1e0000" "1.e0000" "01d0000" "+1d0000" "1.d0000" "01f0000" "+1f0000" "1.f0000" "001.000" "+01.000" "#e1.000" "#i1.000" "#d1.000" "01e+000" "+1e+000" "1.e+000" "01d+000" "+1d+000" "1.d+000" "01f+000" "+1f+000" "1.f+000" "01e-000" "+1e-000" "1.e-000" "01d-000" "+1d-000" "1.d-000" "01f-000" "+1f-000" "1.f-000" "001e000" "+01e000" "#e1e000" "#i1e000" "#d1e000" "1.0e000" "+1.e000" "001d000" "+01d000" "#e1d000" "#i1d000" "#d1d000" "1.0d000" "01.d000" "+1.d000" "001f000" "+01f000" "#e1f000" "#i1f000" "#d1f000" "1.0f000" "01.f000" "+1.f000" "0001.00" "+001.00" "#e01.00" "#i01.00" "#d01.00" "#e+1.00" "#i+1.00" "#d+1.00" "001e+00" "+01e+00" "#e1e+00" "#i1e+00" "#d1e+00" "1.0e+00" "01.e+00" "+1.e+00" "001d+00" "+01d+00" "#e1d+00" "#i1d+00" "#d1d+00" "1.0d+00" "01.d+00" "+1.d+00" "001f+00" "+01f+00" "#e1f+00" "#i1f+00" "#d1f+00" "1.0f+00" "01.f+00" "+1.f+00" "001e-00" "+01e-00" "#e1e-00" "#i1e-00" "#d1e-00" "1.0e-00" "01.e-00" "+1.e-00" "001d-00" "+01d-00" "#e1d-00" "#i1d-00" "#d1d-00" "1.0d-00" "01.d-00" "+1.d-00" "001f-00" "+01f-00" "#e1f-00" "#i1f-00" "#d1f-00" "1.0f-00" "0001.f0" "+001.f0" "#e01.f0" "#i01.f0" "#d01.f0" "#e+1.f0" "#i+1.f0" "#d+1.f0" "#xf0/f0" "000001." "+00001." "#e0001." "#i0001." "#d0001." "#e+001." "#i+001." "#d+001." "#d#e01." "#d#i01." "#e#d01." "#i#d01." "#d#e+1." "#d#i+1." "#e#d+1." "#i#d+1." "#x1e/1e" "#xe/00e" "#x0e/0e" "#x+e/0e" "#xee/ee" "#x00e/e" "#x+0e/e" "#x#ee/e" "#x#ie/e" "#e#xe/e" "#i#xe/e" "#xbe/be" "#xde/de" "#xfe/fe" "1+0e11i" "1-0e11i" "1+0/11i" "1-0/11i" "1+0d11i" "1-0d11i" "1+0f11i" "1-0f11i" "1+0e01i" "1-0e01i" "1+0/01i" "1-0/01i" "1+0d01i" "1-0d01i" "1+0f01i" "1-0f01i" "1+0e+1i" "1-0e+1i" "1+0d+1i" "1-0d+1i" "1+0f+1i" "1-0f+1i" "1+0e-1i" "1-0e-1i" "1+0d-1i" "1-0d-1i" "1+0f-1i" "1-0f-1i" "1+00e1i" "1-00e1i" "1+.0e1i" "1-.0e1i" "01+0e1i" "+1+0e1i" "1.+0e1i" "01-0e1i" "+1-0e1i" "1.-0e1i" "1+0.e1i" "1-0.e1i" "1+00/1i" "1-00/1i" "01+0/1i" "+1+0/1i" "1.+0/1i" "01-0/1i" "+1-0/1i" "1.-0/1i" "1+00d1i" "1-00d1i" "1+.0d1i" "1-.0d1i" "01+0d1i" "+1+0d1i" "1.+0d1i" "01-0d1i" "+1-0d1i" "1.-0d1i" "1+0.d1i" "1-0.d1i" "1+00f1i" "1-00f1i" "1+.0f1i" "1-.0f1i" "01+0f1i" "+1+0f1i" "1.+0f1i" "01-0f1i" "+1-0f1i" "1.-0f1i" "1+0.f1i" "1-0.f1i" "1+0e10i" "1-0e10i" "1+0/10i" "1-0/10i" "1+0d10i" "1-0d10i" "1+0f10i" "1-0f10i" "1+0000i" "1-0000i" "1+.000i" "1-.000i" "01+000i" "+1+000i" "1.+000i" "01-000i" "+1-000i" "1.-000i" "1+0.00i" "1-0.00i" "01+.00i" "+1+.00i" "1.+.00i" "01-.00i" "+1-.00i" "1.-.00i" "001+00i" "+01+00i" "#e1+00i" "#i1+00i" "1/1+00i" "#b1+00i" "#x1+00i" "#d1+00i" "#o1+00i" "1.0+00i" "1e0+00i" "1d0+00i" "1f0+00i" "01.+00i" "+1.+00i" "001-00i" "+01-00i" "#e1-00i" "#i1-00i" "1/1-00i" "#b1-00i" "#x1-00i" "#d1-00i" "#o1-00i" "1.0-00i" "1e0-00i" "1d0-00i" "1f0-00i" "01.-00i" "+1.-00i" "1+0e00i" "1-0e00i" "1+0d00i" "1-0d00i" "1+0f00i" "1-0f00i" "1+00.0i" "1-00.0i" "01+0.0i" "+1+0.0i" "1.+0.0i" "01-0.0i" "+1-0.0i" "1.-0.0i" "001+.0i" "+01+.0i" "#e1+.0i" "#i1+.0i" "1/1+.0i" "#d1+.0i" "1.0+.0i" "1e0+.0i" "1d0+.0i" "1f0+.0i" "01.+.0i" "+1.+.0i" "001-.0i" "+01-.0i" "#e1-.0i" "#i1-.0i" "1/1-.0i" "#d1-.0i" "1.0-.0i" "1e0-.0i" "1d0-.0i" "1f0-.0i" "01.-.0i" "+1.-.0i" "0001+0i" "+001+0i" "#e01+0i" "#i01+0i" "1/01+0i" "#b01+0i" "#x01+0i" "#d01+0i" "#o01+0i" "#e+1+0i" "#i+1+0i" "#b+1+0i" "#x+1+0i" "#d+1+0i" "#o+1+0i" ".1e1+0i" "01/1+0i" "+1/1+0i" ".1d1+0i" ".1f1+0i" "1.00+0i" "1e00+0i" "1d00+0i" "1f00+0i" "01.0+0i" "+1.0+0i" "1e+0+0i" "1d+0+0i" "1f+0+0i" "1e-0+0i" "1d-0+0i" "1f-0+0i" "01e0+0i" "+1e0+0i" "1.e0+0i" "01d0+0i" "+1d0+0i" "1.d0+0i" "01f0+0i" "+1f0+0i" "1.f0+0i" "001.+0i" "+01.+0i" "#e1.+0i" "#i1.+0i" "#d1.+0i" "1+0e+0i" "1-0e+0i" "1+0d+0i" "1-0d+0i" "1+0f+0i" "1-0f+0i" "0001-0i" "+001-0i" "#e01-0i" "#i01-0i" "1/01-0i" "#b01-0i" "#x01-0i" "#d01-0i" "#o01-0i" "#e+1-0i" "#i+1-0i" "#b+1-0i" "#x+1-0i" "#d+1-0i" "#o+1-0i" ".1e1-0i" "01/1-0i" "+1/1-0i" ".1d1-0i" ".1f1-0i" "1.00-0i" "1e00-0i" "1d00-0i" "1f00-0i" "01.0-0i" "+1.0-0i" "1e+0-0i" "1d+0-0i" "1f+0-0i" "1e-0-0i" "1d-0-0i" "1f-0-0i" "01e0-0i" "+1e0-0i" "1.e0-0i" "01d0-0i" "+1d0-0i" "1.d0-0i" "01f0-0i" "+1f0-0i" "1.f0-0i" "001.-0i" "+01.-0i" "#e1.-0i" "#i1.-0i" "#d1.-0i" "1+0e-0i" "1-0e-0i" "1+0d-0i" "1-0d-0i" "1+0f-0i" "1-0f-0i" "1+00e0i" "1-00e0i" "1+.0e0i" "1-.0e0i" "01+0e0i" "+1+0e0i" "1.+0e0i" "01-0e0i" "+1-0e0i" "1.-0e0i" "1+0.e0i" "1-0.e0i" "1+00d0i" "1-00d0i" "1+.0d0i" "1-.0d0i" "01+0d0i" "+1+0d0i" "1.+0d0i" "01-0d0i" "+1-0d0i" "1.-0d0i" "1+0.d0i" "1-0.d0i" "1+00f0i" "1-00f0i" "1+.0f0i" "1-.0f0i" "01+0f0i" "+1+0f0i" "1.+0f0i" "01-0f0i" "+1-0f0i" "1.-0f0i"
 "1+000.i" "1-000.i" "01+00.i" "+1+00.i" "1.+00.i" "01-00.i" "+1-00.i" "1.-00.i" "001+0.i" "+01+0.i" "#e1+0.i" "#i1+0.i" "1/1+0.i" "#d1+0.i" "1.0+0.i" "1e0+0.i" "1d0+0.i" "1f0+0.i" "+1.+0.i" "001-0.i" "+01-0.i" "#e1-0.i" "#i1-0.i" "1/1-0.i" "#d1-0.i" "1.0-0.i" "1e0-0.i" "1d0-0.i" "1f0-0.i" "01.-0.i" "+1.-0.i" "#xb/00b" "#x0b/0b" "#x+b/0b" "#xeb/eb" "#x00b/b" "#x+0b/b" "#x#eb/b" "#x#ib/b" "#e#xb/b" "#i#xb/b" "#xbb/bb" "#xdb/db" "#xfb/fb" "#x1d/1d" "#xd/00d" "#x0d/0d" "#x+d/0d" "#xed/ed" )
 
 ;;; selected ones...
 
 (list "#i+11/011" "#xf11/f11" "+101/0101" "#o#e11/11" "#d+11/011" "#e1/0001" "010d-001" "#e#b+001" ".10f+001" "+10f-001" ".10d0001" "#d10d-1" "#e10e-1"
       "#e.1d0001" "#d.01d002" "#i0.1f001" "#x#e1/001" "000000001" "#i+.1e+01" "#d+.1e+01" "00.10e+01" "+0.10e+01" "#e.10e+01" "#i.10e+01" "#d.10e+01"
-      "#e.10e+01" "#i10.0e-01" "#d+.1d+01" "#d.10f+01" "#i0.1f+01" "+010.e-01" "#e10.e-01" "#e00.1e01" "#e#d.1e01" "#i#d1e0+0e0i" 
+      "#e.10e+01" "#i10.0e-01" "#d+.1d+01" "#d.10f+01" "#i0.1f+01" "+010.e-01" "#e10.e-01" "#e00.1e01" "#e#d.1e01" "#i#d1e0+0e0i"
       "#e#d10e-1+0e-2i" "#e#d1e0+0e-2i" "#d.1d+01+.0d01i" "#d0.001d+03+0.0d-10i" "#i#d+0.001d+03+0.0d-10i" "#i#d+1/1-0/1i"
 )
 ))
@@ -35262,8 +35262,8 @@
 	 (begin
 	   (display "(string->number \"") (display str) (display "\") = ") (display val) (display "?") (newline)))))
  (list "#e1+i" "#e1-i" "#e01+i" "#e+1+i" "#e1.+i" "#e01-i" "#e+1-i" "#e1.-i" "#e1+1i" "#e1-1i" "011e0" "11e-00"
-       "00.e01-i" "+10e10+i" "+1.110+i" "10011-0i" "-000.111" "0.100111" "-11.1111" "10.00011" "110e00+i" 
-       "1e-011+i" "101001+i" "+11e-0-0i" "11+00e+0i" "-11101.-i" "1110e-0-i" 
+       "00.e01-i" "+10e10+i" "+1.110+i" "10011-0i" "-000.111" "0.100111" "-11.1111" "10.00011" "110e00+i"
+       "1e-011+i" "101001+i" "+11e-0-0i" "11+00e+0i" "-11101.-i" "1110e-0-i"
        ))
 
 
@@ -35273,14 +35273,14 @@
      (if (number? val)
 	 (begin
 	   (display "(string->number \"") (display str) (display "\") = ") (display val) (display "?") (newline)))))
- (list "#b#e#e1" "#x#e#e1" "#d#e#e1" "#o#e#e1" "#b#i#e1" "#x#i#e1" "#d#i#e1" "#o#i#e1" "#e#b#e1" "#i#b#e1" "#e#x#e1" "#i#x#e1" 
-       "#e#d#e1" "#i#d#e1" "#e#o#e1" "#i#o#e1" "#e#b#i1" "#e#x#i1" "#e#d#i1" "#e#o#i1" "#b#e#b1" "#x#e#b1" "#d#e#b1" "#o#e#b1" 
-       "#b#i#b1" "#x#i#b1" "#d#i#b1" "#o#i#b1" "#b#e#x1" "#x#e#x1" "#d#e#x1" "#o#e#x1" "#b#i#x1" "#x#i#x1" "#d#i#x1" "#o#i#x1" 
-       "#b#e#d1" "#x#e#d1" "#d#e#d1" "#o#e#d1" "#b#i#d1" "#x#i#d1" "#d#i#d1" "#o#i#d1" "#b#e#o1" "#x#e#o1" "#d#e#o1" "#o#e#o1" 
-       "#b#i#o1" "#x#i#o1" "#d#i#o1" "#o#i#o1"  
+ (list "#b#e#e1" "#x#e#e1" "#d#e#e1" "#o#e#e1" "#b#i#e1" "#x#i#e1" "#d#i#e1" "#o#i#e1" "#e#b#e1" "#i#b#e1" "#e#x#e1" "#i#x#e1"
+       "#e#d#e1" "#i#d#e1" "#e#o#e1" "#i#o#e1" "#e#b#i1" "#e#x#i1" "#e#d#i1" "#e#o#i1" "#b#e#b1" "#x#e#b1" "#d#e#b1" "#o#e#b1"
+       "#b#i#b1" "#x#i#b1" "#d#i#b1" "#o#i#b1" "#b#e#x1" "#x#e#x1" "#d#e#x1" "#o#e#x1" "#b#i#x1" "#x#i#x1" "#d#i#x1" "#o#i#x1"
+       "#b#e#d1" "#x#e#d1" "#d#e#d1" "#o#e#d1" "#b#i#d1" "#x#i#d1" "#d#i#d1" "#o#i#d1" "#b#e#o1" "#x#e#o1" "#d#e#o1" "#o#e#o1"
+       "#b#i#o1" "#x#i#o1" "#d#i#o1" "#o#i#o1"
 
-       "+1ei" "-1ei" "+0ei" "-0ei" "+1di" "-1di" "+0di" "-0di" "+1fi" "-1fi" "+0fi" "-0fi" "0e-+i" "1d-+i" 
-       "0d-+i" "1f-+i" "0f-+i" "1e++i" "0e++i" "1d++i" ".10-10." "-1.e++i" "0e--01i" "1-00." "0-00." "#xf+b" 
+       "+1ei" "-1ei" "+0ei" "-0ei" "+1di" "-1di" "+0di" "-0di" "+1fi" "-1fi" "+0fi" "-0fi" "0e-+i" "1d-+i"
+       "0d-+i" "1f-+i" "0f-+i" "1e++i" "0e++i" "1d++i" ".10-10." "-1.e++i" "0e--01i" "1-00." "0-00." "#xf+b"
        "#x1+d" "0f++1i" "1+0d-i" ".0f--i" "1-0d-i" "#xe-ff" "0-" "0-e0"
 
 ))
@@ -35289,14 +35289,14 @@
 
 
 ;;; every scheme disagrees about stuff like #b.1 or #b+i etc -- I'll just omit them
- 
+
 (for-each
  (lambda (p)
    (let ((sym (car p))
 	 (num (cdr p)))
      (let ((tag (catch #t (lambda () (string->number sym)) (lambda args 'error))))
        (if (not (equal? num tag))
-	   (begin (display "(string->number \"") (display sym) (display "\") = ") 
+	   (begin (display "(string->number \"") (display sym) (display "\") = ")
 		  (display tag) (display " [") (display num) (display "])") (newline))))))
  '(("#xe/d" . 14/13) ("#xb/d" . 11/13) ("#xf/d" . 15/13) ("#x1/f" . 1/15) ("#xd/f" . 13/15) ("#xe/f" . 14/15) ("#d.1" . .1) ("#d01" . 1)
    ("#d+1" . 1) ("#d+0" . 0) ("#d0+i" . 0+i) ("#xe+i" . 14.0+1.0i) ("#xf+i" . 15.0+1.0i) ("#d1-i" . 1.0-1.0i) ("#e1+i" . 1+i)
@@ -35388,8 +35388,8 @@
 
 
 ;;; these 2 are (mostly) from guile
-(for-each 
- (lambda (x) 
+(for-each
+ (lambda (x)
    (if (string->number x)
        (begin
 	 (display "(string->number ") (display x) (display ") returned ") (display (string->number x)) (newline))))
@@ -35398,13 +35398,13 @@
    "3.4q" "15.16e17q" "18.19e+q" ".q" ".17#18" "10q" "#b2" "#b12" "#b-12"
    "#b3" "#b4" "#b5" "#b6" "#b7" "#b8" "#b9" "#ba" "#bb" "#bc"
    "#bd" "#be" "#bf" "#q" "#b#b1" "#o#o1" "#d#d1" "#x#x1" "#e#e1" "#xag" "#x1x"
-   "#o8" "#o9" "1/#e1" "#o#" "#e#i1" "#d--2" "#b#x1" "#i#x#b1" "#e#e#b1" "#e#b#b1" 
+   "#o8" "#o9" "1/#e1" "#o#" "#e#i1" "#d--2" "#b#x1" "#i#x#b1" "#e#e#b1" "#e#b#b1"
    "-#b1" "+#b1" "#b1/#b2" "#b1+#b1i" "1+#bi" "1+#b1i" "1#be1" "#b" "#o" "#" "#ea" "#e1a" "1+ie1" "1+i1" "1e+1i"
    "#e#b" "#b#b" "#b#b1" "1e3e4" "1.0e-3e+4" "1e3s" "1e3s3" "#o#x1" "#i#i1" "1e-i" "#be1" "1/i" "1/e1" "1+e1"
    "1e+" "1e1+" "1e1e1" "1e-+1" "1e0x1" "1e-"
    "#i#i1" "12@12+0i"))
 
-(for-each 
+(for-each
  (lambda (couple)
    (apply
     (lambda (x y)
@@ -35423,9 +35423,9 @@
    ("#o7" 7)  ("#d0" 0) ("#d1" 1)
    ("#d2" 2)  ("#d3" 3) ("#d4" 4)
    ("#d5" 5)  ("#d6" 6) ("#d7" 7) ("#d-123" -123) ("#d+123" 123)
-   ("#d8" 8)  ("#d9" 9) 
+   ("#d8" 8)  ("#d9" 9)
    ("#xa" 10) ("#xb" 11) ("#x-1" -1) ("#x-a" -10)
-   ("#xc" 12) ("#xd" 13) 
+   ("#xc" 12) ("#xd" 13)
    ("#xe" 14) ("#xf" 15) ("#x-abc" -2748)
    ("#b1010" 10)
    ("#o12345670" 2739128)
@@ -35435,7 +35435,7 @@
    ("#e1" 1) ("#e1.2" 12/10)
    ("#i1.1" 1.1) ("#i1" 1.0)
    ;; Integers:
-   ("1" ,(+ 1 0)) ("23" ,(+ 9 9 5)) ("-1" ,(- 0 1)) 
+   ("1" ,(+ 1 0)) ("23" ,(+ 9 9 5)) ("-1" ,(- 0 1))
    ("-45" ,(- 0 45))                      ;("2#" 20.0) ("2##" 200.0) ("12##" 1200.0) ; this # = 0 is about the stupidest thing I've ever seen
    ("#b#i100" 4.0) ("#b#e100" 4) ("#i#b100" 4.0) ("#e#b100" 4)
    ("#b#i-100" -4.0) ("#b#e+100" 4) ("#i#b-100" -4.0) ("#e#b+100" 4)
@@ -35451,8 +35451,8 @@
    ;; Decimal numbers:
    ;; * <uinteger 10> <suffix>
    ("1e2" 100.0) ("1s2" 100.0)
-   ("1f2" 100.0) ("1d2" 100.0) 
-   ("1l2" 100.0) 
+   ("1f2" 100.0) ("1d2" 100.0)
+   ("1l2" 100.0)
    ("1e+2" 100.0) ("1e-2" 0.01)
    ;; * . <digit 10>+ #* <suffix>
    (".1" .1) (".0123456789" 123456789e-10) ;(".16#" 0.16)
@@ -35466,7 +35466,7 @@
    ;; Complex:
    ;; ("1@0" 1.0) ("1@+0" 1.0) ("1@-0" 1.0)          ; whose dumb idea was this?
    ("2+3i" ,(+ 2 (* 3 0+i))) ("4-5i" ,(- 4 (* 5 0+i)))
-   ("1+i" 1+1i) ("1-i" 1-1i) 
+   ("1+i" 1+1i) ("1-i" 1-1i)
    ;; ("+1i" 0+1i) ("-1i" 0-1i) ("+i" +1i) ("-i" -1i) ; I don't like these
    ("#e1e1" 10) ("#i1e1+i" 10.0+1.0i)
    ))
@@ -35573,10 +35573,10 @@
        (num-test (ash 1 (- (expt 2 31))) 0)
        (num-test (ash (expt 2 31) (- (expt 2 31))) 0)
 
-       (do ((i 0 (+ i 1))) 
-	   ((= i 15)) 
+       (do ((i 0 (+ i 1)))
+	   ((= i 15))
 	 (test (= (expt (ash 1 i) 2)
-		  (ash 1 (* 2 i)) 
+		  (ash 1 (* 2 i))
 		  (expt 2 (* 2 i))
 		  (* (- (expt 2 i)) (- (ash 1 i)))
 		  (ash 2 (- (* i 2) 1)))
@@ -35631,14 +35631,14 @@
 	     (num-test (ash 1 48) 281474976710656)
 	     (num-test (ash 281474976710656 -48) 1)
 	     (num-test (ash -100000000000000000000000000000000 -100) -79)
-	     
+
 	     (num-test (ash 1 63) 9223372036854775808)
 	     (num-test (ash 1 64) 18446744073709551616)
 	     (num-test (ash 1 100) 1267650600228229401496703205376)
 	     (num-test (ash 18446744073709551616 -63) 2)
 	     (num-test (ash 1267650600228229401496703205376 -100) 1)
 	     ))
-  
+
        (if (defined? 'most-positive-fixnum)
 	   (begin
 	     (test (> 0 most-negative-fixnum) #t)
@@ -35702,7 +35702,7 @@
       (test (char-numeric?) 'error)
       (test (char-whitespace?) 'error)
       (test (char-alphabetic?) 'error)
-      
+
       (for-each
        (lambda (op)
 	 (for-each
@@ -35710,7 +35710,7 @@
 	    (test (op arg) 'error))
 	  (list "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #f #t (lambda (a) (+ a 1)))))
        (list char-upper-case? char-lower-case? char-upcase char-downcase char-numeric? char-whitespace? char-alphabetic?))
-      
+
       (for-each
        (lambda (op)
 	 (for-each
@@ -35718,7 +35718,7 @@
 	    (test (op #\a arg) 'error))
 	  (list "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #f #t (lambda (a) (+ a 1)))))
        (list char=? char<? char<=? char>? char>? char-ci=? char-ci<? char-ci<=? char-ci>? char-ci>=?))
-      
+
       (for-each
        (lambda (op)
 	 (for-each
@@ -35726,12 +35726,12 @@
 	    (test (op arg #\a) 'error))
 	  (list "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #f #t (lambda (a) (+ a 1)))))
        (list char=? char<? char<=? char>? char>? char-ci=? char-ci<? char-ci<=? char-ci>? char-ci>=?))
-      
+
       (test (char=? #\a) 'error)
       (test (char=?) 'error)
       (test (char<?) 'error)
-      
-      (if with-char-ops-with-more-than-2-args 
+
+      (if with-char-ops-with-more-than-2-args
 	  (begin
 	    (test (char<? #\b #\a "hi") 'error)
 	    (test (char<? #\b #\a 0) 'error)
@@ -35750,7 +35750,7 @@
 	    (test (char-ci>=? #\a #\b "hi") 'error)
 	    (test (char-ci>=? #\a #\b 0) 'error)
 	    ))
-      
+
       (test (char<=?) 'error)
       (test (char>?) 'error)
       (test (char>=?) 'error)
@@ -35760,23 +35760,23 @@
       (test (integer->char) 'error)
       (test (integer->char (expt 2 31)) 'error)
       (test (integer->char (expt 2 32)) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (char->integer arg) 'error))
        (list -1 1 0 123456789 "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (integer->char arg) 'error))
        (list -1 123456789 -123456789 #\a "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
-      
+
+
 					;(test (string? "das ist die eine haelfte" "und das die andere") 'error)
       (test (string?) 'error)
-      
-      (if with-string-ops-with-more-than-2-args 
-	  (begin  
+
+      (if with-string-ops-with-more-than-2-args
+	  (begin
 	    (test (string=? "foo" "FOO" 1.0) 'error)
 	    (test (string<? "foo" "fo" 1.0) 'error)
 	    (test (string>? "foo" "fooo" 1.0) 'error)
@@ -35787,87 +35787,87 @@
 	    (test (string-ci>? "foo" "fooo" 1.0) 'error)
 	    (test (string-ci<=? "fOo" "fo" 1.0) 'error)
 	    (test (string-ci>=? "fo" "foo" 1.0) 'error)
-	    
+
 	    ))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string=? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string<? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string>? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string<=? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string>=? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-ci=? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
-      
+
+
       (for-each
        (lambda (arg)
 	 (test (string-ci<? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-ci>? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-ci<=? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-ci>=? "hi" arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-length arg) 'error))
        (list #\a '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string #\a arg) 'error))
        (list '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (make-string -1) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (make-string 3 arg) 'error))
        (list "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (make-string arg #\a) 'error))
        (list #\a "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (make-string arg) 'error))
        (list #\a "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (string-ref "abcdef-dg1ndh" 20) 'error)
       (test (string-ref "abcdef-dg1ndh") 'error)
       (test (string-ref "abcdef-dg1ndh" -3) 'error)
@@ -35878,17 +35878,17 @@
       (test (string-ref "" 1) 'error)
       (test (string-ref "hiho" (expt 2 32)) 'error)
       (test (string-set! "hiho" (expt 2 32) #\a) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-ref arg 0) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-ref "hiho" arg) 'error))
        (list #\a -1 123 4 "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (let ((hi (string-copy "hi"))) (string-set! hi 2 #\H) hi) 'error)
       (test (let ((hi (string-copy "hi"))) (string-set! hi -1 #\H) hi) 'error)
       (test (let ((g (lambda () "***"))) (string-set! (g) 0 #\?)) 'error) ; guile is happy here and below [fixed 1.9]
@@ -35896,26 +35896,26 @@
       (test (string-set! "" 1 #\a) 'error)
       (test (string-set! (string) 0 #\a) 'error)
       (test (string-set! (symbol->string 'lambda) 0 #\a) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-set! arg 0 #\a) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-set! "hiho" arg #\a) 'error))
        (list #\a -1 123 4 "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-set! "hiho" 0 arg) 'error))
        (list 1 "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (string-fill! "" #\a) 'error)
       (test (string-fill! "hiho" #\a) 'error)
       (test (let ((g (lambda () "***"))) (string-fill! (g) #\?)) 'error)
-      
+
       (test (substring "ab" 0 3) 'error)
       (test (substring "ab" 3 3) 'error)
       (test (substring "ab" 2 3) 'error)
@@ -35923,22 +35923,22 @@
       (test (substring "" -1 0) 'error)
       (test (substring "abc" -1 0) 'error)
       (test (substring "hiho" (expt 2 32) (+ 2 (expt 2 32))) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (substring "hiho" arg 0) 'error))
        (list "hi" #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (substring "hiho" 1 arg) 'error))
        (list "hi" #\a 0 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (substring arg 1 2) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-append "hiho" arg) 'error))
@@ -35946,46 +35946,46 @@
 
       (test (string-append '()) 'error)
       (test (string '()) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (let ((hiho "hiho")) (string-fill! hiho arg) hiho) 'error))
        (list 1 "hi" '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-fill! arg #\a) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string-copy arg) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string->list arg) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (let ((x (cons #\a #\b))) (set-cdr! x x) (list->string x)) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (list->string arg) 'error))
        (list "hi" #\a 1 ''foo '(1 . 2) (cons #\a #\b) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (symbol->string arg) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string->symbol arg) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
-      
-      
+
+
+
       (for-each
        (lambda (op)
 	 (for-each
@@ -35995,8 +35995,8 @@
 		  (begin
 		    (display "(") (display op) (display " ") (display arg) (display ") returned ") (display result) (display "?") (newline)))))
 	  (list "hi" (integer->char 65) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #\f #t (lambda (a) (+ a 1)))))
-       
-       (list reverse cons car cdr set-car! set-cdr! caar cadr cdar cddr caaar caadr cadar cdaar caddr cdddr cdadr cddar 
+
+       (list reverse cons car cdr set-car! set-cdr! caar cadr cdar cddr caaar caadr cadar cdaar caddr cdddr cdadr cddar
 	     caaaar caaadr caadar cadaar caaddr cadddr cadadr caddar cdaaar cdaadr cdadar cddaar cdaddr cddddr cddadr cdddar
 	     assq assv assoc memq memv member list-ref list-tail))
 
@@ -36005,7 +36005,7 @@
 	   (lambda (arg)
 	     (test (length arg) 'error))
 	   (list "hi" (integer->char 65) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #\f #t (lambda (a) (+ a 1)))))
-      
+
       (test (cons 1 . 2) 'error)
 ;      (test '(1 . 2 . 3) 'error) ; gets reader error which is inconvenient
       (test (car (list)) 'error)
@@ -36132,32 +36132,32 @@
       (test (cddddr '(a . b)) 'error)
       (test (cddddr '(a c . b)) 'error)
       (test (cddddr '(a c e . b)) 'error)
-      
+
       (test (length 'x) 'error)
       (test (length (cons 1 2)) 'error)
       (let ((x (list 1 2)))
 	(set-cdr! x x)
 	(test (length x) 'error))
       (test (length '(1 2 . 3)) 'error)
-      
+
       (test (reverse (cons 1 2)) 'error)
       (test (reverse '(1 . 2)) 'error)
       (test (reverse '(1 2 . 3)) 'error)
-      
+
       (if with-reverse!
 	  (begin
 	    (test (reverse! '(1 . 2)) 'error)
 	    (test (reverse! (cons 1 2)) 'error)
 	    (test (reverse! (cons 1 (cons 2 3))) 'error)
 	    ))
-      
+
       (test (set-car! '() 32) 'error)
       (test (set-car! 'x 32) 'error)
       (test (set-car! #f 32) 'error)
       (test (set-cdr! '() 32) 'error)
       (test (set-cdr! 'x 32) 'error)
       (test (set-cdr! #f 32) 'error)
-      
+
       (test (list-ref '() 0) 'error)
       (test (list-ref (list 1 2) 2) 'error)
       (test (list-ref (list 1 2) -1) 'error)
@@ -36168,12 +36168,12 @@
       (test (list-ref (cons 1 2) 2) 'error)
       (test (list-ref (list 1 2 3) (expt 2 32)) 'error)
       (test (list-set! (list 1 2 3) (expt 2 32)  0) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (list-ref (list 1 2) arg) 'error))
        (list "hi" (integer->char 65) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #\f #t (lambda (a) (+ a 1))))
-      
+
       (test (list-set! '() 0 1) 'error)
       (test (list-set! '(1) 1 2) 'error)
       (test (list-set! '(1 2 3) -1 2) 'error)
@@ -36181,16 +36181,16 @@
       (test (list-set! '(1) 3/2 2) 'error)
       (test (list-set! '(1) 1+3i 2) 'error)
       (test (let ((x (cons 1 2))) (list-set! x 1 3) x) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (list-set! (list 1 2) arg arg) 'error))
        (list "hi" (integer->char 65) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #\f #t (lambda (a) (+ a 1))))
-      
+
       (test (list 1 2 . 3) 'error)
       (test (list 1 2 , 3) 'error)
       (test (list 1 2 ,@ 3) 'error)
-      
+
       (test (list-tail (list 1 2) 3) 'error)
       (test (list-tail (list 1 2) -1) 'error)
       (test (list-tail (list 1 2) 1.3) 'error)
@@ -36199,18 +36199,18 @@
       (test (list-tail (cons 1 2) 2) 'error)
       (test (list-tail '(1 2 . 3)) 'error)
       (test (list-tail (list 1 2 3) (+ 1 (expt 2 32))) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (list-tail (list 1 2) arg) 'error))
        (list "hi" (integer->char 65) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #\f #t (lambda (a) (+ a 1))))
-      
-      
+
+
       (test (assq #f '(#f 2 . 3)) 'error)
       (test (assq #f '((#f 2) . 3)) 'error) ; an a-list is a proper list sez kd
       (test (assv 1 '(1 2 . 3)) 'error)
       (test (assv 1 '((1 2) . 3)) 'error) ; an a-list is a proper list sez kd
-      
+
       (test (assoc '() 1) 'error)
       (test (assoc (cons 1 2) 1) 'error)
       (test (assoc (let ((x (cons 1 2))) (set-cdr! x x)) 1) 'error)
@@ -36218,16 +36218,16 @@
       (test (assoc ''foo quote) 'error)
       (test (assoc 1 '(1 2 . 3)) 'error)
       (test (assoc 1 '((1 2) . 3)) 'error) ; an a-list is a proper list sez kd
-      
+
       ;(test (let ((lst '((1 2)))) (assq #t (reverse! lst lst))) #f) ; this will hang Guile
 
-      
+
       (test (append 'a 'b) 'error)
       (test (append 'a '()) 'error)
       (test (append (cons 1 2) '()) 'error)
       (test (append '(1) 2 '(3)) 'error)
       (test (append '(1) 2 3) 'error)
-      
+
 					;(test (memq 'a (cons a b)) 'error)                  ; there is disagreement about this
       (test (memq 'a (list a b . c)) 'error)
 					;(test (memv 1 (cons 1 2)) 'error)                   ; there is disagreement about this
@@ -36235,33 +36235,33 @@
 					;(test (member 1 (cons 1 2)) 'error)                 ; there is disagreement about this
       (test (member 'a (list a b . c)) 'error)
       (test (member 1 '(1 2 . 3)) 'error)
-      
+
       (test (make-vector) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (make-vector arg) 'error))
        (list #\a '() -1 #f "hi" 'a-symbol abs 3.14 3/4 1.0+1.0i #t (vector 1 2 3) (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (vector->list arg) 'error))
        (list #\a 1 '() (list 1) '(1 . 2) #f 'a-symbol "hi" abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (let ((x (cons #\a #\b))) (set-cdr! x x) (list->vector x)) 'error)
       (test (list->vector (cons 1 2)) 'error)
       (test (list->vector '(1 2 . 3)) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (list->vector arg) 'error))
        (list "hi" #\a 1 '(1 . 2) (cons #\a #\b) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (vector-length arg) 'error))
        (list "hi" #\a 1 '(1 . 2) (cons #\a #\b) #f 'a-symbol abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (test (let ((v (make-vector 1 0))) (vector-ref v 1)) 'error)
       (test (let ((v (make-vector 1 0))) (vector-ref v -1)) 'error)
       (test (let ((v (vector 1 (list 2) (make-vector 3 #\a)))) (vector-ref (vector-ref v 2) 3)) 'error)
@@ -36270,7 +36270,7 @@
       (test (vector-ref '#() 0) 'error)
       (test (vector-ref '#() -1) 'error)
       (test (vector-ref '#() 1) 'error)
-      
+
 					;(test (vector-set! '#(0 1 2) 1 "doe") 'error)
       (test (let ((v (vector 1 2 3))) (vector-set! v -1 0)) 'error)
       (test (let ((v (vector 1 2 3))) (vector-set! v 3 0)) 'error)
@@ -36282,12 +36282,12 @@
 	 (lambda (arg)
 	   (test (vector-set! v arg 0) 'error))
 	 (list "hi" #\a -1 '(1 . 2) (cons #\a #\b) #f 'a-symbol abs 3.14 3/4 1.0+1.0i #t (make-vector 3) (lambda (a) (+ a 1)))))
-      
+
       (for-each
        (lambda (arg)
 	 (test (vector-set! arg 0 0) 'error))
        (list "hi" #\a 1 '(1 . 2) (cons #\a #\b) #f 'a-symbol abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
+
       (let ((v (vector)))
 	(test (vector-set! v 0 0) 'error)
 	(test (vector-set! v 1 0) 'error)
@@ -36302,32 +36302,32 @@
        (lambda (arg)
 	 (test (vector-fill! arg 0) 'error))
        (list "hi" #\a 1 '(1 . 2) (cons #\a #\b) #f 'a-symbol abs 3.14 3/4 1.0+1.0i #t (lambda (a) (+ a 1))))
-      
-      
-      
+
+
+
       (for-each
        (lambda (arg)
 	 (test (string->number arg) 'error))
        (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi abs '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-      
+
       (for-each
        (lambda (arg)
 	 (test (string->number "123" arg) 'error)
 	 (test (string->number "1" arg) 'error))
        (list -1 0 1 #\a '#(1 2 3) 3.14 3/4 1.5+0.3i 1+i '() 'hi abs '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-      
+
       ;; (string->number "0" 1) ?? why not?
-      
+
       (for-each
        (lambda (arg)
 	 (test (number->string arg) 'error))
        (list #\a '#(1 2 3) '() 'hi abs "hi" '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-      
+
       (for-each
        (lambda (arg)
 	 (test (number->string 123 arg) 'error))
        (list -1 0 1 512 #\a '#(1 2 3) 3.14 2/3 1.5+0.3i 1+i '() 'hi abs "hi" '#(()) (list 1 2 3) '(1 . 2) (lambda () 1)))
-      
+
       (test (exact?) 'error)
       (test (exact? "hi") 'error)
       (test (exact? 1.0+23.0i 1.0+23.0i) 'error)
@@ -36393,7 +36393,7 @@
 
       (test (expt 0 -1) 'error)
       (test (expt 0.0 -1.0) 'error)
-      
+
       (test (expt 0 -1.0) 'error)
 ;      (test (expt 0 -1.0+i) 'error)
 ;      (test (expt 0 0-i) 0.0) ; sbcl and clisp say division by 0 here
@@ -36472,14 +36472,14 @@
 
       (test (string->number "34.1" (+ 5 (expt 2 32))) 'error)
       (test (number->string 34.1 (+ 5 (expt 2 32))) 'error)
-      
+
       (for-each
        (lambda (op)
 	 (for-each
 	  (lambda (arg)
 	    (let ((val (catch #t (lambda () (op arg)) (lambda args 'error))))
 	      (if (not (eq? val 'error))
-		  (begin 
+		  (begin
 		    (display "(") (display op) (display " ") (display arg) (display ") returned ")
 		    (display val) (display " but expected 'error") (newline)))))
 	  (list "hi" '() #\a (list 1) '(1 . 2) #f 'a-symbol (make-vector 3) abs #t (lambda (a) (+ a 1))
@@ -36501,14 +36501,14 @@
 	  (list (integer->char 65) 1 0 -1 (list 1) (cons 1 2) #f 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #\f #t (lambda (a) (+ a 1)))))
        (list char-ready? set-current-output-port set-current-input-port set-current-error-port
 	     close-input-port close-output-port open-input-file open-output-file
-	     read-char peek-char read 
+	     read-char peek-char read
 	     (lambda (arg) (write-char #\a arg))
 	     (lambda (arg) (write "hi" arg))
 	     (lambda (arg) (display "hi" arg))
 	     call-with-input-file with-input-from-file call-with-output-file with-output-to-file))
 
-      
-      (if with-hyperbolic-functions 
+
+      (if with-hyperbolic-functions
 	  (begin
 	    (test (sinh) 'error)
 	    (test (sinh "hi") 'error)
@@ -36528,14 +36528,14 @@
 	    (test (atanh) 'error)
 	    (test (atanh "hi") 'error)
 	    (test (atanh 1.0+23.0i 1.0+23.0i) 'error)
-	    
+
 	    (for-each
 	     (lambda (op)
 	       (for-each
 		(lambda (arg)
 		  (let ((val (catch #t (lambda () (op arg)) (lambda args 'error))))
 		    (if (not (eq? val 'error))
-			(begin 
+			(begin
 			  (display "(") (display op) (display " ") (display arg) (display ") returned ")
 			  (display val) (display " but expected 'error") (newline)))))
 		(list "hi" '() #\a (list 1) '(1 . 2) '#(0) #f 'a-symbol (make-vector 3) abs #t (lambda (a) (+ a 1)))))
@@ -36549,7 +36549,7 @@
 ;	    (test (eval-string "{") 'error)
 ;	    ))
 
-      
+
       (test (string->number) 'error)
       (test (string->number 'symbol) 'error)
       (test (string->number "1.0" "1.0") 'error)
@@ -36557,9 +36557,9 @@
       (test (number->string "hi") 'error)
       (test (number->string 1.0+23.0i 1.0+23.0i 1.0+23.0i) 'error)
       (test (+ 1 2 . 3) 'error)
-      
-      
-      
+
+
+
       (num-test (gcd 1.4 2.3) 'error)
       (num-test (lcm 1.4 2.3) 'error)
 					;(num-test (gcd 2/3 1) 'error) ; these are ok in s7
@@ -36570,7 +36570,7 @@
       (test (lcm 0 "hi") 'error)
       (num-test (numerator 2.3+0.5i) 'error)
       (num-test (denominator 2.3+0.5i) 'error)
-      
+
       (if (not with-generic-modulo) (begin
 				      (num-test (modulo 3 2.3) 'error)
 				      (num-test (modulo 2.3 3) 'error)
@@ -36581,9 +36581,9 @@
 				      (num-test (remainder 3 2.3) 'error)
 				      (num-test (remainder 2.3 3) 'error)
 				      (num-test (remainder 1/3 2.3) 'error)))
-      
+
       (num-test (mod 2 0) 'error)
-      
+
       (num-test (remainder 2.3 1.0+0.1i) 'error)
       (num-test (remainder 3.0+2.3i 3) 'error)
       (num-test (abs 1.0+0.1i) 'error)
@@ -36593,7 +36593,7 @@
       (num-test (make-rectangular 1.0+0.1i 1.0) 'error)
       (test (>=- 1 2) 'error)
       (test (>= - 1 2) 'error)
-      
+
       (if with-relational-ops-that-require-at-least-2-args (begin
 							     (num-test (< 0) 'error)
 							     (num-test (<= 0) 'error)
@@ -36626,8 +36626,8 @@
 							     (num-test (> 1.0) 'error)
 							     (num-test (>= 1.0) 'error)
 							     ))
-      
-      
+
+
       (num-test (min 0.0+0.00000001i) 'error)
       (num-test (max 0.0+0.00000001i) 'error)
       (num-test (< 0.0+0.00000001i) 'error)
@@ -36668,12 +36668,12 @@
       (num-test (<= 2 1 1.0+1.0i) 'error)
       (num-test (> 1 2 1.0+1.0i) 'error)
       (num-test (>= 1 2 1.0+1.0i) 'error)
-      
+
       (num-test (< 2 1 #\a) 'error)
       (num-test (<= 2 1 #\a) 'error)
       (num-test (> 1 2 #\a) 'error)
       (num-test (>= 1 2 #\a) 'error)
-      
+
       (num-test (= 0 1 "hi") 'error)
       (num-test (= 0.0 1.0 "hi") 'error)
       (num-test (* 0 1 "hi") 'error)
@@ -36684,29 +36684,29 @@
       (num-test (gcd 0 "hi") 'error)
       (num-test (lcm 0 "hi") 'error)
       (num-test (* 1 0.0 #\a) 'error)
-      
+
       (num-test (< 3 3.0 3 3.0+1.0i) 'error)
       (num-test (> 3 3.0 3 3.0+1.0i) 'error)
       (num-test (log 3 0) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (log 10.0 arg) 'error))
        (list "hi" #\a 0 '#(1 2 3) #t #f '() abs 'hi (list 1 2 3) '(1 . 2)))
-      
+
       (test (quotient 3 0) 'error)
       (test (remainder 3 0) 'error)
       (test (+ 1 + 2) 'error)
       (test (+ 1 - 2) 'error)
-      
+
       (test (+ 1 #t) 'error)
       (test (+ 1 #f) 'error)
-      
+
       (test (/ 0) 'error)
       (test (/ -0) 'error)
       (test (/ 0.0) 'error)
       (test (/ 1.0 0) 'error)
-      
+
       (if with-bitwise-functions
 	  (begin
 	    (test (logior -1 "hi") 'error)
@@ -36721,7 +36721,7 @@
 			  (display op) (display " ") (display arg) (display " returned ") (display val) (newline)))))
 		(list "hi" (integer->char 65) 'a-symbol (make-vector 3) abs #\f (lambda (a) (+ a 1)))))
 	     (list logior logand lognot logxor ash integer-length))
-	    
+
 	    (for-each
 	     (lambda (op)
 	       (for-each
@@ -36732,14 +36732,14 @@
 			  (display op) (display " 1 ") (display arg) (display " returned ") (display val) (newline)))))
 		(list "hi" (integer->char 65) 'a-symbol (make-vector 3) abs #\f (lambda (a) (+ a 1)))))
 	     (list logior logand logxor lognot))
-	    
+
 	    ))
-      
+
       (for-each
        (lambda (arg)
 	 (test (char-ready? arg) 'error))
        (list "hi" -1 #\a 1 'a-symbol (make-vector 3) abs 3.14 3/4 1.0+1.0i #f #t (lambda (a) (+ a 1))))
-      
+
       (test (if #f) 'error)
       (test (if (< 2 3)) 'error)
       (test (if #f 1 2 3) 'error)
@@ -36751,7 +36751,7 @@
       (test (if 1 2 . 3) 'error)
       (test (if . 1) 'error)
       (test (if _no_var_ 1) 'error)
-      
+
       (test (for-each (lambda (x) (display "for-each should not have called this"))) 'error)
       (test (for-each (lambda () 1) '()) 'error)
       (test (let ((ctr 0)) (for-each (lambda (x y z) (set! ctr (+ ctr x y z))) '(1) '(3) '()) ctr) 'error)
@@ -36781,7 +36781,7 @@
        (lambda (arg)
 	 (test (for-each (lambda (n m) n) (list 1) arg) 'error))
        (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #f #t '() (list 1 2 3) '(1 . 2)))
-      
+
       (for-each
        (lambda (arg)
 	 (test (for-each (lambda (a) a) arg) 'error))
@@ -36790,13 +36790,13 @@
       (test (for-each abs '() abs) 'error)
       (test (for-each abs '() '#(1)) 'error)
       (test (map abs '() abs) 'error)
-      
-      
+
+
       (test (map (lambda (x) (display "map should not have called this"))) 'error)
       (test (map (lambda () 1) '()) 'error)
       (test (let ((ctr 0)) (map (lambda (x y z) (set! ctr (+ ctr x y z)) ctr) '(1) '(3) '())) 'error)
       (test (let ((ctr 0)) (map (lambda (x y z) (set! ctr (+ ctr x y z)) ctr) '(0 1) '(2 3) '(4 5 6))) 'error)
-      
+
       (test (map (lambda (a b) (+ a b)) (list 1)) 'error)
       (test (map (lambda (a b) (+ a b)) (list 1) (list)) 'error)
       (test (map (lambda (a b) (+ a b)) (list 1) (list 2)) (list 3))
@@ -36809,7 +36809,7 @@
       (test (map (lambda (a b) (+ a b)) (list 1 2) (list 1 2) (list)) 'error)
       (test (map (lambda (a b) (+ a b)) (list 1 2) (list 1 2) (list 1 2)) 'error)
       (test (map (lambda (a b) (+ a b)) (list 1 2) (cons 1 2)) 'error)
-      
+
       (test (map (lambda (a) (+ a 1)) (list 1) (list 2)) 'error)
       (test (map (lambda (a) (+ a 1)) #\a) 'error)
       (test (map (lambda (a) (+ a 1)) (cons 1 2)) 'error)
@@ -36823,12 +36823,12 @@
        (lambda (arg)
 	 (test (map (lambda (n m) n) (list 1) arg) 'error))
        (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #f #t (list 1 2 3) '(1 . 2)))
-      
+
       (for-each
        (lambda (arg)
 	 (test (map (lambda (a) a) arg) 'error))
        (list "hi" -1 #\a 1 'a-symbol 3.14 3/4 1.0+1.0i #f #t '(1 . 2)))
-      
+
 					;(test (do '() ('() '())) 'error) ; ?? -- isn't this the same as before?
       (test (do '() (#t 1)) 'error)
       (test (do . 1) 'error)
@@ -36842,7 +36842,7 @@
 					;(test (do ((i 0 j) (i 0 j) (j 1 (+ j 1))) ((= j 3) i)) 'error) ; ??
       (test (do ((i 1) ()) (= i 1)) 'error)
       (test (do ((i 0 . 1)) ((= i 1)) i) 'error)
-      
+
 
       (test (let ((a 1)) (set! a)) 'error)
       (test (let ((a 1)) (set! a 2 3)) 'error)
@@ -36861,12 +36861,12 @@
       (test (set! #\a 12) 'error)
       (test (set! (1 2) #t) 'error)
       (test (set! _not_a_var_ 1) 'error)
-      
+
       (test (let ((a (lambda (x) (set! a 3) x))) (list (a 1) a)) 'error)
-      (test (let ((a (let ((b 1)) (set! a 3) b))) a) 'error)            
+      (test (let ((a (let ((b 1)) (set! a 3) b))) a) 'error)
       (test (let ((a (lambda () "hi"))) (set! (a) "ho")) 'error)
-      (test (let ((a (let ((b 1)) (set! a 3) b))) a) 'error) 
-      
+      (test (let ((a (let ((b 1)) (set! a 3) b))) a) 'error)
+
       (test (cond) 'error)
 					;(test (cond ((= 1 2) 3) (else 4) (4 5)) 'error)
       (test (cond ((+ 1 2) => (lambda (a b) (+ a b)))) 'error)
@@ -36886,8 +36886,8 @@
       (test (cond 1 2 3 4) 'error)
       (test (cond (1 => (lambda (x y) #t))) 'error)
       (test (cond . 1) 'error)
-      
-      
+
+
       (test (case 1) 'error)
       (test (case 1 . "hi") 'error)
       (test (case 1 ("hi")) 'error)
@@ -36904,7 +36904,7 @@
       ;; actually, both Guile and Gauche accept
       ;; ((lambda () + 3)) and (begin + 3)
       ;; but surely => is an undefined variable in this context?
-      
+
       (test (lambda) 'error)
       (test (lambda (a) ) 'error)
       ;; should this be an error: (lambda (a) (define x 1)) ?
@@ -36928,12 +36928,12 @@
       (test ((lambda ("x") x)) 'error)
       (test ((lambda "x" x)) 'error)
       (test ((lambda (x . "hi") x)) 'error)
-      
+
 					;(test (begin . 1) 'error)
 					;(test (let () (begin . 1)) 'error)
-      
+
 					;(test (let ((x 0)) (set! x (+ x 1)) (begin (define y 1)) (+ x y)) 'error)
-      
+
       (test (apply + #f) 'error)
       (test (apply #f '(2 3)) 'error)
       (test (apply make-vector '(1 2 3)) 'error)
@@ -36943,16 +36943,16 @@
       (test (apply . 1) 'error)
       (test (apply car ''foo) 'error)
       (test (apply + '(1 . 2)) 'error)
-      
+
       (for-each
        (lambda (arg)
 	 (test (apply arg '(1)) 'error))
        (list -1 #\a 1 'a-symbol 3.14 3/4 1.0+1.0i #t)) ; "hi" and (list 1 2 3) work here because they are applicable in s7
-      
+
       (test (let ((x (list 1 2))) (set-cdr! x x) (apply + x)) 'error)
       (test (apply + '(1 2 . 3)) 'error)
       (test (apply + '(1 2) (list 3 4)) 'error)
-      
+
       (test (define) 'error)
       (test (define x) 'error)
       (test (define . x) 'error)
@@ -36966,8 +36966,8 @@
 					;(test (define 'hi 1) 'error) ; this redefines quote, which maybe isn't an error
       (test (let () (define . 1) 1) 'error)
       (test (let ((hi (lambda (a 0.0) (b 0.0) (+ a b)))) (hi)) 'error)
-      
-      
+
+
       (test (call-with-values (lambda (x) (+ x 1)) (lambda (y) y)) 'error)
       (test (+ (values . 1)) 'error)
       (for-each
@@ -36976,7 +36976,7 @@
        (list "hi" -1 #\a 1 'a-symbol 3.14 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2)))
       (test (call-with-values (lambda () (values -1 2)) abs) 'error)
 
-      
+
       (test (let ((x 1 2 3)) x) 'error)
       (test (let ((+ 1 2)) 2) 'error)
       (test (let* ((x 1 2)) x) 'error)
@@ -36998,7 +36998,7 @@
       (test (let () ) 'error)
       (test (let '() 3) 'error)
       (test (let* ((x 1))) 'error)
-      (test (let ((x 1)) (letrec ((x 32) (y x)) (+ 1 y))) 'error) ; #<unspecified> seems reasonable if not the 1+ 
+      (test (let ((x 1)) (letrec ((x 32) (y x)) (+ 1 y))) 'error) ; #<unspecified> seems reasonable if not the 1+
       (test (let ((x 1)) (letrec ((y x) (x 32)) (+ 1 y))) 'error)
 					;(test (let ((x 1)) (letrec ((y x) (x 32)) 1)) 'error)       ; Guile is perverse... s7 returns 1 here
       (test (let ((x 1)) (letrec ((y (let () (+ x 1))) (x 32)) (+ 1 y))) 'error)
@@ -37028,7 +37028,7 @@
       (test (let func (a . 1) a) 'error)
       (test (let ((a 1) . b) a) 'error)
       (test (let* ((a 1) . b) a) 'error)
-      
+
       (test (call/cc (lambda () 0)) 'error)
       (test (call/cc (lambda (a) 0) 123) 'error)
       (test (call/cc) 'error)
@@ -37037,10 +37037,10 @@
        (lambda (arg)
 	 (test (call/cc arg) 'error))
        (list "hi" -1 #\a 1 'a-symbol 3.14 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2)))
-      
+
       (test (call/cc . 1) 'error)
-      
-      
+
+
       (test (dynamic-wind) 'error)
       (test (dynamic-wind (lambda () #f)) 'error)
       (test (dynamic-wind (lambda () #f) (lambda () #f)) 'error)
@@ -37049,21 +37049,21 @@
       (test (dynamic-wind (lambda () #f) (lambda () #f) (lambda (a) #f)) 'error)
       (test (dynamic-wind (lambda () 1) #f (lambda () 2)) 'error)
       (test (dynamic-wind . 1) 'error)
-      
-      
+
+
       (if with-delay
 	  (begin
 	    (test (force) 'error)
 	    (test (delay) 'error)
 	    (test (delay 1 2) 'error)
 	    ))
-      
+
       (if with-hash-tables
-	  (begin 
-	    
+	  (begin
+
 	    (test (hash-table?) 'error)
 	    (test (hash-table? 1 2) 'error)
-	    
+
 	    (let ((ht (make-hash-table)))
 	      (test (hash-table-set! ht #\a 'key) 'error)
 	      (for-each
@@ -37074,75 +37074,75 @@
 	       (lambda (arg)
 		 (test (hash-table-ref ht arg) 'error))
 	       (list #\a '#(1 2 3) 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2))))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (hash-table-size arg) 'error))
 	     (list "hi" -1 0 #\a 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (make-hash-table arg) 'error))
 	     (list "hi" -1 0 #\a 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t (list 1 2 3) '(1 . 2)))
-	    
+
 	    ))
-      
+
       (if with-keywords
 	  (begin
 	    (for-each
 	     (lambda (arg)
 	       (test (make-keyword arg) 'error))
 	     (list -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t #f '() '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (keyword->symbol arg) 'error))
 	     (list "hi" -1 #\a 1 'a-symbol '#(1 2 3) 3.14 3/4 1.0+1.0i #t #f '() '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (symbol->keyword arg) 'error))
 	     (list "hi" -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i #t #f '() '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    ))
-      
-      
+
+
       (if with-gensym
 	  (begin
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (test (gensym arg) 'error))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i #t #f '() '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    ))
-      
+
       (if with-format
-	  (begin 
+	  (begin
 	    (test (format #f "" 1) 'error)
 	    (test (format #f "hiho" 1) 'error)
 	    (test (format #f "a~%" 1) 'error) ; some just ignore extra args
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (let ((result (catch #t (lambda () (format arg "hiho")) (lambda args 'error))))
 		 (if (not (eq? result 'error))
 		     (begin (display "(format ") (display arg) (display " \"hiho\")")
-			    (display " returned ") (display result) 
+			    (display " returned ") (display result)
 			    (display " but expected 'error")
 			    (newline)))))
 	     (list -1 #\a 1 '#(1 2 3) 3.14 3/4 1.0+1.0i 'hi abs (lambda () 1) '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (for-each
 	     (lambda (arg)
 	       (let ((result (catch #t (lambda () (format #f arg)) (lambda args 'error))))
 		 (if (not (eq? result 'error))
 		     (begin (display "(format #f ") (display arg) (display ")")
-			    (display " returned ") (display result) 
+			    (display " returned ") (display result)
 			    (display " but expected 'error")
 			    (newline)))))
 	     (list -1 #\a 1 #f #t '#(1 2 3) 3.14 3/4 1.0+1.0i '() 'hi abs (lambda () 1) '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (test (format #f "hi ~A ho" 1 2) 'error)
 	    (test (format #f "hi ~A ho") 'error)
 	    (test (format #f "hi ~S ho") 'error)
@@ -37151,36 +37151,36 @@
 	    (test (format #f "123 ~R 321" 1) 'error)
 	    (test (format #f "123 ~,3R 321" 1) 'error)
 	    (test (format #f "~,2,3,4D" 123) 'error)
-	    
+
 	    (test (format #f "hi ~Z ho") 'error)
 	    (test (format #f "hi ~+ ho") 'error)
 	    (test (format #f "hi ~# ho") 'error)
-	    
+
 	    (test (format #f "hi ~} ho") 'error)
 	    (test (format #f "hi {ho~}") 'error)
-	    
+
 	    (test (format #f "asb~{~A asd" '(1 2 3)) 'error)
 	    (test (format #f "~{~A~}" 1 2 3) 'error)
 	    (test (format #f "asb~{~}asd" '(1 2 3)) 'error) ; this apparently makes the format.scm in Guile hang? [fixed]
 	    (test (format #f "asb~{ ~}asd" '(1 2 3)) 'error)
 	    (test (format #f "asb~{ hiho~~~}asd" '(1 2 3)) 'error)
-	    
+
 	    (test (format #f "~{~A ~A ~}" '(1 "hi" 2)) 'error)
 	    (for-each
 	     (lambda (arg)
 	       (let ((result (catch #t (lambda () (format #f "~F" arg)) (lambda args 'error))))
 		 (if (not (eq? result 'error))
 		     (begin (display "(format #f \"~F\" ") (display arg)
-			    (display ") returned ") (display result) 
+			    (display ") returned ") (display result)
 			    (display " but expected 'error")
 			    (newline)))))
 	     (list #\a '#(1 2 3) "hi" '() 'hi abs (lambda () 1) '#(()) (list 1 2 3) '(1 . 2)))
-	    
+
 	    (test (format #f "~D") 'error)
 ;	    (test (format () "hi") "hi") ; not sure this is a good idea
 
 	    ))
-      
+
       (test (let "" 1) 'error)
       (test (let "hi" 1) 'error)
       (test (let #(1) 1) 'error)
@@ -37209,7 +37209,7 @@
 
 
       (test (let ((!@$%^&*~|}{?><.,/`_-+=:! 1)) (+ !@$%^&*~|}{?><.,/`_-+=:! 1)) 2)
-	    
+
 
       (let ((d 3.14)
 	    (i 32)
@@ -37220,7 +37220,7 @@
 				    (not (= i 32))
 				    (not (= r 2/3))
 				    (not (= c 1.5+0.3i)))
-				(begin 
+				(begin
 				  (display name) (display " changed ")
 				  (if (not (= i 32))
 				      (begin (display "stored integer to: ") (display i))
@@ -37255,12 +37255,12 @@
 	    numerator denominator rationalize exact? inexact? exact->inexact inexact->exact floor ceiling truncate round
 	    logior logxor logand lognot ash integer-length
 	    + - * / quotient remainder
-	    expt = max min modulo < > <= >= lcm gcd 
+	    expt = max min modulo < > <= >= lcm gcd
 	    ))))
-      
+
       (if (and with-bignums with-bignum-function with-bigfloats)
 	  (begin
-	    
+
 	    (let ((d (bignum "3.14"))
 		  (i (bignum "32"))
 		  (r (bignum "2/3"))
@@ -37270,7 +37270,7 @@
 					  (not (= i 32))
 					  (not (= r 2/3))
 					  (not (= c 1.5+0.3i)))
-				      (begin 
+				      (begin
 					(display name) (display " changed ")
 					(if (not (= i 32))
 					    (begin (display "stored integer to: ") (display i))
@@ -37305,10 +37305,10 @@
 		  numerator denominator rationalize exact? inexact? exact->inexact inexact->exact floor ceiling truncate round
 		  logior logxor logand lognot ash integer-length
 		  + - * / quotient remainder
-		  expt = max min modulo < > <= >= lcm gcd 
+		  expt = max min modulo < > <= >= lcm gcd
 		  ))))
-	    
-	    
+
+
 	    ))
       ))
 
@@ -37370,17 +37370,17 @@
 
 
 ;      (test (char? #\spaces) 'error)
-;      (test (car '( . 1)) 'error) 
+;      (test (car '( . 1)) 'error)
 ;      (test (car '(. )) 'error)
 ;      (test (car '( . )) 'error)
 ;      (test (car '(. . . )) 'error)
-;      (test '#( . 1) 'error) 
+;      (test '#( . 1) 'error)
 ;      (test '(1 2 . ) 'error)
 ;      (test '#(1 2 . ) 'error)
 ;      (test (+ 1 . . ) 'error)
 ;      (test (car '(1 . )) 'error)
 ;      (test (car '(1 . . 2)) 'error)
-;      (test '#( . ) 'error) 
+;      (test '#( . ) 'error)
 ;      (test '#(1 . ) 'error)
 ;      (test '#(. . . ) 'error)
 ;      (test '#(1 . . 2) 'error)
@@ -37406,12 +37406,12 @@
 (if (and (not (null? error-data))
 	 with-error-data)
     (begin
-      (if with-format 
+      (if with-format
 	  (format #t "op~16Terror~44Ttest~76Tresult~115Texpected~%"))
       (for-each
        (lambda (op)
 	 (if with-format
-	     (format #t "~A: ~16T~A ~40T~A ~70T~A ~110T~A~%" 
+	     (format #t "~A: ~16T~A ~40T~A ~70T~A ~110T~A~%"
 		     (vector-ref op 0) (vector-ref op 1) (vector-ref op 2) (vector-ref op 3) (vector-ref op 4))
 	     (begin
 	       (display op) (newline))))
@@ -37441,10 +37441,10 @@
 		    (3141592653589793238462.0 0.64338327950288419716 0.5999057324027754)
 		    (31415926535897932384626.0 0.43383279502884197169 0.4203516113275538)
 		    (314159265358979323846264.0 0.33832795028841971693 0.3319102940355321)
-		    (3141592653589793238462643.0 0.38327950288419716939 .3739640276557301))) 
+		    (3141592653589793238462643.0 0.38327950288419716939 .3739640276557301)))
 	    (vals '())
 	    (mx-sin-err 0.0))
-	
+
 	(for-each
 	 (lambda (p)
 	   (let ((arg1 (car p))
@@ -37459,15 +37459,15 @@
 	     (set! vals (cons mxerr vals))
 	     (set! mx-sin-err (max mx-sin-err (abs (- (sin arg2) (caddr p)))))))
 	 data)
-	
+
 	(if (> mx-sin-err 1e-8)
 	    (begin
-	      (display "base sine seems inaccurate!  error: ") 
-	      (display mx-sin-err) 
+	      (display "base sine seems inaccurate!  error: ")
+	      (display mx-sin-err)
 	      (newline)))
-	
+
 	(set! vals (reverse vals))
-	
+
 	(let ((stop #f))
 	  (do ((i 0 (+ i 1)))
 	      ((or (number? stop)
@@ -37522,8 +37522,8 @@
 		    (begin
 		      (set! happy #f)
 		      (display "exp+log error > 1e-6 around 2^") (display (/ (log val) (log 2))) (newline))))))))
-      
-      (let ((data (list ; table[Tan[10^k], {k, 0, 30}] 
+
+      (let ((data (list ; table[Tan[10^k], {k, 0, 30}]
 		   1.55740772465490223050697480745836017308725077238152003838394660569886
 		   0.64836082745908667125912493300980867681687434298372497563362796739585
 		   -0.58721391515692907667780963564458789425876598687291954412663968360989
@@ -37560,7 +37560,7 @@
 	       (dec 1.0 (* dec 10.0)))
 	      ((or (not happy)
 		   (= i (length data))))
-	    (let ((val (tan dec))) 
+	    (let ((val (tan dec)))
 	      (let ((err (abs (- (list-ref data i) val)))
 		    (err1 (- (tan (+ 0.1 (* our-pi dec))) (tan 0.1)))
 		    (err2 (- (tan (+ 1.0 (* our-pi dec))) (tan 1.0))))
@@ -37605,7 +37605,7 @@
 		    -0.01497567178976730440176306617453810628601368985529884710795141610434
 		    -0.01447648273010839425503763063105350274314656686012221887048754923492)))
 	(let ((happy #t))
-	  (do ((i 1 (+ i 1))) 
+	  (do ((i 1 (+ i 1)))
 	      ((or (= i (length expts))
 		   (not happy)))
 	    (catch #t
@@ -37616,9 +37616,9 @@
 			   (begin
 			     (set! happy #f)
 			     (display "expt error > 1e-6 around 2^") (display (/ (log (expt .1 i)) (log 2))) (newline)))))
-		   (lambda args 
+		   (lambda args
 		     (display "expt no accurate below around 2^") (display (/ (log (expt .1 i)) (log 2))) (newline))))))
-      
+
       (let ((sin-err 0.0)
 	    (cos-err 0.0)
 	    (log-err 0.0)
@@ -37628,8 +37628,8 @@
 	;; data generated by mathtool in the arprec package
 
 	;; another baddy: (tan 314159265358979323) should be -1.129792652308908544253650171110
-	
-	(let ((sins (list 
+
+	(let ((sins (list
 		     0.00000000000000000000000000000000000000000000000000000000000000000000
 		     0.09983341664682815230681419841062202698991538801798225999276686156165
 		     0.19866933079506121545941262711838975037020672954020540398639599139797
@@ -37671,8 +37671,8 @@
 		(if (> err mxerr)
 		    (set! mxerr err))))
 	    (set! sin-err mxerr)))
-	
-	(let ((coss (list 
+
+	(let ((coss (list
 		     1.00000000000000000000000000000000000000000000000000000000000000000000
 		     0.99500416527802576609556198780387029483857622541508403595935274468526
 		     0.98006657784124163112419651674816887739352436080656799405254829012618
@@ -37714,7 +37714,7 @@
 		(if (> err mxerr)
 		    (set! mxerr err))))
 	    (set! cos-err mxerr)))
-	
+
 	(let ((logs-1 (list
 		       -4.60517018598809136803598290936872841520220297725754595206665580193514
 		       -3.91202300542814605861875078791055184712670284289729069794597579244175
@@ -37767,7 +37767,7 @@
 		(if (> err mxerr)
 		    (set! mxerr err))))
 	    (set! log-err mxerr)))
-	
+
 	(let ((asins (list
 		      0.00000000000000000000000000000000000000000000000000000000000000000000
 		      0.02500260489936113599406838915349107150195748368840710160729904233944
@@ -37818,7 +37818,7 @@
 		(if (> err mxerr)
 		    (set! mxerr err))))
 	    (set! asin-err mxerr)))
-	
+
 	(let ((atans (list
 		      0.00000000000000000000000000000000000000000000000000000000000000000000
 		      0.04995839572194276141000628703484488149127708042350717441085345482998
@@ -37869,7 +37869,7 @@
 		(if (> err mxerr)
 		    (set! mxerr err))))
 	    (set! atan-err mxerr)))
-	
+
 	(let ((sqrts (list
 		      1.00000000000000000000000000000000000000000000000000000000000000000000
 		      1.41421356237309504880168872420969807856967187537694807317667973799073
@@ -37918,7 +37918,7 @@
 		(if (> err mxerr)
 		    (set! mxerr err))))
 	    (set! sqrt-err mxerr)))
-	
+
 	(if (> sin-err 1e-12) (begin (display "sin err: ") (display sin-err) (newline)))
 	(if (> cos-err 1e-12) (begin (display "cos err: ") (display cos-err) (newline)))
 	(if (> log-err 1e-12) (begin (display "log err: ") (display log-err) (newline)))
@@ -37931,10 +37931,10 @@
 
 '(
 ;;; this is the current s7 output from loading this file:
-  
+
   " "
   (let ((funcs (make-vector 3 #f))) (do ((i 0 (+ i 1))) ((= i 3)) (vector-set! funcs i (lambda () (+ i 1)))) (+ ((vector-ref funcs 0)) ((vector-ref funcs 1)) ((vector-ref funcs 2)))) got 12 but expected 6
-  
+
 (let* ((x (quote (1 2 3))) (y (apply list x))) (not (eq? x y))) got #f but expected #t
 
 format #t 1 output-port: 2! (this is testing output ports)
@@ -37983,7 +37983,7 @@ expt error > 1e-6 around 2^-46.506993328423
 
       ;;; --------------------------------------------------------------------------------
       ;;; these are for testing the logical funcs -- taken from slib
-      
+
       ;; "logical.scm", bit access and operations for integers for Scheme
       ;; Copyright (C) 1991, 1993, 2001, 2003 Aubrey Jaffer
       ;;
@@ -38002,7 +38002,7 @@ expt error > 1e-6 around 2^-46.506993328423
       ;;material, there shall be no use of my name in any advertising,
       ;;promotional, or sales literature without prior written consent in
       ;;each case.
-      
+
       (define logical:integer-expt
 	(if (provided? 'inexact)
 	    expt
@@ -38015,7 +38015,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		     ((0) acc)
 		     ((1) (* x acc))
 		     (else (slib:error 'integer-expt n k))))))))
-      
+
       (define logical:boole-xor
 	'#(#(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
 	   #(1 0 3 2 5 4 7 6 9 8 11 10 13 12 15 14)
@@ -38033,7 +38033,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	   #(13 12 15 14 9 8 11 10 5 4 7 6 1 0 3 2)
 	   #(14 15 12 13 10 11 8 9 6 7 4 5 2 3 0 1)
 	   #(15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0)))
-      
+
       (define logical:boole-and
 	'#(#(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 	   #(0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1)
@@ -38051,12 +38051,12 @@ expt error > 1e-6 around 2^-46.506993328423
 	   #(0 1 0 1 4 5 4 5 8 9 8 9 12 13 12 13)
 	   #(0 0 2 2 4 4 6 6 8 8 10 10 12 12 14 14)
 	   #(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)))
-      
+
       (define (logical:ash-4 x)
 	(if (negative? x)
 	    (+ -1 (quotient (+ 1 x) 16))
 	    (quotient x 16)))
-      
+
       (define logical:logand
 	(letrec
 	    ((lgand
@@ -38073,7 +38073,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					 scl)
 				      acc)))))))
 	  (lambda (n1 n2) (lgand n2 n1 1 0))))
-      
+
       (define logical:logior
 	(letrec
 	    ((lgior
@@ -38091,7 +38091,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					 scl)
 				      acc)))))))
 	  (lambda (n1 n2) (lgior n2 n1 1 0))))
-      
+
       (define logical:logxor
 	(letrec
 	    ((lgxor
@@ -38108,9 +38108,9 @@ expt error > 1e-6 around 2^-46.506993328423
 					 scl)
 				      acc)))))))
 	  (lambda (n1 n2) (lgxor n2 n1 1 0))))
-      
+
       (define (logical:lognot n) (- -1 n))
-      
+
       (define (logical:ash n count)
 	(if (negative? count)
 	    (let ((k (logical:integer-expt 2 (- count))))
@@ -38118,7 +38118,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		  (+ -1 (quotient (+ 1 n) k))
 		  (quotient n k)))
 	    (* (logical:integer-expt 2 count) n)))
-      
+
       (define logical:integer-length
 	(letrec ((intlen (lambda (n tot)
 			   (case n
@@ -38128,125 +38128,125 @@ expt error > 1e-6 around 2^-46.506993328423
 			     ((4 5 6 7 -5 -6 -7 -8) (+ 3 tot))
 			     (else (intlen (logical:ash-4 n) (+ 4 tot)))))))
 	  (lambda (n) (intlen n 0))))
-      
+
       ;; --------------------------------------------------------------------------------
       ;; end of slib borrowings
       ;; --------------------------------------------------------------------------------
-      
-      
+
+
       (if (and (provided? 's7) (defined? 'current-time) (defined? 'mus-rand-seed)) (set! (mus-rand-seed) (current-time)))
-      
+
       (format #t "the bug machine is running...")
-      
-      (letrec ((distance (lambda (a b) 
+
+      (letrec ((distance (lambda (a b)
 			   (magnitude (- a b))
 			   ;; (magnitude (- (exact->inexact a) (exact->inexact b)))
 			   ))
-	       
+
 	       (choose-number (lambda ()
 				(let ((choice (random 4))
 				      (num1 (random (inexact->exact (floor (expt 2 expt-max)))))
 				      (num2 (random (inexact->exact (floor (expt 2 expt-max))))))
 				  (if (> (random 1.0) 0.5) (set! num1 (- num1)))
 				  (if (> (random 1.0) 0.5) (set! num2 (- num2)))
-				  (list 
+				  (list
 				   (case choice
 				     ((0) num1)
 				     ((1) (/ num1 (if (= num2 0) 1 num2)))
 				     ((2) (if (not (= num2 0)) (exact->inexact (/ num1 num2)) (* .01 num1)))
 				     ((3) (make-rectangular (* (random 1.0) num1) (* (random 1.0) num2))))))))
-	       
+
 	       (choose-real (lambda ()
 			      (let ((choice (random 3))
 				    (num1 (random (expt 2 expt-max)))
 				    (num2 (random (expt 2 expt-max))))
 				(if (> (random 1.0) 0.5) (set! num1 (- num1)))
 				(if (> (random 1.0) 0.5) (set! num2 (- num2)))
-				(list 
+				(list
 				 (case choice
 				   ((0) num1)
 				   ((1) (/ num1 (if (= num2 0) 1 num2)))
 				   ((2) (if (not (= num2 0)) (exact->inexact (/ num1 num2)) (* .01 num1))))))))
-	       
+
 	       (choose-rational (lambda ()
 				  (let ((choice (random 2))
 					(num1 (random (inexact->exact (floor (expt 2 expt-max)))))
 					(num2 (inexact->exact (floor (random (expt 2 expt-max))))))
 				    (if (> (random 1.0) 0.5) (set! num1 (- num1)))
 				    (if (> (random 1.0) 0.5) (set! num2 (- num2)))
-				    (list 
+				    (list
 				     (case choice
 				       ((0) num1)
 				       ((1) (/ num1 (if (= num2 0) 1 num2))))))))
-	       
+
 	       (choose-integer (lambda () (list (random (inexact->exact (floor (expt 2 31)))))))
-       
+
 	       (choose-number-small-imag (lambda ()
 					   (let ((choice (random 4))
 						 (num1 (random (inexact->exact (floor (expt 2 31)))))
 						 (num2 (random (inexact->exact (floor (expt 2 31))))))
 					     (if (> (random 1.0) 0.5) (set! num1 (- num1)))
 					     (if (> (random 1.0) 0.5) (set! num2 (- num2)))
-					     (list 
+					     (list
 					      (case choice
 						((0) num1)
 						((1) (/ num1 (if (= num2 0) 1 num2)))
 						((2) (if (not (= num2 0)) (exact->inexact (/ num1 num2)) (* .01 num1)))
 						((3) (make-rectangular (* (random 1.0) num1) (- (random 10.0) 5.0))))))))
-	       
+
 	       (choose-number-small-real (lambda ()
 					   (let ((choice (random 4))
 						 (num1 (random 10.0))
 						 (num2 (random 1000.0)))
 					     (if (> (random 1.0) 0.5) (set! num1 (- num1)))
 					     (if (> (random 1.0) 0.5) (set! num2 (- num2)))
-					     (list 
+					     (list
 					      (case choice
 						((0) (floor num1))
 						((1) (/ (floor num1) (max 1 (floor num2))))
 						((2) num1)
 						((3) (make-rectangular (- (random 10.0) 5.0) (* (random 1.0) num1))))))))
-	       
+
 	       (choose-small-number (lambda ()
 				      (let ((choice (random 4))
 					    (num1 (random 10.0))
 					    (num2 (random 10.0)))
 					(if (> (random 1.0) 0.5) (set! num1 (- num1)))
-					(list 
+					(list
 					 (case choice
 					   ((0) (floor num1))
 					   ((1) (/ (floor num1) (max 1 (floor num2))))
 					   ((2) num1)
 					   ((3) (make-rectangular (- (random 10.0) 5.0) (* (random 1.0) num1))))))))
-	       
+
 	       (choose-n-numbers (lambda ()
 				   (let ((n (max 1 (random 20)))
 					 (args '()))
 				     (do ((i 0 (+ i 1)))
 					 ((= i n) args)
 				       (set! args (cons (car (choose-number)) args))))))
-	       
+
 	       (choose-n-real-numbers (lambda ()
 					(let ((n (max 1 (random 20)))
 					      (args '()))
 					  (do ((i 0 (+ i 1)))
 					      ((= i n) args)
 					    (set! args (cons (car (choose-real)) args))))))
-	       
+
 	       (choose-2-or-more-real-numbers (lambda ()
 						(let ((n (max 2 (random 20)))
 						      (args '()))
 						  (do ((i 0 (+ i 1)))
 						      ((= i n) args)
 						    (set! args (cons (car (choose-real)) args))))))
-	       
+
 	       (choose-n-small-numbers (lambda ()
 					 (let ((n (max 1 (random 20)))
 					       (args '()))
 					   (do ((i 0 (+ i 1)))
 					       ((= i n) args)
 					     (set! args (cons (car (choose-small-number)) args))))))
-	       
+
 	       (ok-real-keep-type (lambda (op nlst v tst)
 				    (let ((n (car nlst)))
 				      (if (not (real? n))
@@ -38259,7 +38259,7 @@ expt error > 1e-6 around 2^-46.506993328423
 						  (not (real? v))
 						  (not (tst n v)))
 					      (format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-number-to-real (lambda (op nlst v tst)
 				    (let ((n (car nlst)))
 				      (if (not (number? n))
@@ -38268,7 +38268,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					  (if (or (not (real? v))
 						  (not (tst n v)))
 					      (format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-rational (lambda (op nlst v tst)
 			      (let ((n (car nlst)))
 				(if (not (rational? n))
@@ -38276,7 +38276,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					(format #t "(~A ~A) -> ~A~%" op n v))
 				    (if (not (tst n v))
 					(format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-number (lambda (op nlst v tst)
 			    (let ((n (car nlst)))
 			      (if (not (number? n))
@@ -38284,7 +38284,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      (format #t "(~A ~A) -> ~A~%" op n v))
 				  (if (not (tst n v))
 				      (format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-two-numbers (lambda (op nlst v tst)
 				 (let ((n1 (car nlst))
 				       (n2 (cadr nlst)))
@@ -38294,7 +38294,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (format #t "(~A ~A ~A) -> ~A~%" op n1 n2 v))
 				       (if (not (tst n1 n2 v))
 					   (format #t "(~A ~A ~A) -> ~A~%" op n1 n2 v))))))
-	       
+
 	       (ok-number-to-bool (lambda (op nlst v tst)
 				    (let ((n (car nlst)))
 				      (if (not (number? n))
@@ -38303,7 +38303,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					  (if (or (not (boolean? v))
 						  (not (tst n v)))
 					      (format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-real-to-bool (lambda (op nlst v tst)
 				  (let ((n (car nlst)))
 				    (if (not (real? n))
@@ -38312,7 +38312,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					(if (or (not (boolean? v))
 						(not (tst n v)))
 					    (format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-integer-to-bool (lambda (op nlst v tst)
 				     (let ((n (car nlst)))
 				       (if (not (integer? n))
@@ -38321,7 +38321,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (if (or (not (boolean? v))
 						   (not (tst n v)))
 					       (format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (ok-string-to-number (lambda (op nlst v tst)
 				      (let ((n (car nlst)))
 					(if (not (number? n))
@@ -38330,18 +38330,18 @@ expt error > 1e-6 around 2^-46.506993328423
 					    (if (or (not (string? v))
 						    (not (tst n v)))
 						(format #t "(~A ~A) -> ~A~%" op n v))))))
-	       
+
 	       (choose-char (lambda () (list (integer->char (random 128)))))
-	       
+
 	       (choose-non-null-char (lambda () (list (integer->char (max 1 (random 128))))))
-	       
+
 	       (choose-2-or-more-chars (lambda ()
 					 (let ((n (if with-char-ops-with-more-than-2-args (max 2 (random 20)) 2))
 					       (args '()))
 					   (do ((i 0 (+ i 1)))
 					       ((= i n) args)
 					     (set! args (cons (car (choose-char)) args))))))
-	       
+
 	       (choose-string (lambda ()
 				(let* ((strlen (random 20))
 				       (str (make-string strlen)))
@@ -38349,7 +38349,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      ((= i strlen))
 				    (string-set! str i (integer->char (+ 40 (random 80)))))  ;(max 1 (random 128)))))
 				  (list str))))
-	       
+
 	       (choose-non-null-string (lambda ()
 					 (let* ((strlen (+ 1 (random 20)))
 						(str (make-string strlen)))
@@ -38364,7 +38364,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					     (do ((i 0 (+ i 1)))
 						 ((= i n) args)
 					       (set! args (cons (car (choose-string)) args))))))
-	       
+
 	       (choose-vector (lambda (ctr)
 				(if (> ctr 3)
 				    (list 1)
@@ -38374,7 +38374,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					  ((= i len))
 					(vector-set! v i (car (choose-any (+ ctr 1)))))
 				      (list v)))))
-	       
+
 	       (choose-list (lambda (ctr)
 			      (if (> ctr 6)
 				  (list (list 1))
@@ -38384,13 +38384,13 @@ expt error > 1e-6 around 2^-46.506993328423
 					((= i len))
 				      (set! lst (cons (car (choose-any (+ ctr 1))) lst)))
 				    (list lst)))))
-	       
+
 	       (choose-non-null-list (lambda (ctr)
 				       (let ((val (car (choose-list ctr))))
 					 (if (null? val)
 					     (list (list val))
 					     (list val)))))
-	       
+
 	       (choose-alist (lambda (type)
 			       (let ((dotted (> (random 1.0) 0.5))
 				     (len (+ 1 (random 10)))
@@ -38410,7 +38410,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (set! lst (cons ((if dotted cons list) key key) lst)))
 					 (set! lst (cons ((if dotted cons list) (car (choose-any 3)) (car (choose-any 3))) lst))))
 				   (list key (reverse lst))))))
-	       
+
 	       (choose-mlist (lambda (type)
 			       (let ((len (+ 1 (random 10)))
 				     (key (car (if (eq? type 'eq?)
@@ -38429,13 +38429,13 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (set! lst (cons key lst)))
 					 (set! lst (cons (car (choose-any 3)) lst))))
 				   (list key (reverse lst))))))
-	       
+
 	       (choose-boolean (lambda ()
 				 (list (case (random 4)
 					 ((0) #f)
 					 ((1) #t)
 					 (else 'hi)))))
-	       
+
 	       (choose-any (lambda (ctr)
 			     (let ((type (random (if (= ctr 0) 6 (if (= ctr 1) 5 (if (= ctr 2) 4 3))))))
 			       (case type
@@ -38445,124 +38445,124 @@ expt error > 1e-6 around 2^-46.506993328423
 				 ((3) (choose-list (+ ctr 1)))
 				 ((4) (choose-vector (+ ctr 1)))
 				 (else (choose-boolean))))))
-       
-	       
+
+
 	       )
-	
-	(let ((ops 
-	       (list 
-		
+
+	(let ((ops
+	       (list
+
 		;; -------- numbers --------------------------------
-		(list abs 
-		      (lambda (nlst v) 
-			(ok-real-keep-type 'abs nlst v 
+		(list abs
+		      (lambda (nlst v)
+			(ok-real-keep-type 'abs nlst v
 					   (lambda (n v)
 					     (= v (if (< n 0) (- n) n)))))
 		      choose-real)
-		
-		(list angle 
+
+		(list angle
 		      (lambda (nlst v)
-			(ok-number 'angle nlst v 
+			(ok-number 'angle nlst v
 				   (lambda (n v)
 				     (let ((val (make-polar (magnitude n) v)))
 				       (< (distance val n) 1e-5)))))
 		      choose-number)
-		
-		(list magnitude 
+
+		(list magnitude
 		      (lambda (nlst v)
-			(ok-number 'magnitude nlst v 
+			(ok-number 'magnitude nlst v
 				   (lambda (n v)
 				     (let ((val (make-polar v (angle n))))
 				       (< (distance val n) 1e-5)))))
 		      choose-number)
-		
-		(list real-part 
+
+		(list real-part
 		      (lambda (nlst v)
-			(ok-number-to-real 'real-part nlst v 
+			(ok-number-to-real 'real-part nlst v
 					   (lambda (n v)
 					     (let ((val (make-rectangular v (imag-part n))))
 					       (< (distance val n) 1e-5)))))
 		      choose-number)
-		
-		(list imag-part 
+
+		(list imag-part
 		      (lambda (nlst v)
-			(ok-number-to-real 'imag-part nlst v 
+			(ok-number-to-real 'imag-part nlst v
 					   (lambda (n v)
 					     (let ((val (make-rectangular (real-part n) v)))
 					       (< (distance val n) 1e-5)))))
 		      choose-number)
-		
-		(list numerator 
+
+		(list numerator
 		      (lambda (nlst v)
-			(ok-rational 'numerator nlst v 
+			(ok-rational 'numerator nlst v
 				     (lambda (n v)
 				       (if (integer? n)
 					   (= n v)
 					   (= v (* n (denominator n)))))))
 		      choose-rational)
-		
-		(list denominator 
+
+		(list denominator
 		      (lambda (nlst v)
-			(ok-rational 'denominator nlst v 
+			(ok-rational 'denominator nlst v
 				     (lambda (n v)
 				       (if (integer? n)
 					   (= v 1)
 					   (= v (/ (numerator n) n))))))
 		      choose-rational)
-		
-		(list zero? 
+
+		(list zero?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'zero? nlst v 
+			(ok-number-to-bool 'zero? nlst v
 					   (lambda (n v)
 					     (or (and (= n 0)
 						      v)
 						 (and (not (= n 0))
 						      (not v))))))
 		      choose-number)
-		
-		(list positive? 
+
+		(list positive?
 		      (lambda (nlst v)
-			(ok-real-to-bool 'positive? nlst v 
+			(ok-real-to-bool 'positive? nlst v
 					 (lambda (n v)
 					   (or (and (> n 0)
 						    v)
 					       (and (<= n 0)
 						    (not v))))))
 		      choose-real)
-		
-		(list negative? 
+
+		(list negative?
 		      (lambda (nlst v)
-			(ok-real-to-bool 'negative? nlst v 
+			(ok-real-to-bool 'negative? nlst v
 					 (lambda (n v)
 					   (or (and (< n 0)
 						    v)
 					       (and (>= n 0)
 						    (not v))))))
 		      choose-real)
-		
-		(list even? 
+
+		(list even?
 		      (lambda (nlst v)
-			(ok-integer-to-bool 'even? nlst v 
+			(ok-integer-to-bool 'even? nlst v
 					    (lambda (n v)
 					      (or (and (= (modulo n 2) 0)
 						       v)
 						  (and (not (= (modulo n 2) 0))
 						       (not v))))))
 		      choose-integer)
-		
-		(list odd? 
+
+		(list odd?
 		      (lambda (nlst v)
-			(ok-integer-to-bool 'odd? nlst v 
+			(ok-integer-to-bool 'odd? nlst v
 					    (lambda (n v)
 					      (or (and (= (modulo n 2) 1)
 						       v)
 						  (and (not (= (modulo n 2) 1))
 						       (not v))))))
 		      choose-integer)
-		
-		(list exact? 
+
+		(list exact?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'exact? nlst v 
+			(ok-number-to-bool 'exact? nlst v
 					   (lambda (n v)
 					     (let* ((str (number->string n))
 						    (dotted #f)
@@ -38575,10 +38575,10 @@ expt error > 1e-6 around 2^-46.506993328423
 						   (eq? v (and (real? n)
 							       (not dotted))))))))
 		      choose-number)
-		
-		(list inexact? 
+
+		(list inexact?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'inexact? nlst v 
+			(ok-number-to-bool 'inexact? nlst v
 					   (lambda (n v)
 					     (let* ((str (number->string n))
 						    (dotted #f)
@@ -38591,31 +38591,31 @@ expt error > 1e-6 around 2^-46.506993328423
 						   (eq? v (or (not (real? n))
 							      dotted)))))))
 		      choose-number)
-		
-		(list sin 
+
+		(list sin
 		      (lambda (nlst v)
-			(ok-number 'sin nlst v 
+			(ok-number 'sin nlst v
 				   (lambda (n v)
 				     (let ((a (cos n)))
-				       (and (< (min (distance v (sqrt (- 1 (* a a)))) 
+				       (and (< (min (distance v (sqrt (- 1 (* a a))))
 						    (distance v (- (sqrt (- 1 (* a a))))))
 					       err-max)
 					    (< (distance (- v) (sin (- n))) err-max)
 					    (< (distance v (- (* 3 (sin (/ n 3))) (* 4 (expt (sin (/ n 3)) 3)))) 1e-4))))))
 		      choose-number-small-imag)
-		
-		(list cos 
+
+		(list cos
 		      (lambda (nlst v)
-			(ok-number 'cos nlst v 
+			(ok-number 'cos nlst v
 				   (lambda (n v)
 				     (let ((a (sin n)))
-				       (and (< (min (distance v (sqrt (- 1 (* a a)))) 
+				       (and (< (min (distance v (sqrt (- 1 (* a a))))
 						    (distance v (- (sqrt (- 1 (* a a))))))
 					       err-max)
 					    (< (distance v (cos (- n))) err-max)
 					    (< (distance v (- (* 4 (expt (cos (/ n 3)) 3)) (* 3 (cos (/ n 3))))) 1e-4))))))
 		      choose-number-small-imag)
-		
+
 		(list asin
 		      (lambda (nlst v)
 			(let ((asin-taylor (lambda (x)
@@ -38623,7 +38623,7 @@ expt error > 1e-6 around 2^-46.506993328423
 						(* 35/1152 (expt x 9)) (* 63/2816 (expt x 11)) (* 231/13312 (expt x 13))
 						(* 143/10240 (expt x 15)) (* 6435/557056 (expt x 17)) (* 12155/1245184 (expt x 19))))))
 
-			  (ok-number 'asin nlst v 
+			  (ok-number 'asin nlst v
 				   (lambda (n v)
 				     (let ((a (sin v)))
 					;(format #t "[~A ~A ~A -> ~A]~%" n v a (min (magnitude (- a n)) (magnitude (+ a n))))
@@ -38638,15 +38638,15 @@ expt error > 1e-6 around 2^-46.506993328423
 							  (distance val (- v)))
 						     1e-6)))))))))
 		      choose-small-number)
-		
-		(list acos 
+
+		(list acos
 		      (lambda (nlst v)
 			(let ((acos-taylor (lambda (x)
-					     (- (/ our-pi 2) 
+					     (- (/ our-pi 2)
 						x (* 1/6 x x x) (* 3/40 x x x x x) (* 5/112 (expt x 7))
 						(* 35/1152 (expt x 9)) (* 63/2816 (expt x 11)) (* 231/13312 (expt x 13))
 						(* 143/10240 (expt x 15)) (* 6435/557056 (expt x 17)) (* 12155/1245184 (expt x 19))))))
-			  (ok-number 'acos nlst v 
+			  (ok-number 'acos nlst v
 				   (lambda (n v)
 				     (let ((a (cos v)))
 					;(format #t "[~A ~A ~A -> ~A]~%" n v a (min (magnitude (- a n)) (magnitude (+ a n))))
@@ -38660,12 +38660,12 @@ expt error > 1e-6 around 2^-46.506993328423
 							  (distance val (- v)))
 						     1e-6)))))))))
 		      choose-small-number)
-		
-		(list integer? 
+
+		(list integer?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'integer? nlst v 
+			(ok-number-to-bool 'integer? nlst v
 					   (lambda (n v)
-					     (eq? v 
+					     (eq? v
 						  (and (zero? (imag-part n))
 						       (rational? n)
 						       (= n (inexact->exact n))
@@ -38682,41 +38682,41 @@ expt error > 1e-6 around 2^-46.506993328423
 							       (set! unzero-after-dot (not (char=? #\0 (string-ref str i))))))
 							 (not unzero-after-dot)))))))
 		      choose-number)
-		
+
 		(list rational?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'rational? nlst v 
+			(ok-number-to-bool 'rational? nlst v
 					   (lambda (n v)
 					     (if with-generic-modulo
 						 (eq? v (exact? n))
 						 (eq? v (real? n))))))
 		      choose-number)
-		
+
 		(list real?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'real? nlst v 
+			(ok-number-to-bool 'real? nlst v
 					   (lambda (n v) (eq? v (zero? (imag-part n))))))
 		      choose-number)
-		
-		(list complex? 
+
+		(list complex?
 		      (lambda (nlst v)
-			(ok-number-to-bool 'complex? nlst v 
+			(ok-number-to-bool 'complex? nlst v
 					   (lambda (n v) (eq? v (number? n)))))
 		      choose-number)
-		
-		(list sqrt 
+
+		(list sqrt
 		      (lambda (nlst v)
-			(ok-number 'sqrt nlst v 
+			(ok-number 'sqrt nlst v
 				   (lambda (n v)
 				     (let ((a (* v v)))
 				       (and (< (magnitude (- a n)) 1e-6)
 					    (< (distance (expt n 1/2) v) 1e-6)
 					    (< (/ (distance (* n v) (expt n 3/2)) (max 1 (magnitude n))) 1e-6))))))
 		      choose-number)
-		
-		(list exp 
+
+		(list exp
 		      (lambda (nlst v)
-			(ok-number 'exp nlst v 
+			(ok-number 'exp nlst v
 				   (lambda (n v)
 				     (let ((a (log v)))
 				       (and (< (min (distance a n)
@@ -38728,10 +38728,10 @@ expt error > 1e-6 around 2^-46.506993328423
 					    (< (distance (/ (exp n) (exp 2.8125)) (exp (- n 2.8125))) err-max)
 					    (< (distance (* (exp n) (exp (- n))) 1.0) err-max))))))
 		      choose-number-small-real)
-		
-		(list log 
+
+		(list log
 		      (lambda (nlst v)
-			(ok-number 'log nlst v 
+			(ok-number 'log nlst v
 				   (lambda (n v)
 				     (let ((a (exp v)))
 				       (and (< (distance a n) 1e-4)
@@ -38741,10 +38741,10 @@ expt error > 1e-6 around 2^-46.506993328423
 						(< (distance (* 2 v) (log (* n n))) 1e-4)
 						(< (distance (- v) (log (/ 1 n))) 1e-4)))))))
 		      (lambda () (let ((val (car (choose-number)))) (list (if (zero? val) 1.0 val)))))
-		
-		(list tan 
+
+		(list tan
 		      (lambda (nlst v)
-			(ok-number 'tan nlst v 
+			(ok-number 'tan nlst v
 				   (lambda (n v)
 				     (let ((a (/ (sin n) (cos n))))
 				       ;; this division is a problem!
@@ -38753,16 +38753,16 @@ expt error > 1e-6 around 2^-46.506993328423
 							      (- 1 (expt (tan (/ n 2)) 2))))
 					       1e-4))))))
 		      (lambda () (let ((val (car (choose-number-small-imag)))) (list (if (zero? (cos val)) 1.0 val)))))
-		
-		(list atan 
-		      (lambda (nlst v) 
+
+		(list atan
+		      (lambda (nlst v)
 			(let ((atan-taylor (lambda (x)
 					     (let ((val x))
 					       (do ((i 3 (+ i 2))
 						    (sign -1 (- sign)))
 						   ((>= i 100) val)
 						 (set! val (+ val (/ (* sign (expt x i)) i))))))))
-			  (ok-number 'atan nlst v 
+			  (ok-number 'atan nlst v
 				     (lambda (n v)
 				       (let ((a (tan v)))
 					 (and (< (min (distance a n)
@@ -38772,41 +38772,41 @@ expt error > 1e-6 around 2^-46.506993328423
 					      (or (> (magnitude n) .5)
 						  (< (distance v (atan-taylor (exact->inexact n))) 1e-6))))))))
 		      choose-number-small-real)
-		
+
 		(list floor
 		      (lambda (nlst v)
-			(ok-number 'floor nlst v 
+			(ok-number 'floor nlst v
 				   (lambda (n v)
 				     (and (rational? v)
 					  (>= (- n v) 0)
 					  (< (- n v) 1.0)))))
 		      choose-real)
-		
+
 		(list ceiling
 		      (lambda (nlst v)
-			(ok-number 'ceiling nlst v 
+			(ok-number 'ceiling nlst v
 				   (lambda (n v)
 				     (and (rational? v)
 					  (<= (- n v) 0)
 					  (< (- v n) 1.0)))))
 		      choose-real)
-		
-		(list round 
+
+		(list round
 		      (lambda (nlst v)
-			(ok-number 'round nlst v 
+			(ok-number 'round nlst v
 				   (lambda (n v)
 				     (and (rational? v)
 					  (<= (abs (- n v)) 0.5)))))
 		      choose-real)
-		
+
 		(list truncate
 		      (lambda (nlst v)
-			(ok-number 'truncate nlst v 
+			(ok-number 'truncate nlst v
 				   (lambda (n v)
 				     (and (rational? v)
 					  (< (abs (- n v)) 1.0)))))
 		      choose-real)
-		
+
 
 		;; -------- hyperbolics --------------------------------
 
@@ -38817,7 +38817,7 @@ expt error > 1e-6 around 2^-46.506993328423
 						 (+ x (* 1/6 (expt x 3)) (* 1/120 (expt x 5)) (* 1/5040 (expt x 7))
 						    (* 1/362880 (expt x 9)) (* 1/39916800 (expt x 11))
 						    (* 1/6227020800 (expt x 13))))))
-			      (ok-number 'sinh nlst v 
+			      (ok-number 'sinh nlst v
 					 (lambda (n v)
 					   (let ((a (- (* 0.0+1.0i (sin (* 0.0+1.0i n))))))
 					     (and (< (distance a v) err-max)
@@ -38825,15 +38825,15 @@ expt error > 1e-6 around 2^-46.506993328423
 						      (< (distance (sinh-taylor (exact->inexact n)) v) 1e-4))))))))
 			  choose-number-small-real)
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
+
 		(if with-hyperbolic-functions
-		    (list cosh 
+		    (list cosh
 			  (lambda (nlst v)
 			    (let ((cosh-taylor (lambda (x)
 						 (+ 1 (* 1/2 x x) (* 1/24 (expt x 4)) (* 1/720 (expt x 6))
 						    (* 1/40320 (expt x 8)) (* 1/362880 (expt x 10))
 						    (* 1/479001600 (expt x 12))))))
-			      (ok-number 'cosh nlst v 
+			      (ok-number 'cosh nlst v
 				       (lambda (n v)
 					 (let ((a (cos (* 0.0+1.0i n))))
 					   (and (< (distance a v) err-max)
@@ -38841,91 +38841,91 @@ expt error > 1e-6 around 2^-46.506993328423
 						    (< (distance (cosh-taylor (exact->inexact n)) v) 1e-4))))))))
 			  choose-number-small-real)
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
+
 		(if with-hyperbolic-functions
 		    (list asinh
 			  (lambda (nlst v)
-			    (ok-number 'asinh nlst v 
+			    (ok-number 'asinh nlst v
 				       (lambda (n v)
 					 (let ((a (sinh v)))
 					   (< (distance a n) err-max)))))
 			  choose-small-number)
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
+
 		(if with-hyperbolic-functions
 		    (list acosh
 			  (lambda (nlst v)
-			    (ok-number 'acosh nlst v 
+			    (ok-number 'acosh nlst v
 				       (lambda (n v)
 					 (let ((a (cosh v)))
 					   (< (distance a n) err-max)))))
 			  choose-small-number)
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
+
 		(if with-hyperbolic-functions
 		    (list tanh
 			  (lambda (nlst v)
-			    (ok-number 'tanh nlst v 
+			    (ok-number 'tanh nlst v
 				       (lambda (n v)
 					 (let ((a (/ (sinh n) (cosh n))))
 					   (< (distance a v) err-max)))))
 			  choose-small-number)
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
+
 		(if with-hyperbolic-functions
 		    (list atanh
 			  (lambda (nlst v)
-			    (ok-number 'atanh nlst v 
+			    (ok-number 'atanh nlst v
 				       (lambda (n v)
 					 (let ((a (tanh v)))
 					   (< (distance a n) err-max)))))
 			  choose-small-number)
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
+
 		;; ------------------------------------------------
-		
-		(list make-polar 
+
+		(list make-polar
 		      (lambda (nlst v)
-			(ok-two-numbers 'make-polar nlst v 
+			(ok-two-numbers 'make-polar nlst v
 					(lambda (n1 n2 v)
 					  (if (>= (/ (distance (* n1 (exp (* 0.0+1.0i n2))) v) (max .001 (magnitude n1))) err-max)
 					      (format #t "(make-polar ~A ~A) -> ~A (~A, ~A)~%"
-						      n1 n2 v  
+						      n1 n2 v
 						      (* n1 (exp (* 0.0+1.0i n2)))
 						      (/ (distance (* n1 (exp (* 0.0+1.0i n2))) v) (max .001 (magnitude n1)))))
 					  (< (/ (distance (* n1 (exp (* 0.0+1.0i n2))) v) (max .001 (magnitude n1))) err-max))))
 		      (lambda () (list (car (choose-real)) (car (choose-real)))))
-		
+
 		(list make-rectangular
 		      (lambda (nlst v)
-			(ok-two-numbers 'make-rectangular nlst v 
+			(ok-two-numbers 'make-rectangular nlst v
 					(lambda (n1 n2 v)
 					  (< (/ (distance (+ n1 (* 0.0+1.0i n2)) v) (max .001 (magnitude n1))) err-max))))
 		      (lambda () (list (car (choose-real)) (car (choose-real)))))
-		
-		(list modulo 
+
+		(list modulo
 		      (lambda (nlst v)
-			(ok-two-numbers 'modulo nlst v 
+			(ok-two-numbers 'modulo nlst v
 					(lambda (n1 n2 v)
 					  (let ((a (- n1 (* n2 (floor (/ n1 n2))))))
 					    (= a v)))))
 		      (lambda () (list (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1))
 				       (let ((val (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1))))
 					 (if (zero? val) 1 val)))))
-		
-		(list remainder 
+
+		(list remainder
 		      (lambda (nlst v)
-			(ok-two-numbers 'remainder nlst v 
+			(ok-two-numbers 'remainder nlst v
 					(lambda (n1 n2 v)
 					  (let ((a (- n1 (* n2 (quotient n1 n2)))))
 					    (= a v)))))
 		      (lambda () (list (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1))
 				       (let ((val (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1))))
 					 (if (zero? val) 1 val)))))
-		
+
 		(list quotient
 		      (lambda (nlst v)
-			(ok-two-numbers 'quotient nlst v 
+			(ok-two-numbers 'quotient nlst v
 					(lambda (n1 n2 v)
 					  (let ((a (truncate (/ n1 n2))))
 					    (= a v)))))
@@ -38936,7 +38936,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-rationalize
 		    (list rationalize
 			  (lambda (nlst v)
-			    (ok-two-numbers 'rationalize nlst v 
+			    (ok-two-numbers 'rationalize nlst v
 					    (lambda (n1 n2 v) ; (rationalize n1 n2) -> v
 					      (and (rational? v)
 						   (< (abs (- v n1)) n2)
@@ -38973,33 +38973,33 @@ expt error > 1e-6 around 2^-46.506993328423
 						       (= v1 v)))))))
 			  (lambda () (list (car (choose-real)) (max 0.000001 (random .1)))))
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
-		
-		(list number->string 
+
+		(list number->string
 		      (lambda (nlst v)
-			(ok-string-to-number 'number->string nlst v 
+			(ok-string-to-number 'number->string nlst v
 					     (lambda (n v)
 					       (< (distance n (string->number v)) 1e-4))))
 		      choose-number)
-		
-		(list exact->inexact 
+
+		(list exact->inexact
 		      (lambda (nlst v)
 			(ok-number 'exact->inexact nlst v
 				   (lambda (n v)
 				     (and (< (abs (- n v)) 1e-11)
 					  (inexact? v)))))
 		      choose-rational)
-		
-		(list inexact->exact 
+
+		(list inexact->exact
 		      (lambda (nlst v)
 			(ok-number 'inexact->exact nlst v
 				   (lambda (n v)
 				     (and (< (abs (- n v)) 1e-11)
 					  (exact? v)))))
 		      choose-real)
-		
-		(list gcd 
+
+		(list gcd
 		      (lambda (nlst v)
-			(ok-two-numbers 'gcd nlst v 
+			(ok-two-numbers 'gcd nlst v
 					(lambda (n1 n2 v)
 					  (and (integer? (/ n1 v))
 					       (integer? (/ n2 v))
@@ -39007,9 +39007,9 @@ expt error > 1e-6 around 2^-46.506993328423
 					       (= (abs (lcm n1 n2)) (abs (/ (* n1 n2) v)))))))
 		      (lambda () (list (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1))
 				       (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1)))))
-		
-		
-		(list lcm 
+
+
+		(list lcm
 		      (lambda (nlst v)
 			(ok-two-numbers 'lcm nlst v
 					(lambda (n1 n2 v)
@@ -39021,10 +39021,10 @@ expt error > 1e-6 around 2^-46.506993328423
 						   (= (abs (/ (* n1 n2) v)) (gcd n1 n2)))))))
 		      (lambda () (list (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1))
 				       (* (random (inexact->exact (floor (expt 2 30)))) (if (> (random 1.0) 0.5) 1 -1)))))
-		
-		(list expt 
+
+		(list expt
 		      (lambda (nlst v)
-			(ok-two-numbers 'expt nlst v 
+			(ok-two-numbers 'expt nlst v
 					(lambda (n1 n2 v)
 
 					  (let ((a1 (if (zero? n1) 0 (exp (* n2 (log n1)))))
@@ -39038,8 +39038,8 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda () (list (let ((val (car (choose-small-number))))
 					 (if (zero? val) 1 (/ val 2.0)))
 				       (car (choose-small-number)))))
-		
-		(list + 
+
+		(list +
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
 				     (let ((n (length nlst))
@@ -39055,8 +39055,8 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(+ ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-n-numbers)
-		
-		(list - 
+
+		(list -
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
 				     (let ((n (length nlst))
@@ -39075,8 +39075,8 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(- ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-n-numbers)
-		
-		(list * 
+
+		(list *
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
 				     (let ((n (length nlst))
@@ -39091,8 +39091,8 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(* ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      (lambda () (map (lambda (n) (if (zero? n) 1 n)) (choose-n-small-numbers))))
-		
-		(list / 
+
+		(list /
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
 				     (let ((n (length nlst))
@@ -39111,15 +39111,15 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(/ ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      (lambda () (map (lambda (n) (if (zero? n) 1 n)) (choose-n-small-numbers))))
-		
-		(list max 
+
+		(list max
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
 				     (let ((n (length nlst))
 					   (happy #t))
 				       (do ((i 0 (+ i 1)))
-					   ((or (not happy) 
-						(= i n)) 
+					   ((or (not happy)
+						(= i n))
 					    happy)
 					 (let ((arg (list-ref nlst i)))
 					   (set! happy (> (- v arg) (- err-max)))))))))
@@ -39127,15 +39127,15 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(max ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-n-real-numbers)
-		
+
 		(list min
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
 				     (let ((n (length nlst))
 					   (happy #t))
 				       (do ((i 0 (+ i 1)))
-					   ((or (not happy) 
-						(= i n)) 
+					   ((or (not happy)
+						(= i n))
 					    happy)
 					 (let ((arg (list-ref nlst i)))
 					   (set! happy (> (- arg v) (- err-max)))))))))
@@ -39143,7 +39143,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(min ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-n-real-numbers)
-		
+
 		(list <
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
@@ -39151,7 +39151,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (happy #t)
 					   (last-arg (car nlst)))
 				       (do ((i 1 (+ i 1)))
-					   ((or (not happy) 
+					   ((or (not happy)
 						(= i n))
 					    (eq? v happy))
 					 (let ((arg (list-ref nlst i)))
@@ -39161,7 +39161,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(< ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-2-or-more-real-numbers)
-		
+
 		(list <=
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
@@ -39169,7 +39169,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (happy #t)
 					   (last-arg (car nlst)))
 				       (do ((i 1 (+ i 1)))
-					   ((or (not happy) 
+					   ((or (not happy)
 						(= i n))
 					    (eq? v happy))
 					 (let ((arg (list-ref nlst i)))
@@ -39179,7 +39179,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(<= ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-2-or-more-real-numbers)
-		
+
 		(list >
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
@@ -39187,7 +39187,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (happy #t)
 					   (last-arg (car nlst)))
 				       (do ((i 1 (+ i 1)))
-					   ((or (not happy) 
+					   ((or (not happy)
 						(= i n))
 					    (eq? v happy))
 					 (let ((arg (list-ref nlst i)))
@@ -39197,7 +39197,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(> ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-2-or-more-real-numbers)
-		
+
 		(list >=
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
@@ -39205,7 +39205,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (happy #t)
 					   (last-arg (car nlst)))
 				       (do ((i 1 (+ i 1)))
-					   ((or (not happy) 
+					   ((or (not happy)
 						(= i n))
 					    (eq? v happy))
 					 (let ((arg (list-ref nlst i)))
@@ -39215,7 +39215,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(>= ~{~A~^ ~}) -> ~A~%" nlst v)
 			      #t)))
 		      choose-2-or-more-real-numbers)
-		
+
 		(list =
 		      (lambda (nlst v)
 			(let ((tst (lambda (nlst v)
@@ -39223,7 +39223,7 @@ expt error > 1e-6 around 2^-46.506993328423
 					   (happy #t)
 					   (last-arg (car nlst)))
 				       (do ((i 1 (+ i 1)))
-					   ((or (not happy) 
+					   ((or (not happy)
 						(= i n))
 					    (eq? v happy))
 					 (let ((arg (list-ref nlst i)))
@@ -39240,7 +39240,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-bitwise-functions
 		    (list logand
 			  (lambda (nlst v)
-			    (ok-two-numbers 'logand nlst v 
+			    (ok-two-numbers 'logand nlst v
 					    (lambda (n1 n2 v)
 					      (let ((a (logical:logand n1 n2)))
 						(= a v)))))
@@ -39251,7 +39251,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-bitwise-functions
 		    (list logior
 			  (lambda (nlst v)
-			    (ok-two-numbers 'logior nlst v 
+			    (ok-two-numbers 'logior nlst v
 					    (lambda (n1 n2 v)
 					      (let ((a (logical:logior n1 n2)))
 						(= a v)))))
@@ -39262,7 +39262,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-bitwise-functions
 		    (list logxor
 			  (lambda (nlst v)
-			    (ok-two-numbers 'logxor nlst v 
+			    (ok-two-numbers 'logxor nlst v
 					    (lambda (n1 n2 v)
 					      (let ((a (logical:logxor n1 n2)))
 						(= a v)))))
@@ -39273,7 +39273,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-bitwise-functions
 		    (list lognot
 			  (lambda (nlst v)
-			    (ok-number 'logxor nlst v 
+			    (ok-number 'logxor nlst v
 				       (lambda (n1 v)
 					 (let ((a (logical:lognot n1)))
 					   (= a v)))))
@@ -39283,7 +39283,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-bitwise-functions
 		    (list ash
 			  (lambda (nlst v)
-			    (ok-two-numbers 'ash nlst v 
+			    (ok-two-numbers 'ash nlst v
 					    (lambda (n1 n2 v)
 					      (let ((a (logical:ash n1 n2)))
 						(= a v)))))
@@ -39294,7 +39294,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(if with-bitwise-functions
 		    (list integer-length
 			  (lambda (nlst v)
-			    (ok-number 'integer-length nlst v 
+			    (ok-number 'integer-length nlst v
 				       (lambda (n1 v)
 					 (let ((a (logical:integer-length n1))
 					       (b (ceiling (log (abs n1) 2))))
@@ -39303,9 +39303,9 @@ expt error > 1e-6 around 2^-46.506993328423
 		    (list (lambda () #f) (lambda (a b) #t) (lambda () '())))
 
 
-		
+
 		;; -------- characters --------------------------------
-		
+
 		(list char-upcase
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
@@ -39316,7 +39316,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				       (not (char=? chr (char-downcase v))))
 				  (format #t "(char-upcase #\\~A) -> ~A~%" chr v)))))
 		      choose-char)
-		
+
 		(list char-downcase
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
@@ -39327,7 +39327,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				       (not (char=? chr (char-upcase v))))
 				  (format #t "(char-downcase #\\~A) -> ~A~%" chr v)))))
 		      choose-char)
-		
+
 		(list char-alphabetic?
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
@@ -39335,37 +39335,37 @@ expt error > 1e-6 around 2^-46.506993328423
 					      (and (char<=? #\a chr) (char<=? chr #\z)))))
 			      (format #t "(char-alphabetic? #\\~A) -> ~A~%" chr v))))
 		      choose-char)
-		
+
 		(list char-numeric?
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
 			  (if (not (eq? v (if (member chr (list #\0 #\1 #\2 #\3 #\4 #\5 #\6 #\7 #\8 #\9)) #t #f)))
 			      (format #t "(char-numeric? #\\~A) -> ~A~%" chr v))))
 		      choose-char)
-		
+
 		(list char-upper-case?
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
 			  (if (not (eq? v (and (char<=? #\A chr) (char<=? chr #\Z))))
 			      (format #t "(char-upper-case? #\\~A) -> ~A~%" chr v))))
 		      choose-char)
-		
+
 		(list char-lower-case?
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
 			  (if (not (eq? v (and (char<=? #\a chr) (char<=? chr #\z))))
 			      (format #t "(char-lower-case? #\\~A) -> ~A~%" chr v))))
 		      choose-char)
-		
+
 		(list char-whitespace?
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
-			  (if (not (eq? v (if (member chr (list #\space (integer->char 9) (integer->char 10) 
+			  (if (not (eq? v (if (member chr (list #\space (integer->char 9) (integer->char 10)
 								(integer->char 11) (integer->char 12) (integer->char 13)))
 					      #t #f)))
 			      (format #t "(char-whitespace? #\\~A) -> ~A (~D)~%" chr v (char->integer chr)))))
 		      choose-char)
-		
+
 		(list char=?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39377,7 +39377,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char=? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char-ci=?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39391,7 +39391,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char-ci=? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char<?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39404,7 +39404,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char<? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char-ci<?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39417,7 +39417,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char-ci<? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char<=?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39430,7 +39430,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char<=? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char-ci<=?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39443,7 +39443,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char-ci<=? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char>?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39456,7 +39456,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char>? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char-ci>?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39469,7 +39469,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char-ci>? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char>=?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39482,7 +39482,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char>=? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char-ci>=?
 		      (lambda (nlst v)
 			(let ((c1 (car nlst))
@@ -39495,7 +39495,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(char-ci>=? ~{#\\~A~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-chars)
-		
+
 		(list char->integer
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
@@ -39503,7 +39503,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (char=? chr (integer->char v))))
 			      (format #t "(char->integer #\\~A) -> ~A~%" chr v))))
 		      choose-char)
-		
+
 		(list integer->char
 		      (lambda (nlst v)
 			(let ((chr (car nlst)))
@@ -39511,9 +39511,9 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (= chr (char->integer v))))
 			      (format #t "(integer->char ~A) -> #\\~A" chr v))))
 		      (lambda () (list (random 256))))
-		
+
 		;; -------- strings --------------------------------
-		
+
 		(list string-length
 		      (lambda (nlst v)
 			(let ((chr (car nlst))
@@ -39533,7 +39533,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (not (= (+ ilen 1) v))))
 			      (format #t "(string-length ~S) -> ~D (~D)~%" chr v ilen))))
 		      choose-string)
-		
+
 		(list string-ref
 		      (lambda (nlst v)
 			(let ((str (car nlst))
@@ -39544,7 +39544,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda ()
 			(let ((str (string-append "1" (car (choose-string)))))
 			  (list str (random (string-length str))))))
-		
+
 		(list string-set!
 		      (lambda (nlst v)
 			(let ((str (car nlst))
@@ -39555,7 +39555,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda ()
 			(let ((str (string-append "1" (car (choose-string)))))
 			  (list str (random (string-length str)) (car (choose-non-null-char))))))
-		
+
 		(list make-string
 		      (lambda (nlst v)
 			(let ((len (car nlst))
@@ -39575,7 +39575,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (> (random 1.0) 0.5)
 			      (list len (car (choose-non-null-char)))
 			      (list len)))))
-		
+
 		(list string=?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39593,7 +39593,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string=? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-ci=?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39611,7 +39611,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string-ci=? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string<?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39632,7 +39632,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char<? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (< c1-len c2-len)))
 			      (set! c1 c2)
@@ -39640,7 +39640,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string<? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-ci<?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39661,7 +39661,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char-ci<? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (< c1-len c2-len)))
 			      (set! c1 c2)
@@ -39669,7 +39669,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string-ci<? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string>?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39689,7 +39689,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char>? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (> c1-len c2-len)))
 			      (set! c1 c2)
@@ -39697,7 +39697,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string>? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-ci>?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39717,7 +39717,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char-ci>? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (> c1-len c2-len)))
 			      (set! c1 c2)
@@ -39725,7 +39725,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string-ci>? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string<=?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39745,7 +39745,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char<? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (<= c1-len c2-len)))
 			      (set! c1 c2)
@@ -39753,7 +39753,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string<=? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-ci<=?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39773,7 +39773,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char-ci<? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (<= c1-len c2-len)))
 			      (set! c1 c2)
@@ -39781,7 +39781,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string-ci<=? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string>=?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39801,7 +39801,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char>? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (>= c1-len c2-len)))
 			      (set! c1 c2)
@@ -39809,7 +39809,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string>=? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-ci>=?
 		      (lambda (nlst v)
 			(let* ((c1 (car nlst))
@@ -39829,7 +39829,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				    (begin
 				      (if (= pos -1) (set! pos k))
 				      (set! happy (char-ci>? (string-ref c1 k) (string-ref c2 k))))))
-			      (if (and happy 
+			      (if (and happy
 				       (= pos -1))
 				  (set! happy (>= c1-len c2-len)))
 			      (set! c1 c2)
@@ -39837,7 +39837,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? happy v))
 			      (format #t "(string-ci>=? ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-append
 		      (lambda (nlst v)
 			(let* ((len (length nlst))
@@ -39858,7 +39858,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not happy)
 			      (format #t "(string-append ~{~S~^ ~}) -> ~A~%" nlst v))))
 		      choose-2-or-more-strings)
-		
+
 		(list string-fill!
 		      (lambda (nlst v)
 			(let ((str (car nlst))
@@ -39872,14 +39872,14 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda ()
 			(let ((str (car (choose-string))))
 			  (list str (car (choose-non-null-char))))))
-		
+
 		(list string-copy
 		      (lambda (nlst v)
 			(let ((str (car nlst)))
 			  (if (not (string=? str v))
 			      (format #t "(string-copy ~S) -> ~S~%" str v))))
 		      choose-string)
-		
+
 		(list string->list
 		      (lambda (nlst v)
 			(let* ((str (car nlst))
@@ -39892,7 +39892,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      (set! happy (char=? (string-ref str i) (list-ref v i))))))
 			      (format #t "(string->list ~S) -> ~A~%" str v))))
 		      choose-string)
-		
+
 		(list list->string
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -39910,7 +39910,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (do ((i 0 (+ i 1)))
 			      ((= i len) (list lst))
 			    (set! lst (cons (car (choose-non-null-char)) lst))))))
-		
+
 		(list string
 		      (lambda (nlst v)
 			(let ((len (length nlst)))
@@ -39927,7 +39927,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (do ((i 0 (+ i 1)))
 			      ((= i len) lst)
 			    (set! lst (cons (car (choose-non-null-char)) lst))))))
-		
+
 		(list substring
 		      (lambda (nlst v)
 			(let* ((str (car nlst))
@@ -39951,16 +39951,16 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (= start strlen))
 			      (list str start)
 			      (list str start (+ start (random (- strlen start))))))))
-		
-		
+
+
 		;; -------- generic stuff  --------------------------------
-		
+
 		(list not
 		      (lambda (nlst v)
 			(if (not (eq? v (if (car nlst) #f #t)))
 			    (format #t "(not ~A) -> ~A~%" (car nlst) v)))
 		      (lambda () (choose-any 0)))
-		
+
 		(list boolean?
 		      (lambda (nlst v)
 			(if (or (and (not (eq? v #t))
@@ -39973,14 +39973,14 @@ expt error > 1e-6 around 2^-46.506993328423
 					 (eq? (car nlst) #t))))
 			    (format #t "(boolean? ~A) -> ~A~%" (car nlst) v)))
 		      (lambda () (choose-any 0)))
-		
+
 		(list number?
 		      (lambda (nlst v)
 			(if (or (not (boolean? v))
 				(not (eq? v (complex? (car nlst)))))
 			    (format #t "(number? ~A) -> ~A~%" (car nlst) v)))
 		      (lambda () (choose-any 0)))
-		
+
 		(list string?
 		      (lambda (nlst v)
 			(let ((strp (catch #t (lambda () (integer? (string-length (car nlst)))) (lambda args #f))))
@@ -39988,7 +39988,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v strp)))
 			      (format #t "(string? ~A) -> ~A~%" (car nlst) v))))
 		      (lambda () (choose-any 0)))
-		
+
 		(list char?
 		      (lambda (nlst v)
 			(let ((chrp (catch #t (lambda () (integer? (char->integer (car nlst)))) (lambda args #f))))
@@ -39996,7 +39996,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v chrp)))
 			      (format #t "(char? ~A) -> ~A~%" (car nlst) v))))
 		      (lambda () (choose-any 0)))
-		
+
 		(list vector?
 		      (lambda (nlst v)
 			(let ((chrp (catch #t (lambda () (integer? (vector-length (car nlst)))) (lambda args #f))))
@@ -40004,7 +40004,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v chrp)))
 			      (format #t "(vector? ~A) -> ~A~%" (car nlst) v))))
 		      (lambda () (choose-any 0)))
-		
+
 		(list list?
 		      (lambda (nlst v)
 			(let ((chrp (catch #t (lambda () (let ((hi (or (null? (car nlst)) (list-ref (car nlst) 0)))) #t)) (lambda args #f))))
@@ -40012,7 +40012,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v chrp)))
 			      (format #t "(list? ~A) -> ~A~%" (car nlst) v))))
 		      (lambda () (choose-any 0)))
-		
+
 		(list pair?
 		      (lambda (nlst v)
 			(let ((chrp (catch #t (lambda () (car (car nlst)) #t) (lambda args #f))))
@@ -40020,12 +40020,12 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v chrp)))
 			      (format #t "(pair? ~A) -> ~A~%" (car nlst) v))))
 		      (lambda () (choose-any 0)))
-		
+
 		(list eqv?
 		      (lambda (nlst v)
 			(let* ((a1 (car nlst))
 			       (a2 (cadr nlst)))
-			  ;; eq? + numbers chars 
+			  ;; eq? + numbers chars
 			  (define (eqv-1 x y) ; from Dybvig
 			    (cond
 			     ((eq? x y))
@@ -40040,7 +40040,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v (eqv-1 a1 a2))))
 			      (format #t "(eqv? ~A ~A) -> ~A~%" a1 a2 v))))
 		      (lambda () (list (car (choose-any 0)) (car (choose-any 0)))))
-		
+
 		(list equal?
 		      (lambda (nlst v)
 			(let* ((a1 (car nlst))
@@ -40066,11 +40066,11 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v (equal-1 a1 a2))))
 			      (format #t "(equal? ~A ~A) -> ~A~%" a1 a2 v))))
 		      (lambda () (list (car (choose-any 0)) (car (choose-any 0)))))
-		
-		
-		
+
+
+
 		;; -------- vectors --------------------------------
-		
+
 		(list vector-fill!
 		      (lambda (nlst v)
 			(let* ((vect (car nlst))
@@ -40084,7 +40084,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			      (format #t "(vector-fill! ~A ~A)~%" vect val))))
 		      (lambda ()
 			(list (car (choose-vector 0)) (car (choose-any 0)))))
-		
+
 		(list vector-ref
 		      (lambda (nlst v)
 			(let* ((vect (car nlst))
@@ -40095,7 +40095,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda ()
 			(let ((vect (car (choose-vector 0))))
 			  (list vect (random (vector-length vect))))))
-		
+
 		(list vector-set!
 		      (lambda (nlst v)
 			(let* ((vect (car nlst))
@@ -40106,7 +40106,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda ()
 			(let ((vect (car (choose-vector 0))))
 			  (list vect (random (vector-length vect)) (car (choose-any 0))))))
-		
+
 		(list vector-length
 		      (lambda (nlst v)
 			(let* ((vect (car nlst))
@@ -40114,7 +40114,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (= val v))
 			      (format #t "(vector-length ~A) -> ~A~%" vect v))))
 		      (lambda () (choose-vector 0)))
-		
+
 		(list vector->list
 		      (lambda (nlst v)
 			(let* ((vect (car nlst))
@@ -40127,7 +40127,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      (set! happy (equal? (vector-ref vect i) (list-ref v i))))))
 			      (format #t "(vector->list ~A) -> ~A~%" vect v))))
 		      (lambda () (choose-vector 0)))
-		
+
 		(list list->vector
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -40140,7 +40140,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      (set! happy (equal? (vector-ref v i) (list-ref lst i))))))
 			      (format #t "(list->vector ~A) -> ~A~%" lst v))))
 		      (lambda () (choose-list 0)))
-		
+
 		(list vector
 		      (lambda (lst v)
 			(let* ((len (length lst)))
@@ -40152,7 +40152,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      (set! happy (equal? (vector-ref v i) (list-ref lst i))))))
 			      (format #t "(vector ~{~A~^ ~}) -> ~A~%" lst v))))
 		      (lambda () (choose-list 0)))
-		
+
 		(list make-vector
 		      (lambda (nlst v)
 			(let* ((len (car nlst))
@@ -40171,24 +40171,24 @@ expt error > 1e-6 around 2^-46.506993328423
 			(if (> (random 1.0) 0.5)
 			    (list (+ 1 (random 20)) (car (choose-any 0)))
 			    (list (+ 1 (random 20))))))
-		
-		
+
+
 		;; -------- lists --------------------------------
-		
-		(list null? 
+
+		(list null?
 		      (lambda (nlst v)
 			(if (or (not (boolean? v))
 				(and (eq? v #t) (not (eq? (car nlst) '())))
 				(and (eq? v #f) (eq? (car nlst) '())))
 			    (format #t "(null? ~A) -> ~A~%" (car nlst) v)))
 		      (lambda () (choose-list 0)))
-		
+
 		(list car
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref nlst 0) 0)))
 			    (format #t "(car ~A) -> ~A~%" (car nlst) v)))
 		      (lambda () (choose-non-null-list 0)))
-		
+
 		(list cdr
 		      (lambda (nlst v)
 			(if (not (equal? v (list-tail (car nlst) 1)))
@@ -40202,7 +40202,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (= v (vector-length (list->vector lst)))))
 			      (format #t "(length ~A) -> ~A~%" lst v))))
 		      (lambda () (choose-list 0)))
-		
+
 		(list null?
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -40213,17 +40213,17 @@ expt error > 1e-6 around 2^-46.506993328423
 				       (= len 0)))
 			      (format #t "(null? ~A) -> ~A~%" lst v))))
 		      (lambda () (choose-list 0)))
-		
+
 		(list list-ref
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
 			       (pos (cadr nlst)))
 			  (if (not (equal? v (vector-ref (list->vector lst) pos)))
 			      (format #t "(list-ref ~A ~D) -> ~A~%" lst pos v))))
-		      (lambda () 
+		      (lambda ()
 			(let ((lst (car (choose-non-null-list 0))))
 			  (list lst (random (length lst))))))
-		
+
 		(list reverse
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -40237,7 +40237,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				      (set! happy (equal? (list-ref lst i) (list-ref v j))))))
 			      (format #t "(reverse ~A) -> ~A~%" lst v))))
 		      (lambda () (choose-list 0)))
-		
+
 		(list cons
 		      (lambda (nlst v)
 			(let* ((cr (car nlst))
@@ -40247,7 +40247,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (equal? (cdr v) cd)))
 			      (format #t "(cons ~A ~A) -> ~A~%" cr cd v))))
 		      (lambda () (list (car (choose-any 0)) (car (choose-any 0)))))
-		
+
 		(list caar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-ref nlst 0) 0) 0)))
@@ -40257,7 +40257,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (pair? (car lst)))
 			      (list (list (choose-list 0) lst))
 			      (list lst)))))
-		
+
 		(list cadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (car nlst) 1) 0)))
@@ -40267,7 +40267,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (< (length lst) 2)
 			      (list (list lst (choose-non-null-list 0)))
 			      (list lst)))))
-		
+
 		(list cdar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-ref nlst 0) 0) 1)))
@@ -40277,7 +40277,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (pair? (car lst)))
 			      (list (list (choose-list 0) lst))
 			      (list lst)))))
-		
+
 		(list cddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-ref nlst 0) 1) 1)))
@@ -40287,7 +40287,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (pair? (cdr lst)))
 			      (list (list lst (choose-list 0)))
 			      (list lst)))))
-		
+
 		(list caaar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-ref (list-ref nlst 0) 0) 0) 0)))
@@ -40298,7 +40298,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caar lst))))
 			      (list (list (list lst (choose-list 0))))
 			      (list lst)))))
-		
+
 		(list caadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-tail (car nlst) 1) 0) 0)))
@@ -40309,7 +40309,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cadr lst))))
 			      (list (list lst (list (choose-non-null-list 0))))
 			      (list lst)))))
-		
+
 		(list cadar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (list-ref (list-ref nlst 0) 0) 1) 0)))
@@ -40320,7 +40320,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdar lst))))
 			      (list (list (list (choose-non-null-list 0) (list 1 lst))))
 			      (list lst)))))
-		
+
 		(list cdaar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-ref (list-ref nlst 0) 0) 0) 1)))
@@ -40331,7 +40331,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caar lst))))
 			      (list (list (list (choose-list 0) lst)))
 			      (list lst)))))
-		
+
 		(list caddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (list-tail (list-ref nlst 0) 1) 1) 0)))
@@ -40342,7 +40342,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cddr lst))))
 			      (list (list 1 lst (list (choose-list 0))))
 			      (list lst)))))
-		
+
 		(list cdddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-tail (list-ref nlst 0) 1) 1) 1)))
@@ -40353,7 +40353,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cddr lst))))
 			      (list (list 1 lst (list (choose-list 0))))
 			      (list lst)))))
-		
+
 		(list cdadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-tail (car nlst) 1) 0) 1)))
@@ -40364,7 +40364,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cadr lst))))
 			      (list (list 1 (list lst (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list cddar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-ref (list-ref nlst 0) 0) 1) 1)))
@@ -40375,7 +40375,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdar lst))))
 			      (list (list (list lst (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list caaaar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-ref (list-ref (list-ref nlst 0) 0) 0) 0) 0)))
@@ -40386,7 +40386,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caar lst))))
 			      (list (list (list (list lst (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list cdaaar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-ref (list-ref (list-ref nlst 0) 0) 0) 0) 1)))
@@ -40397,7 +40397,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caar lst))))
 			      (list (list (list (list lst (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list caaadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-ref (list-tail (car nlst) 1) 0) 0) 0)))
@@ -40409,7 +40409,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caadr lst))))
 			      (list (list lst (list (list (choose-non-null-list 0)))))
 			      (list lst)))))
-		
+
 		(list cdaadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-ref (list-tail (car nlst) 1) 0) 0) 1)))
@@ -40421,7 +40421,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caadr lst))))
 			      (list (list lst (list (list (choose-non-null-list 0)))))
 			      (list lst)))))
-		
+
 		(list caadar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-tail (list-ref (list-ref nlst 0) 0) 1) 0) 0)))
@@ -40433,7 +40433,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cadar lst))))
 			      (list (list (list (choose-non-null-list 0) (list (list 1 lst)))))
 			      (list lst)))))
-		
+
 		(list cdadar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-tail (list-ref (list-ref nlst 0) 0) 1) 0) 1)))
@@ -40445,7 +40445,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cadar lst))))
 			      (list (list (list (choose-non-null-list 0) (list (list 1 lst)))))
 			      (list lst)))))
-		
+
 		(list cadaar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (list-ref (list-ref (list-ref nlst 0) 0) 0) 1) 0)))
@@ -40457,7 +40457,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdaar lst))))
 			      (list (list (list (list (choose-list 0) (list lst)))))
 			      (list lst)))))
-		
+
 		(list cddaar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-ref (list-ref (list-ref nlst 0) 0) 0) 1) 1)))
@@ -40469,7 +40469,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdaar lst))))
 			      (list (list (list (list (choose-list 0) (list lst)))))
 			      (list lst)))))
-		
+
 		(list caaddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-ref (list-tail (list-tail (list-ref nlst 0) 1) 1) 0) 0)))
@@ -40481,7 +40481,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caddr lst))))
 			      (list (list 1 lst (list (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list cdaddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-ref (list-tail (list-tail (list-ref nlst 0) 1) 1) 0) 1)))
@@ -40493,7 +40493,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (caddr lst))))
 			      (list (list 1 lst (list (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list cadddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (list-tail (list-tail (list-ref nlst 0) 1) 1) 1) 0)))
@@ -40505,7 +40505,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdddr lst))))
 			      (list (list 1 lst 1 (list (choose-list 0))))
 			      (list lst)))))
-		
+
 		(list cddddr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-tail (list-tail (list-ref nlst 0) 1) 1) 1) 1)))
@@ -40517,7 +40517,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdddr lst))))
 			      (list (list 1 lst 1 (list (choose-list 0))))
 			      (list lst)))))
-		
+
 		(list cadadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (list-ref (list-tail (car nlst) 1) 0) 1) 0)))
@@ -40529,7 +40529,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdadr lst))))
 			      (list (list 1 (list lst (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list cddadr
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-ref (list-tail (car nlst) 1) 0) 1) 1)))
@@ -40541,7 +40541,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cdadr lst))))
 			      (list (list 1 (list lst (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list caddar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-ref (list-tail (list-tail (list-ref (list-ref nlst 0) 0) 1) 1) 0)))
@@ -40553,7 +40553,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cddar lst))))
 			      (list (list (list lst 1 (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list cdddar
 		      (lambda (nlst v)
 			(if (not (eq? v (list-tail (list-tail (list-tail (list-ref (list-ref nlst 0) 0) 1) 1) 1)))
@@ -40565,7 +40565,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (pair? (cddar lst))))
 			      (list (list (list lst 1 (list (choose-list 0)))))
 			      (list lst)))))
-		
+
 		(list set-car!
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -40573,7 +40573,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (equal? (car lst) val))
 			      (format #t "(set-car! ~A ~A)~%" lst val))))
 		      (lambda () (list (choose-non-null-list 0) (choose-any 0))))
-		
+
 		(list set-cdr!
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -40581,7 +40581,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (equal? (cdr lst) val))
 			      (format #t "(set-cdr! ~A ~A)~%" lst val))))
 		      (lambda () (list (choose-non-null-list 0) (choose-any 0))))
-		
+
 		(list assoc
 		      (lambda (nlst v)
 			(let* ((alst (cadr nlst))
@@ -40596,7 +40596,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (equal? v val))
 			      (format #t "(assoc ~A ~A) -> ~A~%" obj alst v))))
 		      (lambda () (choose-alist 'equal?)))
-		
+
 		(list assq
 		      (lambda (nlst v)
 			(let* ((alst (cadr nlst))
@@ -40611,7 +40611,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (eq? v val))
 			      (format #t "(assq ~A ~A) -> ~A~%" obj alst v))))
 		      (lambda () (choose-alist 'eq?)))
-		
+
 		(list assv
 		      (lambda (nlst v)
 			(let* ((alst (cadr nlst))
@@ -40626,7 +40626,7 @@ expt error > 1e-6 around 2^-46.506993328423
 			  (if (not (equal? v val))
 			      (format #t "(assv ~A ~A) -> ~A~%" obj alst v))))
 		      (lambda () (choose-alist 'eqv?)))
-		
+
 		(list memq
 		      (lambda (nlst v)
 			(let* ((lst (cadr nlst))
@@ -40640,8 +40640,8 @@ expt error > 1e-6 around 2^-46.506993328423
 				(set! val mlst)))
 			  (if (not (equal? v val))
 			      (format #t "(memq ~A ~A) -> ~A~%" obj lst v))))
-		      (lambda () (choose-mlist 'eq?))) 
-		
+		      (lambda () (choose-mlist 'eq?)))
+
 		(list memv
 		      (lambda (nlst v)
 			(let* ((lst (cadr nlst))
@@ -40655,8 +40655,8 @@ expt error > 1e-6 around 2^-46.506993328423
 				(set! val mlst)))
 			  (if (not (equal? v val))
 			      (format #t "(memv ~A ~A) -> ~A~%" obj lst v))))
-		      (lambda () (choose-mlist 'eqv?))) 
-		
+		      (lambda () (choose-mlist 'eqv?)))
+
 		(list member
 		      (lambda (nlst v)
 			(let* ((lst (cadr nlst))
@@ -40670,8 +40670,8 @@ expt error > 1e-6 around 2^-46.506993328423
 				(set! val mlst)))
 			  (if (not (equal? v val))
 			      (format #t "(member ~A ~A) -> ~A~%" obj lst v))))
-		      (lambda () (choose-mlist 'equal?))) 
-		
+		      (lambda () (choose-mlist 'equal?)))
+
 		(list list-tail
 		      (lambda (nlst v)
 			(let* ((lst (car nlst))
@@ -40683,14 +40683,14 @@ expt error > 1e-6 around 2^-46.506993328423
 		      (lambda ()
 			(let ((lst (car (choose-list 0))))
 			  (list lst (random (length lst))))))
-		
+
 		(list list
 		      (lambda (nlst v)
 			(if (not (equal? nlst v))
 			    (format #t "(list ~{~A~^ ~}) -> ~A~%" nlst v)))
 		      (lambda ()
 			(car (choose-list 0))))
-		
+
 		(list symbol?
 		      (lambda (nlst v)
 			(let ((symp (catch #t (lambda () (string? (symbol->string (car nlst)))) (lambda args #f))))
@@ -40698,7 +40698,7 @@ expt error > 1e-6 around 2^-46.506993328423
 				  (not (eq? v symp)))
 			      (format #t "(symbol? ~A) -> ~A~%" (car nlst) v))))
 		      (lambda () (choose-any 0)))
-		
+
 		(list append
 		      (lambda (nlst v)
 			(let* ((len (length nlst))
@@ -40726,14 +40726,14 @@ expt error > 1e-6 around 2^-46.506993328423
 			  lsts)))
 
 		;; --------------------------------------------------------------------------------
-		
-		
+
+
 		)))
-	  
+
 	  (define (choose-op)
 	    (let ((choice (random (length ops))))
 	      (list-ref ops choice)))
-	  
+
 	  (define (quotify args)
 	    (map (lambda (arg)
 		   (if (or (list? arg)
@@ -40742,7 +40742,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		       (list 'quote arg)
 		       arg))
 		 args))
-    
+
 	  (do ((i 1 (+ i 1)))
 	      ((> i tries))
 	    (if (= (modulo i 1000) 0) (format #t "."))
@@ -40751,25 +40751,25 @@ expt error > 1e-6 around 2^-46.506993328423
 		   (op (car data))
 		   (checker (cadr data)))
 					;	(format #t "(~A ~A)~%" op args)
-	      (let ((result (catch #t 
-				   (lambda () 
-				     (apply op args)) 
-				   (lambda args 
-				     (display args) 
-				     (newline) 
+	      (let ((result (catch #t
+				   (lambda ()
+				     (apply op args))
+				   (lambda args
+				     (display args)
+				     (newline)
 				     'error))))
 		(checker args result)
-		(set! result (catch #t 
-				    (lambda () 
-				      (eval (cons op (quotify args))))  
-				    (lambda args 
-				      (display args) 
-				      (newline) 
+		(set! result (catch #t
+				    (lambda ()
+				      (eval (cons op (quotify args))))
+				    (lambda args
+				      (display args)
+				      (newline)
 				      'error)))
 		(checker args result))))))
       ))
 ;;; I made a fancier version that created nested expressions, but it didn't hit any new
-;;;   bugs, and it was too complicated.  
+;;;   bugs, and it was too complicated.
 
 
 (newline) (display ";all done!") (newline)
@@ -40782,22 +40782,22 @@ expt error > 1e-6 around 2^-46.506993328423
 		   global-environment current-environment provided? provide defined? keyword?
 		   make-keyword symbol->keyword keyword->symbol hash-table? make-hash-table
 		   hash-table-ref hash-table-set! hash-table-size port-line-number port-filename
-		   input-port? output-port? char-ready? eof-object? current-input-port 
-		   current-output-port    
+		   input-port? output-port? char-ready? eof-object? current-input-port
+		   current-output-port
 					;set-current-output-port set-current-input-port set-current-error-port
-		   current-error-port 
-		   close-input-port close-output-port 
+		   current-error-port
+		   close-input-port close-output-port
 					;open-input-file open-output-file open-input-string
-					;open-output-string 
+					;open-output-string
 		   get-output-string read-char peek-char read newline write-char
-		   write display read-byte write-byte read-line 
+		   write display read-byte write-byte read-line
 					;call-with-input-string call-with-input-file
-					;with-input-from-string with-input-from-file 
+					;with-input-from-string with-input-from-file
 					;call-with-output-string call-with-output-file
-					;with-output-to-string with-output-to-file 
-		   number->string string->number make-polar 
+					;with-output-to-string with-output-to-file
+		   number->string string->number make-polar
 		   make-rectangular magnitude angle rationalize abs exp log sin cos tan asin acos atan
-		   sinh cosh tanh asinh acosh atanh sqrt expt floor ceiling truncate round lcm gcd + - * 
+		   sinh cosh tanh asinh acosh atanh sqrt expt floor ceiling truncate round lcm gcd + - *
 					; / -- too many divide by 0 complaints
 		   max min quotient remainder modulo = < > <= >= number? integer? real? complex? rational?
 		   even? odd? zero? positive? negative? real-part imag-part numerator denominator inexact->exact
@@ -40808,54 +40808,54 @@ expt error > 1e-6 around 2^-46.506993328423
 		   make-string string-length string-ref string-set! string=? string<? string>? string<=?
 		   string>=? string-ci=? string-ci<? string-ci>? string-ci<=? string-ci>=? string-append
 		   string-fill! string-copy substring string list->string string->list object->string format
-		   null? list? pair? reverse 
+		   null? list? pair? reverse
 					;reverse! set-car! set-cdr! sort!
 		   cons car cdr caar cadr cdar cddr
 		   caaar caadr cadar cdaar caddr cdddr cdadr cddar caaaar caaadr caadar cadaar caaddr cadddr
 		   cadadr caddar cdaaar cdaadr cdadar cddaar cdaddr cddddr cddadr cdddar length assq assv
-		   assoc memq memv member append list list-ref 
-					;list-set! vector-set! 
+		   assoc memq memv member append list list-ref
+					;list-set! vector-set!
 		   list-tail vector?
 		   vector->list list->vector vector-fill! vector vector-length vector-ref make-vector
 					;call/cc call-with-current-continuation call-with-exit load
 		   continuation? eval eval-string apply
-		   force for-each map values call-with-values dynamic-wind ;catch error 
+		   force for-each map values call-with-values dynamic-wind ;catch error
 					;quit gc
 		   procedure? procedure-documentation
-		   help procedure-arity procedure-source make-procedure-with-setter procedure-with-setter? 
+		   help procedure-arity procedure-source make-procedure-with-setter procedure-with-setter?
 		   procedure-with-setter-setter-arity not boolean? eq? eqv? equal? s7-version)))
-    
-    (let ((argls (list #t #f 
+
+    (let ((argls (list #t #f
 		       -1 0 1 1.5 1.0+1.0i 3/4 (if with-bignums (expt 2 100) (expt 2 30))
 		       (list 1 2) (cons 1 2) '() '((1 2) (3 4)) '((1 (2)) (((3) 4)))
 		       '#(1 2) (vector 1 #\a '(3)) (make-vector 0)
 		       (let ((x 3)) (lambda (y) (+ x y))) abs
-		       "hi" "" 
-		       'hi :hi 
-		       #\a #\newline 
+		       "hi" ""
+		       'hi :hi
+		       #\a #\newline
 		       ;;; (call/cc (lambda (a) a)) -- this causes us to start over!
 		       (make-hash-table 256)
 		       (symbol->value '_?__undefined__?_)                  ; -> #<undefined> hopefully
 		       (vector-fill! (vector 0) 0)                         ; -> #<unspecified>?
 		       (with-input-from-string "" (lambda () (read-char))) ; -> #<eof>?
 		       (make-random-state 1234))))
-      
+
 					;(display "no args") (newline)
       (for-each
        (lambda (f)
-	 (catch #t 
-		(lambda () 
+	 (catch #t
+		(lambda ()
 		  (f))
 		(lambda args #f)))
        ops)
-      
+
 					;(display "one arg") (newline)
       (for-each
        (lambda (f)
 	 (for-each
 	  (lambda (a)
-	    (catch #t 
-		   (lambda () 
+	    (catch #t
+		   (lambda ()
 		     (if (or (and (not (eq? f make-string))
 				  (not (eq? f ash)))
 			     (not (>= a (expt 2 30))))
@@ -40864,7 +40864,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		   (lambda args #f)))
 	  argls))
        ops)
-      
+
 					;(display "two args") (newline)
       (for-each
        (lambda (f)
@@ -40872,8 +40872,8 @@ expt error > 1e-6 around 2^-46.506993328423
 	  (lambda (a)
 	    (for-each
 	     (lambda (b)
-	       (catch #t 
-		      (lambda () 
+	       (catch #t
+		      (lambda ()
 			(if (or (and (not (eq? f expt))
 				     (not (eq? f ash))
 				     (not (eq? f make-string)))
@@ -40885,7 +40885,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	     argls))
 	  argls))
        ops)
-      
+
 					;(display "three args") (newline)
       (for-each
        (lambda (f)
@@ -40895,8 +40895,8 @@ expt error > 1e-6 around 2^-46.506993328423
 	     (lambda (b)
 	       (for-each
 		(lambda (c)
-		  (catch #t 
-			 (lambda () 
+		  (catch #t
+			 (lambda ()
 			   ;(format #t "(~A ~A ~A ~A)~%" f a b c)
 			   (f a b c))
 			 (lambda args #f)))
@@ -40904,7 +40904,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	     argls))
 	  argls))
        ops)
-      
+
 					;(display "four args") (newline)
       (for-each
        (lambda (f)
@@ -40917,8 +40917,8 @@ expt error > 1e-6 around 2^-46.506993328423
 		(lambda (c)
 		  (for-each
 		   (lambda (d)
-		     (catch #t 
-			    (lambda () 
+		     (catch #t
+			    (lambda ()
 			      (f a b c d))
 			    (lambda args #f)))
 		   argls))
@@ -40930,14 +40930,14 @@ expt error > 1e-6 around 2^-46.506993328423
   (let ((ops (list 'lambda 'define 'quote 'if 'begin 'set! 'let 'let* 'letrec 'cond 'case 'and 'or 'do
 		   'call/cc 'apply 'for-each 'map 'values 'dynamic-wind))
 
-	(args (list #t #f 
+	(args (list #t #f
 		    -1 0 1 1.5 1.0+1.0i 3/4 (expt 2 30)
 		    (list 1 2) (cons 1 2) '() '((1 2) (3 4)) '((1 (2)) (((3) 4)))
 		    '#(1 2) (vector 1 #\a '(3)) (make-vector 0)
 		    (let ((x 3)) (lambda (y) (+ x y))) abs (lambda args args)
-		    "hi" "" 
-		    'hi :hi 
-		    #\a #\newline 
+		    "hi" ""
+		    'hi :hi
+		    #\a #\newline
 		    ;;; (call/cc (lambda (a) a))
 		    (make-hash-table 256)
 		    (symbol->value '_?__undefined__?_)                  ; -> #<undefined> hopefully
@@ -40949,7 +40949,7 @@ expt error > 1e-6 around 2^-46.506993328423
        (for-each
 	(lambda (arg)
 	  (catch #t
-		 (lambda () 
+		 (lambda ()
 		   (if (or (and (not (eq? op make-string))
 				(not (eq? op ash)))
 			   (not (>= arg (expt 2 30))))
@@ -40957,10 +40957,10 @@ expt error > 1e-6 around 2^-46.506993328423
 		       #f))
 		 (lambda args
 		   #f)))
-	
+
 	args))
      ops)
-    
+
     (for-each
      (lambda (op)
        (for-each
@@ -40968,7 +40968,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	  (for-each
 	   (lambda (arg2)
 	     (catch #t
-		    (lambda () 
+		    (lambda ()
 		      (if (or (and (not (eq? op expt))
 				   (not (eq? op ash))
 				   (not (eq? op make-string)))
@@ -40981,13 +40981,13 @@ expt error > 1e-6 around 2^-46.506993328423
 	   args))
 	args))
      ops)
-    
+
     (for-each
      (lambda (op)
        (for-each
 	(lambda (arg)
 	  (catch #t
-		 (lambda () 
+		 (lambda ()
 		   (eval (cons op arg)))
 		 (lambda args
 		   #f)))
@@ -41001,7 +41001,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	  (for-each
 	   (lambda (arg2)
 	     (catch #t
-		    (lambda () 
+		    (lambda ()
 		      (eval (list op (cons arg1 arg2))))
 		    (lambda args
 		      #f)))
@@ -41014,7 +41014,7 @@ expt error > 1e-6 around 2^-46.506993328423
        (for-each
 	(lambda (arg2)
 	  (catch #t
-		 (lambda () 
+		 (lambda ()
 		   (eval (list 'set! (list arg1) arg2)))
 		 (lambda args
 		   #f)))
@@ -41026,7 +41026,7 @@ expt error > 1e-6 around 2^-46.506993328423
        (for-each
 	(lambda (arg2)
 	  (catch #t
-		 (lambda () 
+		 (lambda ()
 		   (eval (list 'set! (list arg1) arg2)))
 		 (lambda args
 		   #f)))
@@ -41038,7 +41038,7 @@ expt error > 1e-6 around 2^-46.506993328423
        (for-each
 	(lambda (arg2)
 	  (catch #t
-		 (lambda () 
+		 (lambda ()
 		   (eval (list 'set! (cons arg1 arg2) arg1)))
 		 (lambda args
 		   #f)))
@@ -41062,7 +41062,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	   args))
 	args))
      ops)
-    
+
     (for-each
      (lambda (op)
        (for-each
@@ -41072,7 +41072,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	     (for-each
 	      (lambda (arg3)
 		(catch #t
-		       (lambda () 
+		       (lambda ()
 			 (eval (list op (list arg1 arg2 arg3))))
 		       (lambda args
 			 #f)))
@@ -41080,7 +41080,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	   args))
 	ops))
      ops)
-    
+
     (for-each
      (lambda (op)
        (for-each
@@ -41090,7 +41090,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	     (for-each
 	      (lambda (arg3)
 		(catch #t
-		       (lambda () 
+		       (lambda ()
 			 (eval (list op arg1 (list arg2 arg3))))
 		       (lambda args
 			 #f)))
@@ -41098,7 +41098,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	   ops))
 	args))
      ops)
-    
+
     (for-each
      (lambda (op)
        (for-each
@@ -41110,7 +41110,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(for-each
 		 (lambda (arg4)
 		   (catch #t
-			  (lambda () 
+			  (lambda ()
 			    (eval (list op arg1 arg2 arg3 arg4)))
 			  (lambda args
 			    #f)))
@@ -41119,7 +41119,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	   args))
 	args))
      ops)
-    
+
     (for-each
      (lambda (op)
        (for-each
@@ -41131,7 +41131,7 @@ expt error > 1e-6 around 2^-46.506993328423
 		(for-each
 		 (lambda (arg4)
 		   (catch #t
-			  (lambda () 
+			  (lambda ()
 			    (eval (list op arg1 (list arg2 arg3) arg4)))
 			  (lambda args
 			    #f)))
@@ -41140,7 +41140,7 @@ expt error > 1e-6 around 2^-46.506993328423
 	   ops))
 	args))
      ops)
-    
+
     ))
 
 

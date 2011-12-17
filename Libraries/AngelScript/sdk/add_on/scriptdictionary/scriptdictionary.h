@@ -65,7 +65,7 @@ protected:
         };
         int   typeId;
     };
-    
+
 	// We don't want anyone to call the destructor directly, it should be called through the Release method
 	virtual ~CScriptDictionary();
 
@@ -74,7 +74,7 @@ protected:
 
 	// Helper methods
     void FreeValue(valueStruct &value);
-	
+
 	// Our properties
     asIScriptEngine *engine;
     int refCount;

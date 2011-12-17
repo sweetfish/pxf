@@ -63,7 +63,7 @@ static void _glfwEnableMouseCursor( void )
 
 	if( _glfwWin.MousePosCallback )
 	{
-	    _glfwWin.MousePosCallback( _glfwInput.MousePosX, 
+	    _glfwWin.MousePosCallback( _glfwInput.MousePosX,
 				       _glfwInput.MousePosY );
 	}
     }

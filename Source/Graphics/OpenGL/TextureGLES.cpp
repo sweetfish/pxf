@@ -31,11 +31,11 @@ TextureGLES::~TextureGLES()
 
 Math::Vec4f TextureGLES::CreateTextureSubset(float _x1, float _y1, float _x2, float _y2)
 {
-	
+
 	float xdelta, ydelta;
 	xdelta = 1.0f / (float)m_Width;
 	ydelta = 1.0f / (float)m_Height;
-	
+
 	Math::Vec4f coords;
 	/*coords.x = _x1 * xdelta;
 	 coords.y = 1.0f - _y1 * ydelta;
@@ -56,9 +56,9 @@ void TextureGLES::Load()
 void TextureGLES::Load(const char* _filepath)
 {
 	m_Filepath = _filepath;
-	
+
 	Reload();
-	
+
 }
 
 void TextureGLES::LoadData(const unsigned char* _datachunk, int _width, int _height, int _channels)
@@ -66,7 +66,7 @@ void TextureGLES::LoadData(const unsigned char* _datachunk, int _width, int _hei
 	m_Width = _width;
 	m_Height = _height;
 	m_Channels = _channels;
-	
+
 	if(_datachunk == NULL)
 	{
 		glGenTextures(1, &m_TextureID);
@@ -74,7 +74,7 @@ void TextureGLES::LoadData(const unsigned char* _datachunk, int _width, int _hei
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	}
 	else
-	{	
+	{
 		m_TextureID = SOIL_create_OGL_texture(
 											  _datachunk,
 											  m_Width, m_Height, m_Channels,
@@ -82,7 +82,7 @@ void TextureGLES::LoadData(const unsigned char* _datachunk, int _width, int _hei
 											  SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB
 											  );
 	}
-	
+
 	if( m_TextureID == 0)
 	{
 		Message(LOCAL_MSG, "SOIL loading error data chunk: '%s';", SOIL_last_result() );
@@ -102,41 +102,41 @@ void TextureGLES::Reload()
 	{
 		Unload();
 	}
-	
+
 	unsigned char* t_data = SOIL_load_image(m_Filepath.c_str(), &m_Width, &m_Height, &m_Channels, 0);
 	if( t_data == 0)
 	{
 		Message(LOCAL_MSG, "SOIL data loading error for file '%s': '%s';", m_Filepath.c_str(), SOIL_last_result() );
 		return;
 	}
-	
+
 	m_TextureID = SOIL_create_OGL_texture(
 										  t_data,
 										  m_Width, m_Height, m_Channels,
 										  SOIL_CREATE_NEW_ID,
 										  NULL
 										  );
-    
+
 	SOIL_free_image_data(t_data);
-	
+
 	if( m_TextureID == 0)
 	{
 		Message(LOCAL_MSG, "SOIL loading error for file '%s': '%s';", m_Filepath.c_str(), SOIL_last_result() );
 		return;
 	}
-	
+
 	Message(LOCAL_MSG, "Texture has been loaded [id: %i]: %s", m_TextureID, m_Filepath.c_str());
 }
 
 void TextureGLES::SetMagFilter(TextureFilter _Filter)
 {
 	GLint param = GL_NEAREST;
-	
+
 	// use a lut
 	if      (_Filter == TEX_FILTER_NEAREST) param = GL_NEAREST;
 	else if (_Filter == TEX_FILTER_LINEAR)  param = GL_LINEAR;
 	else    Message("TextureGL2", "invalid mag filter, using GL_NEAREST");
-	
+
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, param);
 }
@@ -144,7 +144,7 @@ void TextureGLES::SetMagFilter(TextureFilter _Filter)
 void TextureGLES::SetMinFilter(TextureFilter _Filter)
 {
 	GLint param = GL_NEAREST;
-	
+
 	// use a lut
 	if      (_Filter == TEX_FILTER_NEAREST) param = GL_NEAREST;
 	else if (_Filter == TEX_FILTER_LINEAR)  param = GL_LINEAR;
@@ -153,7 +153,7 @@ void TextureGLES::SetMinFilter(TextureFilter _Filter)
 	else if (_Filter == TEX_FILTER_NEAREST_MIPMAP_LINEAR)  param = GL_NEAREST_MIPMAP_LINEAR;
 	else if (_Filter == TEX_FILTER_NEAREST_MIPMAP_NEAREST)  param = GL_NEAREST_MIPMAP_NEAREST;
 	else    Message("TextureGL2", "invalid mag filter, using GL_NEAREST");
-	
+
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, param);
 }

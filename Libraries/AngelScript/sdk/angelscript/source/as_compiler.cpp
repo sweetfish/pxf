@@ -429,7 +429,7 @@ int asCCompiler::CompileFunction(asCBuilder *builder, asCScriptCode *script, asC
 	}
 
 	// If there are compile errors, there is no reason to build the final code
-	if( hasCompileErrors || builder->numErrors != buildErrors ) 
+	if( hasCompileErrors || builder->numErrors != buildErrors )
 	{
 		// Clear the accessed global properties, so they are not prematurely released
 		outFunc->globalVarPointers.SetLength(0);
@@ -1228,7 +1228,7 @@ void asCCompiler::MoveArgsToStack(int funcID, asCByteCode *bc, asCArray<asSExprC
 				if( descr->parameterTypes[n].GetTokenType() == ttQuestion &&
 					args[n]->type.dataType.IsObject() && !args[n]->type.dataType.IsObjectHandle() )
 				{
-					// Send the object as a reference to the object, 
+					// Send the object as a reference to the object,
 					// and not to the variable holding the object
 					bc->InstrWORD(asBC_GETOBJREF, (asWORD)offset);
 				}
@@ -1398,7 +1398,7 @@ void asCCompiler::MatchFunctions(asCArray<int> &funcs, asCArray<asSExprContext*>
 		{
 			str.Format(TXT_MULTIPLE_MATCHING_SIGNATURES_TO_s, str.AddressOf());
 			Error(str.AddressOf(), node);
-	
+
 			PrintMatchingFuncs(funcs, node);
 		}
 	}
@@ -2674,8 +2674,8 @@ void asCCompiler::CompileReturnStatement(asCScriptNode *rnode, asCByteCode *bc)
 					// LOADOBJ cleared the address in the variable so the object will not be freed
 					// here, but the temporary variable must still be freed
 
-					// TODO: optimize: Since there is nothing in the variable anymore, 
-					//                 there is no need to call asBC_FREE on it. 
+					// TODO: optimize: Since there is nothing in the variable anymore,
+					//                 there is no need to call asBC_FREE on it.
 				}
 
 				// Release temporary variables used by expression
@@ -4705,8 +4705,8 @@ int asCCompiler::DoAssignment(asSExprContext *ctx, asSExprContext *lctx, asSExpr
 	{
 		if( op != ttAssignment )
 		{
-			// TODO: getset: We may actually be able to support this, if we can 
-			//               guarantee that the object reference will stay valid 
+			// TODO: getset: We may actually be able to support this, if we can
+			//               guarantee that the object reference will stay valid
 			//               between the calls to the get and set accessors.
 
 			// Compound assignments are not allowed for properties
@@ -5769,7 +5769,7 @@ asUINT asCCompiler::ProcessStringConstant(asCString &cstr, asCScriptNode *node, 
 				return charLiteral;
 			}
 
-			// TODO: Consider deprecating use of hexadecimal escape sequences, 
+			// TODO: Consider deprecating use of hexadecimal escape sequences,
 			//       as they do not guarantee proper unicode sequences
 			if( cstr[n] == 'x' || cstr[n] == 'X' )
 			{
@@ -6908,13 +6908,13 @@ int asCCompiler::FindPropertyAccessor(const asCString &name, asSExprContext *ctx
 
 	if( getId || setId )
 	{
-		// Property accessors were found, but we don't know which is to be used yet, so 
+		// Property accessors were found, but we don't know which is to be used yet, so
 		// we just prepare the bytecode for the method call, and then store the function ids
 		// so that the right one can be used when we get there.
 		ctx->property_get = getId;
 		ctx->property_set = setId;
 
-		// If the object is read-only then we need to remember 
+		// If the object is read-only then we need to remember
 		if( (!ctx->type.dataType.IsObjectHandle() && ctx->type.dataType.IsReadOnly()) ||
 			(ctx->type.dataType.IsObjectHandle() && ctx->type.dataType.IsHandleToConst()) )
 			ctx->property_const = true;
@@ -6930,7 +6930,7 @@ int asCCompiler::FindPropertyAccessor(const asCString &name, asSExprContext *ctx
 		else
 			dt = engine->scriptFunctions[setId]->parameterTypes[0];
 
-		// Just change the type, the context must still maintain information 
+		// Just change the type, the context must still maintain information
 		// about previous variable offset and the indicator of temporary variable.
 		int offset = ctx->type.stackOffset;
 		bool isTemp = ctx->type.isTemporary;
@@ -7150,7 +7150,7 @@ int asCCompiler::CompileExpressionPostOp(asCScriptNode *node, asSExprContext *ct
 			int r = FindPropertyAccessor(name, ctx, node);
 			if( r != 0 )
 				return r;
-			
+
 			if( !ctx->type.dataType.IsPrimitive() )
 				Dereference(ctx, true);
 
@@ -7229,7 +7229,7 @@ int asCCompiler::CompileExpressionPostOp(asCScriptNode *node, asSExprContext *ct
 				Error(str.AddressOf(), node);
 				return -1;
 			}
-	
+
 			// Process the get property accessor
 			ProcessPropertyGetAccessor(ctx, node);
 
@@ -7246,7 +7246,7 @@ int asCCompiler::CompileExpressionPostOp(asCScriptNode *node, asSExprContext *ct
 			// Compile function call
 			CompileFunctionCall(node->firstChild, ctx, trueObj, isConst);
 
-			// If the method returned a reference, then we can't release the original  
+			// If the method returned a reference, then we can't release the original
 			// object yet, because the reference may be to a member of it
 			if( objType.isTemporary &&
 				(ctx->type.dataType.IsReference() || (ctx->type.dataType.IsObject() && !ctx->type.dataType.IsObjectHandle())) &&
@@ -7385,7 +7385,7 @@ int asCCompiler::CompileExpressionPostOp(asCScriptNode *node, asSExprContext *ct
 			}
 		}
 
-		// If the method returned a reference, then we can't release the original  
+		// If the method returned a reference, then we can't release the original
 		// object yet, because the reference may be to a member of it
 		if( objType.isTemporary &&
 			(ctx->type.dataType.IsReference() || (ctx->type.dataType.IsObject() && !ctx->type.dataType.IsObjectHandle())) &&
@@ -7614,8 +7614,8 @@ bool asCCompiler::CompileOverloadedDualOperator(asCScriptNode *node, asSExprCont
 	int token = node->tokenType;
 	if( token == ttUnrecognizedToken )
 	{
-		// This happens when the compiler is inferring an assignment 
-		// operation from another action, for example in preparing a value 
+		// This happens when the compiler is inferring an assignment
+		// operation from another action, for example in preparing a value
 		// as a function argument
 		token = ttAssignment;
 	}
@@ -7631,7 +7631,7 @@ bool asCCompiler::CompileOverloadedDualOperator(asCScriptNode *node, asSExprCont
 		token == ttNotEqual )
 	{
 		// TODO: Should evaluate which of the two have the best match. If both have equal match, the first version should be used
-		// Find the matching opEquals method 
+		// Find the matching opEquals method
 		int r = CompileOverloadedDualOperator2(node, "opEquals", lctx, rctx, ctx, true, asCDataType::CreatePrimitive(ttBool, false));
 		if( r == 0 )
 		{
@@ -7803,7 +7803,7 @@ bool asCCompiler::CompileOverloadedDualOperator(asCScriptNode *node, asSExprCont
 //         one on matching operator
 int asCCompiler::CompileOverloadedDualOperator2(asCScriptNode *node, const char *methodName, asSExprContext *lctx, asSExprContext *rctx, asSExprContext *ctx, bool specificReturn, const asCDataType &returnType)
 {
-	// Find the matching method 
+	// Find the matching method
 	if( lctx->type.dataType.IsObject() && !lctx->type.isExplicitHandle )
 	{
 		// Is the left value a const?
@@ -7848,7 +7848,7 @@ int asCCompiler::CompileOverloadedDualOperator2(asCScriptNode *node, const char 
 			ctx->type = lctx->type;
 			MakeFunctionCall(ctx, ops[0], objType.dataType.GetObjectType(), args, node);
 
-			// TODO: Can we do this here? 
+			// TODO: Can we do this here?
 			ReleaseTemporaryVariable(objType, &ctx->bc);
 
 			// Found matching operator
@@ -7876,12 +7876,12 @@ void asCCompiler::MakeFunctionCall(asSExprContext *ctx, int funcId, asCObjectTyp
 	{
 		Dereference(ctx, true);
 
-		// Warn if the method is non-const and the object is temporary 
+		// Warn if the method is non-const and the object is temporary
 		// since the changes will be lost when the object is destroyed.
 		// If the object is accessed through a handle, then it is assumed
 		// the object is not temporary, even though the handle is.
-		if( ctx->type.isTemporary && 
-			!ctx->type.dataType.IsObjectHandle() && 
+		if( ctx->type.isTemporary &&
+			!ctx->type.dataType.IsObjectHandle() &&
 			!engine->scriptFunctions[funcId]->isReadOnly )
 		{
 			Warning(TXT_CALLING_NONCONST_METHOD_ON_TEMP, node);

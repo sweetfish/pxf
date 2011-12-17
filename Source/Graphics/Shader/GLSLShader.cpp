@@ -25,7 +25,7 @@ void GLSLShader::_Init()
 		Message(LOCAL_MSG,"Fragment Program not valid");
 	}
 
-	if(_Sucess)	
+	if(_Sucess)
 		m_ProgramHandle	= glCreateProgramObjectARB();
 
 	m_IsValid = _Sucess;
@@ -48,13 +48,13 @@ GLSLShader::~GLSLShader()
 	glDeleteObjectARB(m_ProgramHandle);
 }
 
-Pxf::Util::String GLSLShader::GetString() 
+Pxf::Util::String GLSLShader::GetString()
 {
 	char _OutStr[16];
 #if defined(CONF_PLATFORM_MACOSX)
 	snprintf(_OutStr,sizeof(_OutStr),"Shader %i", (int) _ID);
 #else
-	sprintf_s(_OutStr,sizeof(_OutStr),"Shader %i", (int) _ID); 
+	sprintf_s(_OutStr,sizeof(_OutStr),"Shader %i", (int) _ID);
 #endif
 	return Pxf::Util::String(_OutStr);
 }
@@ -100,7 +100,7 @@ void GLSLComponent::Detach(unsigned _Handle)
 void GLSLComponent::_Init()
 {
 	m_IsValid = false;
-	m_IsAttached = false;	
+	m_IsAttached = false;
 	m_SourceChanged = false;
 
 	if(GetFileName() == NULL)

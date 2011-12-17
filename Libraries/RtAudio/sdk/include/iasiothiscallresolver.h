@@ -1,7 +1,7 @@
 // ****************************************************************************
 //
 // Changed:         I have modified this file slightly (includes) to work  with
-//                  RtAudio. RtAudio.cpp must include this file after asio.h.                                                    
+//                  RtAudio. RtAudio.cpp must include this file after asio.h.
 //
 // File:			IASIOThiscallResolver.h
 // Description:     The IASIOThiscallResolver class implements the IASIO

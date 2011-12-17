@@ -19,10 +19,10 @@ SimpleServer::SimpleServer(char* _host, unsigned int _port, unsigned int _max_cl
     m_address.host = ENET_HOST_ANY;
     m_address_host = "*";
   }
-  
+
   m_address.port = _port;
   m_max_clients = _max_clients;
-  
+
 }
 
 SimpleServer::~SimpleServer()
@@ -39,9 +39,9 @@ void SimpleServer::Open()
     Message(LOCAL_MSG, "An error occurred while trying to create an ENet server host.");
     return;
   }
-  
+
   Message(LOCAL_MSG, "Server started on %s:%i", m_address_host, m_address.port);
-  
+
   // TODO: Any more setup for servers?
 }
 
@@ -50,14 +50,14 @@ void SimpleServer::Close()
 	// Don't try to close an already closed instance
 	if (!m_server)
 		return;
-  
+
   ENetEvent event;
-  
+
   for(size_t i = 0; i < m_server->peerCount; ++i)
   {
     enet_peer_disconnect_now(&m_server->peers[i], (enet_uint32)"Server is closing!");
   }
-  
+
   if (m_server != NULL)
   {
     enet_host_destroy(m_server);
@@ -71,7 +71,7 @@ int SimpleServer::MessagePump(NetMessage* _message)
 {
   if (!m_server)
 		return 0;
-	
+
   if (enet_host_service (m_server, (ENetEvent*)_message, 0) > 0)
   {
     switch (_message->type)
@@ -83,15 +83,15 @@ int SimpleServer::MessagePump(NetMessage* _message)
         return PUMP_RESULT_DISCONNECT;
         break;
       case ENET_EVENT_TYPE_RECEIVE:
-        
+
         // Take care of internal data
         // return NetPumpResult.INTERNAL;
-        
+
         return PUMP_RESULT_DATA;
         break;
     }
   }
-  
+
   return PUMP_RESULT_EMPTY;
 }
 

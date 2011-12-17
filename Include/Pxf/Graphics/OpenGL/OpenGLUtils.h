@@ -3,9 +3,9 @@
 
 #include <Pxf/Graphics/OpenGL/OpenGL.h>
 
-namespace Pxf 
+namespace Pxf
 {
-	namespace Graphics 
+	namespace Graphics
 	{
 		// Should this be elsewhere?
 		bool IsExtensionSupported( char* szTargetExtension )

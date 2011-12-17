@@ -8,7 +8,7 @@
 #define COM_CLSID			"clsid"
 
 // ******************************************************************
-// Local Functions 
+// Local Functions
 // ******************************************************************
 static LONG findDrvPath (char *clsidstr,char *dllpath,int dllpathsize)
 {
@@ -36,18 +36,18 @@ static LONG findDrvPath (char *clsidstr,char *dllpath,int dllpathsize)
 							cr = RegQueryValueEx(hkpath,0,0,&datatype,(LPBYTE)dllpath,&datasize);
 							if (cr == ERROR_SUCCESS) {
 								memset(&ofs,0,sizeof(OFSTRUCT));
-								ofs.cBytes = sizeof(OFSTRUCT); 
+								ofs.cBytes = sizeof(OFSTRUCT);
 								hfile = OpenFile(dllpath,&ofs,OF_EXIST);
-								if (hfile) rc = 0; 
+								if (hfile) rc = 0;
 							}
 							RegCloseKey(hkpath);
 						}
 						RegCloseKey(hksub);
 					}
-					found = TRUE;	// break out 
+					found = TRUE;	// break out
 				}
 			}
-		}				
+		}
 		RegCloseKey(hkEnum);
 	}
 	return rc;
@@ -92,7 +92,7 @@ static LPASIODRVSTRUCT newDrvStruct (HKEY hkey,char *keyname,int drvID,LPASIODRV
 			}
 			RegCloseKey(hksub);
 		}
-	}	
+	}
 	else lpdrv->next = newDrvStruct(hkey,keyname,drvID+1,lpdrv->next);
 
 	return lpdrv;
@@ -192,7 +192,7 @@ LONG AsioDriverList::asioOpenDriver (int drvID,LPVOID *asiodrv)
 		else rc = DRVERR_DEVICE_ALREADY_OPEN;
 	}
 	else rc = DRVERR_DEVICE_NOT_FOUND;
-	
+
 	return rc;
 }
 
@@ -214,7 +214,7 @@ LONG AsioDriverList::asioCloseDriver (int drvID)
 }
 
 LONG AsioDriverList::asioGetDriverName (int drvID,char *drvname,int drvnamesize)
-{	
+{
 	LPASIODRVSTRUCT			lpdrv = 0;
 
 	if (!drvname) return DRVERR_INVALID_PARAM;

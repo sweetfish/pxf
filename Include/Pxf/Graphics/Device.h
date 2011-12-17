@@ -21,9 +21,9 @@ namespace Pxf
 		class NonInterleavedVertexBuffer;
 
 		class QuadBatch;
-		
+
 		class Texture;
-		
+
 		//! Abstract video device
 		class Device
 		{
@@ -53,7 +53,7 @@ namespace Pxf
 
 			// PrimitiveBatch
 			virtual QuadBatch* CreateQuadBatch(int _maxSize) = 0;
-			
+
 			virtual VertexBuffer* CreateVertexBuffer(VertexBufferLocation _VertexBufferLocation, VertexBufferUsageFlag _VertexBufferUsageFlag) = 0;
 			virtual void DestroyVertexBuffer(VertexBuffer* _pVertexBuffer) = 0;
 			virtual void DrawBuffer(VertexBuffer* _pVertexBuffer) = 0;
@@ -63,16 +63,16 @@ namespace Pxf
 			virtual RenderTarget* CreateRenderTarget(int _Width,int _Height,RTFormat _ColorFormat,RTFormat _DepthFormat) = 0;
 
 			//virtual VideoBuffer* CreateVideoBuffer(int _Format, int _Width, int _Height) = 0;
-			
+
 			bool Ready() { return m_Ready; }
 		private:
 			bool m_Ready;
-			
+
 			// Need the name VertexBuffer for draw calls...?
 			// Or should *VertexArray inherit from Drawable?
 
 			// QuadBatch : public PrimitiveBatch public : Drawable
-			// 
+			//
 
 		};
 	} // Graphics

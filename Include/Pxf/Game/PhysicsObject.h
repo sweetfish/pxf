@@ -3,18 +3,18 @@
 
 #include <Pxf/Math/Vector.h>
 
-namespace Pxf 
-{	
+namespace Pxf
+{
 	namespace Game
 	{
-		class PhysicsObject 
+		class PhysicsObject
 			{
-			public:				
+			public:
 				virtual Math::Vec3f GetPosition() = 0;
 				virtual void SetPosition(Math::Vec3f) = 0;
-				
+
 			private:
-	
+
 			};
 	} // Game
 } // Pxf
