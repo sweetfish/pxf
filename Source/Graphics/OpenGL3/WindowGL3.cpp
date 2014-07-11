@@ -150,7 +150,7 @@ bool WindowGL3::InitWindow()
 
 	//Now that all adjustments have been made, we can show the window
 	ShowWindow(m_Window,SW_SHOW);
-	
+
 	//#else
 	// if not windows architechture, use glfw (temporary solution..)
 	#endif
@@ -163,7 +163,7 @@ bool WindowGL3::Open()
 {
 	if (!InitWindow())
 		return false;
-	
+
 	//if (!InitD3D())
 	//	return false;
 
@@ -196,7 +196,7 @@ bool WindowGL3::Open()
 #ifdef CONF_PLATFORM_MACOSX
 		/* HACK - Get events without bundle */
 	/*
-		ProcessSerialNumber psn;    
+		ProcessSerialNumber psn;
 		GetCurrentProcess(&psn);
 		TransformProcessType(&psn,kProcessTransformToForegroundApplication);
 		SetFrontProcess(&psn);

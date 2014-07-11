@@ -7,8 +7,8 @@
 namespace Pxf
 {
 	namespace Graphics
-	{			
-		const GLenum FBO_Buffers[] = { 	GL_COLOR_ATTACHMENT0_EXT, 
+	{
+		const GLenum FBO_Buffers[] = { 	GL_COLOR_ATTACHMENT0_EXT,
 										GL_COLOR_ATTACHMENT1_EXT,
 										GL_COLOR_ATTACHMENT2_EXT,
 										GL_COLOR_ATTACHMENT3_EXT };
@@ -19,11 +19,11 @@ namespace Pxf
 		{
 		private:
 			bool 	m_MRTEnabled;
-			
+
 			int 	m_Width;
 			int 	m_Height;
 
-			// balls, just realized color formats already have been set by the device when the textures are created.. 
+			// balls, just realized color formats already have been set by the device when the textures are created..
 			// to maintain "FBO completeness", the same color formats must be used in all color attachments
 			GLenum	m_ColorFormat;
 			GLenum 	m_DepthFormat;
@@ -54,10 +54,10 @@ namespace Pxf
 		public:
 			PBO(Device* _pDevice) : RenderTarget(_pDevice, RT_TYPE_PBO)
 			{
-				
+
 			}
 			~PBO();
-			
+
 			void AddColorAttachment(Texture* _Color);
 			void AddDepthAttachment(Texture* _Depth);
 		};

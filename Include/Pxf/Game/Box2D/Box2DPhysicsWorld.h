@@ -10,8 +10,8 @@
 class b2World;
 class b2Body;
 
-namespace Pxf 
-{	
+namespace Pxf
+{
 	/* This attempt at forward declaration yields specialization of 'Pxf::Math::Vector3D<float>' after instantiation error..
 	   any ideas?
 	namespace Math
@@ -19,9 +19,9 @@ namespace Pxf
 		class Vector3D<float>;
 		typedef Vector3D<float> Vec3f;
 	} */
-	
+
 	namespace Game
-	{	
+	{
 		struct body_parameters;
 		class PhysicsObject;
 		class Box2DPhysicsWorld : public PhysicsWorld
@@ -29,15 +29,15 @@ namespace Pxf
 			public:
 				Box2DPhysicsWorld(Math::Vec2f _Gravity, bool _SleepObjects, float32 _TimeStep, int32 _VelocityIterations, int32 _PositionIterations);
 				~Box2DPhysicsWorld();
-				
+
 				// TODO: what to do
 				void Simulate();
 				void ClearForces();
-				
+
 				PhysicsObject* CreateBodyFromParams(body_parameters _Params);
-				
+
 				b2World* GetWorld() { return m_World; }
-				
+
 			private:
 				b2World*	m_World;
 				bool		m_SleepObjects;

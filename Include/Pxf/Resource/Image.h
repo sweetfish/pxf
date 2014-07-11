@@ -24,18 +24,18 @@ namespace Resource {
 		const int Width() const
 		{
 			return m_Width;
-		} 
+		}
 
 		const int Height() const
 		{
 			return m_Height;
-		} 
+		}
 
 		const int Channels() const
 		{
 			return m_Channels;
-		} 
-		
+		}
+
 		unsigned char* Ptr() const
 		{
 			return m_ImageData;

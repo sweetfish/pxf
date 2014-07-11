@@ -41,7 +41,7 @@ namespace Pxf{
 			HDC			m_HDC;		// Private GDI Device Context
 			HGLRC		m_HRC;		// Permanent Rendering Context
 			HWND		m_Window;	// Window Handle
-			HINSTANCE	m_HInstance;// Instance Of The Application	
+			HINSTANCE	m_HInstance;// Instance Of The Application
 
 			#endif // CONF_FAMILY_WINDOWS
 			int m_width, m_height;

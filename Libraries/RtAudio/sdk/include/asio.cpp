@@ -3,11 +3,11 @@
 	(c) 1996, Steinberg Soft- und Hardware GmbH
 
 	asio.cpp
-	
+
 	asio functions entries which translate the
 	asio interface to the asiodrvr class methods
-*/ 
-	
+*/
+
 #include <string.h>
 #include "asiosys.h"		// platform definition
 #include "asio.h"
@@ -49,13 +49,13 @@ ASIOError ASIOInit(ASIODriverInfo *info)
 	{
 		delete theAsioDriver;
 		theAsioDriver = 0;
-	}		
+	}
 	info->driverVersion = 0;
 	strcpy(info->name, "No ASIO Driver");
 	theAsioDriver = getDriver();
 	if(!theAsioDriver)
 	{
-		strcpy(info->errorMessage, "Not enough memory for the ASIO driver!"); 
+		strcpy(info->errorMessage, "Not enough memory for the ASIO driver!");
 		return ASE_NotPresent;
 	}
 	if(!theAsioDriver->init(info->sysRef))
@@ -81,7 +81,7 @@ ASIOError ASIOInit(ASIODriverInfo *info)
 			theAsioDriver->getErrorMessage(info->errorMessage);
 			theAsioDriver = 0;
 			return ASE_NotPresent;
-		}		
+		}
 
 		strcpy(info->errorMessage, "No ASIO Driver Error");
 		theAsioDriver->getDriverName(info->name);
@@ -102,7 +102,7 @@ ASIOError ASIOExit(void)
 #else
 		delete theAsioDriver;
 #endif
-	}		
+	}
 	theAsioDriver = 0;
 	return ASE_OK;
 }

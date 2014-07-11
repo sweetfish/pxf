@@ -41,9 +41,9 @@ namespace Pxf {
 				return m_FileName;
 			}
 
-			SHType GetType() 
-			{ 
-				return m_SType; 
+			SHType GetType()
+			{
+				return m_SType;
 			}
 		};
 	}

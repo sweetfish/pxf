@@ -8,14 +8,14 @@
 	<title>LuaGame Reference Manual</title>
 </head>
 <body>
-  
+
 <div id="menu">
   <a href="#jump_top">Top</a><br />
   <a href="#jump_usage">Usage</a><br />
   <strong>Packages</strong><br />
   <a href="#jump_graphics">graphics</a><br />
 </div>
-  
+
 <h1 id="jump_top">LuaGame Reference Manual</h1>
 <h2>Version 0.1.0</h2>
 
@@ -49,7 +49,7 @@ function luagame:PreLoad()
 end
 
 function luagame:Update(dt)
-	
+
 end
 
 function luagame:Render()
@@ -66,7 +66,7 @@ end
   <ul class="package_list">
   <h3>luagame.graphics</h3>
   Some awesome description about this package.
-  
+
     <li><h4>luagame.graphics.getscreensize()</h4>
       Gets the size of the device screen being rendered to.
 
@@ -75,17 +75,17 @@ end
         <li>w, h - Width and height of screen in pixels.</li>
       </ul>
     </li>
-  
+
     <li><h4>luagame.graphics.drawquad(x, y, w, h)</h4>
       Draws a textured quad to the screen.
-      
+
       <ul class="parameter_list">
         <h5>Params</h5>
         <li>x, y - Position on screen</li>
         <li>w, h - Width and height of quad</li>
       </ul>
     </li>
-      
+
     <li><h4>luagame.graphics.translate(dx, dy)</h4>
       Translate game coordinate system. (Only affects drawquad() at the moment.)
 
@@ -94,7 +94,7 @@ end
         <li>dx, dy - Delta translation.</li>
       </ul>
     </li>
-    
+
     <li><h4>luagame.graphics.rotate(angle)</h4>
       Rotates quads that will be drawn after this call. (Only affects drawquad() at the moment.)
 

@@ -244,7 +244,7 @@ void VertexBufferGL2::UnmapData()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		m_IsMapped = false;
 	}
-	
+
 	if (m_VertexBufferLocation == VB_LOCATION_SYS && m_InterleavedData != 0)
 	{
 		m_IsMapped = false;

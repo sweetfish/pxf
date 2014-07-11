@@ -10,7 +10,7 @@ Libraries["glfw"] = {
                 elseif family == "windows" then
                     glfw_platform = "win32"
                 end
-    
+
                 settings.cc.defines:Add("CONF_WITH_GLFW")
                 settings.cc.includes:Add(Path(PathDir(module_filename) .. "/sdk/include"))
                 settings.cc.includes:Add(Path(PathDir(module_filename) .. "/sdk/src"))

@@ -48,7 +48,7 @@ bool PxfMain(Util::String _CmdLine)
 	pDevice->SetViewport(0, 0, pWindowSpecs->Width / 2.0f, pWindowSpecs->Height);
 	Math::Mat4 t_ortho = Math::Mat4::Ortho(0, pWindowSpecs->Width / 2.0f, pWindowSpecs->Height, 0, 0, 1);
 	pDevice->SetProjection(&t_ortho);
-	
+
 	// Test font
 	/*SimpleFont *_fonttest = new SimpleFont(pDevice);
 	_fonttest->Load("data/alterebro_pixel.ttf", 13.0f, 128);
@@ -56,7 +56,7 @@ bool PxfMain(Util::String _CmdLine)
 
 	while (!pInput->IsKeyDown(Input::ESC) && pWindow->IsOpen())
 	{
-		
+
 		// Some OGL stuff that hasn't been moved to the device yet
 		pDevice->SetViewport(0, 0, pWindowSpecs->Width, pWindowSpecs->Height);
 		pDevice->SetProjection(&t_ortho);
@@ -66,7 +66,7 @@ bool PxfMain(Util::String _CmdLine)
 		glEnable(GL_TEXTURE_2D);
 		//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 		//glEnable(GL_BLEND);
-		
+
 
 		// Update input
 		pInput->Update();
@@ -82,12 +82,12 @@ bool PxfMain(Util::String _CmdLine)
 		glEnable(GL_BLEND);
 		pGUI->Update(&mousepos_f, pInput->IsButtonDown(Pxf::Input::MOUSE_LEFT), 1.0f);
 		pGUI->Draw();
-		
+
 		//glBlendFunc(GL_SRC_COLOR,GL_ONE_MINUS_SRC_COLOR);
 		//glEnable(GL_BLEND);
 		//_fonttest->Draw();
 
-		
+
 
 		//glTranslatef(cosf(t_honk) * 200.0f, sinf(t_honk) * 200.0f, 0);
 

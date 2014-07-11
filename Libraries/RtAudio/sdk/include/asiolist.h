@@ -26,13 +26,13 @@ class AsioDriverList {
 public:
 	AsioDriverList();
 	~AsioDriverList();
-	
+
 	LONG asioOpenDriver (int,VOID **);
 	LONG asioCloseDriver (int);
 
 	// nice to have
 	LONG asioGetNumDev (VOID);
-	LONG asioGetDriverName (int,char *,int);		
+	LONG asioGetDriverName (int,char *,int);
 	LONG asioGetDriverPath (int,char *,int);
 	LONG asioGetDriverCLSID (int,CLSID *);
 

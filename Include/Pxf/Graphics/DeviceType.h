@@ -7,7 +7,7 @@ namespace Pxf
 {
 	namespace Graphics
 	{
-		
+
 		const char* DeviceTypeName(DeviceType _deviceType);
 	} // Graphics
 } // Pxf

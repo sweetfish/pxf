@@ -21,13 +21,13 @@ namespace Pxf
             public:
                 //Subsystem ();
                 //virtual ~Subsystem();
-                
+
                 //virtual void RegisterClass(lua_State* _L);
-                
+
                 //virtual int ToString(lua_State* _L);
 
             private:
-                
+
             };
         } /* LuaGame */
     } /* Extra */

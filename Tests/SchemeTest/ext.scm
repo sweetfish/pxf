@@ -19,8 +19,8 @@
 	(for-each
 	 (lambda (binding)
 	   (if (substring? name (symbol->string (car binding)))
-	   (format (current-output-port) "~A: ~A~%" 
-		   (car binding) 
+	   (format (current-output-port) "~A: ~A~%"
+		   (car binding)
 		   (if (procedure? (cdr binding))
 			   (procedure-documentation (cdr binding))
 			   (cdr binding)))))

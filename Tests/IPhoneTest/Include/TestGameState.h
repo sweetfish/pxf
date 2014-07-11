@@ -9,16 +9,16 @@ class TestGameState : public Pxf::Game::GameState
 public:
 	TestGameState();
 	~TestGameState();
-	
+
 	bool Init();
 	void Update();
 	void Render();
 	void Halt();
 	void Pause();
 	void Resume();
-	
+
 private:
-	
+
 };
 
 #endif

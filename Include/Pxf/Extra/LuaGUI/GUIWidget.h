@@ -55,7 +55,7 @@ namespace Pxf
 				bool m_MousePushedLast;
 				Math::Vec2f m_MouseHit;
 			};
-			
+
 		} // LuaGUI
 
 	} // Extra

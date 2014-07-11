@@ -8,7 +8,7 @@
 // Windows
 #	if defined (WIN64) || defined (_WIN64)
 #		define CONF_FAMILY_WINDOWS
-#		define CONF_FAMILY_STRING "windows"	
+#		define CONF_FAMILY_STRING "windows"
 #		define CONF_PLATFORM_WIN64
 #		define CONF_PLATFORM_STRING "win64"
 #	elif defined (WIN32) || defined (_WIN32) || defined(__CYGWIN32__) || defined (__MINGW32__)

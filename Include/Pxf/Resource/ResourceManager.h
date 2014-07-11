@@ -59,7 +59,7 @@ public:
 			Message("ResourceManager", "Failed to acquire resource.");
 			return NULL;
 		}
-		
+
 		res->m_References++;
 		Message("ResourceManager", "Acquired '%s' [refs = %d]", _Filename, res->m_References);
 		return (T*)res;

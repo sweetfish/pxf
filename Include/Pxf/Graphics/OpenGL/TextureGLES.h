@@ -11,7 +11,7 @@ namespace Pxf
 {
 	namespace Graphics
 	{
-		
+
 		//! Abstract texture class
 		class TextureGLES : public Texture
 		{
@@ -19,7 +19,7 @@ namespace Pxf
 			TextureGLES(Device* _pDevice);
 			TextureGLES(const char* _filepath, Device* _pDevice);
 			~TextureGLES();
-			
+
 			void Load();
 			void Load(const char* _filepath);
 			void LoadData(const unsigned char* _datachunk, int _width, int _height, int _channels);
@@ -36,7 +36,7 @@ namespace Pxf
 			void SetClampMethod(TextureClampMethod _Method);
 
 			Math::Vec4f CreateTextureSubset(float _x1, float _y1, float _x2, float _y2);
-			
+
 			// OGL specific
 			inline GLuint GetTextureID() { return m_TextureID; }
 

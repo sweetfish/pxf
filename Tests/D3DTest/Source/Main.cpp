@@ -57,7 +57,7 @@ bool PxfMain(String _CmdLine)
 
 		// Swap buffers
 		wnd->Swap();
-		
+
 		// Update title with FPS
 		if (t_fps != wnd->GetFPS())
 		{
@@ -65,7 +65,7 @@ bool PxfMain(String _CmdLine)
 			sprintf(t_title, "%s - %s - FPS: %i", t_pxftitle, wnd->GetContextTypeName(), t_fps);
 			wnd->SetTitle(t_title);
 		}
-		
+
 	}
 	wnd->Close();
 

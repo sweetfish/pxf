@@ -127,24 +127,24 @@ public:
 
 	void CreateMatrix(Mat4* out_mtx) const
 	{
-		out_mtx->m[ 0] = 1.0f - 2.0f * ( y * y + z * z );  
-		out_mtx->m[ 1] = 2.0f * ( x * y - w * z );  
-		out_mtx->m[ 2] = 2.0f * ( x * z + w * y );  
-		out_mtx->m[ 3] = 0.0f;  
+		out_mtx->m[ 0] = 1.0f - 2.0f * ( y * y + z * z );
+		out_mtx->m[ 1] = 2.0f * ( x * y - w * z );
+		out_mtx->m[ 2] = 2.0f * ( x * z + w * y );
+		out_mtx->m[ 3] = 0.0f;
 
-		out_mtx->m[ 4] = 2.0f * ( x * y + w * z );  
-		out_mtx->m[ 5] = 1.0f - 2.0f * ( x * x + z * z );  
-		out_mtx->m[ 6] = 2.0f * ( y * z - w * x );  
-		out_mtx->m[ 7] = 0.0f;  
+		out_mtx->m[ 4] = 2.0f * ( x * y + w * z );
+		out_mtx->m[ 5] = 1.0f - 2.0f * ( x * x + z * z );
+		out_mtx->m[ 6] = 2.0f * ( y * z - w * x );
+		out_mtx->m[ 7] = 0.0f;
 
-		out_mtx->m[ 8] = 2.0f * ( x * z - w * y );  
-		out_mtx->m[ 9] = 2.0f * ( y * z + w * x );  
-		out_mtx->m[10] = 1.0f - 2.0f * ( x * x + y * y );  
-		out_mtx->m[11] = 0.0f;  
+		out_mtx->m[ 8] = 2.0f * ( x * z - w * y );
+		out_mtx->m[ 9] = 2.0f * ( y * z + w * x );
+		out_mtx->m[10] = 1.0f - 2.0f * ( x * x + y * y );
+		out_mtx->m[11] = 0.0f;
 
-		out_mtx->m[12] = 0;  
-		out_mtx->m[13] = 0;  
-		out_mtx->m[14] = 0;  
+		out_mtx->m[12] = 0;
+		out_mtx->m[13] = 0;
+		out_mtx->m[14] = 0;
 		out_mtx->m[15] = 1.0f;
 	}
 
@@ -164,7 +164,7 @@ public:
 
 	/* Negation */
 	Quaternion operator - () const
-	{	
+	{
 		Quaternion q;
 		q.x = -x;
 		q.y = -y;
@@ -197,7 +197,7 @@ public:
 
 	/* Multiplication */
 	Quaternion operator * (const float c) const
-	{ 
+	{
 		Quaternion q;
 		q.x = x*c;
 		q.y = y*c;
@@ -205,12 +205,12 @@ public:
 		q.w = w*c;
 		return q;
 	}
-	
+
 	const Quaternion& operator *= (const float c)
 	{
 		x*=c; y*=c; z*=c; w*=c;
 	}
-	
+
 	Quaternion operator * (const Quaternion& o) const
 	{
 		Quaternion tmp;
@@ -231,7 +231,7 @@ public:
 		*this = tmp;
 		return *this;
 	}
-	
+
 	/* Division */
 	Quaternion operator / (const float c) const
 	{
@@ -292,7 +292,7 @@ inline Quaternion Conjugated(const Quaternion& q)
 }
 
 inline float Dot(const Quaternion& a, const Quaternion& b)
-{ 
+{
 	return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w;
 }
 
@@ -318,7 +318,7 @@ inline Quaternion Slerp(const Quaternion& from, const Quaternion& to, float t)
 	}
 
 	if (c > 1.0f - 0.0000001f)
-	{	
+	{
 		Quaternion q = Lerp(from, q3, t);
 		return Normalized(q);
 	}

@@ -27,14 +27,14 @@ namespace Pxf
 		namespace LuaGUI
 		{
 		  enum ScriptMessageID { SCRIPT_MESSAGE_TEST = 1 };
-		  
+
 		  struct ScriptMessage
 		  {
         int id;
 				GUIScript* script;
         void* data;
 		  };
-		  
+
 			class GUIHandler
 			{
 			public:
@@ -50,7 +50,7 @@ namespace Pxf
 				Pxf::Graphics::Device* m_Device;
 				std::list<GUIScript*> m_Scripts;
 			};
-			
+
 		} // LuaGUI
 
 	} // Extra

@@ -27,7 +27,7 @@
 #include <Pxf/Game/Box2D/Box2DPhysicsWorld.h>
 
 #import <Pxf/Extra/iPhoneInput/iPhoneInput.h>
-		
+
 
 struct fps_helper
 {
@@ -41,35 +41,35 @@ class Application
 public:
 	Application(const char* _Title);
 	~Application();
-	
+
 	bool Init();
 	bool Destroy();
 	bool Render();
 	bool Update();
 	bool IsRunning();
-	
+
 	void Shutdown();
-	
+
 	void SetDevice(Pxf::Graphics::Device* _pDevice);
 	void Setup();
-	
+
 private:
 	void _UpdateFPS();
-	
+
 	Pxf::Engine*				m_Engine;
 	Pxf::Graphics::Device*		m_Device;
 	bool						m_IsRunning;
-	
+
 	const char*					m_Title;
 	fps_helper					m_FPS;
-	
+
 	// DEBUG OBJECTS
 	Pxf::Game::Sprite*				pSprite1;
 	Pxf::Game::Sprite*				pSprite2;
 	Pxf::Graphics::VertexBuffer*	pBuffer;
 	Pxf::Graphics::Texture*			pTexture;
 	Pxf::Graphics::QuadBatch*		pQBatch;
-	
+
 	// BOX2D
 	Pxf::Game::Box2DPhysicsWorld*	m_World;
 	/*
@@ -77,7 +77,7 @@ private:
 	float		m_b2TimeStep;
 	int32		m_b2VelIterations;
 	int32		m_b2PosIterations; */
-	
+
 	// Input
 	InputHandler* m_InputHandler;
 };

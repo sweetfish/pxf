@@ -16,7 +16,7 @@ DeviceD3D9::DeviceD3D9()
 	// not sure if the D3D9 object is needed anymore
 	m_D3D9			= NULL;
 	m_D3D9_device	= NULL;
-	
+
 	/*
 	if(!m_D3D9){
 		//Handle error

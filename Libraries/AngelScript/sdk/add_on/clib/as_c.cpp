@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2009 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -32,7 +32,7 @@
 //
 // as_c.cpp
 //
-// A C interface to the library 
+// A C interface to the library
 //
 
 // Include the C++ interface header so we can call the proper methods
@@ -158,15 +158,15 @@ AS_API int                asModule_BindAllImportedFunctions(asIScriptModule *m) 
 AS_API int                asModule_UnbindAllImportedFunctions(asIScriptModule *m)                                                              { return m->UnbindAllImportedFunctions(); }
 AS_API int                asModule_SaveByteCode(asIScriptModule *m, asIBinaryStream *out)                                                      { return m->SaveByteCode(out); }
 AS_API int                asModule_LoadByteCode(asIScriptModule *m, asIBinaryStream *in)                                                       { return m->LoadByteCode(in); }
-                                                                                                                               
+
 AS_API int              asContext_AddRef(asIScriptContext *c)                                                               { return c->AddRef(); }
 AS_API int              asContext_Release(asIScriptContext *c)                                                              { return c->Release(); }
 AS_API asIScriptEngine *asContext_GetEngine(asIScriptContext *c)                                                            { return c->GetEngine(); }
 AS_API int              asContext_GetState(asIScriptContext *c)                                                             { return c->GetState(); }
 AS_API int              asContext_Prepare(asIScriptContext *c, int funcID)                                                  { return c->Prepare(funcID); }
-AS_API int              asContext_SetArgByte(asIScriptContext *c, asUINT arg, asBYTE value)                                 { return c->SetArgByte(arg, value); } 
-AS_API int              asContext_SetArgWord(asIScriptContext *c, asUINT arg, asWORD value)                                 { return c->SetArgWord(arg, value); } 
-AS_API int              asContext_SetArgDWord(asIScriptContext *c, asUINT arg, asDWORD value)                               { return c->SetArgDWord(arg, value); } 
+AS_API int              asContext_SetArgByte(asIScriptContext *c, asUINT arg, asBYTE value)                                 { return c->SetArgByte(arg, value); }
+AS_API int              asContext_SetArgWord(asIScriptContext *c, asUINT arg, asWORD value)                                 { return c->SetArgWord(arg, value); }
+AS_API int              asContext_SetArgDWord(asIScriptContext *c, asUINT arg, asDWORD value)                               { return c->SetArgDWord(arg, value); }
 AS_API int              asContext_SetArgQWord(asIScriptContext *c, asUINT arg, asQWORD value)                               { return c->SetArgQWord(arg, value); }
 AS_API int              asContext_SetArgFloat(asIScriptContext *c, asUINT arg, float value)                                 { return c->SetArgFloat(arg, value); }
 AS_API int              asContext_SetArgDouble(asIScriptContext *c, asUINT arg, double value)                               { return c->SetArgDouble(arg, value); }
@@ -246,7 +246,7 @@ AS_API const char *     asObject_GetPropertyName(asIScriptObject *s, asUINT prop
 AS_API void *           asObject_GetAddressOfProperty(asIScriptObject *s, asUINT prop)  { return s->GetAddressOfProperty(prop); }
 AS_API int              asObject_CopyFrom(asIScriptObject *s, asIScriptObject *other) { return s->CopyFrom(other); }
 
-AS_API asIScriptEngine *asArray_GetEngine(asIScriptArray *a)                       { return a->GetEngine(); }                
+AS_API asIScriptEngine *asArray_GetEngine(asIScriptArray *a)                       { return a->GetEngine(); }
 AS_API int              asArray_AddRef(asIScriptArray *a)                          { return a->AddRef(); }
 AS_API int              asArray_Release(asIScriptArray *a)                         { return a->Release(); }
 AS_API int              asArray_GetArrayTypeId(asIScriptArray *a)                  { return a->GetArrayTypeId(); }
@@ -281,7 +281,7 @@ AS_API int                      asObjectType_GetPropertyCount(const asIObjectTyp
 AS_API int                      asObjectType_GetPropertyTypeId(const asIObjectType *o, asUINT prop)                                 { return o->GetPropertyTypeId(prop); }
 AS_API const char              *asObjectType_GetPropertyName(const asIObjectType *o, asUINT prop)                                   { return o->GetPropertyName(prop); }
 AS_API int                      asObjectType_GetPropertyOffset(const asIObjectType *o, asUINT prop)                                 { return o->GetPropertyOffset(prop); }
-                                                                                                               
+
 AS_API asIScriptEngine     *asScriptFunction_GetEngine(const asIScriptFunction *f)                                           { return f->GetEngine(); }
 AS_API const char          *asScriptFunction_GetModuleName(const asIScriptFunction *f)                                       { return f->GetModuleName(); }
 AS_API asIObjectType       *asScriptFunction_GetObjectType(const asIScriptFunction *f)                                       { return f->GetObjectType(); }
@@ -293,7 +293,7 @@ AS_API bool                 asScriptFunction_IsInterfaceMethod(const asIScriptFu
 AS_API int                  asScriptFunction_GetParamCount(const asIScriptFunction *f)                                       { return f->GetParamCount(); }
 AS_API int                  asScriptFunction_GetParamTypeId(const asIScriptFunction *f, int index)                           { return f->GetParamTypeId(index); }
 AS_API int                  asScriptFunction_GetReturnTypeId(const asIScriptFunction *f)                                     { return f->GetReturnTypeId(); }
-                                                                                                  
+
 }
 
 END_AS_NAMESPACE

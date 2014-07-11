@@ -34,7 +34,7 @@
 //
 // The script engine interface for the C language.
 //
-// The idea is that the library should be compiled with a C++ compiler with the AS_C_INTERFACE 
+// The idea is that the library should be compiled with a C++ compiler with the AS_C_INTERFACE
 // preprocessor word defined. The C application will then be able to link with the library and
 // use this header file to interact with it.
 //
@@ -80,7 +80,7 @@ typedef size_t         asPWORD;
 // Enumerations and constants
 
 // Engine properties
-typedef enum 
+typedef enum
 {
 	asEP_ALLOW_UNSAFE_REFERENCES      = 1,
 	asEP_OPTIMIZE_BYTECODE            = 2,
@@ -98,7 +98,7 @@ typedef enum
 } asEEngineProp;
 
 // Calling conventions
-typedef enum 
+typedef enum
 {
 	asCALL_CDECL            = 0,
 	asCALL_STDCALL          = 1,
@@ -109,7 +109,7 @@ typedef enum
 } asECallConvTypes;
 
 // Object type flags
-typedef enum 
+typedef enum
 {
 	asOBJ_REF                   = 0x01,
 	asOBJ_VALUE                 = 0x02,
@@ -135,7 +135,7 @@ typedef enum
 } asEObjTypeFlags;
 
 // Behaviours
-typedef enum 
+typedef enum
 {
 	// Value object memory management
 	asBEHAVE_CONSTRUCT,
@@ -165,7 +165,7 @@ typedef enum
 } asEBehaviours;
 
 // Return codes
-typedef enum 
+typedef enum
 {
 	asSUCCESS                              =  0,
 	asERROR                                = -1,
@@ -198,7 +198,7 @@ typedef enum
 } asERetCodes;
 
 // Context states
-typedef enum 
+typedef enum
 {
     asEXECUTION_FINISHED      = 0,
     asEXECUTION_SUSPENDED     = 1,
@@ -211,14 +211,14 @@ typedef enum
 } asEContextState;
 
 // ExecuteString flags
-typedef enum 
+typedef enum
 {
 	asEXECSTRING_ONLY_PREPARE	= 1,
 	asEXECSTRING_USE_MY_CONTEXT = 2
 } asEExecStrFlags;
 
 // Message types
-typedef enum 
+typedef enum
 {
     asMSGTYPE_ERROR       = 0,
     asMSGTYPE_WARNING     = 1,
@@ -241,7 +241,7 @@ const int asPREPARE_PREVIOUS = -1;
 const char * const asALL_MODULES = (const char * const)-1;
 
 // Type id flags
-typedef enum 
+typedef enum
 {
 	asTYPEID_VOID           = 0,
 	asTYPEID_BOOL           = 1,
@@ -272,7 +272,7 @@ typedef enum
 	asGM_ALWAYS_CREATE        = 2
 } asEGMFlags;
 
-typedef struct 
+typedef struct
 {
 	const char *section;
 	int         row;
@@ -397,7 +397,7 @@ extern "C"
 
 	AS_API asIScriptEngine   *asModule_GetEngine(asIScriptModule *m);
 	AS_API void               asModule_SetName(asIScriptModule *m, const char *name);
-	AS_API const char        *asModule_GetName(asIScriptModule *m); 
+	AS_API const char        *asModule_GetName(asIScriptModule *m);
 	AS_API int                asModule_AddScriptSection(asIScriptModule *m, const char *name, const char *code, size_t codeLength, int lineOffset);
 	AS_API int                asModule_Build(asIScriptModule *m);
 	AS_API int                asModule_GetFunctionCount(asIScriptModule *m);

@@ -36,28 +36,28 @@ inline T TransformRange(T value, T in_min, T in_max, T out_min, T out_max)
 }
 
 // Returns the absolute value of a
-template <typename T> 
+template <typename T>
 inline T Abs(const T& a)
 {
 	return (a < 0 ? -a : a);
 }
 
 // Returns the biggest of a and b
-template<typename T> 
+template<typename T>
 inline T Max(const T& a, const T& b)
 {
 	return (b < a ? a : b);
 }
 
 // Returns the smallest of a and b
-template<typename T> 
+template<typename T>
 inline T Min(const T& a,const T& b)
 {
 	return (a < b ? a : b);
 }
 
 // Clamps value between min and max
-template <typename T> 
+template <typename T>
 inline T Clamp(const T& value, const T& min, const T& max)
 {
 	return (value < min ? min : (value > max ? max : value));

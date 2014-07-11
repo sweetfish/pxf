@@ -77,7 +77,7 @@ bool PxfMain(Util::String _CmdLine)
 
 		t_honk += 0.001f;
 		glTranslatef(cosf(t_honk) * 200.0f, sinf(t_honk) * 200.0f, 0);
-		
+
 		pDevice->BindTexture(pTexture);
 		pQBatch->Draw();
 

@@ -17,7 +17,7 @@ static CScriptArray* ScriptArrayFactory2(asIObjectType *ot, asUINT length)
 {
 	CScriptArray *a = new CScriptArray(length, ot);
 
-	// It's possible the constructor raised a script exception, in which case we 
+	// It's possible the constructor raised a script exception, in which case we
 	// need to free the memory and return null instead, else we get a memory leak.
 	asIScriptContext *ctx = asGetActiveContext();
 	if( ctx && ctx->GetState() == asEXECUTION_EXCEPTION )
@@ -35,11 +35,11 @@ static CScriptArray* ScriptArrayFactory(asIObjectType *ot)
 }
 
 // This optional callback is called when the template type is first used by the compiler.
-// It allows the application to validate if the template can be instanciated for the requested 
+// It allows the application to validate if the template can be instanciated for the requested
 // subtype at compile time, instead of at runtime.
 static bool ScriptArrayTemplateCallback(asIObjectType *ot)
 {
-	// Make sure the subtype can be instanciated with a default factory/constructor, 
+	// Make sure the subtype can be instanciated with a default factory/constructor,
 	// otherwise we won't be able to instanciate the elements
 	int typeId = ot->GetSubTypeId();
 	if( (typeId & asTYPEID_MASK_OBJECT) && !(typeId & asTYPEID_OBJHANDLE) )
@@ -78,7 +78,7 @@ static bool ScriptArrayTemplateCallback(asIObjectType *ot)
 					// Found the default factory
 					return true;
 				}
-			}	
+			}
 
 			// No default factory
 			return false;
@@ -101,7 +101,7 @@ void RegisterScriptArray(asIScriptEngine *engine)
 void RegisterScriptArray_Native(asIScriptEngine *engine)
 {
 	int r;
-	
+
 	// Register the array type as a template
 	r = engine->RegisterObjectType("array<class T>", 0, asOBJ_REF | asOBJ_GC | asOBJ_TEMPLATE); assert( r >= 0 );
 
@@ -119,7 +119,7 @@ void RegisterScriptArray_Native(asIScriptEngine *engine)
 	// The index operator returns the template subtype
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_INDEX, "T &f(uint)", asMETHOD(CScriptArray, At), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_INDEX, "const T &f(uint) const", asMETHOD(CScriptArray, At), asCALL_THISCALL); assert( r >= 0 );
-	
+
 	// The assignment operator
 	r = engine->RegisterObjectMethod("array<T>", "array<T> &opAssign(const array<T>&in)", asMETHOD(CScriptArray, operator=), asCALL_THISCALL); assert( r >= 0 );
 
@@ -138,7 +138,7 @@ void RegisterScriptArray_Native(asIScriptEngine *engine)
 CScriptArray &CScriptArray::operator=(const CScriptArray &other)
 {
 	// Only perform the copy if the array types are the same
-	if( &other != this && 
+	if( &other != this &&
 		other.GetArrayObjectType() == GetArrayObjectType() )
 	{
 		if( buffer )
@@ -233,7 +233,7 @@ void CScriptArray::Resize(asUINT numElements)
 		asDWORD **s = (asDWORD**)buffer->data;
 		for( int n = 0; n < c; n++ )
 			d[n] = s[n];
-		
+
 		if( numElements > buffer->numElements )
 		{
 			Construct(newBuffer, buffer->numElements, numElements);
@@ -262,7 +262,7 @@ void CScriptArray::Resize(asUINT numElements)
 // internal
 bool CScriptArray::CheckMaxSize(asUINT numElements)
 {
-	// This code makes sure the size of the buffer that is allocated 
+	// This code makes sure the size of the buffer that is allocated
 	// for the array doesn't overflow and becomes smaller than requested
 
 	asUINT maxSize = 0xFFFFFFFFul - sizeof(SArrayBuffer) + 1;
@@ -410,7 +410,7 @@ void CScriptArray::CopyBuffer(SArrayBuffer *dst, SArrayBuffer *src)
 			asDWORD **max = (asDWORD**)(dst->data + count * sizeof(void*));
 			asDWORD **d   = (asDWORD**)dst->data;
 			asDWORD **s   = (asDWORD**)src->data;
-			
+
 			for( ; d < max; d++, s++ )
 			{
 				*d = *s;
@@ -619,7 +619,7 @@ static void ScriptArrayReleaseAllHandles_Generic(asIScriptGeneric *gen)
 void RegisterScriptArray_Generic(asIScriptEngine *engine)
 {
 	int r;
-	
+
 	r = engine->RegisterObjectType("array<class T>", 0, asOBJ_REF | asOBJ_GC | asOBJ_TEMPLATE); assert( r >= 0 );
 
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_FACTORY, "array<T>@ f(int&in)", asFUNCTION(ScriptArrayFactory_Generic), asCALL_GENERIC); assert( r >= 0 );

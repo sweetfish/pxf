@@ -8,9 +8,9 @@ BEGIN_AS_NAMESPACE
 
 int CompareRelation(asIScriptEngine *engine, void *lobj, void *robj, int typeId, int &result)
 {
-    // TODO: If a lot of script objects are going to be compared, e.g. when sorting an array, 
+    // TODO: If a lot of script objects are going to be compared, e.g. when sorting an array,
     //       then the method id and context should be cached between calls.
-    
+
 	int retval = -1;
 	int funcId = 0;
 
@@ -27,7 +27,7 @@ int CompareRelation(asIScriptEngine *engine, void *lobj, void *robj, int typeId,
 			{
 				asDWORD flags;
 				int paramTypeId = func->GetParamTypeId(0, &flags);
-				
+
 				// The parameter must be an input reference of the same type
 				if( flags != asTM_INREF || typeId != paramTypeId )
 					break;
@@ -64,7 +64,7 @@ int CompareEquality(asIScriptEngine *engine, void *lobj, void *robj, int typeId,
 {
     // TODO: If a lot of script objects are going to be compared, e.g. when searching for an
 	//       entry in a set, then the method id and context should be cached between calls.
-    
+
 	int retval = -1;
 	int funcId = 0;
 
@@ -81,7 +81,7 @@ int CompareEquality(asIScriptEngine *engine, void *lobj, void *robj, int typeId,
 			{
 				asDWORD flags;
 				int paramTypeId = func->GetParamTypeId(0, &flags);
-				
+
 				// The parameter must be an input reference of the same type
 				if( flags != asTM_INREF || typeId != paramTypeId )
 					break;
@@ -128,10 +128,10 @@ int ExecuteString(asIScriptEngine *engine, const char *code, asIScriptModule *mo
 	string funcCode = "void ExecuteString() {\n";
 	funcCode += code;
 	funcCode += "\n;}";
-	
+
 	// If no module was provided, get a dummy from the engine
 	asIScriptModule *execMod = mod ? mod : engine->GetModule("ExecuteString", asGM_ALWAYS_CREATE);
-	
+
 	// Compile the function that can be executed
 	asIScriptFunction *func = 0;
 	int r = execMod->CompileFunction("ExecuteString", funcCode.c_str(), -1, 0, &func);
@@ -150,7 +150,7 @@ int ExecuteString(asIScriptEngine *engine, const char *code, asIScriptModule *mo
 
 	// Execute the function
 	r = execCtx->Execute();
-	
+
 	// Clean up
 	func->Release();
 	if( !ctx ) execCtx->Release();

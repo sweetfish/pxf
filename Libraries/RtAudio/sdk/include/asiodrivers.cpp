@@ -152,7 +152,7 @@ void AsioDrivers::removeCurrentDriver()
 
 #include "asiolist.h"
 
-AsioDrivers::AsioDrivers() 
+AsioDrivers::AsioDrivers()
 	: AsioDriverList()
 {
 	curIndex = -1;

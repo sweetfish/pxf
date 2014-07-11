@@ -8,18 +8,18 @@ namespace Pxf
 {
 
 	// safe deletion of ptr
-	template<typename T> 
+	template<typename T>
 	inline void SafeDelete(T& _Ptr)
 	{
-		if(_Ptr != 0) 
-		{ 
+		if(_Ptr != 0)
+		{
 			delete _Ptr;
 			_Ptr = 0;
 		}
 	}
 
 	// safe deletion of array
-	template<typename T> 
+	template<typename T>
 	inline void SafeDeleteArray(T& _Ptr)
 	{
 		if(_Ptr != 0)
@@ -39,7 +39,7 @@ namespace Pxf
 	int Format(char* _Dest, const char* _Format, ...);
 
 	// Swaps the content of a and b
-	template <typename T> 
+	template <typename T>
 	inline void Swap(T& a, T& b)
 	{
 		T t; t = a; a = b; b = t;
@@ -87,8 +87,8 @@ namespace Pxf
 		return ((v>>24) | ((v&0xFF0000)>>8) | ((v&0xFF00)<<8) | ((v&0xFF)<<24));
 	}
 
-	// Swaps endianess for arbitrary data type 
-	template<typename T> 
+	// Swaps endianess for arbitrary data type
+	template<typename T>
 	static T ByteswapArb(const T& t)
 	{
 		if (sizeof(T) > 1)
@@ -124,7 +124,7 @@ namespace Pxf
 	template <typename T> inline T ByteswapLtoN(const T& t) { return t; }
 	template <typename T> inline T ByteswapNtoL(const T& t) { return t; }
 	#endif
-	
+
 } // namespace Pxf
 
 #endif //__PXF_BASE_UTILS_H__

@@ -6,7 +6,7 @@
 namespace Pxf
 {
 	namespace Graphics
-	{	
+	{
 		struct VideoBufferGL : VideoBuffer
 		{
 			unsigned int 	m_Handle;

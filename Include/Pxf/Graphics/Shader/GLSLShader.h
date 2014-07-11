@@ -20,15 +20,15 @@ namespace Pxf {
 			bool m_SourceChanged;
 			void _Init();
 		public:
-			GLSLComponent(Resource::Chunk* _Chunk, const char* _Source,Resource::SHType _Type) 
+			GLSLComponent(Resource::Chunk* _Chunk, const char* _Source,Resource::SHType _Type)
 				: Resource::ShaderSource(_Chunk,_Source,_Type)
 				,m_ShaderHandle(0)
 			{
-				_Init();	
+				_Init();
 			}
 
 			~GLSLComponent();
-		
+
 			unsigned GetHandle() const { return m_ShaderHandle; }
 			bool IsValid() { return m_IsValid; }
 			void Attach(unsigned _Handle);
@@ -43,11 +43,11 @@ namespace Pxf {
 			unsigned m_ProgramHandle;
 			GLSLComponent* m_VertexProgram;
 			GLSLComponent* m_FragmentProgram;
-	
-			static unsigned int _ID; 
+
+			static unsigned int _ID;
 			bool m_IsValid;
 			bool m_IsBound;
-			void _Init();			
+			void _Init();
 		public:
 			GLSLShader(GLSLComponent* _Vertex,GLSLComponent* _Fragment)
 			{
@@ -55,7 +55,7 @@ namespace Pxf {
 				if(_Vertex->GetType() == Resource::SH_TYPE_VERTEX)
 					m_VertexProgram = _Vertex;
 				else
-					Message(LOCAL_MSG,"Vertex program has wrong type");	
+					Message(LOCAL_MSG,"Vertex program has wrong type");
 				if(_Fragment->GetType() == Resource::SH_TYPE_FRAGMENT)
 					m_FragmentProgram = _Fragment;
 				else

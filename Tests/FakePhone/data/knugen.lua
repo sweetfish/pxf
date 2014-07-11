@@ -7,17 +7,17 @@ require("knugen/card")
 function pxf:Init()
 	self.GameIdent = "Knugen"
 	self.GameVersion = "1.0"
-	
+
 	pxf:add_console("GameIdent: ^4" .. self.GameIdent)
 	pxf:add_console("GameVersion: ^4" .. self.GameVersion)
-	
+
 	screenw, screenh = pxf.graphics.getscreensize()
 	pxf:add_console("Screen size: ^4" .. tostring(screenw) .. "x" .. tostring(screenh))
-	
+
 	self.GameSeed = 4546
 	pxf:add_console("Game seed: ^4" .. self.GameSeed)
 	initial_deal = knugen:gen_eight_stacks(self.GameSeed)
-	         
+
 	decks = {knugen:new_tablau_deck(40, 142, initial_deal[1]),
 	         knugen:new_tablau_deck(40 + 57,   142, initial_deal[2]),
 	         knugen:new_tablau_deck(98 + 57,   142, initial_deal[3]),
@@ -26,19 +26,19 @@ function pxf:Init()
 	         knugen:new_tablau_deck(98 + 57*4, 142, initial_deal[6]),
 	         knugen:new_tablau_deck(98 + 57*5, 142, initial_deal[7]),
 	         knugen:new_tablau_deck(98 + 57*6, 142, initial_deal[8]),
-	         
+
 	         knugen:new_foundation_deck(275,        54),
 	         knugen:new_foundation_deck(275 + 57,   54),
 	         knugen:new_foundation_deck(275 + 57*2, 54),
 	         knugen:new_foundation_deck(275 + 57*3, 54),
-	         
+
 	         knugen:new_cell_deck(32, 54),
 	         knugen:new_cell_deck(32 + 57, 54),
 	         knugen:new_cell_deck(32 + 57*2, 54),
 	         knugen:new_cell_deck(32 + 57*3, 54),}
-	
+
 	draging_deck_info = nil
-	
+
 	last_mouse_drag = {drag = false, x1 = 0, y1 = 0, x2 = 0, y2 = 0, dx = 0, dy = 0}
 end
 
@@ -51,22 +51,22 @@ function pxf:Update(dt)
 end
 
 function pxf:Render()
-	
+
 	-- render background
 	texture_map01:bind()
 	pxf.graphics.translate(screenw / 2.0, screenh / 2.0)
 	pxf.graphics.rotate(math.pi / 2)
 	pxf.graphics.drawquad(0, 0,screenh,screenw, 0, 0, 1024, 683)
 	--pxf.graphics.drawquad(screenw / 2.0, screenh / 2.0,screenw,screenh)
-	
+
 	pxf.graphics.translate(-screenh / 2.0, -screenw / 2.0)
-  
-  
+
+
   tx1 = last_mouse_drag.x1
   ty1 = last_mouse_drag.y1
   tx2 = last_mouse_drag.x2
   ty2 = last_mouse_drag.y2
-  
+
 	if (last_mouse_drag.drag) then
 	  -- update current drag
 	  if (draging_deck_info) then
@@ -85,16 +85,16 @@ function pxf:Render()
   	  end
     end
   end
-  
+
   for i=1,#decks do
     decks[i]:draw()
   end
-  
+
   if (draging_deck_info) then
     pxf.graphics.setalpha(0.8)
     draging_deck_info.new_deck:draw()
   end
-	
+
 	-- render console
 	pxf.graphics.loadidentity()
   pxf.graphics.translate(screenw / 2.0, screenh / 2.0)
@@ -102,13 +102,13 @@ function pxf:Render()
   pxf.graphics.translate(-screenh / 2.0, -screenw / 2.0)
   pxf.console.cut_off_width = screenh
   pxf:draw_console(screenh, screenw)
-	  
-	
+
+
 	--pxf:add_console("Rendering frame: ^4" .. tostring(simple_framecount))
-	
+
 	-- make it crash:
   --pxf.graphics.drawquad(nil)
-  
+
   -- reset mouse drag
   --last_mouse_drag.drag = false
 end
@@ -143,7 +143,7 @@ end
 function pxf:EventRelease(x, y)
   if (last_mouse_drag.drag and draging_deck_info) then
     last_mouse_drag.drag = false
-    
+
     local ret = false
 	  for i=1,#decks do
       if decks[i]:hit_test(tx1, ty1) then
@@ -152,11 +152,11 @@ function pxf:EventRelease(x, y)
         break
       end
 	  end
-	  
+
 	  decks[draging_deck_info.from_deck]:drag_finished(ret)
 	  draging_deck_info = nil
   end
-  
+
   --pxf:add_console("Release event, ^4x: " .. tostring(x) .. " y: " .. tostring(y))
 end
 

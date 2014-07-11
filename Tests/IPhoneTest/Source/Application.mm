@@ -31,9 +31,9 @@ using namespace Graphics;
 using namespace Extra;
 using namespace Game;
 
-PhysicsObject* _GroundBody; 
-PhysicsObject* _Box1Body; 
-PhysicsObject* _Box2Body; 
+PhysicsObject* _GroundBody;
+PhysicsObject* _Box1Body;
+PhysicsObject* _Box2Body;
 
 TestGameState* _TestGameState;
 
@@ -60,49 +60,49 @@ Application::~Application()
 	m_Title = 0;
 	delete m_Engine;
 	delete m_World;
-	
+
 	m_Engine = 0;
 	m_World = 0;
 }
-	
+
 
 bool Application::Update()
 {
 	bool _RetVal = true;
 	// Call update on scene
-	
+
 	m_World->Simulate();
 	m_World->ClearForces();
-	
+
 	_UpdateFPS();
 
-	
+
 	return _RetVal;
 }
 
 void Application::_UpdateFPS()
 {
 	m_FPS.ticks++;
-	
+
 	if(m_FPS.elapsed_time >= 60.0f)
 	{
 		m_FPS.fps = m_FPS.ticks / m_FPS.elapsed_time;
 		m_FPS.ticks = 0;
 		m_FPS.elapsed_time = 0.0f;
-	}	
+	}
 }
 
 bool Application::Render()
 {
 	bool _RetVal = true;
-	
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 	//glOrthof(0.0f, ((DeviceGLES11*) m_Device)->GetBackingWidth(), 0.f, ((DeviceGLES11*) m_Device)->GetBackingHeight(), -1.0f, 1.0f);
 	glOrthof(0.0f, 10.0f, 0.f, 10.0f, -1.0f, 1.0f);
 	//glOrthof(0.0f, 100.0f, 100.0f, 0.0f, -1.0f, 1.0f);
     glMatrixMode(GL_MODELVIEW);
-    
+
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	// Temporary fix for depth testing
 	glEnable(GL_DEPTH_TEST);
@@ -110,28 +110,28 @@ bool Application::Render()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	/*
 	m_Device->Translate(_Box1Body->GetPosition());
 	pSprite1->Draw();
 	m_Device->Translate(-_Box1Body->GetPosition());
-	
+
 	m_Device->Translate(_Box2Body->GetPosition());
 	pSprite1->Draw();
 	m_Device->Translate(-_Box2Body->GetPosition());
 	 */
-	 
+
 	//pSprite2->Draw();
-	
-	
+
+
 	// Draw loading if preloading resources
 	m_Device->SetViewport(0.0f, 0.0f, ((DeviceGLES11*) m_Device)->GetBackingWidth(), ((DeviceGLES11*) m_Device)->GetBackingHeight());
 	Math::Mat4 t_ortho = Math::Mat4::Ortho(0, ((DeviceGLES11*) m_Device)->GetBackingWidth(), ((DeviceGLES11*) m_Device)->GetBackingHeight(), 0, 0, 1);
 	m_Device->SetProjection(&t_ortho);
-	
+
 	// Update LuaGame
 	luagame->Update(0.1);
-	
+
 	luagame->Render();
 
 	return _RetVal;
@@ -140,16 +140,16 @@ bool Application::Render()
 void Application::SetDevice(Pxf::Graphics::Device* _pDevice)
 {
 	m_Device = _pDevice;
-	
+
 	Setup();
-}	
+}
 
 void Application::Setup()
-{	
+{
 	Vec2f _Gravity(0.0f,-10.0f);
-	
+
 	m_World = new Game::Box2DPhysicsWorld(_Gravity,true,1 / 60.0f, 6,2);
-	
+
 	Game::body_parameters _GroundBodyParams;
 	_GroundBodyParams.position.x = 0.0f;
 	_GroundBodyParams.position.y = -10.0f;
@@ -158,9 +158,9 @@ void Application::Setup()
 	_GroundBodyParams.density = 1.0f;
 	_GroundBodyParams.shape_type = b2Shape::e_polygon;
 	_GroundBodyParams.po_type = Game::PO_BODY_STATIC;
-	
+
 	_GroundBody = m_World->CreateBodyFromParams(_GroundBodyParams);
-	
+
 	Game::body_parameters _Box1;
 	_Box1.position.x = 8.0f;
 	_Box1.position.y = 5.0f;
@@ -170,9 +170,9 @@ void Application::Setup()
 	_Box1.density = 1.0f;
 	_Box1.shape_type = b2Shape::e_polygon;
 	_Box1.po_type = Game::PO_BODY_DYNAMIC;
-	
+
 	_Box1Body = (Box2DPhysicsObject*) m_World->CreateBodyFromParams(_Box1);
-	
+
 	Game::body_parameters _Box2;
 	_Box2.position.x = 8.4f;
 	_Box2.position.y = 7.0f;
@@ -182,14 +182,14 @@ void Application::Setup()
 	_Box2.density = 1.0f;
 	_Box2.shape_type = b2Shape::e_polygon;
 	_Box2.po_type = Game::PO_BODY_DYNAMIC;
-	
+
 	_Box2Body = (Box2DPhysicsObject*) m_World->CreateBodyFromParams(_Box2);
 
 	// Load some texture
 	pTexture = m_Device->CreateTexture("sprite_test.jpg");
-	
+
 	/*pSprite1 = new Game::Sprite(m_Device,						// Device Context
-							   "MySprite",						// Object Name (providing a NULL pointer 
+							   "MySprite",						// Object Name (providing a NULL pointer
 																// in this field will generate a new name)
 							   pTexture,						// Sprite Texture
 							   64,								// Sprite Cell Width
@@ -199,26 +199,26 @@ void Application::Setup()
 	 */
 	// Init gamestate
 	_TestGameState = new TestGameState();
-	
+
 	// Init LuaGame
 	luagame = new LuaGame::Game("knugen.lua", m_Device);
-	
+
 	// Load LuaGame
 	luagame->Load();
-	
+
 }
 
 
 bool Application::Init()
 {
-	m_Engine		= new Engine();	
+	m_Engine		= new Engine();
 	m_IsRunning		= true;
-	
+
 	if(!m_Engine)
 	{
 		m_IsRunning = false;
 	}
-	
+
 	return m_IsRunning;
 }
 

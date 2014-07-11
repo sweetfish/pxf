@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2009 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -138,7 +138,7 @@ int asCParser::ParseDataType(asCScriptCode *script)
 	this->script = script;
 
 	scriptNode = new(engine->memoryMgr.AllocScriptNode()) asCScriptNode(snDataType);
-		
+
 	scriptNode->AddChildLast(ParseType(true));
 	if( isSyntaxError ) return -1;
 
@@ -406,7 +406,7 @@ int asCParser::ParseStatementBlock(asCScriptCode *script, asCScriptNode *block)
 	this->script = script;
 	sourcePos = block->tokenPos;
 
-	scriptNode = ParseStatementBlock();	
+	scriptNode = ParseStatementBlock();
 
 	if( isSyntaxError || errorWhileParsing )
 		return -1;
@@ -436,7 +436,7 @@ asCScriptNode *asCParser::ParseEnumeration()
 
 	// Get the identifier
 	GetToken(&token);
-	if(ttIdentifier != token.type) 
+	if(ttIdentifier != token.type)
 	{
 		Error(TXT_EXPECTED_IDENTIFIER, &token);
 		return node;
@@ -452,24 +452,24 @@ asCScriptNode *asCParser::ParseEnumeration()
 
 	// check for the start of the declaration block
 	GetToken(&token);
-	if( token.type != ttStartStatementBlock ) 
+	if( token.type != ttStartStatementBlock )
 	{
 		RewindTo(&token);
 		Error(ExpectedToken(asGetTokenDefinition(token.type)).AddressOf(), &token);
 		return node;
 	}
 
-	while(ttEnd != token.type) 
+	while(ttEnd != token.type)
 	{
 		GetToken(&token);
 
-		if( ttEndStatementBlock == token.type ) 
+		if( ttEndStatementBlock == token.type )
 		{
 			RewindTo(&token);
 			break;
 		}
 
-		if(ttIdentifier != token.type) 
+		if(ttIdentifier != token.type)
 		{
 			Error(TXT_EXPECTED_IDENTIFIER, &token);
 			return node;
@@ -496,7 +496,7 @@ asCScriptNode *asCParser::ParseEnumeration()
 			GetToken(&token);
 		}
 
-		if(ttListSeparator != token.type) 
+		if(ttListSeparator != token.type)
 		{
 			RewindTo(&token);
 			break;
@@ -505,7 +505,7 @@ asCScriptNode *asCParser::ParseEnumeration()
 
 	//	check for the end of the declaration block
 	GetToken(&token);
-	if( token.type != ttEndStatementBlock ) 
+	if( token.type != ttEndStatementBlock )
 	{
 		RewindTo(&token);
 		Error(ExpectedToken(asGetTokenDefinition(token.type)).AddressOf(), &token);
@@ -551,7 +551,7 @@ bool asCParser::CheckTemplateType(sToken &t)
 			GetToken(&t);
 		}
 
-		// Accept >> and >>> tokens too. But then force the tokenizer to move 
+		// Accept >> and >>> tokens too. But then force the tokenizer to move
 		// only 1 character ahead (thus splitting the token in two).
 		if( script->code[t.pos] != '>' )
 			return false;
@@ -573,7 +573,7 @@ bool asCParser::IsVarDecl()
 	sToken t;
 	GetToken(&t);
 	RewindTo(&t);
-	
+
 	// A variable decl can start with a const
 	sToken t1;
 	GetToken(&t1);
@@ -622,14 +622,14 @@ bool asCParser::IsVarDecl()
 		RewindTo(&t);
 		return true;
 	}
-	if( t2.type == ttOpenParanthesis ) 
-	{	
-		// If the closing paranthesis is followed by a statement 
-		// block or end-of-file, then treat it as a function. 
+	if( t2.type == ttOpenParanthesis )
+	{
+		// If the closing paranthesis is followed by a statement
+		// block or end-of-file, then treat it as a function.
 		while( t2.type != ttCloseParanthesis && t2.type != ttEnd )
 			GetToken(&t2);
 
-		if( t2.type == ttEnd ) 
+		if( t2.type == ttEnd )
 			return false;
 		else
 		{
@@ -704,14 +704,14 @@ bool asCParser::IsFuncDecl(bool isMethod)
 	}
 
 	GetToken(&t2);
-	if( t2.type == ttOpenParanthesis ) 
-	{	
-		// If the closing paranthesis is not followed by a  
-		// statement block then it is not a function. 
+	if( t2.type == ttOpenParanthesis )
+	{
+		// If the closing paranthesis is not followed by a
+		// statement block then it is not a function.
 		while( t2.type != ttCloseParanthesis && t2.type != ttEnd )
 			GetToken(&t2);
 
-		if( t2.type == ttEnd ) 
+		if( t2.type == ttEnd )
 			return false;
 		else
 		{
@@ -778,7 +778,7 @@ asCScriptNode *asCParser::ParseFunction(bool isMethod)
 			node->AddChildLast(ParseToken(ttConst));
 	}
 
-	// We should just find the end of the statement block here. The statements 
+	// We should just find the end of the statement block here. The statements
 	// will be parsed on request by the compiler once it starts the compilation.
 	node->AddChildLast(SuperficiallyParseStatementBlock());
 
@@ -851,7 +851,7 @@ asCScriptNode *asCParser::ParseInterface()
 		// Parse the method signature
 		node->AddChildLast(ParseInterfaceMethod());
 		if( isSyntaxError ) return node;
-		
+
 		GetToken(&t);
 		RewindTo(&t);
 	}
@@ -886,7 +886,7 @@ asCScriptNode *asCParser::ParseClass()
 	{
 		// Parse 'implicit handle class' construct
 		GetToken(&t);
-		
+
 		if ( t.type == ttHandle )
 			node->SetToken(&t);
 		else
@@ -1033,7 +1033,7 @@ int asCParser::ParseGlobalVarInit(asCScriptCode *script, asCScriptNode *init)
 		else
 			scriptNode = ParseAssignment();
 	}
-	else if( t.type == ttOpenParanthesis ) 
+	else if( t.type == ttOpenParanthesis )
 	{
 		RewindTo(&t);
 		scriptNode = ParseArgList();
@@ -1155,7 +1155,7 @@ asCScriptNode *asCParser::ParseTypeMod(bool isParam)
 		}
 	}
 
-	// Parse possible + token 
+	// Parse possible + token
 	GetToken(&t);
 	RewindTo(&t);
 	if( t.type == ttPlus )
@@ -1202,7 +1202,7 @@ asCScriptNode *asCParser::ParseType(bool allowConst, bool allowVariableType)
 		node->AddChildLast(ParseType(true, false));
 		if( isSyntaxError ) return node;
 
-		// Accept >> and >>> tokens too. But then force the tokenizer to move 
+		// Accept >> and >>> tokens too. But then force the tokenizer to move
 		// only 1 character ahead (thus splitting the token in two).
 		GetToken(&t);
 		if( script->code[t.pos] != '>' )
@@ -1834,7 +1834,7 @@ asCScriptNode *asCParser::ParseInitList()
 			GetToken(&t1);
 			if( t1.type == ttListSeparator )
 			{
-				// No expression 
+				// No expression
 				node->AddChildLast(new(engine->memoryMgr.AllocScriptNode()) asCScriptNode(snUndefined));
 
 				GetToken(&t1);
@@ -1849,7 +1849,7 @@ asCScriptNode *asCParser::ParseInitList()
 			}
 			else if( t1.type == ttEndStatementBlock )
 			{
-				// No expression 
+				// No expression
 				node->AddChildLast(new(engine->memoryMgr.AllocScriptNode()) asCScriptNode(snUndefined));
 
 				node->UpdateSourcePos(t1.pos, t1.length);
@@ -2100,11 +2100,11 @@ asCScriptNode *asCParser::ParseSwitch()
 		Error(ExpectedToken("{").AddressOf(), &t);
 		return node;
 	}
-	
+
 	while( !isSyntaxError )
 	{
 		GetToken(&t);
-		
+
 		if( t.type == ttEndStatementBlock || t.type == ttDefault)
 			break;
 
@@ -2168,9 +2168,9 @@ asCScriptNode *asCParser::ParseCase()
 	// Parse statements until we find either of }, case, default, and break
 	GetToken(&t);
 	RewindTo(&t);
-	while( t.type != ttCase && 
-		   t.type != ttDefault && 
-		   t.type != ttEndStatementBlock && 
+	while( t.type != ttCase &&
+		   t.type != ttDefault &&
+		   t.type != ttEndStatementBlock &&
 		   t.type != ttBreak )
 	{
 
@@ -2284,14 +2284,14 @@ asCScriptNode *asCParser::ParseFor()
 	}
 
 	node->AddChildLast(ParseStatement());
-	
+
 	return node;
 }
 
 
 
 
-	
+
 asCScriptNode *asCParser::ParseWhile()
 {
 	asCScriptNode *node = new(engine->memoryMgr.AllocScriptNode()) asCScriptNode(snWhile);
@@ -2561,7 +2561,7 @@ asCScriptNode *asCParser::ParseExprTerm()
 	node->AddChildLast(ParseExprValue());
 	if( isSyntaxError ) return node;
 
-	
+
 	for(;;)
 	{
 		sToken t;
@@ -2693,7 +2693,7 @@ void asCParser::GetToken(sToken *token)
 		sourcePos += token->length;
 	}
 	// Filter out whitespace and comments
-	while( token->type == ttWhiteSpace || 
+	while( token->type == ttWhiteSpace ||
 	       token->type == ttOnelineComment ||
 		   token->type == ttMultilineComment );
 }
@@ -2893,7 +2893,7 @@ asCScriptNode *asCParser::ParseTypedef()
 		Error(ExpectedToken(asGetTokenDefinition(token.type)).AddressOf(), &token);
 		return node;
 	}
-	
+
 	node->SetToken(&token);
 	node->UpdateSourcePos(token.pos, token.length);
 
@@ -2915,7 +2915,7 @@ asCScriptNode *asCParser::ParseTypedef()
 
 	// Check for the end of the typedef
 	GetToken(&token);
-	if( token.type != ttEndStatement ) 
+	if( token.type != ttEndStatement )
 	{
 		RewindTo(&token);
 		Error(ExpectedToken(asGetTokenDefinition(token.type)).AddressOf(), &token);

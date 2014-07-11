@@ -2,23 +2,23 @@
    AngelCode Scripting Library
    Copyright (c) 2003-2009 Andreas Jonsson
 
-   This software is provided 'as-is', without any express or implied 
-   warranty. In no event will the authors be held liable for any 
+   This software is provided 'as-is', without any express or implied
+   warranty. In no event will the authors be held liable for any
    damages arising from the use of this software.
 
-   Permission is granted to anyone to use this software for any 
-   purpose, including commercial applications, and to alter it and 
+   Permission is granted to anyone to use this software for any
+   purpose, including commercial applications, and to alter it and
    redistribute it freely, subject to the following restrictions:
 
-   1. The origin of this software must not be misrepresented; you 
+   1. The origin of this software must not be misrepresented; you
       must not claim that you wrote the original software. If you use
-      this software in a product, an acknowledgment in the product 
+      this software in a product, an acknowledgment in the product
       documentation would be appreciated but is not required.
 
-   2. Altered source versions must be plainly marked as such, and 
+   2. Altered source versions must be plainly marked as such, and
       must not be misrepresented as being the original software.
 
-   3. This notice may not be removed or altered from any source 
+   3. This notice may not be removed or altered from any source
       distribution.
 
    The original version of this library can be located at:
@@ -50,12 +50,12 @@ asCRestore::asCRestore(asCModule* _module, asIBinaryStream* _stream, asCScriptEn
 {
 }
 
-int asCRestore::Save() 
+int asCRestore::Save()
 {
 	unsigned long i, count;
 
 	// Store everything in the same order that the builder parses scripts
-	
+
 	// Store enums
 	count = (asUINT)module->enumTypes.GetLength();
 	WRITE_NUM(count);
@@ -100,7 +100,7 @@ int asCRestore::Save()
 	// scriptGlobals[]
 	count = (asUINT)module->scriptGlobals.GetLength();
 	WRITE_NUM(count);
-	for( i = 0; i < count; ++i ) 
+	for( i = 0; i < count; ++i )
 		WriteGlobalProperty(module->scriptGlobals[i]);
 
 	// scriptFunctions[]
@@ -155,9 +155,9 @@ int asCRestore::Save()
 	return asSUCCESS;
 }
 
-int asCRestore::Restore() 
+int asCRestore::Restore()
 {
-	// Before starting the load, make sure that 
+	// Before starting the load, make sure that
 	// any existing resources have been freed
 	module->InternalReset();
 
@@ -227,14 +227,14 @@ int asCRestore::Restore()
 	// scriptGlobals[]
 	READ_NUM(count);
 	module->scriptGlobals.Allocate(count, 0);
-	for( i = 0; i < count; ++i ) 
+	for( i = 0; i < count; ++i )
 	{
 		ReadGlobalProperty();
 	}
 
 	// scriptFunctions[]
 	READ_NUM(count);
-	for( i = 0; i < count; ++i ) 
+	for( i = 0; i < count; ++i )
 	{
 		func = ReadFunction();
 	}
@@ -262,7 +262,7 @@ int asCRestore::Restore()
 		info->boundFunctionId = -1;
 		module->bindInformations[i] = info;
 	}
-	
+
 	// usedTypes[]
 	READ_NUM(count);
 	usedTypes.Allocate(count, 0);
@@ -330,7 +330,7 @@ void asCRestore::ReadUsedStringConstants()
 	asUINT count;
 	READ_NUM(count);
 	usedStringConstants.SetLength(count);
-	for( asUINT i = 0; i < count; ++i ) 
+	for( asUINT i = 0; i < count; ++i )
 	{
 		ReadString(&str);
 		usedStringConstants[i] = engine->AddConstantString(str.AddressOf(), str.GetLength());
@@ -417,7 +417,7 @@ void asCRestore::WriteFunctionSignature(asCScriptFunction *func)
 	WriteDataType(&func->returnType);
 	count = (asUINT)func->parameterTypes.GetLength();
 	WRITE_NUM(count);
-	for( i = 0; i < count; ++i ) 
+	for( i = 0; i < count; ++i )
 		WriteDataType(&func->parameterTypes[i]);
 
 	count = (asUINT)func->inOutFlags.GetLength();
@@ -442,7 +442,7 @@ void asCRestore::ReadFunctionSignature(asCScriptFunction *func)
 	ReadDataType(&func->returnType);
 	READ_NUM(count);
 	func->parameterTypes.Allocate(count, 0);
-	for( i = 0; i < count; ++i ) 
+	for( i = 0; i < count; ++i )
 	{
 		ReadDataType(&dt);
 		func->parameterTypes.PushLast(dt);
@@ -463,7 +463,7 @@ void asCRestore::ReadFunctionSignature(asCScriptFunction *func)
 	READ_NUM(func->isReadOnly);
 }
 
-void asCRestore::WriteFunction(asCScriptFunction* func) 
+void asCRestore::WriteFunction(asCScriptFunction* func)
 {
 	char c;
 
@@ -525,7 +525,7 @@ void asCRestore::WriteFunction(asCScriptFunction* func)
 	// TODO: Store script section index
 }
 
-asCScriptFunction *asCRestore::ReadFunction(bool addToModule, bool addToEngine) 
+asCScriptFunction *asCRestore::ReadFunction(bool addToModule, bool addToEngine)
 {
 	char c;
 	READ_NUM(c);
@@ -559,7 +559,7 @@ asCScriptFunction *asCRestore::ReadFunction(bool addToModule, bool addToEngine)
 		engine->gc.AddScriptObjectToGC(func, &engine->functionBehaviours);
 
 	func->id = engine->GetNextScriptFunctionId();
-	
+
 	READ_NUM(count);
 	func->byteCode.Allocate(count, 0);
 	ReadByteCode(func->byteCode.AddressOf(), count);
@@ -614,7 +614,7 @@ void asCRestore::WriteObjectTypeDeclaration(asCObjectType *ot, bool writePropert
 		WRITE_NUM(flags);
 	}
 	else
-	{	
+	{
 		if( ot->flags & asOBJ_ENUM )
 		{
 			// enumValues[]
@@ -718,7 +718,7 @@ void asCRestore::ReadObjectTypeDeclaration(asCObjectType *ot, bool readPropertie
 			engine->scriptFunctions[ot->beh.operators[i]]->AddRef();
 	}
 	else
-	{	
+	{
 		if( ot->flags & asOBJ_ENUM )
 		{
 			int count;
@@ -802,7 +802,7 @@ void asCRestore::ReadObjectTypeDeclaration(asCObjectType *ot, bool readPropertie
 
 			// methods[]
 			READ_NUM(size);
-			for( n = 0; n < size; n++ ) 
+			for( n = 0; n < size; n++ )
 			{
 				asCScriptFunction *func = ReadFunction();
 				ot->methods.PushLast(func->id);
@@ -821,14 +821,14 @@ void asCRestore::ReadObjectTypeDeclaration(asCObjectType *ot, bool readPropertie
 	}
 }
 
-void asCRestore::WriteString(asCString* str) 
+void asCRestore::WriteString(asCString* str)
 {
 	asUINT len = (asUINT)str->GetLength();
 	WRITE_NUM(len);
 	stream->Write(str->AddressOf(), (asUINT)len);
 }
 
-void asCRestore::ReadString(asCString* str) 
+void asCRestore::ReadString(asCString* str)
 {
 	asUINT len;
 	READ_NUM(len);
@@ -836,10 +836,10 @@ void asCRestore::ReadString(asCString* str)
 	stream->Read(str->AddressOf(), len);
 }
 
-void asCRestore::WriteGlobalProperty(asCGlobalProperty* prop) 
+void asCRestore::WriteGlobalProperty(asCGlobalProperty* prop)
 {
-	// TODO: We might be able to avoid storing the name and type of the global 
-	//       properties twice if we merge this with the WriteUsedGlobalProperties. 
+	// TODO: We might be able to avoid storing the name and type of the global
+	//       properties twice if we merge this with the WriteUsedGlobalProperties.
 	WriteString(&prop->name);
 	WriteDataType(&prop->type);
 
@@ -858,7 +858,7 @@ void asCRestore::WriteGlobalProperty(asCGlobalProperty* prop)
 	}
 }
 
-void asCRestore::ReadGlobalProperty() 
+void asCRestore::ReadGlobalProperty()
 {
 	asCString name;
 	asCDataType type;
@@ -880,21 +880,21 @@ void asCRestore::ReadGlobalProperty()
 	}
 }
 
-void asCRestore::WriteObjectProperty(asCObjectProperty* prop) 
+void asCRestore::WriteObjectProperty(asCObjectProperty* prop)
 {
 	WriteString(&prop->name);
 	WriteDataType(&prop->type);
 	WRITE_NUM(prop->byteOffset);
 }
 
-void asCRestore::ReadObjectProperty(asCObjectProperty* prop) 
+void asCRestore::ReadObjectProperty(asCObjectProperty* prop)
 {
 	ReadString(&prop->name);
 	ReadDataType(&prop->type);
 	READ_NUM(prop->byteOffset);
 }
 
-void asCRestore::WriteDataType(const asCDataType *dt) 
+void asCRestore::WriteDataType(const asCDataType *dt)
 {
 	bool b;
 	int t = dt->GetTokenType();
@@ -910,7 +910,7 @@ void asCRestore::WriteDataType(const asCDataType *dt)
 	WRITE_NUM(b);
 }
 
-void asCRestore::ReadDataType(asCDataType *dt) 
+void asCRestore::ReadDataType(asCDataType *dt)
 {
 	eTokenType tokenType;
 	READ_NUM(tokenType);
@@ -937,7 +937,7 @@ void asCRestore::ReadDataType(asCDataType *dt)
 	dt->MakeReference(isReference);
 }
 
-void asCRestore::WriteObjectType(asCObjectType* ot) 
+void asCRestore::WriteObjectType(asCObjectType* ot)
 {
 	char ch;
 
@@ -994,7 +994,7 @@ void asCRestore::WriteObjectType(asCObjectType* ot)
 	}
 }
 
-asCObjectType* asCRestore::ReadObjectType() 
+asCObjectType* asCRestore::ReadObjectType()
 {
 	asCObjectType *ot;
 	char ch;
@@ -1013,7 +1013,7 @@ asCObjectType* asCRestore::ReadObjectType()
 
 			dt.MakeArray(engine);
 			ot = dt.GetObjectType();
-			
+
 			asASSERT(ot);
 		}
 		else
@@ -1023,7 +1023,7 @@ asCObjectType* asCRestore::ReadObjectType()
 			asCDataType dt = asCDataType::CreatePrimitive(tokenType, false);
 			dt.MakeArray(engine);
 			ot = dt.GetObjectType();
-			
+
 			asASSERT(ot);
 		}
 	}
@@ -1058,7 +1058,7 @@ asCObjectType* asCRestore::ReadObjectType()
 			ot = module->GetObjectType(typeName.AddressOf());
 			if( !ot )
 				ot = engine->GetObjectType(typeName.AddressOf());
-			
+
 			asASSERT(ot);
 		}
 		else if( typeName == "_builtin_object_" )
@@ -1086,7 +1086,7 @@ void asCRestore::WriteByteCode(asDWORD *bc, int length)
 			for( n = 0; n < asBCTypeSize[asBCInfo[c].type]-1; n++ )
 				tmp[n] = *bc++;
 
-			// Translate the object type 
+			// Translate the object type
 			asCObjectType *ot = *(asCObjectType**)tmp;
 			*(int*)tmp = FindObjectTypeIdx(ot);
 
@@ -1098,7 +1098,7 @@ void asCRestore::WriteByteCode(asDWORD *bc, int length)
 				WRITE_NUM(tmp[n]);
 		}
 		else if( c == asBC_FREE   ||
-			     c == asBC_REFCPY || 
+			     c == asBC_REFCPY ||
 				 c == asBC_OBJTYPE )
 		{
 			WRITE_NUM(*bc++);
@@ -1129,7 +1129,7 @@ void asCRestore::WriteByteCode(asDWORD *bc, int length)
 				WRITE_NUM(tmp[n]);
 		}
 		else if( c == asBC_CALL ||
-				 c == asBC_CALLINTF || 
+				 c == asBC_CALLINTF ||
 				 c == asBC_CALLSYS )
 		{
 			WRITE_NUM(*bc++);
@@ -1237,7 +1237,7 @@ void asCRestore::WriteUsedGlobalProps()
 	for( int n = 0; n < c; n++ )
 	{
 		size_t *p = (size_t*)usedGlobalProperties[n];
-		
+
 		// First search for the global in the module
 		char moduleProp = 0;
 		asCGlobalProperty *prop = 0;

@@ -7,7 +7,7 @@
 namespace Pxf {
 	namespace Game {
 		// these are just a few parameters to get started.. could scrap this as well, its just to create bodies rapidly..
-		struct body_parameters 
+		struct body_parameters
 		{
 			Math::Vec2f		position;
 			Math::Vec2f		half_size;

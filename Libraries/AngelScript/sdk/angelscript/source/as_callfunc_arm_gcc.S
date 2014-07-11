@@ -41,7 +41,7 @@
 .global armFuncR0R1
 .global armFuncObjLast
 .global armFuncR0ObjLast
-    
+
 armFunc:
     stmdb   sp!, {r4-r8, lr}
     mov     r6, r0  // arg table
@@ -94,7 +94,7 @@ armFuncObjLast:
     ldrge   r0, [r6],#4
     cmp     r7, #2*4
     ldrge   r1, [r6],#4
-    ldrlt   r1, [sp]    
+    ldrlt   r1, [sp]
     cmp     r7, #3*4
     ldrge   r2, [r6],#4
     ldrlt   r2, [sp]

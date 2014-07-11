@@ -22,7 +22,7 @@ namespace Pxf
 				s_TimeInitialized = true;
 			}
 		}
-		
+
 		static int64 GetTime();
 	};
 }

@@ -30,7 +30,7 @@ namespace Pxf{
 			char* GetContextTypeName();
 
 			bool IsOpen();
-			/*			
+			/*
 			bool IsActive();
 			bool IsMinimized();
 			*/

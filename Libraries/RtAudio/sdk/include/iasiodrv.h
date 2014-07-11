@@ -1,7 +1,7 @@
 #include "asiosys.h"
 #include "asio.h"
 
-/* Forward Declarations */ 
+/* Forward Declarations */
 
 #ifndef __ASIODRIVER_FWD_DEFINED__
 #define __ASIODRIVER_FWD_DEFINED__
@@ -12,9 +12,9 @@ interface IASIO : public IUnknown
 {
 
 	virtual ASIOBool init(void *sysHandle) = 0;
-	virtual void getDriverName(char *name) = 0;	
+	virtual void getDriverName(char *name) = 0;
 	virtual long getDriverVersion() = 0;
-	virtual void getErrorMessage(char *string) = 0;	
+	virtual void getErrorMessage(char *string) = 0;
 	virtual ASIOError start() = 0;
 	virtual ASIOError stop() = 0;
 	virtual ASIOError getChannels(long *numInputChannels, long *numOutputChannels) = 0;

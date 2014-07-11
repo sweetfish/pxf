@@ -8,7 +8,7 @@ namespace Pxf
 {
 	namespace Graphics
 	{
-		
+
 		class QuadBatchGL2 : public QuadBatch
 		{
 			public:
@@ -38,7 +38,7 @@ namespace Pxf
 				void AddTopLeft(float x, float y, float w, float h);
 				void AddCentered(float x, float y, float w, float h);
 				void AddCentered(float x, float y, float w, float h, float rotation);
-				
+
 				void Draw();
 			private:
 				void Flush();
@@ -51,7 +51,7 @@ namespace Pxf
                 float m_CurrentAlpha;
 
 				//float m_Rotation;
-				
+
                 //Math::Vec2f m_Translation;
                 Math::Mat4 m_TransformMatrix;
 

@@ -62,7 +62,7 @@ bool WindowGL2::Open()
 	// Set number of FSAA samples
 	if (m_fsaa_samples > 0)
 		glfwOpenWindowHint(GLFW_FSAA_SAMPLES, m_fsaa_samples);
-	
+
 	glfwOpenWindowHint(GLFW_WINDOW_NO_RESIZE, m_resizeable ? GL_FALSE : GL_TRUE);
 
 	if (GL_TRUE == glfwOpenWindow(m_width, m_height, m_bits_color, m_bits_color, m_bits_color, m_bits_alpha, m_bits_depth, m_bits_stencil, t_params))
@@ -70,12 +70,12 @@ bool WindowGL2::Open()
 
 #ifdef CONF_PLATFORM_MACOSX
 		/* HACK - Get events without bundle */
-		ProcessSerialNumber psn;    
+		ProcessSerialNumber psn;
 		GetCurrentProcess(&psn);
 		TransformProcessType(&psn,kProcessTransformToForegroundApplication);
 		SetFrontProcess(&psn);
 #endif
-		
+
 		GLenum err = glewInit();
 		if (err != GLEW_OK)
 		{
@@ -89,7 +89,7 @@ bool WindowGL2::Open()
 	else
 		return false;
 
-	
+
 }
 
 bool WindowGL2::Close()

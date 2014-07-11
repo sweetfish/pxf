@@ -23,7 +23,7 @@ int main(int argc, const char** argv)
 
 	Platform p;
 
-	PxfMain(cmdLine);	
+	PxfMain(cmdLine);
 
 	return 0;
 }

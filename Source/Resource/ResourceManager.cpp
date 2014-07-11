@@ -66,7 +66,7 @@ Chunk* ResourceManager::ReadFile(const char* _Filename)
 		Message("ResourceManager", "Failed to read from '%s'", _Filename);
 		return NULL;
 	}
-	
+
 	Message("ResourceManager", "Failed to open '%s'", _Filename);
 	return NULL;
 }
@@ -78,7 +78,7 @@ void ResourceManager::Release(AbstractResource* _Resource, bool _Purge)
 		_Resource->m_References--;
 
 		if (_Resource->m_References <= 0 || _Purge)
-		{			
+		{
 			Map<String, AbstractResource*>::iterator iter = m_Resources.find(_Resource->m_Source);
 			if (iter != m_Resources.end())
 			{

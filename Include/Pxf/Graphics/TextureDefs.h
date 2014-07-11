@@ -4,7 +4,7 @@
 namespace Pxf
 {
 	namespace Graphics
-	{	
+	{
 		enum TextureFilter
 		{
 			// valid for min & mag
@@ -24,7 +24,7 @@ namespace Pxf
 			TEX_CLAMP_TO_EDGE,
 			TEX_REPEAT
 		};
-		
+
 		enum TextureFormatStorage
 		{
 			TEX_FORMAT_RGB,

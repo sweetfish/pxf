@@ -9,7 +9,7 @@ unsigned GameObject::m_ObjectCounter = 0;
 
 GameObject::GameObject()
 {
-	
+
 }
 
 GameObject::GameObject(Pxf::Math::Vec3f _Position, const char* _ID)
@@ -30,8 +30,8 @@ void GameObject::_GenerateNewName()
 {
 	char _NewName[32];
 	sprintf(_NewName,"GameObject%i",m_ObjectCounter);
-	
+
 	std::string * _StrName = new std::string(_NewName);
 	m_ID = _StrName->c_str();
 }
-	
+

@@ -356,7 +356,7 @@ double RtApi :: getStreamTime( void )
   then = stream_.lastTickTimestamp;
   return stream_.streamTime +
     ((now.tv_sec + 0.000001 * now.tv_usec) -
-     (then.tv_sec + 0.000001 * then.tv_usec));     
+     (then.tv_sec + 0.000001 * then.tv_usec));
 #else
   return stream_.streamTime;
 #endif
@@ -712,7 +712,7 @@ OSStatus callbackHandler( AudioDeviceID inDevice,
                           const AudioBufferList* inInputData,
                           const AudioTimeStamp* inInputTime,
                           AudioBufferList* outOutputData,
-                          const AudioTimeStamp* inOutputTime, 
+                          const AudioTimeStamp* inOutputTime,
                           void* infoPointer )
 {
   CallbackInfo *info = (CallbackInfo *) infoPointer;
@@ -1626,7 +1626,7 @@ bool RtApiCore :: callbackEvent( AudioDeviceID deviceId,
           channelsLeft -= streamChannels;
         }
       }
-      
+
       if ( stream_.doConvertBuffer[1] ) { // convert from our internal "device" buffer
         convertBuffer( stream_.userBuffer[1],
                        stream_.deviceBuffer,
@@ -2504,7 +2504,7 @@ RtApiAsio :: RtApiAsio()
   // CoInitialize beforehand, but it must be for appartment threading
   // (in which case, CoInitilialize will return S_FALSE here).
   coInitialized_ = false;
-  HRESULT hr = CoInitialize( NULL ); 
+  HRESULT hr = CoInitialize( NULL );
   if ( FAILED(hr) ) {
     errorText_ = "RtApiAsio::ASIO requires a single-threaded appartment. Call CoInitializeEx(0,COINIT_APARTMENTTHREADED)";
     error( RtError::WARNING );
@@ -2855,7 +2855,7 @@ bool RtApiAsio :: probeDeviceOpen( unsigned int device, StreamMode mode, unsigne
       handle = new AsioHandle;
     }
     catch ( std::bad_alloc& ) {
-      //if ( handle == NULL ) {    
+      //if ( handle == NULL ) {
       drivers.removeCurrentDriver();
       errorText_ = "RtApiAsio::probeDeviceOpen: error allocating AsioHandle memory.";
       return FAILURE;
@@ -3383,13 +3383,13 @@ long asioMessages( long selector, long value, void* message, double* opt )
 
 static const char* getAsioErrorString( ASIOError result )
 {
-  struct Messages 
+  struct Messages
   {
     ASIOError value;
     const char*message;
   };
 
-  static Messages m[] = 
+  static Messages m[] =
     {
       {   ASE_NotPresent,    "Hardware input or output is not present or available." },
       {   ASE_HWMalfunction,  "Hardware is malfunctioning." },
@@ -3412,7 +3412,7 @@ static const char* getAsioErrorString( ASIOError result )
 #if defined(__WINDOWS_DS__) // Windows DirectSound API
 
 // Modified by Robin Davies, October 2005
-// - Improvements to DirectX pointer chasing. 
+// - Improvements to DirectX pointer chasing.
 // - Backdoor RtDsStatistics hook provides DirectX performance information.
 // - Bug fix for non-power-of-two Asio granularity used by Edirol PCR-A30.
 // - Auto-call CoInitialize for DSOUND and ASIO platforms.
@@ -3459,7 +3459,7 @@ struct DsHandle {
   void *id[2];
   void *buffer[2];
   bool xrun[2];
-  UINT bufferPointer[2];  
+  UINT bufferPointer[2];
   DWORD dsBufferSize[2];
   DWORD dsPointerLeadTime[2]; // the number of bytes ahead of the safe pointer to lead by.
   HANDLE condition;
@@ -4326,10 +4326,10 @@ void RtApiDs :: startStream()
   // this is already in effect.
 
   MUTEX_LOCK( &stream_.mutex );
-  
+
   DsHandle *handle = (DsHandle *) stream_.apiHandle;
 
-  timeBeginPeriod( 1 ); 
+  timeBeginPeriod( 1 );
 
   /*
     memset( &statistics, 0, sizeof( statistics ) );
@@ -4637,7 +4637,7 @@ void RtApiDs :: callbackEvent()
   }
 
   if ( stream_.mode == OUTPUT || stream_.mode == DUPLEX ) {
-    
+
     LPDIRECTSOUNDBUFFER dsBuffer = (LPDIRECTSOUNDBUFFER) handle->buffer[0];
 
     if ( handle->drainCounter > 1 ) { // write zeros to the output stream
@@ -4712,7 +4712,7 @@ void RtApiDs :: callbackEvent()
     //}
 
     if ( dsPointerBetween( nextWritePos, safeWritePos, currentWritePos, dsBufferSize )
-         || dsPointerBetween( endWrite, safeWritePos, currentWritePos, dsBufferSize ) ) { 
+         || dsPointerBetween( endWrite, safeWritePos, currentWritePos, dsBufferSize ) ) {
       // We've strayed into the forbidden zone ... resync the read pointer.
       //++statistics.numberOfWriteUnderruns;
       handle->xrun[0] = true;
@@ -4780,14 +4780,14 @@ void RtApiDs :: callbackEvent()
     if ( safeReadPos < (DWORD)nextReadPos ) safeReadPos += dsBufferSize; // unwrap offset
     DWORD endRead = nextReadPos + bufferBytes;
 
-    // Handling depends on whether we are INPUT or DUPLEX. 
+    // Handling depends on whether we are INPUT or DUPLEX.
     // If we're in INPUT mode then waiting is a good thing. If we're in DUPLEX mode,
     // then a wait here will drag the write pointers into the forbidden zone.
-    // 
-    // In DUPLEX mode, rather than wait, we will back off the read pointer until 
-    // it's in a safe position. This causes dropouts, but it seems to be the only 
-    // practical way to sync up the read and write pointers reliably, given the 
-    // the very complex relationship between phase and increment of the read and write 
+    //
+    // In DUPLEX mode, rather than wait, we will back off the read pointer until
+    // it's in a safe position. This causes dropouts, but it seems to be the only
+    // practical way to sync up the read and write pointers reliably, given the
+    // the very complex relationship between phase and increment of the read and write
     // pointers.
     //
     // In order to minimize audible dropouts in DUPLEX mode, we will
@@ -4839,7 +4839,7 @@ void RtApiDs :: callbackEvent()
           errorText_ = errorStream_.str();
           error( RtError::SYSTEM_ERROR );
         }
-      
+
         if ( safeReadPos < (DWORD)nextReadPos ) safeReadPos += dsBufferSize; // unwrap offset
       }
     }
@@ -6007,7 +6007,7 @@ void RtApiAlsa :: stopStream()
   AlsaHandle *apiInfo = (AlsaHandle *) stream_.apiHandle;
   snd_pcm_t **handle = (snd_pcm_t **) apiInfo->handles;
   if ( stream_.mode == OUTPUT || stream_.mode == DUPLEX ) {
-    if ( apiInfo->synchronized ) 
+    if ( apiInfo->synchronized )
       result = snd_pcm_drop( handle[0] );
     else
       result = snd_pcm_drain( handle[0] );

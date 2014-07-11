@@ -45,18 +45,18 @@ void Box2DPhysicsWorld::ClearForces()
 }
 
 PhysicsObject* Box2DPhysicsWorld::CreateBodyFromParams(body_parameters _Params)
-{	
+{
 	b2Body*		_NewBody;
 	b2BodyDef	_NewBodyDef;
 	b2FixtureDef _NewBodyFixture;
-	
+
 	_NewBodyDef.position.Set(_Params.position.x,_Params.position.y);
-	
+
 	if(_Params.po_type == PO_BODY_STATIC)
 	{
 		_NewBodyDef.type = b2_staticBody;
 		_NewBody = m_World->CreateBody(&_NewBodyDef);
-		
+
 		if(_Params.shape_type == b2Shape::e_polygon)
 		{
 			b2PolygonShape _NewShape;
@@ -65,14 +65,14 @@ PhysicsObject* Box2DPhysicsWorld::CreateBodyFromParams(body_parameters _Params)
 		}
 		else
 		{
-			
+
 		}
 	}
 	else if(_Params.po_type == PO_BODY_DYNAMIC)
 	{
 		_NewBodyDef.type = b2_dynamicBody;
 		_NewBody = m_World->CreateBody(&_NewBodyDef);
-		
+
 		if(_Params.shape_type == b2Shape::e_polygon)
 		{
 			b2PolygonShape _NewShape;

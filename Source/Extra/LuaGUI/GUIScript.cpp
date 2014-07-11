@@ -22,7 +22,7 @@ GUIScript::GUIScript(const char* _filepath, Math::Vec4i* _viewarea, Graphics::De
 	m_Viewarea[1] = _viewarea->y;
 	m_Viewarea[2] = _viewarea->z;
 	m_Viewarea[3] = _viewarea->w;
-	
+
 	m_QuadBatch = m_Device->CreateQuadBatch(PXF_EXTRA_LUAGUI_MAXQUAD_PER_WIDGET);
 	m_Font = new SimpleFont(m_Device);
 
@@ -56,7 +56,7 @@ void GUIScript::Load()
 			lua_getglobal(L, "theme_texture");
 			m_Texture = m_Device->CreateTexture(lua_tostring(L, 1));
 			lua_pop(L, 1);
-			
+
 			// Load font file
 			lua_getglobal(L, "theme_font_file");
 			lua_getglobal(L, "theme_font_size");
@@ -98,7 +98,7 @@ void GUIScript::Reload()
 void GUIScript::AddQuad(GUIWidget* _widget, Math::Vec4i* _quad, Math::Vec4i* _texpixels)
 {
 	Math::Vec4f coords = m_Texture->CreateTextureSubset(_texpixels->x, _texpixels->y, _texpixels->z, _texpixels->w);
-	
+
 	m_QuadBatch->SetTextureSubset(coords.x, coords.y, coords.z, coords.w);
 	m_QuadBatch->AddTopLeft(_widget->GetPosition()->x + _quad->x, _widget->GetPosition()->y + _quad->y, _quad->z, _quad->w);
 }
@@ -183,7 +183,7 @@ bool GUIScript::MessagePump(ScriptMessage* _pmessage)
     m_Messages.pop_back();
     return true;
   }
-  
+
   return false;
 }
 
@@ -200,7 +200,7 @@ void GUIScript::SendMessageInternal(GUIWidget* _widget, int _messageid, void* _d
   _message->id = _messageid;
   _message->data = _data;
 	_message->script = this;
-  
+
   m_Messages.push_front(_message);
 }
 

@@ -11,7 +11,7 @@
 
 
 	basic concept is an i/o synchronous double-buffer scheme:
-	
+
 	on bufferSwitch(index == 0), host will read/write:
 
 		after ASIOStart(), the
@@ -75,7 +75,7 @@ ASIOError ASIOOutputReady(void);
 #define __ASIO_H
 
 // force 4 byte alignment
-#if defined(_MSC_VER) && !defined(__MWERKS__) 
+#if defined(_MSC_VER) && !defined(__MWERKS__)
 #pragma pack(push,4)
 #elif PRAGMA_ALIGN_SUPPORTED
 #pragma options align = native
@@ -138,7 +138,7 @@ enum {
 	ASIOSTInt32MSB18 = 9,		// 32 bit data with 18 bit alignment
 	ASIOSTInt32MSB20 = 10,		// 32 bit data with 20 bit alignment
 	ASIOSTInt32MSB24 = 11,		// 32 bit data with 24 bit alignment
-	
+
 	ASIOSTInt16LSB   = 16,
 	ASIOSTInt24LSB   = 17,		// used for 20 bits as well
 	ASIOSTInt32LSB   = 18,
@@ -225,7 +225,7 @@ enum {
 //- - - - - - - - - - - - - - - - - - - - - - - - -
 
 typedef struct ASIOTimeCode
-{       
+{
 	double          speed;                  // speed relation (fraction of nominal speed)
 	                                        // optional; set to 0. or 1. if not supported
 	ASIOSamples     timeCodeSamples;        // time in samples
@@ -240,7 +240,7 @@ typedef enum ASIOTimeCodeFlags
 	kTcReverse              = 1 << 2,
 	kTcOnspeed              = 1 << 3,
 	kTcStill                = 1 << 4,
-	
+
 	kTcSpeedValid           = 1 << 8
 }  ASIOTimeCodeFlags;
 
@@ -262,7 +262,7 @@ typedef enum AsioTimeInfoFlags
 	kSamplePositionValid    = 1 << 1,       // must always be valid
 	kSampleRateValid        = 1 << 2,
 	kSpeedValid             = 1 << 3,
-	
+
 	kSampleRateChanged      = 1 << 4,
 	kClockSourceChanged     = 1 << 5
 } AsioTimeInfoFlags;
@@ -453,7 +453,7 @@ enum
 	kAsioSupportsTimeInfo,		// if host returns true here, it will expect the
 								// callback bufferSwitchTimeInfo to be called instead
 								// of bufferSwitch
-	kAsioSupportsTimeCode,		// 
+	kAsioSupportsTimeCode,		//
 	kAsioMMCCommand,			// unused - value: number of commands, message points to mmc commands
 	kAsioSupportsInputMonitor,	// kAsioSupportsXXX return 1 if host supports this
 	kAsioSupportsInputGain,     // unused and undefined
@@ -536,7 +536,7 @@ ASIOError ASIOStart(void);
 	    the host to read from input buffer A (index 0), and start
 	    processing to output buffer A while output buffer B (which
 	    has been filled by the host prior to calling ASIOStart())
-	    is possibly sounding (see also ASIOGetLatencies()) 
+	    is possibly sounding (see also ASIOGetLatencies())
 	Parameter:
 	  None.
 	Returns:
@@ -895,7 +895,7 @@ ASIOError ASIOFuture(long selector, void *params);
 	  further calls with this selector. on success, ASE_SUCCESS
 	  must be returned (note: ASE_OK is *not* sufficient!)
 	Notes:
-	  see selectors defined below.	  
+	  see selectors defined below.
 */
 
 enum
@@ -1032,7 +1032,7 @@ ASIOError ASIOOutputReady(void);
 	  should be returned in order to prevent further calls to this
 	  function. note that the host may want to determine if it is
 	  to use this when the system is not yet fully initialized, so
-	  ASE_OK should always be returned if the mechanism makes sense.	  
+	  ASE_OK should always be returned if the mechanism makes sense.
 	Notes:
 	  please remeber to adjust ASIOGetLatencies() according to
 	  whether ASIOOutputReady() was ever called or not, if your
@@ -1044,7 +1044,7 @@ ASIOError ASIOOutputReady(void);
 */
 
 // restore old alignment
-#if defined(_MSC_VER) && !defined(__MWERKS__) 
+#if defined(_MSC_VER) && !defined(__MWERKS__)
 #pragma pack(pop)
 #elif PRAGMA_ALIGN_SUPPORTED
 #pragma options align = reset

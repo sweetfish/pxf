@@ -88,7 +88,7 @@ long _glfwReadStream( _GLFWstream *stream, void *data, long size )
 	{
 	    size = stream->Size - stream->Position;
 	}
-	
+
 	// Perform data read
 	memcpy( data, (unsigned char*) stream->Data + stream->Position, size );
 	stream->Position += size;
@@ -168,7 +168,7 @@ int _glfwSeekStream( _GLFWstream *stream, long offset, int whence )
 	{
 	    stream->Position = position;
 	}
-	
+
 	return GL_TRUE;
     }
 

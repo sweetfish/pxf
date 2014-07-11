@@ -4,10 +4,10 @@
 #include <enet/enet.h>
 
 namespace Pxf
-{	
+{
 	namespace Extra
 	{
-	  
+
     typedef ENetEvent NetMessage;
     typedef enum
     {
@@ -27,7 +27,7 @@ namespace Pxf
       ~SimpleNet();
 
     private:
-  
+
     };
   } // Extra
 } // Pxf

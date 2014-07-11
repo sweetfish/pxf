@@ -13,16 +13,16 @@ namespace Resource {
 	public:
 		char* Data;
 		unsigned Size;
-		
+
 		// If data isn't allocated on the heap, it should not attempt to delete it.
 		bool Static;
-		
+
 		Chunk()
 			: Data(NULL)
 			, Size(0)
-			, Static(false) 
+			, Static(false)
 		{}
-		
+
 		~Chunk()
 		{
 			if (!Static)

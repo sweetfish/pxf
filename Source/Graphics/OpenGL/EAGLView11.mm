@@ -27,7 +27,7 @@
 
 }
 
- 
+
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 
@@ -41,7 +41,7 @@
 
 }
 
- 
+
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 
@@ -58,15 +58,15 @@
     } else if (theTouch.tapCount == 2) {
 
         // Double-tap: increase image size by 10%"
-        
+
         //printf("Heyo, double-tap!\n");
-        
+
         ((Pxf::Graphics::DeviceGLES11 *)m_Device)->InputSetDoubleTap(tapPoint.x, tapPoint.y);
     }
-    
+
     ((Pxf::Graphics::DeviceGLES11 *)m_Device)->InputSetRelease(tapPoint.x, tapPoint.y);
 
-} 
+}
 
 - (void)handleSingleTap:(NSDictionary *)touch {
 
@@ -75,7 +75,7 @@
 
 }
 
- 
+
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
 
@@ -86,21 +86,21 @@
 
 - (id) init
 {
-	if(self = [super init]) 
+	if(self = [super init])
 	{
 		if([self InitDevice])
 			Pxf::Message(LOCAL_MSG,"Device is ready to use");
 	}
-		
+
 	return self;
 }
 
 - (bool) InitDevice
 {
 	m_Device = new Pxf::Graphics::DeviceGLES11();
-	
+
 	((Pxf::Graphics::DeviceGLES11*)m_Device)->SetUIView(self);
-	
+
 	return m_Device->Ready();
 }
 
@@ -108,13 +108,13 @@
 {
 	EAGLContext* _OldContext	= [EAGLContext currentContext];
 	EAGLContext* _Context		= ((Pxf::Graphics::DeviceGLES11*) m_Device)->GetEAGLContext();
-	
+
 	if(_OldContext != _Context)
 		[EAGLContext setCurrentContext:_Context];
-	
+
 	if(_OldContext != _Context)
 		[EAGLContext setCurrentContext:_OldContext];
-		
+
 }
 
 -(bool) CreateSurface
@@ -122,10 +122,10 @@
 	EAGLContext*	_Context	= ((Pxf::Graphics::DeviceGLES11*) m_Device)->GetEAGLContext();
 	CAEAGLLayer*	_EaglLayer	= (CAEAGLLayer*)[self layer];
 	CGSize			_Size		= [_EaglLayer bounds].size;
-	
+
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->SetBackingWidth(roundf(_Size.width));
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->SetBackingHeight(roundf(_Size.height));
-	
+
 	if(!((Pxf::Graphics::DeviceGLES11*) m_Device)->InitBuffers(_Context, _EaglLayer))
 	{
 		[self release];
@@ -134,10 +134,10 @@
 	}
 	else
 		Pxf::Message(LOCAL_MSG,"Render/frame buffers: OK");
-	
+
 	// Setup input handling
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->InitInput();
-	
+
 	return true;
 }
 
@@ -148,10 +148,10 @@
 	EAGLContext*	_Context	= ((Pxf::Graphics::DeviceGLES11*) m_Device)->GetEAGLContext();
 	CAEAGLLayer*	_EaglLayer	= (CAEAGLLayer*)[self layer];
 	CGSize			_Size		= [_EaglLayer bounds].size;
-	
+
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->SetBackingWidth(roundf(_Size.width));
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->SetBackingHeight(roundf(_Size.height));
-	
+
 	if(!((Pxf::Graphics::DeviceGLES11*) m_Device)->InitBuffers())
 	{
 		[self release];
@@ -160,7 +160,7 @@
 	}
 	else
 		Pxf::Message(LOCAL_MSG,"Init buffers OK");
-	
+
 	if(!([_Context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:_EaglLayer]))
 	{
 		Pxf::Message(LOCAL_MSG,"Unable to allocate render buffer storage");
@@ -168,31 +168,31 @@
 	}
 	else
 		Pxf::Message(LOCAL_MSG,"Allocate render buffer storage OK");
-	
-	
+
+
 	Pxf::Graphics::VideoBufferGL* _FrameBuffer = ((Pxf::Graphics::DeviceGLES11*) m_Device)->GetFrameBuffer();
 	Pxf::Graphics::VideoBufferGL* _RenderBuffer = ((Pxf::Graphics::DeviceGLES11*) m_Device)->GetRenderBuffer();
 	Pxf::Graphics::VideoBufferGL* _DepthBuffer = ((Pxf::Graphics::DeviceGLES11*) m_Device)->GetDepthBuffer();
-	
+
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->UnBindVideoBufferType(GL_RENDERBUFFER_OES);
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->UnBindVideoBufferType(GL_FRAMEBUFFER_OES);
-	
+
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->BindVideoBuffer(_FrameBuffer);
 	((Pxf::Graphics::DeviceGLES11*) m_Device)->BindVideoBuffer(_RenderBuffer);
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, _RenderBuffer->m_Handle);
-	
+
 	if(((Pxf::Graphics::DeviceGLES11*) m_Device)->GetUseDepthBuffer())
 	{
 	    ((Pxf::Graphics::DeviceGLES11*) m_Device)->BindVideoBuffer(_DepthBuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, _DepthBuffer->m_Handle);
 	}
-	
+
 	 // check for completeness
 	 GLenum _Status = glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES);
 	 char _MSG[256];
 	 if(_Status != GL_FRAMEBUFFER_COMPLETE_OES)
 	 {
-		 
+
 		 switch(_Status)
 		 {
 			case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES:
@@ -205,14 +205,14 @@
 				 sprintf(_MSG, "Unknown");
 				break;
 		}
-		 
+
 		Pxf::Message(LOCAL_MSG,"Failed to create complete framebuffer object. Reason: %s", _MSG);
-	 
+
 		return false;
 	 }
 	 else
 		Pxf::Message(LOCAL_MSG,"Frame buffer Complete");
-	
+
 	return true;
 }*/
 
@@ -238,7 +238,7 @@
 	} else {
 		[[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];
 	}
-	
+
 	return self;
 }
 
@@ -250,38 +250,38 @@
 - (id) initWithRect: (CGRect) _Frame bufferFormat: (GLuint) _CBFormat depthFormat: (GLuint) _DBFormat preserveBackbuffer: (BOOL) _Retained
 {
 	if(self = [super initWithFrame:_Frame])
-	{	
+	{
 		EAGLContext*	_Context	= [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-		
+
 		if(!_DBFormat)
 			((Pxf::Graphics::DeviceGLES11*) m_Device)->SetUseDepthBuffer(false);
 		else
 		    ((Pxf::Graphics::DeviceGLES11*) m_Device)->SetUseDepthBuffer(true);
-		   
+
 		CAEAGLLayer* _EaglLayer = (CAEAGLLayer*)[self layer];
-		_EaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys: 
-										 [NSNumber numberWithBool:_Retained], 
+		_EaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+										 [NSNumber numberWithBool:_Retained],
 										 kEAGLDrawablePropertyRetainedBacking,
 										 (_CBFormat == GL_RGB565_OES) ? kEAGLColorFormatRGB565 : kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
-		
+
 		((Pxf::Graphics::DeviceGLES11*) m_Device)->SetEAGLContext(_Context);
-		
+
 		if(_Context == nil || ![EAGLContext setCurrentContext:_Context])
 		{
 			Pxf::Message(LOCAL_MSG,"Unable to initialize with empty context");
-			[self release]; 
+			[self release];
 			return nil;
 		}
-		
+
 		if(![self CreateSurface])
 		{
 			[self release];
 			Pxf::Message(LOCAL_MSG,"Unable to create surface");
 			return nil;
 		}
-		
+
 	}
-					 
+
 	return self;
 }
 

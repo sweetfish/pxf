@@ -8,13 +8,13 @@ namespace Pxf {
 
 namespace Graphics {
 	class Device;
-	
+
 	class DeviceResource
 	{
 	protected:
 		static unsigned GLOBAL_RESOURCE_COUNTER;
 		uint m_ID;
-		Pxf::Graphics::Device *m_pDevice;		        
+		Pxf::Graphics::Device *m_pDevice;
 		Resource::AbstractResource* m_Resource;
 
 	public:

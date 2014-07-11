@@ -13,10 +13,10 @@ namespace Pxf
             {
                 void RegisterClass(lua_State* _L);
                 void Update(Game* g, lua_State* _L);
-                
+
                 int GetText(lua_State* _L);
-                
-                
+
+
             } /* IPhoneInputSubsystem */
         } /* LuaGame */
     } /* Extra */

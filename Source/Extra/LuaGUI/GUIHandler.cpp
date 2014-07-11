@@ -61,7 +61,7 @@ bool GUIHandler::MessagePump(ScriptMessage* _pmessage)
       return true;
 		}
 	}
-	
+
   return false;
 }
 

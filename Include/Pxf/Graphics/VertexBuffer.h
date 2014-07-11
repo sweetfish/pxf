@@ -74,7 +74,7 @@ namespace Pxf
 
 
 			virtual void CreateNewBuffer(uint32 _NumVertices, uint32 _VertexSize) = 0;
-			virtual void CreateFromBuffer(void* _Buffer,uint32 _NumVertices, uint32 _VertexSize) = 0; 
+			virtual void CreateFromBuffer(void* _Buffer,uint32 _NumVertices, uint32 _VertexSize) = 0;
 
 			virtual void UpdateData(void* _Buffer, uint32 _Count, uint32 _Offset) = 0;
 

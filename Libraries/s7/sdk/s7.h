@@ -15,7 +15,7 @@ typedef double s7_Double;
   /* --------------------------------------------------------------------------------
    * s7 itself is based on the types and functions in this file, so the first place to look for examples
    *   is s7.c.  There are also a few variations on a REPL at the end of s7.html.  s7test.scm
-   *   is a regression test for s7 -- it still turns up a few problems.  More tests are certainly welcome!  
+   *   is a regression test for s7 -- it still turns up a few problems.  More tests are certainly welcome!
    *   Extended examples of s7 usage are:
    *
    *   Snd: ftp://ccrma-ftp.stanford.edu/pub/Lisp/snd-11.tar.gz (a sound editor)
@@ -30,13 +30,13 @@ typedef double s7_Double;
    * s7 (scheme) variables:
    *
    *    *features*              a list of symbols describing what is current available (initially '(s7)).
-   *                               "provide" adds a symbol to the list, 
+   *                               "provide" adds a symbol to the list,
    *                               "provided?" returns #t if its symbol arg is in the list.
    *    *vector-print-length*   how many elements of a vector are printed (initially 8)
    *    __func__                equivalent to C's __func__.  The symbol of the function currently being defined.
    *    *load-path*             a list of directory names that "load" searches for scheme input files (initially '())
    *    *load-hook*             called before a file is loaded, a function of one arg, the name of the file.
-   *    *error-hook*            called upon error, a function of two args, 
+   *    *error-hook*            called upon error, a function of two args,
    *                               the error type (a symbol), and the info about it (a list).
    *    *error-info*            data describing last error (see below).
    *    *trace-hook*            called upon trace (a function of two args)
@@ -62,7 +62,7 @@ typedef double s7_Double;
    *    procedure-source        returns the source (a list) of a procedure
    *    help                    tries to find a help string associated with its argument
    *    symbol-calls            if profiling is enabled, returns the number of times its argument (a symbol) has been called
-   *    trace and untrace       add or subtract functions from the trace list; (trace abs). 
+   *    trace and untrace       add or subtract functions from the trace list; (trace abs).
    *    stacktrace              show a stack trace, the stack at the point of an error: (stacktrace *error-info*),
    *                               or the stack at a break point: (stacktrace break-continuation)
    *
@@ -73,16 +73,16 @@ typedef double s7_Double;
    *    The functions length, copy, and fill! are generic.
    *
    * s7 non-standard object:
-   *  
+   *
    *    encapsulator           a data "continuation" -- save the current environment for later restoration.
    *       open-encapsulator        this returns an encapsulation that when called as a thunk restores the current environment
    *       close-encapsulator       this closes (retires, puts an end to) an encapsulation
    *       encapsulator-bindings    these are the currently saved bindings awaiting restoration
    *       encapsulator?            #t if its argument is an encapsulator
-   * 
+   *
    * --------------------------------------------------------------------------------
    *
-   * I think s7 has built-in support for srfi-6 (basic string ports), srfi-8 (receive), srfi-17 (generalized-set!), 
+   * I think s7 has built-in support for srfi-6 (basic string ports), srfi-8 (receive), srfi-17 (generalized-set!),
    *   srfi-18 (multithreading), srfi-28 (format, also nearly all of srfi-48), srfi-30 (block comments),
    *   srfi-88 (keywords(, and srfi-89 (define*).  It also supports the functionality of many others
    *   but under a slightly different syntax: srfi-69 (hash-tables), srfi-16 (define*), srfi-25 (multidimensional
@@ -135,7 +135,7 @@ s7_pointer s7_eof_object(s7_scheme *sc);                             /* #<eof> *
 bool s7_is_valid_pointer(s7_pointer arg);
 
   /* these are the scheme constants; they do not change in value during a run, and
-   *   are the same across all threads, so they can be safely assigned to C global variables if desired. 
+   *   are the same across all threads, so they can be safely assigned to C global variables if desired.
    */
 
 bool s7_is_c_pointer(s7_pointer arg);
@@ -169,7 +169,7 @@ s7_pointer s7_stacktrace(s7_scheme *sc, s7_pointer arg);
 
   /* these are equivalent to (error ...) in scheme
    *   the first argument to s7_error is a symbol that can be caught (via (catch tag ...))
-   *   the rest of the arguments are passed to the error handler (if in catch) 
+   *   the rest of the arguments are passed to the error handler (if in catch)
    *   or printed out (in the default case).  If the first element of the list
    *   of args ("info") is a string, the default error handler treats it as
    *   a format control string, and passes it to format with the rest of the
@@ -197,7 +197,7 @@ s7_pointer s7_stacktrace(s7_scheme *sc, s7_pointer arg);
    *    4: if not #f, the file name of that code
    *    5: the environment at the point of the error
    *    6..top: stack enviroment pointers (giving enough info to reconstruct the current call stack), ending in #f
-   * 
+   *
    * to find a variable's value at the point of the error:
    *    (symbol->value var (vector-ref *error-info* 5))
    *
@@ -218,17 +218,17 @@ void s7_remove_from_heap(s7_scheme *sc, s7_pointer x);
    *   object in a vector that the GC always checks, returning the object's location
    *   in that table.  s7_gc_unprotect and s7_gc_unprotect_at unprotect the object
    *   (remove it from the vector).  s7_gc_unprotect_at uses the location passed
-   *   to it, whereas s7_gc_unprotect scans the vector to find the object.  
+   *   to it, whereas s7_gc_unprotect scans the vector to find the object.
    *   s7_gc_protected_at returns the object at the given location.
-   * 
+   *
    * You can turn the GC on and off via s7_gc_on.
    *
    * There is a built-in lag between the creation of a new object and its first possible GC
    *    (the lag time is set indirectly by GC_TEMPS_SIZE in s7.c), so you don't need to worry about
    *    very short term temps such as the arguments to s7_cons in:
    *
-   *    s7_cons(s7, s7_make_real(s7, 3.14), 
-   *                s7_cons(s7, s7_make_integer(s7, 123), 
+   *    s7_cons(s7, s7_make_real(s7, 3.14),
+   *                s7_cons(s7, s7_make_integer(s7, 123),
    *                            s7_nil(s7)));
    */
 
@@ -330,7 +330,7 @@ int s7_vector_rank(s7_pointer vect);                                            
 s7_Int *s7_vector_dimensions(s7_pointer vec);                                         /* dimensions */
 s7_Int *s7_vector_offsets(s7_pointer vec);                                            /* precalculated offsets to speed-up addressing */
 
-  /* if s7 is built with multidimensional and applicable vectors, 
+  /* if s7 is built with multidimensional and applicable vectors,
    *
    *  (vect i) is the same as (vector-ref vect i)
    *  (set! (vect i) x) is the same as (vector-set! vect i x)
@@ -339,7 +339,7 @@ s7_Int *s7_vector_offsets(s7_pointer vec);                                      
    *  (make-vector (list 2 3 4)) returns a 3-dimensional vector with the given dimension sizes
    *  (make-vector '(2 3) 1.0) returns a 2-dim vector with all elements set to 1.0
    */
-  
+
   /* since vectors and lists are set-applicable, and length is generic, we can write a
    *   generic FFT that accepts both types or any other object that follows this syntax.
 
@@ -353,7 +353,7 @@ s7_Int *s7_vector_offsets(s7_pointer vec);                                      
         	  (set! (data j) (data i))
         	  (set! (data i) temp)))
             (let ((m (/ n 2)))
-              (do () 
+              (do ()
         	  ((or (< m 2) (< j m)))
         	(set! j (- j m))
         	(set! m (/ m 2)))
@@ -379,19 +379,19 @@ s7_Int *s7_vector_offsets(s7_pointer vec);                                      
         	  (set! wc (* wc wpc)))
         	(set! prev mmax))))
           data)
-        
+
         > (cfft! (list 0.0 1+i 0.0 0.0))
         (1+1i -1+1i -1-1i 1-1i)
         > (cfft! (vector 0.0 1+i 0.0 0.0))
         #(1+1i -1+1i -1-1i 1-1i)
   */
-        
+
 
 bool s7_is_hash_table(s7_pointer p);                                        /* (hash-table? p) */
 s7_pointer s7_make_hash_table(s7_scheme *sc, s7_Int size);                  /* (make-hash-table size) */
-s7_pointer s7_hash_table_ref(s7_scheme *sc, s7_pointer table, const char *name);   
+s7_pointer s7_hash_table_ref(s7_scheme *sc, s7_pointer table, const char *name);
                                                                             /* (hash-table-ref table name) */
-s7_pointer s7_hash_table_set(s7_scheme *sc, s7_pointer table, const char *name, s7_pointer value);  
+s7_pointer s7_hash_table_set(s7_scheme *sc, s7_pointer table, const char *name, s7_pointer value);
                                                                             /* (hash-table-set! table name value) */
   /* a hash-table is a vector of alists '((symbol value)), so to iterate over a hash-table
    *   use hash-table-for-each which calls its function with each of these alists.  An entry defaults to nil.
@@ -415,19 +415,19 @@ s7_pointer s7_current_error_port(s7_scheme *sc);                            /* (
 s7_pointer s7_set_current_error_port(s7_scheme *sc, s7_pointer port);       /* (set-current-error-port port) */
 void s7_close_input_port(s7_scheme *sc, s7_pointer p);                      /* (close-input-port p) */
 void s7_close_output_port(s7_scheme *sc, s7_pointer p);                     /* (close-output-port p) */
-s7_pointer s7_open_input_file(s7_scheme *sc, const char *name, const char *mode);  
+s7_pointer s7_open_input_file(s7_scheme *sc, const char *name, const char *mode);
                                                                             /* (open-input-file name mode) */
-s7_pointer s7_open_output_file(s7_scheme *sc, const char *name, const char *mode); 
+s7_pointer s7_open_output_file(s7_scheme *sc, const char *name, const char *mode);
                                                                             /* (open-output-file name mode) */
   /* mode here is an optional C style flag, "a" for "alter", etc ("r" is the input default, "w" is the output default) */
-s7_pointer s7_open_input_string(s7_scheme *sc, const char *input_string);  
+s7_pointer s7_open_input_string(s7_scheme *sc, const char *input_string);
                                                                             /* (open-input-string str) */
 s7_pointer s7_open_output_string(s7_scheme *sc);                            /* (open-output-string) */
 const char *s7_get_output_string(s7_scheme *sc, s7_pointer out_port);       /* (get-output-string port) -- current contents of output string */
   /*    don't free the string */
 
 typedef enum {S7_READ, S7_READ_CHAR, S7_READ_LINE, S7_READ_BYTE, S7_PEEK_CHAR, S7_IS_CHAR_READY} s7_read_t;
-s7_pointer s7_open_output_function(s7_scheme *sc, void (*function)(s7_scheme *sc, char c, s7_pointer port));  
+s7_pointer s7_open_output_function(s7_scheme *sc, void (*function)(s7_scheme *sc, char c, s7_pointer port));
 s7_pointer s7_open_input_function(s7_scheme *sc, s7_pointer (*function)(s7_scheme *sc, s7_read_t read_choice, s7_pointer port));
 void *s7_port_data(s7_pointer port);
 void *s7_port_set_data(s7_pointer port, void *stuff);
@@ -497,8 +497,8 @@ s7_pointer s7_current_environment(s7_scheme *sc);                           /* (
             (for-each
              (lambda (binding)
                (if (substring? name (symbol->string (car binding)))
-	           (format (current-output-port) "~A: ~A~%" 
-	        	   (car binding) 
+	           (format (current-output-port) "~A: ~A~%"
+	        	   (car binding)
 	        	   (if (procedure? (cdr binding))
 	        	       (procedure-documentation (cdr binding))
 	        	       (cdr binding)))))
@@ -522,25 +522,25 @@ s7_pointer s7_current_environment(s7_scheme *sc);                           /* (
               (set-cdr! e (list (car e)))
               (set-car! e (list binding)))
             (set-car! e (cons binding (car e)))))
-   
+
       (define (pop-environment e)
         (if (not (vector? (car e)))
             (begin
               (set-car! e (cadr e))
               (set-cdr! e (cddr e)))))
-   
-      (define-macro (define! e var val) 
+
+      (define-macro (define! e var val)
         `(push-environment ,e (cons ',var ,val)))
 
       (define (make-environment . initial-bindings)
          (cons initial-bindings (global-environment)))
 
-   *   (let ((x 3)) 
+   *   (let ((x 3))
    *     (define! (current-environment) hi 21)
    *     (+ x hi))
    *   -> 24
    *
-   *   (let ((x 32)) 
+   *   (let ((x 32))
    *     (eval `(+ x y) (make-environment '(x . 2) '(y . 4))))
    *   -> 6
    */
@@ -551,7 +551,7 @@ s7_pointer s7_symbol_set_value(s7_scheme *sc, s7_pointer sym, s7_pointer val);
 s7_pointer s7_symbol_local_value(s7_scheme *sc, s7_pointer sym, s7_pointer local_env);
 void s7_for_each_symbol_name(s7_scheme *sc, bool (*symbol_func)(const char *symbol_name, void *data), void *data);
 void s7_for_each_symbol(s7_scheme *sc, bool (*symbol_func)(const char *symbol_name, s7_pointer value, void *data), void *data);
-  
+
   /* these access the current environment and symbol table, providing
    *   a symbol's current binding (s7_name_to_value takes the symbol name as a char*,
    *   s7_symbol_value takes the symbol itself, s7_symbol_set_value changes the
@@ -569,10 +569,10 @@ void s7_for_each_symbol(s7_scheme *sc, bool (*symbol_func)(const char *symbol_na
    *   for any function that doesn't have documentation:
    *
        (let ((st (symbol-table)))
-         (do ((i 0 (+ i 1))) 
+         (do ((i 0 (+ i 1)))
              ((= i (vector-length st)))
            (let ((lst (vector-ref st i)))
-             (for-each 
+             (for-each
                (lambda (sym)
        	         (if (defined? sym)
 	             (let ((val (symbol->value sym)))
@@ -602,7 +602,7 @@ bool s7_is_constant(s7_pointer p);
    * s7_define is equivalent to define! in scheme (see below).
    */
 
-bool s7_is_function(s7_pointer p); 
+bool s7_is_function(s7_pointer p);
 s7_pointer s7_make_function(s7_scheme *sc, const char *name, s7_function fnc, int required_args, int optional_args, bool rest_arg, const char *doc);
 
 void s7_define_function(s7_scheme *sc, const char *name, s7_function fnc, int required_args, int optional_args, bool rest_arg, const char *doc);
@@ -625,7 +625,7 @@ void s7_define_macro(s7_scheme *sc, const char *name, s7_function fnc, int requi
    *   global (top-level) environment, with the function as its value.  For example, the scheme
    *   function 'car' is essentially:
    *
-   *     s7_pointer g_car(s7_scheme *sc, s7_pointer args) 
+   *     s7_pointer g_car(s7_scheme *sc, s7_pointer args)
    *       {return(s7_car(sc, s7_car(sc, args)));}
    *
    *   then bound to the name "car":
@@ -649,7 +649,7 @@ void s7_define_macro(s7_scheme *sc, const char *name, s7_function fnc, int requi
   /* In s7, (define* (name . args) body) or (define name (lambda* args body))
    *   define a function that takes optional (keyword) named arguments.
    *   The keywords :key and :optional are ok, but they are ignored --
-   *   they exist to be compatible with other define* implementations.  
+   *   they exist to be compatible with other define* implementations.
    *   The "args" is a list that can contain either names (normal arguments),
    *   or lists of the form (name default-value), in any order.  When called,
    *   the names are bound to their default values (or #f), then the function's
@@ -657,7 +657,7 @@ void s7_define_macro(s7_scheme *sc, const char *name, s7_function fnc, int requi
    *   precedes that argument's new value.  Otherwise, as values occur, they
    *   are plugged into the environment based on their position in the arglist
    *   (as normal for a function).  So,
-   *   
+   *
    *   (define* (hi a (b 32) (c "hi")) (list a b c))
    *
    *   is equivalent to other implementations (define* (hi a :key (b 32) ...))
@@ -671,7 +671,7 @@ void s7_define_macro(s7_scheme *sc, const char *name, s7_function fnc, int requi
    *   and so on.  :rest causes its argument to be bound to the rest
    *   of the arguments at that point.
    *
-   * The C connection to this takes the function name, the C function to call, the argument 
+   * The C connection to this takes the function name, the C function to call, the argument
    *   list as written in Scheme, and the documentation string.  s7 makes sure the arguments
    *   are ordered correctly and have the specified defaults before calling the C function.
    *     s7_define_function_star(sc, "a-func", a_func, "arg1 (arg2 32)", "an example of C define*");
@@ -683,19 +683,19 @@ void s7_define_macro(s7_scheme *sc, const char *name, s7_function fnc, int requi
    */
 
 s7_pointer s7_call(s7_scheme *sc, s7_pointer func, s7_pointer args);
-  
+
   /* s7_call takes a scheme function (e.g. g_car above), and applies it to 'args' (a list of arguments)
    *   returning the result.
-   *   
+   *
    *   s7_integer(s7_call(s7, g_car, s7_cons(s7, s7_make_integer(sc, 123), s7_nil(s7))));
-   *  
+   *
    *   returns 123.
    */
 
 bool s7_is_procedure_with_setter(s7_pointer obj);
-s7_pointer s7_make_procedure_with_setter(s7_scheme *sc, 
+s7_pointer s7_make_procedure_with_setter(s7_scheme *sc,
 					 const char *name,
-					 s7_pointer (*getter)(s7_scheme *sc, s7_pointer args), 
+					 s7_pointer (*getter)(s7_scheme *sc, s7_pointer args),
 					 int get_req_args, int get_opt_args,
 					 s7_pointer (*setter)(s7_scheme *sc, s7_pointer args),
 					 int set_req_args, int set_opt_args,
@@ -711,24 +711,24 @@ s7_pointer s7_procedure_with_setter_getter(s7_pointer obj);
    *   In the example in s7.html we have dax-x as the procedure-with-setter,
    *     (dac-x obj)              returns the x field of obj
    *     (set! (dac-x obj) value) sets that field to value
-   *   
+   *
    * In the set! case, the new value is the last of the args passed to the setter.
    * s7_make_procedure_with_setter is equivalent to s7_make_function, so to bind it
    *   to some name, you need to call s7_define_variable.
    */
 
 
-int s7_new_type(const char *name, 
-		char *(*print)(s7_scheme *sc, void *value), 
-		void (*free)(void *value), 
+int s7_new_type(const char *name,
+		char *(*print)(s7_scheme *sc, void *value),
+		void (*free)(void *value),
 		bool (*equal)(void *val1, void *val2),
 		void (*gc_mark)(void *val),
 		s7_pointer (*apply)(s7_scheme *sc, s7_pointer obj, s7_pointer args),
 		s7_pointer (*set)(s7_scheme *sc, s7_pointer obj, s7_pointer args));
 
-int s7_new_type_x(const char *name, 
-		  char *(*print)(s7_scheme *sc, void *value), 
-		  void (*free)(void *value), 
+int s7_new_type_x(const char *name,
+		  char *(*print)(s7_scheme *sc, void *value),
+		  void (*free)(void *value),
 		  bool (*equal)(void *val1, void *val2),
 		  void (*gc_mark)(void *val),
 		  s7_pointer (*apply)(s7_scheme *sc, s7_pointer obj, s7_pointer args),
@@ -742,7 +742,7 @@ int s7_object_type(s7_pointer obj);
 void *s7_object_value(s7_pointer obj);
 s7_pointer s7_make_object(s7_scheme *sc, int type, void *value);
 void s7_mark_object(s7_pointer p);
-  
+
   /* These functions create a new scheme object type.  There is a simple example in s7.html.
    *
    * s7_new_type describes the type for scheme:
@@ -793,7 +793,7 @@ void s7_mark_object(s7_pointer p);
  *
  *   (lock? obj)               returns #t if 'obj' is a lock (a mutex in pthread jargon)
  *   (make-lock)               creates a new lock and initializes it (pthread_mutex_init)
- *   (grab-lock lock)          pthread_mutex_lock 
+ *   (grab-lock lock)          pthread_mutex_lock
  *   (release-lock lock)       pthread_mutex_unlock
  *
  *   (thread-variable? obj)    returns #t if 'obj' is a key
@@ -841,7 +841,7 @@ void s7_mark_object(s7_pointer p);
 
 
 /* --------------------------------------------------------------------------------
- * 
+ *
  *        s7 changes
  *
  * 16-Dec:    hash-table-for-each.
@@ -857,15 +857,15 @@ void s7_mark_object(s7_pointer p);
  * 14-Sep:    s7_values, s7_make_continuation, and a better interrupt example.
  *            vector-for-each, vector-map, string-for-each.
  * 7-Sep:     s7_open_input_function. with-environment. receive.
- * 3-Sep:     s7.html, s7-slib-init.scm. 
+ * 3-Sep:     s7.html, s7-slib-init.scm.
  *            s7_stacktrace in s7.h.
  * 27-Aug:    vector and hash-table sizes are now s7_Ints, rather than ints.
  * 20-Aug:    s7_remove_from_heap.
  * 17-Aug:    *error-info*.
  * 14-Aug:    define-expansion.
- * 7-Aug:     s7_define_function_with_setter. 
+ * 7-Aug:     s7_define_function_with_setter.
  *            s7_quit and example of signal handling.
- * 6-Aug:     encapsulation.  s7_define_set_function.  s7_new_type_x.  
+ * 6-Aug:     encapsulation.  s7_define_set_function.  s7_new_type_x.
  *            generic function: copy, and length is generic.
  * 1-Aug:     lower-case versions of s7_T and friends.
  *            s7_define_macro. macroexpand.
@@ -899,7 +899,7 @@ void s7_mark_object(s7_pointer p);
  * 7-Nov:     removed s7_is_immutable and friends, s7_reverse_in_place.
  *              removed the s7_pointer arg to s7_gc_on.
  *              added s7_UNSPECIFIED
- * 25-Oct:    added name arg to s7_make_procedure_with_setter, 
+ * 25-Oct:    added name arg to s7_make_procedure_with_setter,
  *              and s7_scheme arg to new_type print func.
  * 1-Oct-08   version 1.0
  */

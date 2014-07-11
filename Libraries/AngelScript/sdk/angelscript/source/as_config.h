@@ -78,9 +78,9 @@
 // AS_DOUBLEBYTE_CHARSET
 // When this flag is defined, the parser will treat all characters in strings
 // that are greater than 127 as lead characters and automatically include the
-// next character in the script without checking its value. This should be 
-// compatible with common encoding schemes, e.g. Big5. Shift-JIS is not compatible 
-// though as it encodes some single byte characters above 127. 
+// next character in the script without checking its value. This should be
+// compatible with common encoding schemes, e.g. Big5. Shift-JIS is not compatible
+// though as it encodes some single byte characters above 127.
 //
 // If support for international text is desired, it is recommended that UTF-8
 // is used as this is supported natively by the compiler without the use for this
@@ -112,7 +112,7 @@
 //-----------------------------------------
 
 // asVSNPRINTF(a,b,c,d)
-// Some compilers use different names for this function. You must 
+// Some compilers use different names for this function. You must
 // define this macro to map to the proper function.
 
 // ASM_AT_N_T or ASM_INTEL
@@ -191,7 +191,7 @@
 // Use assembler code for the ARM CPU family
 
 // AS_64BIT_PTR
-// Define this to make the engine store all pointers in 64bit words. 
+// Define this to make the engine store all pointers in 64bit words.
 
 // AS_BIG_ENDIAN
 // Define this for CPUs that use big endian memory layout, e.g. PPC
@@ -284,7 +284,7 @@
 
 // SPLIT_OBJS_BY_MEMBER_TYPES
 // On some platforms objects with primitive members are split over different
-// register types when passed by value to functions. 
+// register types when passed by value to functions.
 
 
 
@@ -489,7 +489,7 @@
 			#define AS_MAX_PORTABILITY
 		#endif
 		#define AS_POSIX_THREADS
- 
+
 	// Windows
 	#elif defined(WIN32)
 		// On Windows the simple classes are returned in the EAX:EDX registers

@@ -5,7 +5,7 @@ namespace Pxf
 {
 	namespace Input
 	{
-		
+
 		//! Special keyboard keys
 		enum
 		{
@@ -99,7 +99,7 @@ namespace Pxf
 			MOUSE_LEFT    = MOUSE_1,
 			MOUSE_RIGHT   = MOUSE_2,
 			MOUSE_MIDDLE  = MOUSE_3
-		};	
+		};
 	}
 }
 

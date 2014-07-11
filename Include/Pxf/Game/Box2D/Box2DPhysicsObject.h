@@ -5,22 +5,22 @@
 
 class b2Body;
 
-namespace Pxf 
+namespace Pxf
 {
 	namespace Game
 	{
 		class Box2DPhysicsObject : public PhysicsObject
 		{
 		public:
-			Box2DPhysicsObject(b2Body* _Body = 0) 
+			Box2DPhysicsObject(b2Body* _Body = 0)
 				: m_Body(0) {
 					m_Body = _Body;
 				}
 			~Box2DPhysicsObject();
-				
+
 			void SetPosition(Math::Vec3f _Position);
 			Math::Vec3f GetPosition();
-			
+
 			b2Body* GetBody() { return m_Body; }
 			void SetBody(b2Body* _Body) { m_Body = _Body; }
 		private:

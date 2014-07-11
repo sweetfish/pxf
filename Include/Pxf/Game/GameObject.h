@@ -4,7 +4,7 @@
 #include <Pxf/Math/Vector.h>
 #include <Pxf/Game/PhysicsObject.h>
 
-namespace Pxf 
+namespace Pxf
 {
 	namespace Game
 	{
@@ -16,11 +16,11 @@ namespace Pxf
 			GameObject();
 			GameObject(Math::Vec3f _Position, const char* _ID = 0);
 			GameObject(float _X, float _Y, float _Z, const char* _ID = 0);
-			
+
 		protected:
 			static unsigned				m_ObjectCounter;
 			const char*					m_ID;
-			
+
 		private:
 			void _GenerateNewName();
 		};

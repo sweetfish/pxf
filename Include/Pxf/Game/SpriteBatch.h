@@ -2,16 +2,16 @@
 #define _PXF_GAME_SPRITEBATCH_H_
 
 namespace Pxf
-{	
-	namespace Game  
+{
+	namespace Game
 	{
-		/* 
+		/*
 		Abstract spritebatch class
 		---
 		The purpose of this class is to manage and draw a set of sprites at the same time,
-		so that the user wont need to explicitly call draw methods on each sprite. 
+		so that the user wont need to explicitly call draw methods on each sprite.
 
-		Todo: Sort sprites? 
+		Todo: Sort sprites?
 
 		*/
 		class SpriteBatch

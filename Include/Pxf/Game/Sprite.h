@@ -9,15 +9,15 @@
 #include <stdarg.h>
 
 namespace Pxf
-{	
+{
 	namespace Graphics {
 		class Texture;
 		class Device;
 		class VertexBuffer;
 	}
 
-	namespace Game  
-	{		
+	namespace Game
+	{
 		struct sprite_sequence {
 			~sprite_sequence();
 			int* sequence;
@@ -51,7 +51,7 @@ namespace Pxf
 					tex_coords = uv;
 				}
 			};
-			 
+
 			Sprite() { }
 			Sprite(Graphics::Device* _pDevice, const char* _ID, Graphics::Texture* _Texture, int _CellWidth, int _CellHeight,int _Frequency);
 			~Sprite();
@@ -65,10 +65,10 @@ namespace Pxf
 			void Stop();
 			void Start();
 			void NextFrame();
-			
+
 			void AddSequence(int _SequenceLength, ...);
 			void SetScale(float _Value) { m_DrawScale = _Value; }
-			
+
 			bool IsReady() { return m_Ready; }
 			int	GetZIndex() { return m_ZIndex; }
 			int	GetCurrentFrame() { return m_CurrentFrame; }
@@ -76,13 +76,13 @@ namespace Pxf
 			void _CalculateUV();
 			void _SetCurrentUV();
 			const char* m_ID;
-			
+
 			Graphics::Device*		m_Device;
 			Graphics::Texture*		m_Texture;
 			Graphics::VertexBuffer*	m_DrawBuffer;
 			SpriteDrawData*			m_MappedData;		// VertexBuffer access pointer
-			
-			int						m_CellSize[2];		// force power-of-two cell size? 
+
+			int						m_CellSize[2];		// force power-of-two cell size?
 			float					m_UVStep[2];		// step sizes
 			float					m_UVCoords[4];
 			float					(*m_UVValues)[4];
@@ -93,14 +93,14 @@ namespace Pxf
 			int					m_CurrentFrame;	// frame counter
 			int					m_ZIndex;		// depth sort
 			int					m_MaxFrames; 	// calculate
-			
+
 			float				m_TimeStep;		// 60 / frequency
 			float				m_SwitchTime;	// += dt, call nextframe when >= timestep
 			float				m_DrawScale;	// draw scale
 
 			bool				m_Ready;
 			bool				m_UseCustomSequence;
-			
+
 			std::vector<sprite_sequence> m_SequenceList;
 		};
 	}
